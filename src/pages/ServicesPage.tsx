@@ -6,6 +6,7 @@ import { Globe, Layers, Code2, ArrowRight, Check } from 'lucide-react';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
+import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 
 interface ServicesPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -35,6 +36,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* Services Hero */}
       <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+        <PageHeroBackground imageSrc="/about2.webp" position="center 52%" />
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>

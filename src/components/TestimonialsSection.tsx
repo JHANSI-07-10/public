@@ -52,26 +52,42 @@ export const TestimonialsSection: React.FC = () => {
         </Reveal>
 
         {/* Carousel / Grid Display with short restrained transition */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={shouldReduceMotion ? undefined : { opacity: 0, x: 12 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={shouldReduceMotion ? undefined : { opacity: 0, x: -12 }}
-            transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            {[0, 1, 2].map((offset) => {
-              const index = (currentIndex + offset) % VERIFIED_TESTIMONIALS.length;
-              const item = VERIFIED_TESTIMONIALS[index];
+        <div className="relative">
+          {/* Ambient gold glow pulsing softly behind the carousel */}
+          {!shouldReduceMotion && (
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[320px] w-[70%] max-w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9a84c]/[0.07] blur-3xl"
+              animate={{ opacity: [0.4, 0.95, 0.4], scale: [0.95, 1.06, 0.95] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, x: 12 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, x: -12 }}
+              transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
+              className="relative grid grid-cols-1 md:grid-cols-3 gap-6"
+            >
+              {[0, 1, 2].map((offset) => {
+                const index = (currentIndex + offset) % VERIFIED_TESTIMONIALS.length;
+                const item = VERIFIED_TESTIMONIALS[index];
 
-              return (
-                <InteractiveCard
-                  key={item.id}
-                  variant="card"
-                  padding="lg"
-                  className="flex flex-col justify-between h-full"
-                >
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: offset * 0.1, ease: 'easeOut' }}
+                    className="h-full"
+                  >
+                    <InteractiveCard
+                      variant="card"
+                      padding="lg"
+                      className="flex flex-col justify-between h-full"
+                    >
                   <div>
                     {/* Rating Stars & Quote Icon */}
                     <div className="flex items-center justify-between mb-6">
@@ -103,11 +119,13 @@ export const TestimonialsSection: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                </InteractiveCard>
-              );
-            })}
-          </motion.div>
-        </AnimatePresence>
+                    </InteractiveCard>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Indicator dots for position */}
         <div className="flex items-center justify-center gap-2 mt-10">

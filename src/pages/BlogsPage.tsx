@@ -1,152 +1,382 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SectionHeader';
-import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { VERIFIED_INSIGHTS, Service } from '../data/content';
-import { ArrowUpRight, BookOpen, Clock, ArrowRight } from 'lucide-react';
+import { CountingNumber } from '../components/ui/counting-number';
+import { Reveal } from '../components/motion/Reveal';
+import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
+import { VERIFIED_INSIGHTS, InsightArticle, Service } from '../data/content';
+import {
+  ArrowUpRight,
+  ArrowRight,
+  Clock,
+  SearchX,
+  CheckCircle2,
+  Layers,
+  ShieldCheck,
+  Gauge,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface BlogsPageProps {
   onOpenConsultation: (service?: Service) => void;
 }
 
+const MARQUEE_TOPICS = [
+  'REACT PERFORMANCE',
+  'EVENT-DRIVEN MESH',
+  'SPRING BOOT',
+  'WEBSOCKETS SYNC',
+  'EDGE RUNTIME',
+  'CORE WEB VITALS',
+  'MULTI-TENANT SAAS',
+  'ISO 27001',
+  'AES-256',
+  'RBAC DESIGN',
+  'POSTGRESQL TUNING',
+  'DOCKER STRATEGY',
+];
+
+const readingMinutes = (article: InsightArticle) => {
+  const words = `${article.title} ${article.excerpt}`.split(/\s+/).length;
+  return Math.max(3, Math.ceil((words + 40) / 40));
+};
+
+const TagPill: React.FC<{
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}> = ({ label, active, onClick }) => (
+  <button
+    onClick={onClick}
+    aria-pressed={active}
+    className={`relative shrink-0 px-4 py-2 rounded-xl text-xs font-mono font-semibold border transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
+      active
+        ? 'border-[#c9a84c] text-black'
+        : 'border-[#242424] bg-[#141414] text-[#aaaaaa] hover:text-white hover:border-[#c9a84c]/40'
+    }`}
+  >
+    {active && (
+      <motion.span
+        layoutId="insight-tag-indicator"
+        className="absolute inset-0 rounded-xl bg-[#c9a84c]"
+        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+      />
+    )}
+    <span className="relative z-10">{label}</span>
+  </button>
+);
+
+const CoverFrame: React.FC<{ article: InsightArticle; featured?: boolean }> = ({
+  article,
+  featured = false,
+}) => (
+  <div
+    className={`relative overflow-hidden bg-[#181818] border-b border-[#242424] ${
+      featured ? 'lg:w-3/5 lg:border-b-0 lg:border-r aspect-[16/10] lg:aspect-auto lg:min-h-[340px]' : 'aspect-[16/10]'
+    }`}
+  >
+    <img
+      src={article.image}
+      alt={article.title}
+      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={(e) => {
+        const parent = (e.target as HTMLElement).parentElement;
+        if (parent) {
+          parent.innerHTML = `
+            <div class="w-full h-full flex flex-col items-center justify-center bg-[#1a1a1a] p-4 text-center">
+              <span class="text-xs font-mono text-[#c9a84c]">${article.tags[0]}</span>
+            </div>
+          `;
+        }
+      }}
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/55 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+    <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+      {article.tags.map((t) => (
+        <span
+          key={t}
+          className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-[#c9a84c] font-bold"
+        >
+          {t.toUpperCase()}
+        </span>
+      ))}
+    </div>
+    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-[#cccccc]">
+      <Clock className="w-3 h-3 text-[#c9a84c]" />
+      {readingMinutes(article)} MIN
+    </span>
+  </div>
+);
+
 export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
   const [selectedTag, setSelectedTag] = useState<string>('all');
+  const shouldReduceMotion = useReducedMotion();
 
-  const allTags = ['all', 'REACT', 'ARCHITECTURE', 'JAVA', 'SECURITY', 'REAL-TIME'];
+  const allTags = useMemo(() => {
+    const unique = Array.from(
+      new Set(VERIFIED_INSIGHTS.flatMap((a) => a.tags.map((t) => t.toLowerCase())))
+    );
+    return ['all', ...unique];
+  }, []);
 
-  const filteredArticles =
-    selectedTag === 'all'
-      ? VERIFIED_INSIGHTS
-      : VERIFIED_INSIGHTS.filter((a) => a.tags.includes(selectedTag));
+  const filteredArticles = useMemo(
+    () =>
+      selectedTag === 'all'
+        ? VERIFIED_INSIGHTS
+        : VERIFIED_INSIGHTS.filter((a) =>
+            a.tags.some((t) => t.toLowerCase() === selectedTag)
+          ),
+    [selectedTag]
+  );
+
+  const avgRead = Math.round(
+    VERIFIED_INSIGHTS.reduce((sum, a) => sum + readingMinutes(a), 0) / VERIFIED_INSIGHTS.length
+  );
+  const isFeaturedLayout = filteredArticles.length > 2;
 
   return (
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
-      {/* Blog Hero */}
+      {/* ── Section 1: Hero + live filters ─────────────────────────── */}
       <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 hero-radial-glow pointer-events-none opacity-70" aria-hidden="true" />
+        {/* Slow gold scanline sweeping the lab grid */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="insights-scanline absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/45 to-transparent" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
-            eyebrow="Technical Insights & Research"
-            title="Architectural Deep Dives from the VPD Engineering Lab."
+            align="center"
+            eyebrow="Engineered Knowledge Base"
+            title={
+              <>
+                Architectural Deep Dives from the{' '}
+                <span className="text-[#c9a84c]">VPD Engineering Lab</span>.
+              </>
+            }
             subtitle="Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and enterprise Java systems."
           />
 
-          {/* Tag Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 mt-8">
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
-                  selectedTag === tag
-                    ? 'bg-[#c9a84c] text-black shadow-md'
-                    : 'bg-[#141414] text-[#aaaaaa] hover:text-white border border-[#242424]'
-                }`}
-              >
-                {tag === 'all' ? 'ALL TOPICS' : tag}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Articles Grid */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArticles.map((article) => (
-              <Card
-                key={article.id}
-                variant="card"
-                padding="none"
-                className="overflow-hidden flex flex-col justify-between group"
-              >
-                <div>
-                  {/* Thumbnail Cover Frame */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#181818] border-b border-[#242424]">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        const parent = (e.target as HTMLElement).parentElement;
-                        if (parent) {
-                          parent.innerHTML = `
-                            <div class="w-full h-full flex flex-col items-center justify-center bg-[#1a1a1a] p-4 text-center">
-                              <span class="text-xs font-mono text-[#c9a84c]">${article.tags[0]}</span>
-                            </div>
-                          `;
-                        }
-                      }}
-                    />
-                    <div className="absolute top-3 left-3 flex gap-1.5">
-                      {article.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-[#c9a84c] font-bold"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-6 sm:p-7">
-                    <div className="flex items-center gap-2 text-xs text-[#777777] font-medium mb-3">
-                      <span>{article.author}</span>
-                      <span aria-hidden="true">·</span>
-                      <span>{article.date}</span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#c9a84c] transition-colors leading-snug">
-                      <Link to={`/blogs/${article.id}`}>
-                        {article.title}
-                      </Link>
-                    </h3>
-
-                    <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed line-clamp-3">
-                      {article.excerpt}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="p-6 pt-0">
-                  <Link
-                    to={`/blogs/${article.id}`}
-                    className="inline-flex items-center gap-2 text-xs font-bold text-[#c9a84c] hover:text-white transition-colors"
-                  >
-                    <span>Read Architectural Breakdown</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter / CTA */}
-      <section className="py-16 border-t border-[#1f1f1f] bg-[#0d0d0d]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h3 className="text-2xl sm:text-3xl font-black text-white mb-4">
-            Need Expert Architectural Guidance on These Stacks?
-          </h3>
-          <p className="text-sm text-[#aaaaaa] mb-8 max-w-xl mx-auto">
-            Schedule an engineering consultation with our team to discuss your tech stack optimization, microservices strategy, or React performance budgets.
-          </p>
-          <Button
-            onClick={() => onOpenConsultation()}
-            variant="primary"
-            size="lg"
-            icon={<ArrowRight className="w-4 h-4" />}
+          {/* Lab stats bar with count-up numbers */}
+          <StaggerContainer
+            className="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto mb-10 pt-8 border-t border-[#1f1f1f]"
+            staggerDelay={0.1}
           >
-            Connect with Engineering Leads
-          </Button>
+            {[
+              { icon: Layers, target: VERIFIED_INSIGHTS.length, suffix: '', label: 'Published briefs' },
+              { icon: ShieldCheck, target: allTags.length - 1, suffix: '', label: 'Technical topics' },
+              { icon: Gauge, target: avgRead, suffix: ' Min', label: 'Average read time' },
+            ].map((stat) => (
+              <StaggerItem key={stat.label} className="text-center">
+                <stat.icon className="w-4 h-4 text-[#c9a84c] mx-auto mb-2" />
+                <div className="text-2xl sm:text-3xl font-black tracking-tight text-white tabular-nums">
+                  <CountingNumber value={`${stat.target}${stat.suffix}`} duration={1.2} />
+                </div>
+                <div className="mt-1 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-[#777777]">
+                  {stat.label}
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+
+          {/* Animated filter pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {allTags.map((tag) => (
+              <TagPill
+                key={tag}
+                label={tag === 'all' ? 'ALL TOPICS' : tag.toUpperCase()}
+                active={selectedTag === tag}
+                onClick={() => setSelectedTag(tag)}
+              />
+            ))}
+          </div>
+
+          {/* Live result counter */}
+          <div className="mt-5 text-center text-xs font-mono text-[#777777]" aria-live="polite">
+            SHOWING{' '}
+            <span className="text-[#c9a84c] font-bold">
+              {String(filteredArticles.length).padStart(2, '0')}
+            </span>{' '}
+            / {String(VERIFIED_INSIGHTS.length).padStart(2, '0')} BRIEFS
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 2: Bento article grid ──────────────────────────── */}
+      <section className="py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {filteredArticles.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-24 text-center">
+              <SearchX className="w-10 h-10 text-[#c9a84c] mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">No briefs on this topic yet</h3>
+              <p className="text-sm text-[#aaaaaa] mb-6 max-w-sm">
+                The lab is still cooking this one. Pick another topic or browse everything.
+              </p>
+              <Button variant="secondary" size="md" onClick={() => setSelectedTag('all')}>
+                Show All Topics
+              </Button>
+            </div>
+          ) : (
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              <AnimatePresence mode="popLayout" initial={false}>
+                {filteredArticles.map((article, idx) => {
+                  const featured = isFeaturedLayout && idx === 0;
+                  return (
+                    <motion.article
+                      key={article.id}
+                      layout={!shouldReduceMotion}
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.96 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: shouldReduceMotion ? 0 : Math.min(idx * 0.07, 0.3),
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className={`group relative rounded-2xl border border-[#262626] bg-[#141414] overflow-hidden card-hover flex flex-col ${
+                        featured ? 'md:col-span-2 lg:flex-row' : ''
+                      }`}
+                    >
+                      {/* Gold sweep on hover */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#c9a84c]/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                      />
+
+                      <CoverFrame article={article} featured={featured} />
+
+                      <div className={`flex flex-col justify-between flex-1 ${featured ? 'lg:w-2/5 p-7 sm:p-8' : ''}`}>
+                        <div className={featured ? '' : 'p-6 sm:p-7'}>
+                          {featured && (
+                            <div className="inline-flex items-center gap-2 mb-4 px-2.5 py-1 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/30">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
+                              <span className="text-[10px] font-mono font-bold tracking-widest text-[#c9a84c]">
+                                LATEST BRIEF
+                              </span>
+                            </div>
+                          )}
+
+                          <div className="flex items-center gap-2 text-xs text-[#777777] font-mono mb-3">
+                            <span className="text-[#aaaaaa]">{article.author}</span>
+                            <span aria-hidden="true">·</span>
+                            <span>{article.date}</span>
+                          </div>
+
+                          <h3
+                            className={`font-bold text-white mb-3 group-hover:text-[#c9a84c] transition-colors leading-snug ${
+                              featured ? 'text-2xl sm:text-3xl tracking-tight' : 'text-xl'
+                            }`}
+                          >
+                            <Link to={`/blogs/${article.id}`}>{article.title}</Link>
+                          </h3>
+
+                          <p
+                            className={`text-xs sm:text-sm text-[#aaaaaa] leading-relaxed ${
+                              featured ? 'line-clamp-4 max-w-xl' : 'line-clamp-3'
+                            }`}
+                          >
+                            {article.excerpt}
+                          </p>
+                        </div>
+
+                        <div className={`flex items-center justify-between gap-4 ${featured ? 'mt-8 pt-6 border-t border-[#242424] px-7 sm:px-8 pb-7 sm:pb-8' : 'p-6 pt-0'}`}>
+                          <Link
+                            to={`/blogs/${article.id}`}
+                            className="inline-flex items-center gap-2 text-xs font-bold text-[#c9a84c] hover:text-white transition-colors"
+                          >
+                            <span>Read Breakdown</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </Link>
+                          {!featured && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[#555555]">
+                              <Clock className="w-3 h-3" />
+                              {readingMinutes(article)} MIN
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </motion.article>
+                  );
+                })}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Section 3: Infinite topic ticker ───────────────────────── */}
+      <section
+        aria-label="Topics covered by the engineering lab"
+        className="py-5 border-y border-[#1f1f1f] bg-[#0d0d0d] overflow-hidden"
+      >
+        <div className="insights-marquee flex w-max gap-3 hover:[animation-play-state:paused]">
+          {[...MARQUEE_TOPICS, ...MARQUEE_TOPICS].map((topic, idx) => (
+            <span
+              key={`${topic}-${idx}`}
+              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-[#242424] bg-[#141414] text-[11px] font-mono font-semibold tracking-wider text-[#888888] whitespace-nowrap"
+            >
+              <span className="w-1 h-1 rounded-full bg-[#c9a84c]" aria-hidden="true" />
+              {topic}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Section 4: Consultation CTA with rotating gold border ──── */}
+      <section className="py-20 sm:py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="relative rounded-2xl p-px overflow-hidden">
+              <div
+                aria-hidden="true"
+                className="insights-border-spin absolute -inset-[150%] pointer-events-none"
+                style={{
+                  background:
+                    'conic-gradient(from 0deg, transparent 0%, rgba(201,168,76,0.55) 12%, transparent 28%)',
+                }}
+              />
+              <div className="relative rounded-2xl bg-[#0d0d0d] p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                  <div className="text-xs font-bold tracking-widest text-[#c9a84c] uppercase mb-3">
+                    Engineering Consultation
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white mb-4 tracking-tight">
+                    Need Expert Architectural Guidance on These Stacks?
+                  </h3>
+                  <p className="text-sm text-[#aaaaaa] leading-relaxed mb-8">
+                    Schedule an engineering consultation with our team to discuss your tech stack
+                    optimization, microservices strategy, or React performance budgets.
+                  </p>
+                  <Button
+                    onClick={() => onOpenConsultation()}
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Connect with Engineering Leads
+                  </Button>
+                </div>
+
+                <ul className="space-y-4">
+                  {[
+                    'Frontend performance budget audits',
+                    'Event-driven service mesh design',
+                    'Java / Spring Boot resilience hardening',
+                    'Real-time sync & WebSocket strategy',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-[#cccccc]">
+                      <CheckCircle2 className="w-4 h-4 text-[#c9a84c] mt-0.5 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>

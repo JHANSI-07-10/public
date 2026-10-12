@@ -1,13 +1,26 @@
 import React from 'react';
 import { Shield, Cpu, Target, Award } from 'lucide-react';
+import { motion, useReducedMotion, Variants } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { Card } from './ui/Card';
 import { Reveal } from './motion/Reveal';
-import { StaggerContainer, StaggerItem } from './motion/StaggerContainer';
+import { StaggerContainer } from './motion/StaggerContainer';
+import { WordMaskReveal } from './motion/WordMaskReveal';
 import { InteractiveCard } from './motion/InteractiveCard';
 
 export const CompanyIntro: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
+  const pillarVariants: Variants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5, ease: 'easeOut' },
+    },
+  };
+
   const principles = [
     {
       icon: Cpu,
@@ -33,7 +46,7 @@ export const CompanyIntro: React.FC = () => {
         <Reveal>
           <SectionHeader
             eyebrow="Company Philosophy & Pedigree"
-            title="Vision, Purpose, Delivery. The Foundations of Our Craft."
+            title={<WordMaskReveal text="Vision, Purpose, Delivery. The Foundations of Our Craft." />}
             subtitle={`${COMPANY_DATA.vision} We reject off-the-shelf compromises and opaque agency jargon, replacing them with verifiable architecture and direct accountability.`}
           />
         </Reveal>
@@ -43,7 +56,11 @@ export const CompanyIntro: React.FC = () => {
           {principles.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <StaggerItem key={idx}>
+              <motion.div
+                key={idx}
+                variants={shouldReduceMotion ? undefined : pillarVariants}
+                className="h-full"
+              >
                 <InteractiveCard
                   variant="card"
                   padding="lg"
@@ -61,7 +78,7 @@ export const CompanyIntro: React.FC = () => {
                     </p>
                   </div>
                 </InteractiveCard>
-              </StaggerItem>
+              </motion.div>
             );
           })}
         </StaggerContainer>

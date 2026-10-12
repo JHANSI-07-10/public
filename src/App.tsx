@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ConsultationModal } from './components/ConsultationModal';
 import { BrandIntro } from './components/BrandIntro';
+import { CursorTrail } from './components/CursorTrail';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -46,6 +47,53 @@ function AppLayout() {
     return () => window.removeEventListener('replay_brand_intro', handleReplayIntro);
   }, []);
 
+  useLayoutEffect(() => {
+    const main = document.querySelector('main');
+    if (
+      !main ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.setAttribute('data-scroll-reveal', 'visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' }
+    );
+
+    const observePageSections = (root: ParentNode) => {
+      root.querySelectorAll<HTMLElement>('section:not(#hero), article').forEach((element) => {
+        if (element.hasAttribute('data-scroll-reveal')) return;
+        const bounds = element.getBoundingClientRect();
+        const isOnScreen = bounds.top < window.innerHeight && bounds.bottom > 0;
+        element.setAttribute('data-scroll-reveal', isOnScreen ? 'visible' : 'pending');
+        if (!isOnScreen) observer.observe(element);
+      });
+    };
+
+    observePageSections(main);
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement) observePageSections(node);
+        });
+      });
+    });
+    mutationObserver.observe(main, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, [location.pathname]);
+
   const handleOpenConsultation = (service?: Service) => {
     setSelectedService(service || null);
     setIsConsultationOpen(true);
@@ -70,8 +118,11 @@ function AppLayout() {
       {/* Global Navigation Header (hidden on admin gate if requested) */}
       <Navbar onOpenConsultation={() => handleOpenConsultation()} />
 
+      {/* Small gold spark trail that follows the mouse (desktop only, subtle) */}
+      <CursorTrail />
+
       {/* Page Routing Outlet */}
-      <main className="flex-grow">
+      <main className="relative z-10 flex-grow">
         <Routes>
           <Route path="/" element={<HomePage onOpenConsultation={handleOpenConsultation} />} />
           <Route path="/about" element={<AboutPage onOpenConsultation={handleOpenConsultation} />} />

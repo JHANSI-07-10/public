@@ -6,6 +6,7 @@ import { Reveal } from './motion/Reveal';
 import { StaggerContainer, StaggerItem } from './motion/StaggerContainer';
 import { InteractiveCard } from './motion/InteractiveCard';
 import { AnimatedButton } from './motion/AnimatedButton';
+import { Parallax } from './motion/Parallax';
 
 interface ServicesSectionProps {
   onSelectService: (service: Service) => void;
@@ -43,7 +44,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
 
         {/* 3-Column Service Card Grid */}
         <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {CORE_SERVICES.map((service) => {
+          {CORE_SERVICES.map((service, idx) => {
             const Icon = getIcon(service.id);
             return (
               <StaggerItem key={service.id}>
@@ -71,21 +72,23 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                       {service.description}
                     </p>
 
-                    {/* Architecture Specs Box */}
-                    <div className="p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6 space-y-2.5">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-[#777777]">Technology Stack:</span>
-                        <span className="font-mono font-semibold text-white">{service.stack}</span>
+                    {/* Architecture Specs Box — subtle scroll parallax, alternating depth per card */}
+                    <Parallax distance={idx % 2 === 0 ? 10 : -10}>
+                      <div className="p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6 space-y-2.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-[#777777]">Technology Stack:</span>
+                          <span className="font-mono font-semibold text-white">{service.stack}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-[#777777]">Latency Benchmark:</span>
+                          <span className="font-mono font-semibold text-[#c9a84c]">{service.latency}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-[#777777]">Security Standard:</span>
+                          <span className="font-mono font-semibold text-white">{service.security}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-[#777777]">Latency Benchmark:</span>
-                        <span className="font-mono font-semibold text-[#c9a84c]">{service.latency}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-[#777777]">Security Standard:</span>
-                        <span className="font-mono font-semibold text-white">{service.security}</span>
-                      </div>
-                    </div>
+                    </Parallax>
 
                     {/* Benefits Checklist */}
                     <div className="space-y-2.5 mb-8">

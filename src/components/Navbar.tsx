@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, Phone, MessageSquare } from 'lucide-react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
 import { Button } from './ui/Button';
 import { AnimatedButton } from './motion/AnimatedButton';
@@ -17,6 +17,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
 
+  const { scrollYProgress } = useScroll();
+  const progressScaleX = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 28,
+    mass: 0.3,
+  });
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -28,7 +35,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   // Prevent background scroll when mobile menu is open
@@ -63,6 +69,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             : 'bg-transparent border-b border-white/5 py-5'
         }`}
       >
+        {/* Scroll progress indicator */}
+        <motion.div
+          aria-hidden="true"
+          style={{ scaleX: shouldReduceMotion ? scrollYProgress : progressScaleX }}
+          className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#c9a84c] via-[#D4AF37] to-[#f3d57b]"
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
           {/* Zone 1: Authentic Brand Monogram & Wordmark */}
           <Link
@@ -70,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl p-1"
             aria-label="VPD Technologies - Home"
           >
-            <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#161616] border border-[#2a2a2a] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-colors">
+            <div className={`rounded-xl overflow-hidden bg-[#161616] border border-[#2a2a2a] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-all duration-300 ${isScrolled ? 'w-9 h-9' : 'w-10 h-10'}`}>
               <img
                 src="/logo.webp"
                 alt="VPD Technologies"
@@ -123,7 +135,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               variant="primary"
               size="md"
               icon={<ArrowRight className="w-3.5 h-3.5" />}
-              className="hidden sm:inline-flex"
+              className="hidden sm:inline-flex md:hidden lg:inline-flex"
             >
               Get a Quote
             </AnimatedButton>

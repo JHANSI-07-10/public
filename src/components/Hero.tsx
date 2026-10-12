@@ -5,6 +5,8 @@ import { KEY_METRICS, COMPANY_DATA } from '../data/content';
 import { AnimatedButton } from './motion/AnimatedButton';
 import { motionTokens } from './motion/motionTokens';
 import { HeroVideoBackground } from './ui/HeroVideoBackground';
+import { CountingNumber } from './ui/counting-number';
+import { WordMaskReveal } from './motion/WordMaskReveal';
 
 interface HeroProps {
   onOpenConsultation: () => void;
@@ -47,7 +49,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
               transition={itemTransition(0.12)}
               className="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.85rem] font-black tracking-tight text-white leading-[1.08] text-balance mb-6"
             >
-              We Engineer the <span className="text-[#D4AF37] drop-shadow-[0_0_24px_rgba(212,175,55,0.22)]">Digital Core</span> for Industry Leaders.
+              <WordMaskReveal
+                text="We Engineer the Digital Core for Industry Leaders."
+                delay={0.18}
+                stagger={0.05}
+                highlightWords={['Digital', 'Core']}
+                highlightClassName="text-[#D4AF37] drop-shadow-[0_0_24px_rgba(212,175,55,0.22)]"
+              />
             </motion.h1>
 
             {/* Supporting Value Proposition */}
@@ -118,9 +126,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {KEY_METRICS.map((metric, idx) => (
-              <div key={idx} className="flex flex-col items-start text-left">
+              <motion.div
+                key={idx}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: 'easeOut' }}
+                className="flex flex-col items-start text-left"
+              >
                 <div className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1 tabular-nums">
-                  <span className="text-[#D4AF37]">{metric.value}</span>
+                  <span className="text-[#D4AF37]">
+                    <CountingNumber value={metric.value} delay={0.5 + idx * 0.12} duration={1.4} />
+                  </span>
                 </div>
                 <div className="text-sm font-semibold text-white">
                   {metric.label}
@@ -128,7 +145,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
                 <div className="text-xs text-[#71717A] mt-0.5">
                   {metric.context}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>

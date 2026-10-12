@@ -1,5 +1,6 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
+import { WhatWeEngineer } from '../components/WhatWeEngineer';
 import { CompanyIntro } from '../components/CompanyIntro';
 import { ServicesSection } from '../components/ServicesSection';
 import { DifferentiatorsSection } from '../components/DifferentiatorsSection';
@@ -18,7 +19,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenConsultation }) => {
       {/* Section 1: Hero */}
       <Hero onOpenConsultation={() => onOpenConsultation()} />
 
-      {/* Section 2: Company Introduction & Leadership */}
+      {/* Section 2: What We Engineer — Spotlight Cards */}
+      <WhatWeEngineer />
+
+      {/* Section 3: Company Introduction & Leadership */}
       <CompanyIntro />
 
       {/* Section 3: Core Engineering Services */}

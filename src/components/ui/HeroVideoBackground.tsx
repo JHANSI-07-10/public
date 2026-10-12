@@ -34,7 +34,8 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
       aria-hidden="true"
     >
       {/* Video: nudged right so its subject sits in the uncovered half, with a
-          slight contrast/saturation lift to keep it punchy through the scrims */}
+          low-contrast, desaturated grade so it stays ambient and never competes
+          with the copy or the metric numbers */}
       <video
         ref={videoRef}
         src={videoSrc}
@@ -44,7 +45,7 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
         playsInline
         preload="auto"
         disablePictureInPicture
-        className="absolute inset-0 w-full h-full object-cover object-[68%_center] contrast-[1.12] saturate-[1.05]"
+        className="absolute inset-0 w-full h-full object-cover object-[68%_center] contrast-[0.95] saturate-[0.85] brightness-[0.95]"
       />
 
       {/* Global tone-down so the video melts into the page background */}

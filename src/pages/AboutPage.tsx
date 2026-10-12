@@ -8,6 +8,7 @@ import { StaggerContainer, StaggerItem } from '../components/motion/StaggerConta
 import { InteractiveCard } from '../components/motion/InteractiveCard';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { Accordion } from '../components/motion/Accordion';
+import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 
 interface AboutPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -54,6 +55,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* Page Hero */}
       <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+        <PageHeroBackground imageSrc="/about1.webp" position="center 40%" />
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -61,10 +63,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               eyebrow="Company Profile & Philosophy"
               title="Standardizing High-Tier Software Engineering Globally."
               subtitle={COMPANY_DATA.vision}
+              align="center"
             />
           </Reveal>
+        </div>
+      </section>
 
-          {/* Facility Imagery Strip */}
+      {/* Facility Imagery Strip */}
+      <section className="relative border-b border-[#1f1f1f] bg-[#0a0a0a] py-10 sm:py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             <StaggerItem>
               <div className="rounded-2xl overflow-hidden border border-[#262626] aspect-[4/3] bg-[#141414] relative group">
@@ -118,9 +125,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
       </section>
 
       {/* Leadership & Story Section */}
-      <section className="py-20 border-b border-[#1f1f1f]">
+      <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_12%_45%,rgba(201,168,76,0.08),transparent_42%),linear-gradient(180deg,#0c0c0c_0%,#0a0a0a_100%)]">
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <Reveal className="lg:col-span-7">
               <div>
                 <div className="text-xs font-bold tracking-widest text-[#c9a84c] uppercase mb-3">
@@ -191,7 +199,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
       </section>
 
       {/* 3 Engineering Pillars */}
-      <section className="py-20 border-b border-[#1f1f1f] bg-[#0d0d0d]">
+      <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_90%_35%,rgba(201,168,76,0.07),transparent_38%),#0d0d0d]">
+        <div className="absolute -right-24 top-12 h-72 w-72 rounded-full bg-[#c9a84c]/[0.04] blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
@@ -225,7 +234,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
       </section>
 
       {/* 6 Capabilities Grid */}
-      <section className="py-20 border-b border-[#1f1f1f]">
+      <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_8%_65%,rgba(201,168,76,0.055),transparent_38%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
@@ -255,8 +264,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
       </section>
 
       {/* Verified Technical FAQs with Accessible Accordion */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative isolate overflow-hidden py-20 bg-[radial-gradient(ellipse_at_50%_100%,rgba(201,168,76,0.07),transparent_52%)]">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
               eyebrow="Frequently Asked Questions"

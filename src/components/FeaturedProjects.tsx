@@ -46,27 +46,35 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                   className="overflow-hidden hover:border-[#c9a84c]/40 transition-colors duration-300"
                 >
                   <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
-                    {/* Visual Frame */}
+                    {/* Visual Frame — mask reveal: clip sweeps down while the image settles 1.1 → 1.0 */}
                     <div className={`lg:col-span-6 w-full ${isReversed ? 'lg:order-2' : ''}`}>
                       <div className="relative rounded-xl overflow-hidden aspect-[16/10] bg-[#1a1a1a] border border-[#2a2a2a] group">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          loading="lazy"
-                          referrerPolicy="no-referrer"
-                          onError={(e) => {
-                            const parent = (e.target as HTMLElement).parentElement;
-                            if (parent) {
-                              parent.innerHTML = `
-                                <div class="w-full h-full flex flex-col items-center justify-center bg-[#181818] p-6 text-center">
-                                  <span class="text-xs font-mono font-bold text-[#c9a84c] mb-2">${project.sector}</span>
-                                  <span class="text-lg font-bold text-white">${project.title}</span>
-                                </div>
-                              `;
-                            }
-                          }}
-                        />
+                        <motion.div
+                          initial={shouldReduceMotion ? false : { clipPath: 'inset(0 0 100% 0)', scale: 1.1 }}
+                          whileInView={{ clipPath: 'inset(0% 0% 0% 0%)', scale: 1 }}
+                          viewport={{ once: true, amount: 0.2 }}
+                          transition={{ duration: 0.8, ease: 'easeOut' }}
+                          className="h-full w-full"
+                        >
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                            onError={(e) => {
+                              const parent = (e.target as HTMLElement).parentElement;
+                              if (parent) {
+                                parent.innerHTML = `
+                                  <div class="w-full h-full flex flex-col items-center justify-center bg-[#181818] p-6 text-center">
+                                    <span class="text-xs font-mono font-bold text-[#c9a84c] mb-2">${project.sector}</span>
+                                    <span class="text-lg font-bold text-white">${project.title}</span>
+                                  </div>
+                                `;
+                              }
+                            }}
+                          />
+                        </motion.div>
                         {/* Metric Callout Overlay */}
                         <div className="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#0a0a0a]/92 backdrop-blur-md border border-[#c9a84c]/30 rounded-xl p-3.5 flex items-center gap-3">
                           <div className="text-2xl font-black text-[#c9a84c] tracking-tight tabular-nums">
@@ -79,8 +87,14 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                       </div>
                     </div>
 
-                    {/* Narrative & Details */}
-                    <div className={`lg:col-span-6 flex flex-col justify-between ${isReversed ? 'lg:order-1' : ''}`}>
+                    {/* Narrative & Details — slides in from its side as the card enters view */}
+                    <motion.div
+                      initial={shouldReduceMotion ? false : { opacity: 0, x: isReversed ? -30 : 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.6, ease: 'easeOut' }}
+                      className={`lg:col-span-6 flex flex-col justify-between ${isReversed ? 'lg:order-1' : ''}`}
+                    >
                       <div>
                         {/* Metadata line: No pills, unboxed clean text with separators */}
                         <div className="flex items-center gap-2 text-xs text-[#888888] font-medium mb-3">
@@ -144,7 +158,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                           <ChevronRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </Card>
               </Reveal>

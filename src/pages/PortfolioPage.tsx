@@ -6,6 +6,8 @@ import { ArrowRight, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Reveal } from '../components/motion/Reveal';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 
 interface PortfolioPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -13,6 +15,7 @@ interface PortfolioPageProps {
 
 export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation }) => {
   const [selectedSector, setSelectedSector] = useState<string>('all');
+  const shouldReduceMotion = useReducedMotion();
 
   const sectors = ['all', 'SaaS / Enterprise', 'Industrial Logistics', 'FinTech / Core Banking'];
 
@@ -25,6 +28,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* Portfolio Hero */}
       <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+        <PageHeroBackground imageSrc="/about3.webp" position="center 42%" />
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -36,39 +40,77 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
           </Reveal>
 
           {/* Sector Filters */}
-          <Reveal delay={0.1}>
-            <div className="flex flex-wrap items-center gap-2 mt-8">
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.4, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap items-center gap-2 mt-8"
+          >
               {sectors.map((sec) => (
-                <button
+                <motion.button
                   key={sec}
+                  type="button"
+                  aria-pressed={selectedSector === sec}
                   onClick={() => setSelectedSector(sec)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer ${
+                  whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className={`relative isolate overflow-hidden rounded-xl border px-4 py-2 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer ${
                     selectedSector === sec
-                      ? 'bg-[#c9a84c] text-black shadow-md'
-                      : 'bg-[#141414] text-[#aaaaaa] hover:text-white border border-[#242424]'
+                      ? 'border-[#c9a84c] text-black shadow-md shadow-[#c9a84c]/10'
+                      : 'border-[#242424] bg-[#141414] text-[#aaaaaa] hover:border-[#c9a84c]/40 hover:text-white'
                   }`}
                 >
-                  {sec === 'all' ? 'All Engagements' : sec}
-                </button>
+                  {selectedSector === sec && (
+                    <motion.span
+                      layoutId="portfolio-sector-indicator"
+                      className="absolute inset-0 z-0 rounded-xl bg-[#c9a84c]"
+                      transition={{ type: 'spring', stiffness: 360, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {sec === 'all' ? 'All Engagements' : sec}
+                  </span>
+                </motion.button>
               ))}
-            </div>
-          </Reveal>
+          </motion.div>
         </div>
       </section>
 
       {/* Projects Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          {filteredProjects.map((project, index) => (
-            <Reveal key={project.id} delay={index * 0.08}>
-              <Card
-                variant="card"
-                padding="lg"
-                className="overflow-hidden hover:border-[#c9a84c]/40 transition-colors duration-300"
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                layout={!shouldReduceMotion}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 36, scale: 0.985 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -18, scale: 0.985 }}
+                viewport={{ once: true, amount: 0.12 }}
+                transition={{
+                  duration: 0.45,
+                  delay: shouldReduceMotion ? 0 : Math.min(index, 4) * 0.06,
+                  ease: [0.16, 1, 0.3, 1],
+                  layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+                }}
               >
+                <Card
+                  variant="card"
+                  padding="lg"
+                  className="overflow-hidden hover:border-[#c9a84c]/40 transition-colors duration-300"
+                >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                   {/* Media Image */}
-                  <div className="lg:col-span-6 w-full">
+                  <motion.div
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: -22 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="lg:col-span-6 w-full"
+                  >
                     <div className="relative rounded-xl overflow-hidden aspect-[16/10] bg-[#1a1a1a] border border-[#2a2a2a] group">
                       <img
                         src={project.image}
@@ -88,19 +130,31 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                           }
                         }}
                       />
-                      <div className="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#0a0a0a]/92 backdrop-blur-md border border-[#c9a84c]/30 rounded-xl p-3.5 flex items-center gap-3">
+                      <motion.div
+                        initial={shouldReduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.35, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                        className="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#0a0a0a]/92 backdrop-blur-md border border-[#c9a84c]/30 rounded-xl p-3.5 flex items-center gap-3"
+                      >
                         <div className="text-2xl font-black text-[#c9a84c] tracking-tight tabular-nums">
                           {project.metricHighlight}
                         </div>
                         <div className="text-xs font-medium text-[#cccccc] leading-tight max-w-[180px]">
                           {project.metricLabel}
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
-                  </div>
+                  </motion.div>
 
                   {/* Content */}
-                  <div className="lg:col-span-6 flex flex-col justify-between">
+                  <motion.div
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: 22 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.55, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
+                    className="lg:col-span-6 flex flex-col justify-between"
+                  >
                     <div>
                       <div className="flex items-center gap-2 text-xs text-[#888888] font-medium mb-3">
                         <span>{project.client}</span>
@@ -162,11 +216,12 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                         <ChevronRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-              </Card>
-            </Reveal>
-          ))}
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </section>
 

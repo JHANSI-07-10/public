@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Phone, MessageSquare, Mail, CheckCircle2, Clock } from 'lucide-react';
 import { COMPANY_DATA, CORE_SERVICES } from '../data/content';
 import { AnimatedButton } from './motion/AnimatedButton';
+import { MagneticHover } from './motion/MagneticHover';
 import { Reveal } from './motion/Reveal';
 import { FormFeedback } from './motion/FormFeedback';
 import { submitContactInquiry } from '../config/api';
@@ -198,7 +199,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="e.g. Alex Morgan"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
                       <div>
@@ -211,7 +212,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="alex@company.com"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
                     </div>
@@ -226,7 +227,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="+91 or country code"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
                       <div>
@@ -236,7 +237,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                         <select
                           value={formData.service}
                           onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         >
                           {CORE_SERVICES.map((s) => (
                             <option key={s.id} value={s.title} className="bg-[#161616]">
@@ -260,21 +261,22 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder="Briefly describe what you're building, target timelines, or technical challenges..."
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors resize-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300 resize-none"
                       />
                     </div>
 
-                    <AnimatedButton
-                      type="submit"
-                      disabled={isSubmitting}
-                      variant="primary"
-                      size="lg"
-                      fullWidth
-                      icon={<ArrowRight className="w-4 h-4" />}
-                      className="mt-2"
-                    >
-                      {isSubmitting ? 'Transmitting Request...' : 'Submit Consultation Request'}
-                    </AnimatedButton>
+                    <MagneticHover className="mt-2 block w-full">
+                      <AnimatedButton
+                        type="submit"
+                        disabled={isSubmitting}
+                        variant="primary"
+                        size="lg"
+                        fullWidth
+                        icon={<ArrowRight className="w-4 h-4" />}
+                      >
+                        {isSubmitting ? 'Transmitting Request...' : 'Submit Consultation Request'}
+                      </AnimatedButton>
+                    </MagneticHover>
                   </form>
                 )}
               </div>
