@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { VERIFIED_TESTIMONIALS } from '../data/content';
@@ -9,27 +9,67 @@ import { Reveal } from './motion/Reveal';
 import { InteractiveCard } from './motion/InteractiveCard';
 import { motionTokens } from './motion/motionTokens';
 
+const AUTO_SCROLL_INTERVAL = 4500;
+const RESUME_DELAY = 6000;
+
 export const TestimonialsSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const prev = () => {
-    setCurrentIndex((prevIdx) => (prevIdx === 0 ? VERIFIED_TESTIMONIALS.length - 1 : prevIdx - 1));
+  // Auto-scroll: running unless the user is interacting (hover / touch / manual nav)
+  const [isPaused, setIsPaused] = useState(false);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearResumeTimer = () => {
+    if (resumeTimerRef.current) {
+      clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = null;
+    }
   };
 
-  const next = () => {
-    setCurrentIndex((prevIdx) => (prevIdx === 0 ? VERIFIED_TESTIMONIALS.length - 1 : (prevIdx + 1) % VERIFIED_TESTIMONIALS.length));
+  const pauseAutoScroll = useCallback(() => {
+    clearResumeTimer();
+    setIsPaused(true);
+  }, []);
+
+  const scheduleResume = useCallback(() => {
+    clearResumeTimer();
+    resumeTimerRef.current = setTimeout(() => setIsPaused(false), RESUME_DELAY);
+  }, []);
+
+  useEffect(() => () => clearResumeTimer(), []);
+
+  // Auto-advance until paused (respects reduced motion)
+  useEffect(() => {
+    if (isPaused || shouldReduceMotion) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((idx) => (idx + 1) % VERIFIED_TESTIMONIALS.length);
+    }, AUTO_SCROLL_INTERVAL);
+    return () => clearInterval(timer);
+  }, [isPaused, shouldReduceMotion]);
+
+  const goTo = (idx: number) => {
+    setCurrentIndex(idx);
+    // Manual navigation pauses the ticker, then resumes after idle
+    setIsPaused(true);
+    scheduleResume();
   };
+
+  const prev = () => goTo((currentIndex - 1 + VERIFIED_TESTIMONIALS.length) % VERIFIED_TESTIMONIALS.length);
+
+  const next = () => goTo((currentIndex + 1) % VERIFIED_TESTIMONIALS.length);
 
   return (
     <section id="testimonials" className="py-24 bg-[#0d0d0d] border-t border-[#1f1f1f] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading & Controls */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col items-center mb-16 gap-6">
             <SectionHeader
               eyebrow="Executive Endorsements"
               title="Trusted by Founders, CTOs, and Product Leaders."
+              align="center"
               className="mb-0"
             />
 
@@ -54,7 +94,15 @@ export const TestimonialsSection: React.FC = () => {
         </Reveal>
 
         {/* Carousel / Grid Display with short restrained transition */}
-        <div className="relative">
+        <div
+          className="relative"
+          onMouseEnter={pauseAutoScroll}
+          onMouseLeave={scheduleResume}
+          onTouchStart={pauseAutoScroll}
+          onTouchEnd={scheduleResume}
+          onFocusCapture={pauseAutoScroll}
+          onBlurCapture={scheduleResume}
+        >
           {/* Ambient gold glow pulsing softly behind the carousel */}
           {!shouldReduceMotion && (
             <motion.div
@@ -71,24 +119,40 @@ export const TestimonialsSection: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0, x: -12 }}
               transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
-              className="relative grid grid-cols-1 md:grid-cols-3 gap-6"
+              className="relative mx-auto grid max-w-3xl grid-cols-1 [grid-template-areas:'stack'] px-1 pb-16"
             >
               {[0, 1, 2].map((offset) => {
                 const index = (currentIndex + offset) % VERIFIED_TESTIMONIALS.length;
                 const item = VERIFIED_TESTIMONIALS[index];
+                const stackPosition = [
+                  '',
+                  'translate-x-5 translate-y-7 sm:translate-x-8 sm:translate-y-8',
+                  'translate-x-10 translate-y-14 sm:translate-x-16 sm:translate-y-16',
+                ][offset];
+                const cardWidth = offset === 0 ? 'w-full' : 'w-[calc(100%-2.5rem)] sm:w-[calc(100%-4rem)]';
+                const isHighlighted = offset === 0 || hoveredCard === offset;
 
                 return (
                   <motion.div
                     key={item.id}
-                    initial={shouldReduceMotion ? false : { opacity: 0, x: 24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: offset * 0.1, ease: 'easeOut' }}
-                    className="h-full"
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={shouldReduceMotion ? undefined : { y: -32, x: -8 }}
+                    transition={{ duration: 0.45, delay: offset * 0.08, ease: motionTokens.ease.snappy }}
+                    onHoverStart={() => setHoveredCard(offset)}
+                    onHoverEnd={() => setHoveredCard(null)}
+                    onFocus={() => setHoveredCard(offset)}
+                    onBlur={() => setHoveredCard(null)}
+                    style={{ zIndex: hoveredCard === offset ? 10 : 3 - offset }}
+                    className={`[grid-area:stack] ${cardWidth} ${stackPosition} transition-[filter,opacity] duration-700 ${
+                      isHighlighted ? 'grayscale-0 opacity-100' : 'grayscale opacity-75 hover:grayscale-0 hover:opacity-100'
+                    }`}
                   >
                     <InteractiveCard
                       variant="card"
                       padding="lg"
-                      className="flex flex-col justify-between h-full"
+                      hoverable={false}
+                      className="flex min-h-[300px] flex-col justify-between border-[#2a2a2a] bg-[linear-gradient(145deg,#1b1b1b_0%,#111111_72%)] shadow-[0_24px_60px_-28px_rgba(0,0,0,0.95)]"
                     >
                   <div>
                     {/* Rating Stars & Quote Icon */}
@@ -103,7 +167,7 @@ export const TestimonialsSection: React.FC = () => {
 
                     {/* Testimonial Quote */}
                     <p className="text-sm sm:text-base text-[#cccccc] leading-relaxed mb-8 italic">
-                      "{item.content}"
+                      &ldquo;{item.content}&rdquo;
                     </p>
                   </div>
 
@@ -134,7 +198,7 @@ export const TestimonialsSection: React.FC = () => {
           {VERIFIED_TESTIMONIALS.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => setCurrentIndex(idx)}
+              onClick={() => goTo(idx)}
               className={`h-1.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer ${
                 currentIndex === idx ? 'w-8 bg-[#c9a84c]' : 'w-2 bg-[#2a2a2a] hover:bg-[#444444]'
               }`}

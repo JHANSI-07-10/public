@@ -11,6 +11,18 @@ import { AnimatedButton } from './motion/AnimatedButton';
 import { Reveal } from './motion/Reveal';
 import { motionTokens } from './motion/motionTokens';
 
+// The clip sweep must live on a CHILD of the whileInView element: Chrome's
+// IntersectionObserver treats an element clipped to inset(…100%…) as 0% visible,
+// so animating clipPath on the observed element itself would never trigger.
+const maskRevealVariants = {
+  hidden: { clipPath: 'inset(0 0 100% 0)', scale: 1.1 },
+  shown: {
+    clipPath: 'inset(0% 0% 0% 0%)',
+    scale: 1,
+    transition: { duration: 0.8, ease: 'easeOut' as const },
+  },
+};
+
 interface FeaturedProjectsProps {
   onOpenConsultation: () => void;
 }
@@ -24,15 +36,14 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="mb-16">
             <SectionHeader
               eyebrow="Selected Engagements & Evidence"
               title="Measurable Architectural Impact for Industry Leaders."
+              subtitle="Every deployment is measured by business outcomes: conversion velocity, operational error reduction, and zero-downtime reliability."
+              align="center"
               className="mb-0"
             />
-            <p className="text-sm text-[#aaaaaa] max-w-md leading-relaxed pb-2">
-              Every deployment is measured by business outcomes: conversion velocity, operational error reduction, and zero-downtime reliability.
-            </p>
           </div>
         </Reveal>
 
@@ -50,14 +61,13 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                   <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                     {/* Visual Frame — mask reveal: clip sweeps down while the image settles 1.1 → 1.0 */}
                     <div className={`lg:col-span-6 w-full ${isReversed ? 'lg:order-2' : ''}`}>
-                      <div className="relative rounded-xl overflow-hidden aspect-[16/10] bg-[#1a1a1a] border border-[#2a2a2a] group">
-                        <motion.div
-                          initial={shouldReduceMotion ? false : { clipPath: 'inset(0 0 100% 0)', scale: 1.1 }}
-                          whileInView={{ clipPath: 'inset(0% 0% 0% 0%)', scale: 1 }}
-                          viewport={{ once: true, amount: 0.2 }}
-                          transition={{ duration: 0.8, ease: 'easeOut' }}
-                          className="h-full w-full"
-                        >
+                      <motion.div
+                        initial={shouldReduceMotion ? false : 'hidden'}
+                        whileInView="shown"
+                        viewport={{ once: true, amount: 0.2 }}
+                        className="relative rounded-xl overflow-hidden aspect-[16/10] bg-[#1a1a1a] border border-[#2a2a2a] group"
+                      >
+                        <motion.div variants={maskRevealVariants} className="h-full w-full">
                           <img
                             src={project.image}
                             alt={project.title}
@@ -86,7 +96,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                             {project.metricLabel}
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
 
                     {/* Narrative & Details — slides in from its side as the card enters view */}

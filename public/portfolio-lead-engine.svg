@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Lead-Engine conversion funnel visualization">
+  <defs>
+    <radialGradient id="bg1" cx="62%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#161310"/>
+      <stop offset="55%" stop-color="#0d0c0a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <linearGradient id="gold1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3d57b"/>
+      <stop offset="100%" stop-color="#a98428"/>
+    </linearGradient>
+    <linearGradient id="card1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1a16"/>
+      <stop offset="100%" stop-color="#131211"/>
+    </linearGradient>
+    <linearGradient id="rise1" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#f3d57b"/>
+    </linearGradient>
+    <filter id="glow1" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft1" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <pattern id="grid1" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#1e1c18" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg1)"/>
+  <rect width="1600" height="900" fill="url(#grid1)" opacity="0.5"/>
+  <ellipse cx="980" cy="300" rx="360" ry="220" fill="#c9a84c" opacity="0.07" filter="url(#soft1)"/>
+
+  <!-- perspective floor -->
+  <path d="M0 760 L1600 640 L1600 900 L0 900 Z" fill="#0e0d0b"/>
+  <g stroke="#221f19" stroke-width="1" opacity="0.8">
+    <path d="M0 780 L1600 668"/><path d="M0 820 L1600 716"/><path d="M0 866 L1600 770"/>
+    <path d="M200 900 L360 654"/><path d="M520 900 L640 646"/><path d="M840 900 L916 640"/><path d="M1160 900 L1192 636"/>
+  </g>
+
+  <!-- incoming lead nodes (left) -->
+  <g opacity="0.9">
+    <circle cx="150" cy="250" r="9" fill="#c9a84c" filter="url(#glow1)"/>
+    <circle cx="235" cy="360" r="6" fill="#8f7a3c"/>
+    <circle cx="170" cy="470" r="7" fill="#c9a84c" opacity="0.8"/>
+    <circle cx="260" cy="560" r="5" fill="#6f5d2e"/>
+    <g stroke="#c9a84c" stroke-width="1.6" fill="none" opacity="0.5">
+      <path d="M150 250 C 340 260, 400 330, 505 380"/>
+      <path d="M235 360 C 360 370, 420 385, 505 405"/>
+      <path d="M170 470 C 330 480, 410 445, 505 430"/>
+      <path d="M260 560 C 380 545, 440 490, 505 455"/>
+    </g>
+  </g>
+
+  <!-- conversion funnel -->
+  <g filter="url(#glow1)">
+    <path d="M520 300 L1060 330 L1060 388 L520 428 Z" fill="url(#gold1)" opacity="0.95"/>
+    <path d="M545 452 L1035 425 L1035 483 L565 505 Z" fill="url(#gold1)" opacity="0.72"/>
+    <path d="M585 528 L1010 498 L1010 552 L615 575 Z" fill="url(#gold1)" opacity="0.5"/>
+    <path d="M640 596 L985 568 L985 614 L672 634 Z" fill="url(#gold1)" opacity="0.32"/>
+  </g>
+  <g fill="none" stroke="#f3d57b" stroke-width="2" opacity="0.85">
+    <path d="M520 300 L1060 330"/>
+  </g>
+
+  <!-- qualified lead output -->
+  <path d="M1060 470 C 1210 470, 1260 400, 1350 330" fill="none" stroke="url(#rise1)" stroke-width="5" filter="url(#glow1)"/>
+  <circle cx="1362" cy="320" r="16" fill="#f3d57b" filter="url(#glow1)"/>
+  <circle cx="1362" cy="320" r="30" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="1362" cy="320" r="48" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.3"/>
+
+  <!-- floating dashboard card: rising bars -->
+  <g transform="rotate(-4 1290 590)">
+    <rect x="1160" y="480" width="290" height="210" rx="16" fill="url(#card1)" stroke="#2e2a22" stroke-width="1.5"/>
+    <rect x="1188" y="506" width="120" height="10" rx="5" fill="#c9a84c" opacity="0.75"/>
+    <rect x="1188" y="528" width="70" height="8" rx="4" fill="#4a443a"/>
+    <g fill="url(#gold1)">
+      <rect x="1196" y="612" width="26" height="48" rx="4" opacity="0.45"/>
+      <rect x="1236" y="592" width="26" height="68" rx="4" opacity="0.6"/>
+      <rect x="1276" y="566" width="26" height="94" rx="4" opacity="0.78"/>
+      <rect x="1316" y="536" width="26" height="124" rx="4" opacity="0.92"/>
+      <rect x="1356" y="556" width="26" height="104" rx="4" opacity="0.7"/>
+    </g>
+    <path d="M1196 600 L1250 574 L1290 548 L1330 512 L1382 530" fill="none" stroke="#f3d57b" stroke-width="2.5" opacity="0.9"/>
+  </g>
+
+  <!-- small floating chip card (top) -->
+  <g transform="rotate(3 640 190)">
+    <rect x="520" y="130" width="240" height="120" rx="14" fill="url(#card1)" stroke="#2e2a22" stroke-width="1.5"/>
+    <circle cx="560" cy="170" r="14" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+    <path d="M553 170 l5 6 l11 -13" stroke="#f3d57b" stroke-width="2.5" fill="none"/>
+    <rect x="592" y="160" width="140" height="9" rx="4.5" fill="#c9a84c" opacity="0.65"/>
+    <rect x="592" y="180" width="96" height="8" rx="4" fill="#43403a"/>
+    <path d="M548 222 h180" stroke="#26231e" stroke-width="1.5"/>
+    <path d="M548 222 l46 -18 l40 10 l52 -22 l42 12" fill="none" stroke="#8f7a3c" stroke-width="2"/>
+  </g>
+
+  <!-- ambient particles -->
+  <g fill="#c9a84c">
+    <circle cx="420" cy="180" r="3" opacity="0.7"/><circle cx="760" cy="120" r="2.5" opacity="0.5"/>
+    <circle cx="1120" cy="180" r="3.5" opacity="0.65"/><circle cx="1480" cy="260" r="2.5" opacity="0.5"/>
+    <circle cx="90" cy="640" r="3" opacity="0.55"/><circle cx="330" cy="700" r="2" opacity="0.4"/>
+    <circle cx="880" cy="240" r="2" opacity="0.5"/><circle cx="1520" cy="620" r="3" opacity="0.6"/>
+  </g>
+  <rect width="1600" height="900" fill="none"/>
+</svg>

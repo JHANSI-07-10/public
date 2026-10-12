@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Real-time operational logistics hub visualization">
+  <defs>
+    <radialGradient id="bg2" cx="50%" cy="45%" r="80%">
+      <stop offset="0%" stop-color="#141210"/>
+      <stop offset="60%" stop-color="#0c0b0a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <linearGradient id="gold2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a98428"/>
+      <stop offset="50%" stop-color="#f3d57b"/>
+      <stop offset="100%" stop-color="#a98428"/>
+    </linearGradient>
+    <linearGradient id="panel2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d1a15"/>
+      <stop offset="100%" stop-color="#121110"/>
+    </linearGradient>
+    <filter id="glow2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg2)"/>
+
+  <!-- dotted terrain grid -->
+  <g fill="#242019">
+    <g>
+      <circle cx="120" cy="700" r="3"/><circle cx="240" cy="700" r="3"/><circle cx="360" cy="700" r="3"/><circle cx="480" cy="700" r="3"/><circle cx="600" cy="700" r="3"/><circle cx="720" cy="700" r="3"/><circle cx="840" cy="700" r="3"/><circle cx="960" cy="700" r="3"/><circle cx="1080" cy="700" r="3"/><circle cx="1200" cy="700" r="3"/><circle cx="1320" cy="700" r="3"/><circle cx="1440" cy="700" r="3"/>
+      <circle cx="180" cy="760" r="2.5"/><circle cx="300" cy="760" r="2.5"/><circle cx="420" cy="760" r="2.5"/><circle cx="540" cy="760" r="2.5"/><circle cx="660" cy="760" r="2.5"/><circle cx="780" cy="760" r="2.5"/><circle cx="900" cy="760" r="2.5"/><circle cx="1020" cy="760" r="2.5"/><circle cx="1140" cy="760" r="2.5"/><circle cx="1260" cy="760" r="2.5"/><circle cx="1380" cy="760" r="2.5"/>
+      <circle cx="240" cy="820" r="2"/><circle cx="360" cy="820" r="2"/><circle cx="480" cy="820" r="2"/><circle cx="600" cy="820" r="2"/><circle cx="720" cy="820" r="2"/><circle cx="840" cy="820" r="2"/><circle cx="960" cy="820" r="2"/><circle cx="1080" cy="820" r="2"/><circle cx="1200" cy="820" r="2"/><circle cx="1320" cy="820" r="2"/>
+    </g>
+    <g opacity="0.7">
+      <circle cx="120" cy="140" r="2.5"/><circle cx="280" cy="110" r="2"/><circle cx="440" cy="90" r="2.5"/><circle cx="600" cy="80" r="2"/><circle cx="760" cy="86" r="2.5"/><circle cx="920" cy="100" r="2"/><circle cx="1080" cy="120" r="2.5"/><circle cx="1240" cy="146" r="2"/><circle cx="1400" cy="170" r="2.5"/>
+    </g>
+  </g>
+  <ellipse cx="800" cy="430" rx="430" ry="250" fill="#c9a84c" opacity="0.06" filter="url(#soft2)"/>
+
+  <!-- route arcs -->
+  <g fill="none" stroke="url(#gold2)" stroke-width="2.4" opacity="0.85">
+    <path d="M220 560 C 420 300, 620 300, 800 420"/>
+    <path d="M800 420 C 980 300, 1180 320, 1360 520"/>
+    <path d="M220 560 C 500 640, 1060 650, 1360 520"/>
+    <path d="M520 260 C 640 330, 720 370, 800 420"/>
+    <path d="M800 420 C 900 340, 1020 260, 1140 230"/>
+    <path d="M520 260 C 720 190, 940 190, 1140 230"/>
+  </g>
+  <g fill="none" stroke="#f3d57b" stroke-width="3" stroke-dasharray="4 26" opacity="0.9" filter="url(#glow2)">
+    <path d="M220 560 C 420 300, 620 300, 800 420"/>
+    <path d="M800 420 C 980 300, 1180 320, 1360 520"/>
+    <path d="M220 560 C 500 640, 1060 650, 1360 520"/>
+  </g>
+
+  <!-- hub nodes -->
+  <g>
+    <g transform="translate(800 420)">
+      <circle r="16" fill="#f3d57b" filter="url(#glow2)"/>
+      <circle r="34" fill="none" stroke="#c9a84c" stroke-width="1.6" opacity="0.7"/>
+      <circle r="58" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+      <circle r="84" fill="none" stroke="#c9a84c" stroke-width="0.7" opacity="0.2"/>
+    </g>
+    <g fill="#c9a84c" filter="url(#glow2)">
+      <circle cx="220" cy="560" r="9"/><circle cx="1360" cy="520" r="9"/>
+      <circle cx="520" cy="260" r="7"/><circle cx="1140" cy="230" r="7"/>
+    </g>
+    <g fill="none" stroke="#8f7a3c" stroke-width="1.2" opacity="0.7">
+      <circle cx="220" cy="560" r="22"/><circle cx="1360" cy="520" r="22"/>
+      <circle cx="520" cy="260" r="17"/><circle cx="1140" cy="230" r="17"/>
+    </g>
+    <g fill="#6f5d2e">
+      <circle cx="420" cy="440" r="4"/><circle cx="640" cy="560" r="4"/><circle cx="980" cy="540" r="4"/><circle cx="1220" cy="380" r="4"/>
+    </g>
+  </g>
+
+  <!-- telemetry panel left -->
+  <g transform="rotate(-3 300 330)">
+    <rect x="150" y="220" width="300" height="180" rx="14" fill="url(#panel2)" stroke="#2e2a22" stroke-width="1.5"/>
+    <circle cx="186" cy="256" r="7" fill="#22c55e"/>
+    <rect x="206" y="250" width="150" height="9" rx="4.5" fill="#c9a84c" opacity="0.7"/>
+    <polyline points="176,340 216,318 256,332 296,300 336,314 376,286 416,296" fill="none" stroke="#f3d57b" stroke-width="2.6"/>
+    <g stroke="#26231e" stroke-width="1">
+      <path d="M176 366 h248"/><path d="M176 300 h248" opacity="0.5"/>
+    </g>
+    <g fill="#8f7a3c">
+      <rect x="176" y="372" width="42" height="8" rx="4"/><rect x="230" y="372" width="70" height="8" rx="4"/><rect x="312" y="372" width="34" height="8" rx="4" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- gauge panel right -->
+  <g transform="rotate(3 1290 300)">
+    <rect x="1130" y="190" width="300" height="200" rx="14" fill="url(#panel2)" stroke="#2e2a22" stroke-width="1.5"/>
+    <g transform="translate(1210 300)">
+      <path d="M-46 0 A46 46 0 0 1 46 0" fill="none" stroke="#2e2a22" stroke-width="9" stroke-linecap="round"/>
+      <path d="M-46 0 A46 46 0 0 1 30 -35" fill="none" stroke="#c9a84c" stroke-width="9" stroke-linecap="round" filter="url(#glow2)"/>
+      <line x1="0" y1="0" x2="22" y2="-26" stroke="#f3d57b" stroke-width="3" stroke-linecap="round"/>
+      <circle r="4" fill="#f3d57b"/>
+    </g>
+    <g transform="translate(1340 300)">
+      <path d="M-36 0 A36 36 0 0 1 36 0" fill="none" stroke="#2e2a22" stroke-width="8" stroke-linecap="round"/>
+      <path d="M-36 0 A36 36 0 0 1 0 -36" fill="none" stroke="#8f7a3c" stroke-width="8" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="-14" y2="-20" stroke="#c9a84c" stroke-width="2.6" stroke-linecap="round"/>
+      <circle r="3.4" fill="#c9a84c"/>
+    </g>
+    <rect x="1160" y="222" width="120" height="9" rx="4.5" fill="#c9a84c" opacity="0.7"/>
+    <rect x="1160" y="352" width="240" height="8" rx="4" fill="#3a362e"/>
+    <rect x="1160" y="368" width="150" height="8" rx="4" fill="#2c2925"/>
+  </g>
+
+  <!-- moving markers on routes -->
+  <g fill="#f3d57b" filter="url(#glow2)">
+    <circle cx="430" cy="392" r="5"/><circle cx="1010" cy="368" r="5"/><circle cx="700" cy="622" r="4"/><circle cx="1120" cy="620" r="4"/>
+  </g>
+
+  <!-- ambient particles -->
+  <g fill="#c9a84c" opacity="0.6">
+    <circle cx="150" cy="120" r="2.5"/><circle cx="1480" cy="120" r="2.5"/><circle cx="80" cy="420" r="2"/><circle cx="1540" cy="380" r="2"/><circle cx="820" cy="150" r="2.5"/>
+  </g>
+</svg>

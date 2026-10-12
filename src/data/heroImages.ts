@@ -10,7 +10,7 @@ export interface TiltedGridImage {
 export const VPD_HERO_GRID_IMAGES: TiltedGridImage[] = [
   {
     id: "lead-engine-funnel",
-    src: "https://res.cloudinary.com/deaku7v6t/image/upload/v1778927949/vpd_tech_uploads/hehksmjc37qfuxe6dyvl.webp",
+    src: "/portfolio-lead-engine.svg",
     alt: "Lead-Engine Architecture & Conversion Dashboard",
     title: "Lead-Engine Analytics",
     category: "Web Application",
@@ -18,7 +18,7 @@ export const VPD_HERO_GRID_IMAGES: TiltedGridImage[] = [
   },
   {
     id: "operational-hub-dispatch",
-    src: "https://res.cloudinary.com/deaku7v6t/image/upload/v1778927890/vpd_tech_uploads/uom9zvwhujynuiwywsxj.webp",
+    src: "/portfolio-operational-hub.svg",
     alt: "Real-Time Operational Hub & WebSocket Stream",
     title: "Real-Time Telemetry Hub",
     category: "Cloud Infrastructure",
@@ -26,7 +26,7 @@ export const VPD_HERO_GRID_IMAGES: TiltedGridImage[] = [
   },
   {
     id: "financial-protocol-core",
-    src: "https://res.cloudinary.com/deaku7v6t/image/upload/v1778927682/vpd_tech_uploads/mycpmmjtvjhovhdsswxa.webp",
+    src: "/portfolio-financial-protocol.svg",
     alt: "Financial Protocol System with Encryption Architecture",
     title: "Financial Protocol Core",
     category: "Enterprise Security",

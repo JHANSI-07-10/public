@@ -18,6 +18,7 @@ export const DifferentiatorsSection: React.FC = () => {
             eyebrow="Engineering Capabilities & Standards"
             title="Why Growing Enterprises Partner with VPD Technologies."
             subtitle="We deliver full-lifecycle engineering excellence from day one. Every architectural decision is grounded in measurable velocity, resilience, and business growth."
+            align="center"
           />
         </Reveal>
 

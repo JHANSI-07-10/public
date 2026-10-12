@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Financial protocol secure core banking visualization">
+  <defs>
+    <radialGradient id="bg3" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#17130d"/>
+      <stop offset="55%" stop-color="#0d0c0a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <linearGradient id="gold3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3d57b"/>
+      <stop offset="100%" stop-color="#a98428"/>
+    </linearGradient>
+    <linearGradient id="hex3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3d57b"/>
+      <stop offset="100%" stop-color="#8f6c22"/>
+    </linearGradient>
+    <linearGradient id="rain3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#e8c96e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow3" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft3" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <pattern id="circuit3" width="120" height="120" patternUnits="userSpaceOnUse">
+      <path d="M0 60 H44 L60 44 H120 M60 44 V0 M60 44 V120" fill="none" stroke="#1d1a15" stroke-width="1.4"/>
+      <circle cx="60" cy="44" r="3" fill="#26221b"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg3)"/>
+  <rect width="1600" height="900" fill="url(#circuit3)" opacity="0.7"/>
+  <ellipse cx="800" cy="450" rx="380" ry="300" fill="#c9a84c" opacity="0.09" filter="url(#soft3)"/>
+
+  <!-- transaction ledger rain -->
+  <g stroke="url(#rain3)" stroke-width="3" opacity="0.8">
+    <line x1="120" y1="80" x2="120" y2="380"/><line x1="200" y1="260" x2="200" y2="620"/>
+    <line x1="290" y1="40" x2="290" y2="300"/><line x1="360" y1="420" x2="360" y2="800"/>
+    <line x1="1250" y1="120" x2="1250" y2="460"/><line x1="1330" y1="320" x2="1330" y2="720"/>
+    <line x1="1420" y1="60" x2="1420" y2="360"/><line x1="1500" y1="380" x2="1500" y2="760"/>
+  </g>
+  <g fill="#f3d57b" opacity="0.75">
+    <rect x="116" y="200" width="8" height="8" rx="2"/><rect x="196" y="480" width="8" height="8" rx="2"/>
+    <rect x="286" y="160" width="8" height="8" rx="2"/><rect x="356" y="640" width="8" height="8" rx="2"/>
+    <rect x="1246" y="280" width="8" height="8" rx="2"/><rect x="1326" y="540" width="8" height="8" rx="2"/>
+    <rect x="1416" y="180" width="8" height="8" rx="2"/><rect x="1496" y="600" width="8" height="8" rx="2"/>
+  </g>
+
+  <!-- encrypted block streams into core -->
+  <g opacity="0.95">
+    <g fill="none" stroke="#8f7a3c" stroke-width="1.6">
+      <path d="M420 240 C 560 280, 620 340, 690 410"/>
+      <path d="M420 660 C 560 620, 620 560, 690 490"/>
+      <path d="M1180 240 C 1040 280, 980 340, 910 410"/>
+      <path d="M1180 660 C 1040 620, 980 560, 910 490"/>
+    </g>
+    <g fill="url(#gold3)" filter="url(#glow3)">
+      <rect x="400" y="222" width="40" height="40" rx="8" transform="rotate(45 420 242)" opacity="0.9"/>
+      <rect x="400" y="642" width="40" height="40" rx="8" transform="rotate(45 420 662)" opacity="0.75"/>
+      <rect x="1160" y="222" width="40" height="40" rx="8" transform="rotate(45 1180 242)" opacity="0.9"/>
+      <rect x="1160" y="642" width="40" height="40" rx="8" transform="rotate(45 1180 662)" opacity="0.75"/>
+    </g>
+    <g fill="#c9a84c" opacity="0.8">
+      <rect x="560" y="308" width="22" height="22" rx="5" transform="rotate(45 571 319)"/>
+      <rect x="620" y="356" width="16" height="16" rx="4" transform="rotate(45 628 364)"/>
+      <rect x="560" y="574" width="22" height="22" rx="5" transform="rotate(45 571 585)"/>
+      <rect x="620" y="528" width="16" height="16" rx="4" transform="rotate(45 628 536)"/>
+      <rect x="1018" y="308" width="22" height="22" rx="5" transform="rotate(45 1029 319)"/>
+      <rect x="964" y="356" width="16" height="16" rx="4" transform="rotate(45 972 364)"/>
+      <rect x="1018" y="574" width="22" height="22" rx="5" transform="rotate(45 1029 585)"/>
+      <rect x="964" y="528" width="16" height="16" rx="4" transform="rotate(45 972 536)"/>
+    </g>
+  </g>
+
+  <!-- concentric security rings -->
+  <g transform="translate(800 450)">
+    <circle r="290" fill="none" stroke="#26221b" stroke-width="1.4"/>
+    <circle r="290" fill="none" stroke="#c9a84c" stroke-width="2" stroke-dasharray="2 22" opacity="0.8"/>
+    <circle r="236" fill="none" stroke="#33301f" stroke-width="1.2"/>
+    <circle r="236" fill="none" stroke="#8f7a3c" stroke-width="2.4" stroke-dasharray="60 300" opacity="0.9">
+    </circle>
+    <circle r="182" fill="#0f0e0c" stroke="#2e2a22" stroke-width="1.6"/>
+    <g stroke="#c9a84c" stroke-width="1.4" opacity="0.55">
+      <line x1="0" y1="-290" x2="0" y2="-244"/><line x1="0" y1="290" x2="0" y2="244"/>
+      <line x1="-290" y1="0" x2="-244" y2="0"/><line x1="290" y1="0" x2="244" y2="0"/>
+      <line x1="-205" y1="-205" x2="-172" y2="-172"/><line x1="205" y1="-205" x2="172" y2="-172"/>
+      <line x1="-205" y1="205" x2="-172" y2="172"/><line x1="205" y1="205" x2="172" y2="172"/>
+    </g>
+  </g>
+
+  <!-- hexagonal vault core -->
+  <g transform="translate(800 450)" filter="url(#glow3)">
+    <polygon points="0,-150 130,-75 130,75 0,150 -130,75 -130,-75" fill="url(#hex3)" opacity="0.16"/>
+    <polygon points="0,-150 130,-75 130,75 0,150 -130,75 -130,-75" fill="none" stroke="#f3d57b" stroke-width="3"/>
+    <polygon points="0,-104 90,-52 90,52 0,104 -90,52 -90,-52" fill="none" stroke="#c9a84c" stroke-width="1.6" opacity="0.8"/>
+  </g>
+
+  <!-- shield emblem -->
+  <g transform="translate(800 450)" filter="url(#glow3)">
+    <path d="M0 -78 C 26 -60, 48 -52, 66 -50 C 66 -8, 56 40, 0 76 C -56 40, -66 -8, -66 -50 C -48 -52, -26 -60, 0 -78 Z"
+          fill="#12100d" stroke="#f3d57b" stroke-width="3.4"/>
+    <path d="M0 -58 C 18 -46, 34 -40, 46 -38 C 46 -6, 38 28, 0 54 C -38 28, -46 -6, -46 -38 C -34 -40, -18 -46, 0 -58 Z"
+          fill="none" stroke="#8f7a3c" stroke-width="1.6"/>
+    <path d="M-22 -2 L -6 18 L 28 -24" fill="none" stroke="#f3d57b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- corner circuit traces -->
+  <g fill="none" stroke="#3a3222" stroke-width="2">
+    <path d="M60 840 H 240 L 280 800 H 420"/>
+    <path d="M1540 60 H 1380 L 1340 100 H 1210"/>
+  </g>
+  <g fill="#c9a84c">
+    <circle cx="420" cy="800" r="5" opacity="0.8"/><circle cx="1210" cy="100" r="5" opacity="0.8"/>
+  </g>
+
+  <!-- ambient particles -->
+  <g fill="#c9a84c" opacity="0.6">
+    <circle cx="520" cy="120" r="2.5"/><circle cx="1080" cy="760" r="2.5"/><circle cx="80" cy="520" r="2"/><circle cx="1540" cy="440" r="2"/><circle cx="820" cy="60" r="2.5"/><circle cx="760" cy="860" r="2"/>
+  </g>
+</svg>
