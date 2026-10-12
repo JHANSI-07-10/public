@@ -290,5 +290,86 @@ export const VERIFIED_INSIGHTS: InsightArticle[] = [
     date: "May 2026",
     tags: ["WebSockets", "Java", "Real-Time"],
     image: "https://res.cloudinary.com/deaku7v6t/image/upload/v1778928608/vpd_tech_uploads/zwqcqtzhtvuwji9gqhkr.webp"
+  },
+  {
+    id: "b4",
+    title: "Containerized Delivery Pipelines with Docker & CI/CD",
+    excerpt: "How immutable infrastructure and one-line Docker deployments cut release cycles from weeks to hours without trading away production stability.",
+    author: "VPD Engineering Lab",
+    date: "April 2026",
+    tags: ["Docker", "DevOps", "Architecture"],
+    image: "/about1.webp"
+  },
+  {
+    id: "b5",
+    title: "Core Web Vitals as a Conversion Metric, Not a Checklist",
+    excerpt: "Treating LCP, INP, and CLS as revenue levers — the measurement discipline and budget enforcement that keep enterprise frontends under 100ms TTI.",
+    author: "VPD Engineering Lab",
+    date: "April 2026",
+    tags: ["React", "UX", "Performance"],
+    image: "/about2.webp"
+  },
+  {
+    id: "b6",
+    title: "Multi-Tenant SaaS: Isolation Models That Actually Scale",
+    excerpt: "Comparing database-per-tenant, schema-per-tenant, and shared-row isolation — and the RBAC patterns that keep enterprise data boundaries airtight.",
+    author: "VPD Engineering Lab",
+    date: "March 2026",
+    tags: ["Architecture", "Security", "SaaS"],
+    image: "/about3.webp"
+  },
+  {
+    id: "b7",
+    title: "Lead Funnel Instrumentation Inside React SPAs",
+    excerpt: "Wiring edge analytics and CRM handoffs directly into the component tree so every micro-conversion is captured, attributed, and actionable.",
+    author: "VPD Engineering Lab",
+    date: "March 2026",
+    tags: ["React", "UX", "Analytics"],
+    image: "/portfolio-lead-engine.svg"
+  },
+  {
+    id: "b8",
+    title: "Event-Driven Backends for High-Frequency Operations",
+    excerpt: "Designing Spring Boot services around durable event queues — idempotent consumers, replay safety, and back-pressure under 10,000 transactions per second.",
+    author: "VPD Engineering Lab",
+    date: "February 2026",
+    tags: ["Java", "Real-Time", "Architecture"],
+    image: "/portfolio-operational-hub.svg"
+  },
+  {
+    id: "b9",
+    title: "AES-256 and ISO 27001: A Practical Compliance Blueprint",
+    excerpt: "A field guide to protocol-level encryption, stateless JWT barriers, and audit trails that satisfy enterprise security reviews without slowing delivery.",
+    author: "VPD Engineering Lab",
+    date: "February 2026",
+    tags: ["Security", "FinTech", "Compliance"],
+    image: "/portfolio-financial-protocol.svg"
+  },
+  {
+    id: "b10",
+    title: "Design Systems That Survive Enterprise Scale",
+    excerpt: "Token architecture, component ownership, and documentation discipline that keep a React design system coherent across a dozen product teams.",
+    author: "VPD Engineering Lab",
+    date: "January 2026",
+    tags: ["React", "UX", "Architecture"],
+    image: "/about1.webp"
+  },
+  {
+    id: "b11",
+    title: "PostgreSQL Tuning for Transaction-Heavy Workloads",
+    excerpt: "Index strategy, connection pooling, and vacuum discipline that keep p99 query latency flat while write volume grows tenfold.",
+    author: "VPD Engineering Lab",
+    date: "January 2026",
+    tags: ["PostgreSQL", "Performance", "Architecture"],
+    image: "/about2.webp"
+  },
+  {
+    id: "b12",
+    title: "RBAC Design Patterns for Multi-Product Platforms",
+    excerpt: "Role hierarchies, resource-scoped permissions, and audit-safe delegation — the access models we deploy across enterprise portals.",
+    author: "VPD Engineering Lab",
+    date: "December 2025",
+    tags: ["Security", "SaaS", "Architecture"],
+    image: "/about3.webp"
   }
 ];

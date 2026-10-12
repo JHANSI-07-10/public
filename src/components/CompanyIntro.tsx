@@ -50,6 +50,7 @@ export const CompanyIntro: React.FC = () => {
             eyebrow="Company Philosophy & Pedigree"
             title={<WordMaskReveal text="Vision, Purpose, Delivery. The Foundations of Our Craft." />}
             subtitle={`${COMPANY_DATA.vision} We reject off-the-shelf compromises and opaque agency jargon, replacing them with verifiable architecture and direct accountability.`}
+            align="center"
           />
         </Reveal>
 

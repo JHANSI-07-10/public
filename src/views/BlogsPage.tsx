@@ -37,6 +37,10 @@ const MARQUEE_TOPICS = [
   'RBAC DESIGN',
   'POSTGRESQL TUNING',
   'DOCKER STRATEGY',
+  'CI/CD PIPELINES',
+  'CONVERSION FUNNELS',
+  'EVENT REPLAY SAFETY',
+  'COMPLIANCE AUDITS',
 ];
 
 const readingMinutes = (article: InsightArticle) => {
@@ -143,6 +147,14 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* ── Section 1: Hero + live filters ─────────────────────────── */}
       <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+        {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
+        <img
+          src="/bg-insights-hero.svg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-[72%_center] opacity-55 pointer-events-none select-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/85 via-[#0a0a0a]/60 to-[#0a0a0a]/90 pointer-events-none" aria-hidden="true" />
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
         <div className="absolute inset-0 hero-radial-glow pointer-events-none opacity-70" aria-hidden="true" />
         {/* Slow gold scanline sweeping the lab grid */}

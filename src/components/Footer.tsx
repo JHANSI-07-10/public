@@ -51,9 +51,6 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
 
-              <div className="text-xs text-[#666666]">
-                CIN: Incorporated under Companies Act · Kurnool, AP, India
-              </div>
             </div>
 
             {/* Column 2: Core Services */}

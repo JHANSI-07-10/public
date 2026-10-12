@@ -11,6 +11,7 @@ import { InteractiveCard } from '../components/motion/InteractiveCard';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { Accordion } from '../components/motion/Accordion';
 import { PageHeroBackground } from '../components/ui/PageHeroBackground';
+import { ProjectJourneyTimeline } from '../components/about/ProjectJourneyTimeline';
 
 interface AboutPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -200,6 +201,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
         </div>
       </section>
 
+      <ProjectJourneyTimeline />
+
       {/* 3 Engineering Pillars */}
       <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_90%_35%,rgba(201,168,76,0.07),transparent_38%),#0d0d0d]">
         <div className="absolute -right-24 top-12 h-72 w-72 rounded-full bg-[#c9a84c]/[0.04] blur-3xl pointer-events-none" aria-hidden="true" />
@@ -209,6 +212,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               eyebrow="Architectural Pillars"
               title="The Structural DNA of Every VPD Deployment"
               subtitle="How we consistently maintain high velocity without sacrificing stability or security."
+              align="center"
             />
           </Reveal>
 
@@ -242,6 +246,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
             <SectionHeader
               eyebrow="Standard Deliverables"
               title="What Every Client Engagement Guarantees"
+              align="center"
             />
           </Reveal>
 

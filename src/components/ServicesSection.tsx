@@ -32,15 +32,14 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="mb-16 flex w-full justify-center text-center">
             <SectionHeader
               eyebrow="Core Technical Offerings"
               title="Software Engineering Built for Uncompromising Scale."
-              className="mb-0"
+              subtitle="Every solution is engineered with strict production protocols, hardened security standards, and predictable long-term maintainability."
+              align="center"
+              className="mx-auto mb-0 w-full items-center text-center"
             />
-            <p className="text-sm text-[#aaaaaa] max-w-md leading-relaxed pb-2">
-              Every solution is engineered with strict production protocols, hardened security standards, and predictable long-term maintainability.
-            </p>
           </div>
         </Reveal>
 

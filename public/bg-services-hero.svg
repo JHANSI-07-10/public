@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gold1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3d57b"/>
+      <stop offset="1" stop-color="#a98428"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c9a84c" stop-opacity="0.2"/>
+      <stop offset="0.55" stop-color="#c9a84c" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#c9a84c" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .wire { fill: none; stroke: #c9a84c; stroke-opacity: .3; stroke-width: 1.5; }
+      .wireFaint { fill: none; stroke: #c9a84c; stroke-opacity: .13; stroke-width: 1; }
+      .node { fill: url(#gold1); }
+      .plate { fill: #121212; stroke: #c9a84c; stroke-opacity: .45; stroke-width: 1.5; }
+      .plateDim { fill: #101010; stroke: #c9a84c; stroke-opacity: .22; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#0a0a0a"/>
+
+  <ellipse cx="1310" cy="470" rx="740" ry="500" fill="url(#halo)"/>
+
+  <!-- Blueprint cross-hair grid -->
+  <g class="wireFaint" opacity="0.5">
+    <line x1="0" y1="270" x2="1920" y2="270"/>
+    <line x1="0" y1="540" x2="1920" y2="540"/>
+    <line x1="0" y1="810" x2="1920" y2="810"/>
+    <line x1="480" y1="0" x2="480" y2="1080"/>
+    <line x1="960" y1="0" x2="960" y2="1080"/>
+    <line x1="1440" y1="0" x2="1440" y2="1080"/>
+  </g>
+
+  <g filter="url(#soft)">
+    <!-- Isometric architecture stack: three layered plates -->
+    <g transform="translate(1310,560)">
+      <polygon class="plateDim" points="0,150 330,240 0,330 -330,240"/>
+      <polygon class="plateDim" points="0,60 330,150 0,240 -330,150"/>
+      <polygon class="plate" points="0,-30 330,60 0,150 -330,60"/>
+      <!-- circuit traces on top plate -->
+      <polyline points="-180,60 -90,86 -20,68 60,92 150,66" fill="none" stroke="url(#gold1)" stroke-width="2" stroke-opacity="0.65"/>
+      <circle cx="-90" cy="86" r="4" class="node"/>
+      <circle cx="60" cy="92" r="4" class="node"/>
+      <circle cx="150" cy="66" r="4" class="node" opacity="0.7"/>
+      <polygon points="0,-30 90,-3 0,24 -90,-3" fill="url(#gold1)" opacity="0.14"/>
+      <!-- vertical risers connecting plates -->
+      <line x1="0" y1="150" x2="0" y2="330" stroke="#c9a84c" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 6"/>
+      <line x1="-330" y1="240" x2="-330" y2="60" stroke="#c9a84c" stroke-opacity="0.25" stroke-width="1.5" stroke-dasharray="4 6"/>
+      <line x1="330" y1="240" x2="330" y2="60" stroke="#c9a84c" stroke-opacity="0.25" stroke-width="1.5" stroke-dasharray="4 6"/>
+    </g>
+
+    <!-- Frontend window card (top-left of stack) -->
+    <g transform="translate(900,190)">
+      <rect class="plate" width="220" height="150" rx="12"/>
+      <line x1="0" y1="34" x2="220" y2="34" stroke="#c9a84c" stroke-opacity="0.4" stroke-width="1.5"/>
+      <circle cx="22" cy="17" r="4" fill="#c9a84c" opacity="0.6"/>
+      <circle cx="38" cy="17" r="4" fill="#c9a84c" opacity="0.35"/>
+      <circle cx="54" cy="17" r="4" fill="#c9a84c" opacity="0.2"/>
+      <polyline points="20,110 60,78 92,96 132,56 172,72 200,48" fill="none" stroke="url(#gold1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+      <rect x="20" y="122" width="120" height="6" rx="3" fill="#c9a84c" opacity="0.3"/>
+    </g>
+
+    <!-- Backend server rack card (right) -->
+    <g transform="translate(1680,300)">
+      <rect class="plate" width="150" height="230" rx="12"/>
+      <g>
+        <rect x="16" y="20" width="118" height="36" rx="6" fill="#181818" stroke="#c9a84c" stroke-opacity="0.35"/>
+        <circle cx="34" cy="38" r="5" fill="#c9a84c"><animate attributeName="opacity" values="1;0.25;1" dur="2.4s" repeatCount="indefinite"/></circle>
+        <line x1="52" y1="38" x2="120" y2="38" stroke="#c9a84c" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(0,54)">
+        <rect x="16" y="20" width="118" height="36" rx="6" fill="#181818" stroke="#c9a84c" stroke-opacity="0.35"/>
+        <circle cx="34" cy="38" r="5" fill="#c9a84c"><animate attributeName="opacity" values="0.25;1;0.25" dur="3.1s" repeatCount="indefinite"/></circle>
+        <line x1="52" y1="38" x2="120" y2="38" stroke="#c9a84c" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(0,108)">
+        <rect x="16" y="20" width="118" height="36" rx="6" fill="#181818" stroke="#c9a84c" stroke-opacity="0.35"/>
+        <circle cx="34" cy="38" r="5" fill="#c9a84c"><animate attributeName="opacity" values="1;0.3;1" dur="2.8s" begin="0.6s" repeatCount="indefinite"/></circle>
+        <line x1="52" y1="38" x2="120" y2="38" stroke="#c9a84c" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <rect x="16" y="188" width="118" height="24" rx="6" fill="none" stroke="#c9a84c" stroke-opacity="0.2" stroke-dasharray="4 6"/>
+    </g>
+
+    <!-- Shield / SLA badge (bottom-left) -->
+    <g transform="translate(1000,760)">
+      <path d="M60,0 L116,22 L116,66 C116,106 92,128 60,142 C28,128 4,106 4,66 L4,22 Z" fill="#101010" stroke="url(#gold1)" stroke-width="2" stroke-opacity="0.7"/>
+      <polyline points="34,68 54,90 90,46" fill="none" stroke="url(#gold1)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- orbit ring around stack -->
+    <ellipse cx="1310" cy="600" rx="470" ry="150" fill="none" stroke="#c9a84c" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="3 12"/>
+
+    <!-- data flow wires -->
+    <path class="wire" d="M1120,265 C1210,265 1220,400 1310,420"/>
+    <path class="wire" d="M1680,415 C1600,415 1560,500 1480,520"/>
+    <path class="wire" d="M1116,830 C1200,830 1220,720 1290,700"/>
+    <circle cx="1120" cy="265" r="5" class="node"/>
+    <circle cx="1680" cy="415" r="5" class="node"/>
+    <circle cx="1116" cy="830" r="5" class="node"/>
+
+    <!-- travelling packets -->
+    <circle r="4" fill="#f3d57b" filter="url(#soft)">
+      <animateMotion dur="5s" repeatCount="indefinite" path="M1120,265 C1210,265 1220,400 1310,420"/>
+    </circle>
+    <circle r="4" fill="#f3d57b" filter="url(#soft)">
+      <animateMotion dur="6s" begin="1.2s" repeatCount="indefinite" path="M1680,415 C1600,415 1560,500 1480,520"/>
+    </circle>
+    <circle r="3.5" fill="#f3d57b" filter="url(#soft)">
+      <animateMotion dur="5.5s" begin="2s" repeatCount="indefinite" path="M1116,830 C1200,830 1220,720 1290,700"/>
+    </circle>
+  </g>
+
+  <!-- scattered particles -->
+  <g fill="#c9a84c">
+    <circle cx="260" cy="180" r="2" opacity="0.3"/>
+    <circle cx="480" cy="380" r="1.5" opacity="0.22"/>
+    <circle cx="680" cy="140" r="2.5" opacity="0.28"/>
+    <circle cx="360" cy="700" r="1.5" opacity="0.2"/>
+    <circle cx="760" cy="900" r="2" opacity="0.26"/>
+    <circle cx="1560" cy="880" r="2" opacity="0.28"/>
+    <circle cx="1840" cy="160" r="2" opacity="0.26"/>
+    <circle cx="1240" cy="120" r="1.5" opacity="0.22"/>
+    <circle cx="1780" cy="760" r="2.5" opacity="0.24"/>
+    <circle cx="960" cy="90" r="2" opacity="0.2"/>
+  </g>
+</svg>

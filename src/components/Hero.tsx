@@ -134,7 +134,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: idx * 0.1, ease: 'easeOut' }}
-                className="flex flex-col items-start text-left"
+                className="flex flex-col items-center text-center"
               >
                 <div className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1 tabular-nums">
                   <span className="text-[#D4AF37]">

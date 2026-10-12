@@ -52,6 +52,14 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* Services Hero */}
       <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+        {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
+        <img
+          src="/bg-services-hero.svg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-55 pointer-events-none select-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/25 pointer-events-none" aria-hidden="true" />
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
