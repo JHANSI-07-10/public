@@ -1,9 +1,11 @@
+'use client';
+
 import React from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { Card } from '../components/ui/Card';
 import { COMPANY_DATA } from '../data/content';
 import { Shield, Lock, Eye, FileText } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const PrivacyPolicyPage: React.FC = () => {
   return (

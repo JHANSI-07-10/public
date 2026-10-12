@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { ArrowRight, Phone, MessageSquare, Mail, CheckCircle2, Clock } from 'lucide-react';
 import { COMPANY_DATA, CORE_SERVICES } from '../data/content';

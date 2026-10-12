@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '../components/ui/Button';
 import { ArrowLeft, Home, Layers, Briefcase, Mail } from 'lucide-react';
 
@@ -20,12 +22,12 @@ export const NotFoundPage: React.FC = () => {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
-          <Link to="/">
+          <Link href="/">
             <Button variant="primary" size="md" icon={<Home className="w-4 h-4" />}>
               Return to Homepage
             </Button>
           </Link>
-          <Link to="/services">
+          <Link href="/services">
             <Button variant="secondary" size="md" icon={<Layers className="w-4 h-4" />}>
               Explore Services
             </Button>
@@ -33,11 +35,11 @@ export const NotFoundPage: React.FC = () => {
         </div>
 
         <div className="pt-8 border-t border-[#222222] flex items-center justify-center gap-6 text-xs text-[#777777]">
-          <Link to="/portfolio" className="hover:text-white transition-colors flex items-center gap-1">
+          <Link href="/portfolio" className="hover:text-white transition-colors flex items-center gap-1">
             <Briefcase className="w-3.5 h-3.5 text-[#c9a84c]" />
             <span>Case Studies</span>
           </Link>
-          <Link to="/contact" className="hover:text-white transition-colors flex items-center gap-1">
+          <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1">
             <Mail className="w-3.5 h-3.5 text-[#c9a84c]" />
             <span>Contact Support</span>
           </Link>

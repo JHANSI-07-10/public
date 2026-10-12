@@ -4,7 +4,7 @@
  */
 
 export const API_BASE_URL: string =
-  (import.meta.env.VITE_API_URL as string)?.replace(/\/$/, '') ||
+  (process.env.NEXT_PUBLIC_API_URL as string)?.replace(/\/$/, '') ||
   'https://vpd-technologies-pvt-ltd-backend.vercel.app/api';
 
 export const API_ENDPOINTS = {

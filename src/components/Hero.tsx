@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';

@@ -1,18 +1,18 @@
+'use client';
+
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 import { VERIFIED_PROJECTS, Service } from '../data/content';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 
 interface PortfolioDetailPageProps {
+  id: string;
   onOpenConsultation: (service?: Service) => void;
 }
 
-export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ onOpenConsultation }) => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-
+export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ id, onOpenConsultation }) => {
   const project = VERIFIED_PROJECTS.find((p) => p.id === id) || VERIFIED_PROJECTS[0];
 
   return (
@@ -21,9 +21,9 @@ export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ onOpen
       <section className="py-8 border-b border-[#1f1f1f] bg-[#0d0d0d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-xs text-[#888888] font-medium">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
-            <Link to="/portfolio" className="hover:text-white transition-colors">Portfolio</Link>
+            <Link href="/portfolio" className="hover:text-white transition-colors">Portfolio</Link>
             <span>/</span>
             <span className="text-[#c9a84c]">{project.title}</span>
           </div>
@@ -149,7 +149,7 @@ export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ onOpen
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <Link
-            to="/portfolio"
+            href="/portfolio"
             className="inline-flex items-center gap-2 text-sm font-bold text-[#aaaaaa] hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4 text-[#c9a84c]" />

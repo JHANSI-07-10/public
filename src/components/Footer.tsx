@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowUp, Phone, Mail, MapPin } from 'lucide-react';
 import { COMPANY_DATA, CORE_SERVICES } from '../data/content';
 import { Reveal } from './motion/Reveal';
@@ -17,7 +19,7 @@ export const Footer: React.FC = () => {
             {/* Column 1: Brand & Positioning */}
             <div className="lg:col-span-4 flex flex-col justify-between space-y-6">
               <div>
-                <Link to="/" className="flex items-center gap-3 mb-4 group inline-flex">
+                <Link href="/" className="flex items-center gap-3 mb-4 group inline-flex">
                   <div className="w-10 h-10 rounded-xl bg-[#141414] border border-[#262626] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-colors">
                     <img
                       src="/logo.webp"
@@ -63,7 +65,7 @@ export const Footer: React.FC = () => {
                 {CORE_SERVICES.map((s) => (
                   <li key={s.id}>
                     <Link
-                      to="/services"
+                      href="/services"
                       className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                     >
                       {s.title}
@@ -72,7 +74,7 @@ export const Footer: React.FC = () => {
                 ))}
                 <li>
                   <Link
-                    to="/services"
+                    href="/services"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Cloud Edge Deployment & CI/CD
@@ -80,7 +82,7 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    to="/services"
+                    href="/services"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     System Migration & Performance Audits
@@ -97,7 +99,7 @@ export const Footer: React.FC = () => {
               <ul className="space-y-2.5 text-sm">
                 <li>
                   <Link
-                    to="/about"
+                    href="/about"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     About VPD Technologies
@@ -105,7 +107,7 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    to="/services"
+                    href="/services"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Technical Capabilities
@@ -113,7 +115,7 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    to="/portfolio"
+                    href="/portfolio"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Featured Case Studies
@@ -121,7 +123,7 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    to="/blogs"
+                    href="/blogs"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Technical Insights
@@ -129,7 +131,7 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    to="/contact"
+                    href="/contact"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Schedule Consultation
@@ -200,13 +202,13 @@ export const Footer: React.FC = () => {
 
           <div className="flex items-center gap-6">
             <Link
-              to="/privacy"
+              href="/privacy"
               className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c]"
             >
               Privacy Policy
             </Link>
             <Link
-              to="/terms"
+              href="/terms"
               className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c]"
             >
               Terms of Service

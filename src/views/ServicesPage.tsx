@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { CORE_SERVICES, Service, COMPANY_DATA } from '../data/content';

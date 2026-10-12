@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Shield, Cpu, Target, Award } from 'lucide-react';
 import { motion, useReducedMotion, Variants } from 'motion/react';

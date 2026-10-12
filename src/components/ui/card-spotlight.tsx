@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'motion/react';
 import { cn } from '../../lib/utils';

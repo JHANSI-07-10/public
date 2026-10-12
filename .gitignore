@@ -7,3 +7,6 @@ coverage/
 .env*
 !.env.example
 .originkit/
+.next/
+next-env.d.ts
+tsconfig.tsbuildinfo

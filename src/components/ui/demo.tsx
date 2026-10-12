@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import { TiltedGridHero } from "./tilted-grid-hero";
 import { VPD_HERO_GRID_IMAGES } from "../../data/heroImages";

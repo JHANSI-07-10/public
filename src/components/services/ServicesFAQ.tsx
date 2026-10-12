@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { HelpCircle, ArrowRight } from 'lucide-react';
 import { Accordion, AccordionItem } from '../motion/Accordion';

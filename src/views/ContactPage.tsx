@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { Card } from '../components/ui/Card';

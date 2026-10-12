@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useReducedMotion } from "motion/react";
 import { VPD_HERO_GRID_IMAGES, TiltedGridImage } from "../../data/heroImages";

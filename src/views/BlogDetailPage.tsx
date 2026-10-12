@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { VERIFIED_INSIGHTS, Service } from '../data/content';
 import { Button } from '../components/ui/Button';
 import { Reveal } from '../components/motion/Reveal';
@@ -16,11 +18,11 @@ import {
 } from 'lucide-react';
 
 interface BlogDetailPageProps {
+  id: string;
   onOpenConsultation: (service?: Service) => void;
 }
 
-export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ onOpenConsultation }) => {
-  const { id } = useParams<{ id: string }>();
+export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsultation }) => {
   const articleRef = useRef<HTMLDivElement | null>(null);
   const [progress, setProgress] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -82,9 +84,9 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ onOpenConsultati
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4">
             <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#888888] font-medium min-w-0">
-              <Link to="/" className="hover:text-white transition-colors shrink-0">Home</Link>
+              <Link href="/" className="hover:text-white transition-colors shrink-0">Home</Link>
               <span aria-hidden="true">/</span>
-              <Link to="/blogs" className="hover:text-white transition-colors shrink-0">Insights</Link>
+              <Link href="/blogs" className="hover:text-white transition-colors shrink-0">Insights</Link>
               <span aria-hidden="true">/</span>
               <span className="text-[#c9a84c] truncate">{article.title}</span>
             </nav>
@@ -232,7 +234,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ onOpenConsultati
                 {related.map((rel) => (
                   <StaggerItem key={rel.id}>
                     <Link
-                      to={`/blogs/${rel.id}`}
+                      href={`/blogs/${rel.id}`}
                       className="group block h-full rounded-xl border border-[#262626] bg-[#141414] p-5 card-hover"
                     >
                       <div className="text-[10px] font-mono text-[#777777] mb-2">
@@ -255,7 +257,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ onOpenConsultati
           {/* Navigation Back */}
           <div className="mt-12 pt-8 border-t border-[#222222]">
             <Link
-              to="/blogs"
+              href="/blogs"
               className="inline-flex items-center gap-2 text-sm font-bold text-[#aaaaaa] hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4 text-[#c9a84c]" />

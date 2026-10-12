@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Sparkles, RotateCcw, Play, Pause } from 'lucide-react';

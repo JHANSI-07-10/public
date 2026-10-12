@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Globe, Layers, Code2, ArrowRight, Check } from 'lucide-react';
 import { CORE_SERVICES, Service } from '../data/content';

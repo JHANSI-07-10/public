@@ -1,9 +1,11 @@
+'use client';
+
 import React, { useState } from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { Card } from '../components/ui/Card';
 import { VERIFIED_PROJECTS, Service } from '../data/content';
 import { ArrowRight, ArrowUpRight, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Reveal } from '../components/motion/Reveal';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -201,7 +203,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                     {/* Actions */}
                     <div className="flex items-center gap-4 pt-2">
                       <Link
-                        to={`/portfolio/${project.id}`}
+                        href={`/portfolio/${project.id}`}
                         className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#1a1a1a] hover:bg-[#222222] border border-[#2a2a2a] hover:border-[#c9a84c]/50 rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c]"
                       >
                         <span>Read Full Case Study</span>

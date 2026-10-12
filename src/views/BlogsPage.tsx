@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SectionHeader';
@@ -16,7 +18,7 @@ import {
   ShieldCheck,
   Gauge,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface BlogsPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -271,7 +273,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                               featured ? 'text-2xl sm:text-3xl tracking-tight' : 'text-xl'
                             }`}
                           >
-                            <Link to={`/blogs/${article.id}`}>{article.title}</Link>
+                            <Link href={`/blogs/${article.id}`}>{article.title}</Link>
                           </h3>
 
                           <p
@@ -285,7 +287,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
 
                         <div className={`flex items-center justify-between gap-4 ${featured ? 'mt-8 pt-6 border-t border-[#242424] px-7 sm:px-8 pb-7 sm:pb-8' : 'p-6 pt-0'}`}>
                           <Link
-                            to={`/blogs/${article.id}`}
+                            href={`/blogs/${article.id}`}
                             className="inline-flex items-center gap-2 text-xs font-bold text-[#c9a84c] hover:text-white transition-colors"
                           >
                             <span>Read Breakdown</span>

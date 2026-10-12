@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { X, ArrowRight, CheckCircle, MessageSquare } from 'lucide-react';
 import { CORE_SERVICES, COMPANY_DATA, Service } from '../data/content';

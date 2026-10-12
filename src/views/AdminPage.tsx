@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Lock, Shield, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { API_ENDPOINTS } from '../config/api';
 
 export const AdminPage: React.FC = () => {
@@ -113,7 +115,7 @@ export const AdminPage: React.FC = () => {
           </form>
 
           <div className="mt-6 pt-4 border-t border-[#222222] text-center">
-            <Link to="/" className="text-xs text-[#888888] hover:text-white transition-colors">
+            <Link href="/" className="text-xs text-[#888888] hover:text-white transition-colors">
               Return to Public Website
             </Link>
           </div>

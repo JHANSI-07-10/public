@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 
 const DEFAULT_GOLD_COLORS: [number, number, number][] = [

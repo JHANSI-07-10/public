@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { SectionHeader } from './ui/SectionHeader';
 import { CardSpotlight } from './ui/card-spotlight';
@@ -144,7 +146,7 @@ export const WhatWeEngineer: React.FC = () => {
           <div className="mt-14 sm:mt-16 flex flex-col items-center gap-5 text-center">
             <p className="text-base sm:text-lg text-[#A1A1AA]">Have a project in mind?</p>
             <Link
-              to="/contact"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 h-11 px-6 text-sm font-semibold bg-[#c9a84c] text-black hover:bg-[#d8b75b] rounded-xl shadow-lg shadow-[#c9a84c]/20 hover:shadow-[#c9a84c]/35 transition-all duration-200 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111111]"
             >
               <span>Let's Talk</span>

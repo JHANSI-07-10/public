@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { motion, useReducedMotion, Variants } from 'motion/react';
 import { motionTokens } from './motionTokens';

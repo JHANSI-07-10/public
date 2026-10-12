@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, Phone, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
@@ -14,7 +17,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll();
@@ -35,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Prevent background scroll when mobile menu is open
   useEffect(() => {
@@ -78,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
           {/* Zone 1: Authentic Brand Monogram & Wordmark */}
           <Link
-            to="/"
+            href="/"
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl p-1"
             aria-label="VPD Technologies - Home"
           >
@@ -106,11 +109,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           {/* Zone 2: Navigation Links (Desktop) */}
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#aaaaaa]">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isActive = pathname === link.path;
               return (
                 <Link
                   key={link.label}
-                  to={link.path}
+                  href={link.path}
                   className={`relative transition-colors duration-200 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-md px-1.5 py-1 ${
                     isActive ? 'text-[#c9a84c] font-bold' : 'hover:text-white'
                   }`}
@@ -170,7 +173,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 Navigation
               </div>
               {navLinks.map((link, index) => {
-                const isActive = location.pathname === link.path;
+                const isActive = pathname === link.path;
                 return (
                   <motion.div
                     key={link.label}
@@ -183,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                     }}
                   >
                     <Link
-                      to={link.path}
+                      href={link.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className={`block text-lg font-bold transition-colors py-3 px-2 border-b border-[#1c1c1c] active:bg-[#161616] rounded-lg ${
                         isActive ? 'text-[#c9a84c]' : 'text-[#cccccc] hover:text-white'

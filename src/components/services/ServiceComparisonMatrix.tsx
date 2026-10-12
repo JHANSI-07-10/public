@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Check, Minus, ArrowRight, ShieldCheck, Zap, Database, Server } from 'lucide-react';
 import { CORE_SERVICES, Service } from '../../data/content';
