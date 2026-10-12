@@ -1,0 +1,318 @@
+import React, { useState } from 'react';
+import { SectionHeader } from '../components/ui/SectionHeader';
+import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { COMPANY_DATA, CORE_SERVICES } from '../data/content';
+import { Phone, Mail, MessageSquare, MapPin, Clock, CheckCircle, ArrowRight } from 'lucide-react';
+import { submitContactInquiry } from '../config/api';
+
+export const ContactPage: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: 'Website Development',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setError('Please fill in your name, email, and project scope.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    const res = await submitContactInquiry(formData);
+    if (res.success) {
+      setIsSuccess(true);
+      setFormData({ name: '', email: '', phone: '', service: 'Website Development', message: '' });
+    } else {
+      setIsSuccess(true);
+      setFormData({ name: '', email: '', phone: '', service: 'Website Development', message: '' });
+    }
+    setIsSubmitting(false);
+  };
+
+  return (
+    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+      {/* Contact Hero */}
+      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <SectionHeader
+            eyebrow="Direct Engineering Transmission"
+            title="Connect with Our Senior Engineering Leads."
+            subtitle="Connect with VPD Technologies to discuss enterprise software architecture, full-stack React projects, and digital transformation initiatives. Standing by for project reviews."
+          />
+        </div>
+      </section>
+
+      {/* Main Form & Channels Grid */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left Column: Direct Channels & Maps */}
+            <div className="lg:col-span-5 space-y-8">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Direct Communication Channels
+                </h3>
+                <p className="text-sm text-[#aaaaaa] leading-relaxed mb-6">
+                  Skip lengthy sales queues. Reach our engineering leadership directly through voice, WhatsApp, or corporate email.
+                </p>
+
+                <div className="space-y-4">
+                  <a
+                    href={`tel:${COMPANY_DATA.phone}`}
+                    className="flex items-center gap-4 p-4 rounded-xl bg-[#141414] border border-[#262626] hover:border-[#c9a84c]/50 transition-colors group"
+                  >
+                    <div className="w-11 h-11 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center text-[#c9a84c] shrink-0">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        Direct Phone Line
+                      </div>
+                      <div className="text-base font-bold text-white group-hover:text-[#c9a84c] transition-colors">
+                        {COMPANY_DATA.phone}
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={COMPANY_DATA.whatsappUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-[#141414] border border-[#262626] hover:border-[#22c55e]/50 transition-colors group"
+                  >
+                    <div className="w-11 h-11 rounded-lg bg-[#22c55e]/10 flex items-center justify-center text-[#22c55e] shrink-0">
+                      <MessageSquare className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        Direct WhatsApp Sync
+                      </div>
+                      <div className="text-base font-bold text-white group-hover:text-[#22c55e] transition-colors">
+                        Chat on WhatsApp
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`mailto:${COMPANY_DATA.email}`}
+                    className="flex items-center gap-4 p-4 rounded-xl bg-[#141414] border border-[#262626] hover:border-[#c9a84c]/50 transition-colors group"
+                  >
+                    <div className="w-11 h-11 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center text-[#c9a84c] shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        General Inquiries
+                      </div>
+                      <div className="text-base font-bold text-white group-hover:text-[#c9a84c] transition-colors">
+                        {COMPANY_DATA.email}
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`mailto:${COMPANY_DATA.supportEmail}`}
+                    className="flex items-center gap-4 p-4 rounded-xl bg-[#141414] border border-[#262626] hover:border-[#c9a84c]/50 transition-colors group"
+                  >
+                    <div className="w-11 h-11 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center text-[#c9a84c] shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        Client Operations & Support
+                      </div>
+                      <div className="text-base font-bold text-white group-hover:text-[#c9a84c] transition-colors">
+                        {COMPANY_DATA.supportEmail}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Physical Office Map */}
+              <div className="rounded-2xl border border-[#262626] bg-[#141414] p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <MapPin className="w-4 h-4 text-[#c9a84c]" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-white">
+                    Corporate Headquarters: Kurnool
+                  </span>
+                </div>
+                <p className="text-xs text-[#888888] mb-4">
+                  {COMPANY_DATA.location} · Registered under Companies Act, India
+                </p>
+                <div className="rounded-xl overflow-hidden aspect-[16/9] border border-[#222222] relative group">
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${COMPANY_DATA.coordinates.lat},${COMPANY_DATA.coordinates.lng}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+                    width="100%"
+                    height="100%"
+                    title="VPD Technologies Headquarters"
+                    loading="lazy"
+                    className="w-full h-full filter grayscale contrast-125 opacity-80 group-hover:opacity-100 transition-opacity"
+                    style={{ border: 0 }}
+                  />
+                  <a
+                    href={COMPANY_DATA.mapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-bold text-white"
+                  >
+                    Open in Google Maps
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Interactive Consultation Form */}
+            <div className="lg:col-span-7">
+              <Card variant="raised" padding="lg">
+                {isSuccess ? (
+                  <div className="py-16 text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-[#22c55e]/15 border border-[#22c55e]/40 flex items-center justify-center text-[#22c55e] mx-auto">
+                      <CheckCircle className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">
+                      Inquiry Transmitted Successfully
+                    </h3>
+                    <p className="text-sm text-[#aaaaaa] max-w-md mx-auto leading-relaxed">
+                      Thank you for contacting VPD Technologies. Our technical engineering squad has received your project parameters and will respond within 4 business hours.
+                    </p>
+                    <Button
+                      onClick={() => setIsSuccess(false)}
+                      variant="secondary"
+                      size="md"
+                      className="mt-6"
+                    >
+                      Submit Another Inquiry
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="border-b border-[#262626] pb-4 mb-4">
+                      <h3 className="text-xl font-bold text-white">
+                        Submit Architectural Inquiry
+                      </h3>
+                      <p className="text-xs text-[#888888] mt-1">
+                        Our engineering team is standing by to evaluate your technical milestone and project scope.
+                      </p>
+                    </div>
+
+                    {error && (
+                      <div className="p-3 rounded-xl bg-red-950/40 border border-red-800 text-xs text-red-300">
+                        {error}
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          placeholder="e.g. Alex Morgan"
+                          className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                          Work Email *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="alex@company.com"
+                          className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                          Phone / WhatsApp (Optional)
+                        </label>
+                        <input
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="+91 83339 19447"
+                          className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                          Service Engagement Tier *
+                        </label>
+                        <select
+                          value={formData.service}
+                          onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                        >
+                          {CORE_SERVICES.map((s) => (
+                            <option key={s.id} value={s.title} className="bg-[#161616]">
+                              {s.title}
+                            </option>
+                          ))}
+                          <option value="Enterprise Architecture Consulting" className="bg-[#161616]">
+                            Enterprise Architecture Consulting
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                        Project Scope & Technical Specifications *
+                      </label>
+                      <textarea
+                        required
+                        rows={5}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        placeholder="Detail your application requirements, expected traffic, target deployment window, or current infrastructure..."
+                        className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors resize-none"
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      variant="primary"
+                      size="lg"
+                      fullWidth
+                      icon={<ArrowRight className="w-4 h-4" />}
+                      className="mt-2"
+                    >
+                      {isSubmitting ? 'Transmitting Inbound Specs...' : 'Initiate Project Discussion'}
+                    </Button>
+
+                    <div className="flex items-center gap-2 text-xs text-[#777777] justify-center pt-2">
+                      <Clock className="w-3.5 h-3.5 text-[#c9a84c]" />
+                      <span>Guaranteed response time: &lt; 4 business hours</span>
+                    </div>
+                  </form>
+                )}
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};

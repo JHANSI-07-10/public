@@ -1,0 +1,224 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, ArrowRight, Phone, MessageSquare } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { COMPANY_DATA } from '../data/content';
+import { Button } from './ui/Button';
+import { AnimatedButton } from './motion/AnimatedButton';
+import { motionTokens } from './motion/motionTokens';
+
+interface NavbarProps {
+  onOpenConsultation: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
+  const navLinks = [
+    { label: 'About', path: '/about' },
+    { label: 'Services', path: '/services' },
+    { label: 'Portfolio', path: '/portfolio' },
+    { label: 'Insights', path: '/blogs' },
+    { label: 'Contact', path: '/contact' },
+  ];
+
+  return (
+    <>
+      <motion.header
+        initial={shouldReduceMotion ? false : { y: -16, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: motionTokens.duration.normal, ease: motionTokens.ease.snappy }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[#0a0a0a]/92 backdrop-blur-md border-b border-[#262626] py-3.5 shadow-xl shadow-black/50'
+            : 'bg-transparent border-b border-white/5 py-5'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
+          {/* Zone 1: Authentic Brand Monogram & Wordmark */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl p-1"
+            aria-label="VPD Technologies - Home"
+          >
+            <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#161616] border border-[#2a2a2a] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-colors">
+              <img
+                src="/logo.webp"
+                alt="VPD Technologies"
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/favicon.svg';
+                }}
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-black tracking-tight text-white leading-tight flex items-center gap-1">
+                <span>VPD</span>
+                <span className="text-[#c9a84c]">Technologies</span>
+              </span>
+              <span className="text-[10px] font-mono tracking-wider text-[#777777] uppercase">
+                Digital Engineering
+              </span>
+            </div>
+          </Link>
+
+          {/* Zone 2: Navigation Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#aaaaaa]">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.label}
+                  to={link.path}
+                  className={`relative transition-colors duration-200 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-md px-1.5 py-1 ${
+                    isActive ? 'text-[#c9a84c] font-bold' : 'hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="navIndicator"
+                      className="absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-[#c9a84c] rounded-full"
+                      transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Zone 3: Primary Action & Mobile Menu Toggle */}
+          <div className="flex items-center gap-3 shrink-0">
+            <AnimatedButton
+              onClick={onOpenConsultation}
+              variant="primary"
+              size="md"
+              icon={<ArrowRight className="w-3.5 h-3.5" />}
+              className="hidden sm:inline-flex"
+            >
+              Get a Quote
+            </AnimatedButton>
+
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-[#aaaaaa] hover:text-white bg-[#161616] border border-[#2a2a2a] rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer"
+              aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Responsive Mobile Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+            transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
+            className="fixed inset-0 z-40 md:hidden bg-black/92 backdrop-blur-xl pt-24 px-6 flex flex-col justify-between pb-8"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="space-y-2">
+              <div className="text-[11px] font-bold tracking-widest text-[#777777] uppercase mb-4 px-2">
+                Navigation
+              </div>
+              {navLinks.map((link, index) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <motion.div
+                    key={link.label}
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      delay: shouldReduceMotion ? 0 : index * motionTokens.stagger.tight,
+                      duration: motionTokens.duration.fast,
+                      ease: motionTokens.ease.snappy,
+                    }}
+                  >
+                    <Link
+                      to={link.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`block text-lg font-bold transition-colors py-3 px-2 border-b border-[#1c1c1c] active:bg-[#161616] rounded-lg ${
+                        isActive ? 'text-[#c9a84c]' : 'text-[#cccccc] hover:text-white'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div className="space-y-4 pt-6 border-t border-[#222222]">
+              <AnimatedButton
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenConsultation();
+                }}
+                variant="primary"
+                size="lg"
+                fullWidth
+                icon={<ArrowRight className="w-4 h-4" />}
+              >
+                Request Free Consultation
+              </AnimatedButton>
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={`tel:${COMPANY_DATA.phone}`}
+                  className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#c9a84c]/40 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#c9a84c]" />
+                  <span>Call Directly</span>
+                </a>
+                <a
+                  href={COMPANY_DATA.whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#22c55e]/40 transition-colors"
+                >
+                  <MessageSquare className="w-3.5 h-3.5 text-[#22c55e]" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};

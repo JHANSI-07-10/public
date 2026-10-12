@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --accent: #c9a84c;
+    --accent-hover: #d8b75b;
+    --accent-soft: rgba(201, 168, 76, 0.14);
+    --accent-glow: rgba(201, 168, 76, 0.25);
+    --accent-border: rgba(201, 168, 76, 0.38);
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-raised: #141414;
+    --card-bg: #161616;
+    --card-hover: #1c1c1c;
+    --card-border: #262626;
+    --border-subtle: #1f1f1f;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --text-muted: #777777;
+    --text-dim: #555555;
+    --button-text: #000000;
+  }
+
+  html {
+    color-scheme: dark;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+.hero-tech-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(201, 168, 76, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201, 168, 76, 0.05) 1px, transparent 1px);
+}
+
+.hero-radial-glow {
+  background: radial-gradient(circle at 50% 25%, rgba(201, 168, 76, 0.12) 0%, rgba(201, 168, 76, 0.02) 45%, transparent 70%);
+}
+
+.gold-glow {
+  box-shadow: 0 0 28px -4px rgba(201, 168, 76, 0.35);
+}
+
+.card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover:hover {
+  border-color: rgba(201, 168, 76, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px -6px rgba(201, 168, 76, 0.18);
+}
+
+

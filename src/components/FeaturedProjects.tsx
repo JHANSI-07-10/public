@@ -1,0 +1,236 @@
+import React, { useState } from 'react';
+import { ArrowUpRight, ChevronRight, X } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { VERIFIED_PROJECTS, Project } from '../data/content';
+import { SectionHeader } from './ui/SectionHeader';
+import { Card } from './ui/Card';
+import { Button } from './ui/Button';
+import { AnimatedButton } from './motion/AnimatedButton';
+import { Reveal } from './motion/Reveal';
+import { motionTokens } from './motion/motionTokens';
+
+interface FeaturedProjectsProps {
+  onOpenConsultation: () => void;
+}
+
+export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsultation }) => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <section id="case-studies" className="py-24 bg-[#0a0a0a] border-t border-[#1f1f1f] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Heading */}
+        <Reveal>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <SectionHeader
+              eyebrow="Selected Engagements & Evidence"
+              title="Measurable Architectural Impact for Industry Leaders."
+              className="mb-0"
+            />
+            <p className="text-sm text-[#aaaaaa] max-w-md leading-relaxed pb-2">
+              Every deployment is measured by business outcomes: conversion velocity, operational error reduction, and zero-downtime reliability.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Project Showcase List */}
+        <div className="space-y-12">
+          {VERIFIED_PROJECTS.map((project, index) => {
+            const isReversed = index % 2 === 1;
+            return (
+              <Reveal key={project.id} delay={index * 0.08}>
+                <Card
+                  variant="card"
+                  padding="lg"
+                  className="overflow-hidden hover:border-[#c9a84c]/40 transition-colors duration-300"
+                >
+                  <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
+                    {/* Visual Frame */}
+                    <div className={`lg:col-span-6 w-full ${isReversed ? 'lg:order-2' : ''}`}>
+                      <div className="relative rounded-xl overflow-hidden aspect-[16/10] bg-[#1a1a1a] border border-[#2a2a2a] group">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            const parent = (e.target as HTMLElement).parentElement;
+                            if (parent) {
+                              parent.innerHTML = `
+                                <div class="w-full h-full flex flex-col items-center justify-center bg-[#181818] p-6 text-center">
+                                  <span class="text-xs font-mono font-bold text-[#c9a84c] mb-2">${project.sector}</span>
+                                  <span class="text-lg font-bold text-white">${project.title}</span>
+                                </div>
+                              `;
+                            }
+                          }}
+                        />
+                        {/* Metric Callout Overlay */}
+                        <div className="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#0a0a0a]/92 backdrop-blur-md border border-[#c9a84c]/30 rounded-xl p-3.5 flex items-center gap-3">
+                          <div className="text-2xl font-black text-[#c9a84c] tracking-tight tabular-nums">
+                            {project.metricHighlight}
+                          </div>
+                          <div className="text-xs font-medium text-[#cccccc] leading-tight max-w-[180px]">
+                            {project.metricLabel}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Narrative & Details */}
+                    <div className={`lg:col-span-6 flex flex-col justify-between ${isReversed ? 'lg:order-1' : ''}`}>
+                      <div>
+                        {/* Metadata line: No pills, unboxed clean text with separators */}
+                        <div className="flex items-center gap-2 text-xs text-[#888888] font-medium mb-3">
+                          <span>{project.client}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{project.sector}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{project.duration}</span>
+                        </div>
+
+                        <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">
+                          {project.title}
+                        </h3>
+
+                        <div className="space-y-3 text-sm text-[#aaaaaa] leading-relaxed mb-6">
+                          <p>
+                            <strong className="text-white font-semibold">The Challenge: </strong>
+                            {project.problem}
+                          </p>
+                          <p>
+                            <strong className="text-white font-semibold">Our Architecture: </strong>
+                            {project.solution}
+                          </p>
+                          <p>
+                            <strong className="text-[#c9a84c] font-semibold">The Outcome: </strong>
+                            {project.result}
+                          </p>
+                        </div>
+
+                        {/* Technical Specs Strip */}
+                        <div className="grid grid-cols-2 gap-3 p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6">
+                          {project.specs.map((spec, sIdx) => (
+                            <div key={sIdx} className="text-xs">
+                              <span className="text-[#666666] block text-[10px] uppercase font-semibold">
+                                {spec.label}
+                              </span>
+                              <span className="font-mono font-medium text-[#dddddd]">
+                                {spec.value}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-4 pt-2">
+                        <AnimatedButton
+                          onClick={() => setSelectedProject(project)}
+                          variant="secondary"
+                          size="sm"
+                          icon={<ArrowUpRight className="w-3.5 h-3.5 text-[#c9a84c]" />}
+                        >
+                          View Project Breakdown
+                        </AnimatedButton>
+                        <button
+                          type="button"
+                          onClick={onOpenConsultation}
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#888888] hover:text-white transition-colors py-2 ml-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded cursor-pointer"
+                        >
+                          <span>Discuss Similar Project</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Project Detail Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            role="dialog"
+            aria-modal="true"
+          >
+            <motion.div
+              initial={shouldReduceMotion ? undefined : { scale: 0.96, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? undefined : { scale: 0.96, opacity: 0, y: 10 }}
+              transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
+              className="bg-[#141414] border border-[#262626] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl"
+            >
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-5 right-5 p-2 rounded-xl bg-[#202020] text-[#aaaaaa] hover:text-white transition-colors cursor-pointer"
+                aria-label="Close Case Study Details"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="mb-6">
+                <span className="text-xs font-mono font-bold text-[#c9a84c] uppercase">
+                  {selectedProject.sector} · {selectedProject.duration}
+                </span>
+                <h3 className="text-2xl font-bold text-white mt-1">
+                  {selectedProject.title}
+                </h3>
+                <p className="text-sm text-[#888888]">
+                  Client: {selectedProject.client}
+                </p>
+              </div>
+
+              <div className="space-y-4 text-sm text-[#cccccc] mb-8">
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
+                    Challenge
+                  </h4>
+                  <p className="text-[#aaaaaa] leading-relaxed">{selectedProject.problem}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
+                    Engineered Solution
+                  </h4>
+                  <p className="text-[#aaaaaa] leading-relaxed">{selectedProject.solution}</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
+                    Measurable Result
+                  </h4>
+                  <p className="text-[#c9a84c] leading-relaxed font-medium">{selectedProject.result}</p>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-[#222222] flex items-center justify-between">
+                <span className="text-xs text-[#777777]">
+                  Delivered under strict client NDA
+                </span>
+                <AnimatedButton
+                  onClick={() => {
+                    setSelectedProject(null);
+                    onOpenConsultation();
+                  }}
+                  variant="primary"
+                  size="sm"
+                >
+                  Inquire About Similar Architecture
+                </AnimatedButton>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
