@@ -21,11 +21,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
 
   return (
     <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-18 overflow-hidden bg-[#0A0A0A]">
-      {/* Subtle architectural background grid & radial warmth */}
-      <div className="absolute inset-0 hero-tech-grid opacity-35 pointer-events-none" />
-      <div className="absolute inset-0 hero-radial-glow pointer-events-none" />
-
-      {/* Ambient Video Background — High contrast on right, smooth left-scrim for crystal clear text */}
+      {/* Ambient Video Background — blended into the dark bg: vivid on the right, scrimmed on the left for text clarity */}
       <HeroVideoBackground />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
