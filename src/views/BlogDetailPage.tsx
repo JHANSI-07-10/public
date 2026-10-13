@@ -2,7 +2,14 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { VERIFIED_INSIGHTS, Service } from '../data/content';
+import {
+  VERIFIED_INSIGHTS,
+  Service,
+  InsightArticle,
+  getRelatedProjectForArticle,
+  getArticleTakeaways,
+} from '../data/content';
+import { getArticleBreakdown } from '../data/articleBreakdowns';
 import { Button } from '../components/ui/Button';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
@@ -15,6 +22,17 @@ import {
   User,
   Clock,
   ArrowUpRight,
+  Copy,
+  Linkedin,
+  Twitter,
+  MessageSquare,
+  Mail,
+  CheckCircle2,
+  ShieldCheck,
+  Zap,
+  Quote,
+  Cpu,
+  FileCheck2,
 } from 'lucide-react';
 
 interface BlogDetailPageProps {
@@ -22,14 +40,150 @@ interface BlogDetailPageProps {
   onOpenConsultation: (service?: Service) => void;
 }
 
+const ArticleShareMenu: React.FC<{ article: InsightArticle }> = ({ article }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const shareUrl =
+    typeof window !== 'undefined'
+      ? window.location.href
+      : `https://vpdtechnologies.com/blogs/${article.id}`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  return (
+    <div className="relative" ref={menuRef}>
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        className="inline-flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-lg border border-[#2a2a2a] bg-[#141414] text-xs font-semibold text-[#aaaaaa] hover:text-white hover:border-[#c9a84c]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer"
+        aria-label="Share this article"
+      >
+        <Share2 className="w-3.5 h-3.5 text-[#c9a84c]" />
+        <span className="hidden sm:inline">Share</span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 top-full mt-2 z-50 w-64 p-3 rounded-2xl bg-[#141414] border border-[#2c2c2c] shadow-2xl shadow-black/80 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-150">
+          <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#242424]">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c9a84c]">
+              Share Briefing
+            </span>
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="text-[10px] font-mono font-bold text-[#aaaaaa] hover:text-white flex items-center gap-1 cursor-pointer"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-3 h-3 text-[#22c55e]" />
+                  <span className="text-[#22c55e]">Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-3 h-3" />
+                  <span>Copy Link</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          <div className="space-y-1">
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
+            >
+              <div className="w-5 h-5 rounded bg-[#0a66c2]/15 text-[#0a66c2] flex items-center justify-center shrink-0">
+                <Linkedin className="w-3 h-3" />
+              </div>
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                `Technical Briefing: "${article.title}" by @VPDTechnologies`
+              )}&url=${encodeURIComponent(shareUrl)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
+            >
+              <div className="w-5 h-5 rounded bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
+                <Twitter className="w-3 h-3" />
+              </div>
+              <span>X (Twitter)</span>
+            </a>
+            <a
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                `Read this technical briefing: "${article.title}" by VPD Technologies: ${shareUrl}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
+            >
+              <div className="w-5 h-5 rounded bg-[#22c55e]/15 text-[#22c55e] flex items-center justify-center shrink-0">
+                <MessageSquare className="w-3 h-3" />
+              </div>
+              <span>WhatsApp</span>
+            </a>
+            <a
+              href={`mailto:?subject=${encodeURIComponent(
+                `${article.title} - VPD Engineering Lab Briefing`
+              )}&body=${encodeURIComponent(
+                `Hi,\n\nI thought you would find this engineering briefing insightful:\n\n${article.title}\n${article.excerpt}\n\nRead more: ${shareUrl}`
+              )}`}
+              onClick={() => setIsOpen(false)}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
+            >
+              <div className="w-5 h-5 rounded bg-[#c9a84c]/15 text-[#c9a84c] flex items-center justify-center shrink-0">
+                <Mail className="w-3 h-3" />
+              </div>
+              <span>Email</span>
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsultation }) => {
   const articleRef = useRef<HTMLDivElement | null>(null);
   const [progress, setProgress] = useState(0);
-  const [copied, setCopied] = useState(false);
 
   const article = VERIFIED_INSIGHTS.find((a) => a.id === id) || VERIFIED_INSIGHTS[0];
-
   const related = VERIFIED_INSIGHTS.filter((a) => a.id !== article.id).slice(0, 2);
+  const relatedProject = getRelatedProjectForArticle(article.id);
+  const takeaways = getArticleTakeaways(article);
+  const breakdown = getArticleBreakdown(article.id);
 
   useEffect(() => {
     setProgress(0);
@@ -59,16 +213,6 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
     };
   }, [article.id]);
 
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
-  };
-
   return (
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* Reading progress rail (below navbar) */}
@@ -91,18 +235,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
               <span className="text-[#c9a84c] truncate">{article.title}</span>
             </nav>
 
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-lg border border-[#2a2a2a] bg-[#141414] text-xs font-semibold text-[#aaaaaa] hover:text-white hover:border-[#c9a84c]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c]"
-              aria-label="Copy link to this article"
-            >
-              {copied ? (
-                <Check className="w-3.5 h-3.5 text-[#22c55e]" />
-              ) : (
-                <Share2 className="w-3.5 h-3.5 text-[#c9a84c]" />
-              )}
-              <span className="hidden sm:inline">{copied ? 'Link Copied' : 'Share'}</span>
-            </button>
+            <ArticleShareMenu article={article} />
           </div>
         </div>
       </section>
@@ -112,7 +245,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <Reveal className="mb-10">
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap items-center gap-2 mb-4">
               {article.tags.map((t) => (
                 <span
                   key={t}
@@ -121,6 +254,17 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
                   {t.toUpperCase()}
                 </span>
               ))}
+
+              {relatedProject && (
+                <Link
+                  href={`/portfolio?case=${relatedProject.id}`}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#c9a84c]/10 hover:bg-[#c9a84c]/20 border border-[#c9a84c]/30 text-[10px] font-mono font-bold text-[#c9a84c] transition-colors"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+                  <span>Verified in Production: {relatedProject.title}</span>
+                  <ArrowUpRight className="w-3 h-3 text-[#c9a84c]" />
+                </Link>
+              )}
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-6 leading-tight text-balance">
@@ -143,68 +287,180 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
             </div>
           </Reveal>
 
-          {/* Featured Image */}
-          <Reveal delay={0.08} className="mb-12">
-            <div className="rounded-2xl overflow-hidden aspect-[16/9] max-h-[460px] bg-[#141414] border border-[#262626]">
-              <img
-                src={article.image}
-                alt={article.title}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
-              />
+          {/* Technical Specifications Matrix (Replaces Image) */}
+          <Reveal delay={0.06} className="mb-10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              {breakdown.specifications.map((spec, i) => (
+                <div
+                  key={i}
+                  className="p-4 rounded-xl bg-[#121212] border border-[#242424] hover:border-[#c9a84c]/40 transition-colors"
+                >
+                  <span className="block text-[10px] font-mono uppercase tracking-wider text-[#777777] mb-1">
+                    {spec.label}
+                  </span>
+                  <span className="text-xs sm:text-sm font-bold font-mono text-white">
+                    {spec.value}
+                  </span>
+                </div>
+              ))}
             </div>
           </Reveal>
 
-          {/* Article Body */}
-          <Reveal delay={0.12}>
-            <div className="prose prose-invert max-w-none space-y-6 text-base text-[#cccccc] leading-relaxed">
-              <p className="text-lg sm:text-xl text-white font-medium leading-relaxed">
-                {article.excerpt}
-              </p>
-
-              <h2 className="text-2xl font-bold text-white pt-6 border-t border-[#222222]">
-                The Architectural Imperative
-              </h2>
-              <p>
-                In high-frequency enterprise environments, the trade-off between user experience
-                agility and system reliability is often mismanaged. Engineering teams default to
-                either bloated client bundles that degrade conversion velocity, or rigid monolithic
-                architectures that cannot accommodate evolving business requirements.
-              </p>
-              <p>
-                At VPD Technologies, our architectural standard couples lightweight, edge-rendered
-                frontends with strictly decoupled event-driven service meshes. This guarantees that
-                operational state synchronization remains resilient even during peak traffic
-                conditions.
-              </p>
-
-              <div className="p-6 rounded-2xl bg-[#141414] border border-[#282828] my-8">
-                <h3 className="text-base font-bold text-[#c9a84c] mb-2">
-                  Key Architectural Principle
+          {/* Executive Architecture Takeaways Callout */}
+          <Reveal delay={0.08} className="mb-10">
+            <div className="p-6 sm:p-7 rounded-2xl bg-[#121212] border border-[#262626] relative overflow-hidden">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="w-4 h-4 text-[#c9a84c]" />
+                <h3 className="text-xs font-mono uppercase font-bold tracking-widest text-[#c9a84c]">
+                  Executive Architecture Takeaways
                 </h3>
-                <p className="text-sm text-[#aaaaaa] italic m-0">
-                  "Zero-waste codebases are not an aesthetic luxury; they are a financial
-                  imperative. Every 100 milliseconds of latency directly degrades user retention and
-                  transaction throughput."
-                </p>
               </div>
+              <ul className="space-y-3">
+                {takeaways.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#cccccc] leading-relaxed">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] mt-0.5 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
 
-              <h2 className="text-2xl font-bold text-white pt-6 border-t border-[#222222]">
-                Scalability & Implementation Protocols
+          {/* Article Executive Summary & Problem Scope */}
+          <Reveal delay={0.1} className="mb-12">
+            <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#141414] to-[#0f0f0f] border-l-4 border-l-[#c9a84c] border border-[#262626]">
+              <div className="flex items-center gap-2 mb-2">
+                <Cpu className="w-4 h-4 text-[#c9a84c]" />
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#c9a84c] font-bold">
+                  {breakdown.topicBadge}
+                </span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                {breakdown.summaryTitle}
               </h2>
-              <p>
-                By leveraging type-safe Java protocols and Spring Boot on the backend alongside React
-                and WebSockets on the frontend, enterprises obtain the rare duality of banking-grade
-                data security with fluid real-time interactions.
+              <p className="text-sm sm:text-base text-[#cccccc] leading-relaxed">
+                {breakdown.summaryText}
               </p>
             </div>
           </Reveal>
+
+          {/* In-Depth Architectural Breakdown Sections */}
+          <div className="space-y-12">
+            {breakdown.sections.map((section, sIdx) => (
+              <Reveal key={sIdx} delay={0.08 + sIdx * 0.04}>
+                <section className="space-y-4 pt-8 first:pt-0 border-t border-[#202020] first:border-t-0">
+                  <div className="flex items-center gap-3">
+                    <span className="w-7 h-7 rounded-lg bg-[#c9a84c]/15 text-[#c9a84c] font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-[#c9a84c]/30">
+                      0{sIdx + 1}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                      {section.heading}
+                    </h3>
+                  </div>
+
+                  <div className="space-y-4 text-base text-[#b8b8b8] leading-relaxed">
+                    {section.paragraphs.map((p, pIdx) => (
+                      <p key={pIdx}>{p}</p>
+                    ))}
+                  </div>
+
+                  {section.bulletPoints && section.bulletPoints.length > 0 && (
+                    <div className="mt-5 p-5 sm:p-6 rounded-xl bg-[#131313] border border-[#222222]">
+                      <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#c9a84c] block mb-3">
+                        Technical Implementation Protocols
+                      </span>
+                      <ul className="space-y-2.5">
+                        {section.bulletPoints.map((bp, bIdx) => (
+                          <li key={bIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#cccccc] leading-relaxed">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] mt-2 shrink-0" />
+                            <span>{bp}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </section>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Key Architectural Principle Callout */}
+          <Reveal delay={0.1} className="my-12">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#141414] border border-[#282828] relative overflow-hidden">
+              <Quote className="w-8 h-8 text-[#c9a84c]/30 mb-3" />
+              <blockquote className="text-base sm:text-lg font-medium text-white italic mb-4 leading-relaxed">
+                "{breakdown.keyPrinciple.quote}"
+              </blockquote>
+              <div className="flex items-center gap-3 pt-3 border-t border-[#222222]">
+                <div>
+                  <span className="text-xs font-bold text-[#c9a84c] block">
+                    {breakdown.keyPrinciple.author}
+                  </span>
+                  <span className="text-[10px] text-[#777777] font-mono">
+                    {breakdown.keyPrinciple.role}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Architectural Verification Checklist */}
+          <Reveal delay={0.12} className="my-12">
+            <div className="p-6 sm:p-7 rounded-2xl bg-[#111111] border border-[#252525]">
+              <div className="flex items-center gap-2 mb-4">
+                <FileCheck2 className="w-4 h-4 text-[#22c55e]" />
+                <h4 className="text-xs font-mono uppercase font-bold tracking-widest text-[#22c55e]">
+                  Production Verification Checklist
+                </h4>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {breakdown.architectureChecklist.map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-[#161616] border border-[#222222] text-xs text-[#cccccc]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#22c55e] mt-0.5 shrink-0" />
+                    <span className="leading-snug">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Verified Production Case Study Callout */}
+          {relatedProject && (
+            <Reveal delay={0.06} className="my-10">
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#121212] border border-[#c9a84c]/30 relative overflow-hidden group">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                  <span className="text-[10px] font-mono uppercase font-bold tracking-wider px-2.5 py-1 rounded bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30 flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    Verified in Production Deployment
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#c9a84c]">
+                    {relatedProject.metricHighlight} {relatedProject.metricLabel}
+                  </span>
+                </div>
+                <h4 className="text-lg font-bold text-white mb-2">
+                  {relatedProject.title}
+                </h4>
+                <p className="text-xs text-[#aaaaaa] leading-relaxed mb-4">
+                  {relatedProject.overview || relatedProject.solution}
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#222222]">
+                  <span className="text-xs text-[#777777]">
+                    Client: <strong className="text-white font-medium">{relatedProject.client}</strong> ({relatedProject.duration})
+                  </span>
+                  <Link
+                    href={`/portfolio?case=${relatedProject.id}`}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-black bg-[#c9a84c] hover:bg-[#d4b55c] transition-colors shrink-0"
+                  >
+                    <span>Explore Production Case Study</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          )}
 
           {/* Call to action inside article */}
-          <Reveal delay={0.08} className="mt-16">
+          <Reveal delay={0.08} className="mt-14">
             <div className="p-8 rounded-2xl bg-[#141414] border border-[#2a2a2a] flex flex-col sm:flex-row items-center justify-between gap-6">
               <div className="text-center sm:text-left">
                 <h4 className="text-lg font-bold text-white mb-1">Implement This Architecture</h4>
@@ -237,35 +493,29 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
                       href={`/blogs/${rel.id}`}
                       className="group block h-full rounded-xl border border-[#262626] bg-[#141414] p-5 card-hover"
                     >
+<<<<<<< Updated upstream
                       <div className="text-xs font-mono text-[#777777] mb-2">
                         {rel.date}
+=======
+                      <div className="text-[10px] font-mono text-[#777777] mb-2">
+                        {rel.author} · {rel.date}
+>>>>>>> Stashed changes
                       </div>
-                      <h4 className="text-base font-bold text-white leading-snug mb-2 group-hover:text-[#c9a84c] transition-colors">
+                      <h4 className="text-sm font-bold text-white mb-2 group-hover:text-[#c9a84c] transition-colors leading-snug">
                         {rel.title}
                       </h4>
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c9a84c]">
-                        Read Brief
-                        <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </span>
+                      <p className="text-xs text-[#888888] line-clamp-2 leading-relaxed">
+                        {rel.excerpt}
+                      </p>
                     </Link>
                   </StaggerItem>
                 ))}
               </StaggerContainer>
             </section>
           )}
-
-          {/* Navigation Back */}
-          <div className="mt-12 pt-8 border-t border-[#222222]">
-            <Link
-              href="/blogs"
-              className="inline-flex items-center gap-2 text-sm font-bold text-[#aaaaaa] hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 text-[#c9a84c]" />
-              <span>Back to All Articles</span>
-            </Link>
-          </div>
         </div>
       </article>
     </div>
   );
 };
+

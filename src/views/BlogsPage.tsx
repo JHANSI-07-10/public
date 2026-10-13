@@ -7,15 +7,17 @@ import { Button } from '../components/ui/Button';
 import { CountingNumber } from '../components/ui/counting-number';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
-import { VERIFIED_INSIGHTS, InsightArticle, Service } from '../data/content';
+import { VERIFIED_INSIGHTS, InsightArticle, Service, getRelatedProjectForArticle } from '../data/content';
 import {
   ArrowUpRight,
   ArrowRight,
   Clock,
   SearchX,
+  Search,
+  X,
   CheckCircle2,
-  Layers,
   ShieldCheck,
+  Layers,
   Gauge,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -119,6 +121,7 @@ const CoverFrame: React.FC<{ article: InsightArticle; featured?: boolean }> = ({
 
 export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
   const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const shouldReduceMotion = useReducedMotion();
 
   const allTags = useMemo(() => {
@@ -128,53 +131,31 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
     return ['all', ...unique];
   }, []);
 
-  const filteredArticles = useMemo(
-    () =>
+  const filteredArticles = useMemo(() => {
+    let result =
       selectedTag === 'all'
         ? VERIFIED_INSIGHTS
         : VERIFIED_INSIGHTS.filter((a) =>
             a.tags.some((t) => t.toLowerCase() === selectedTag)
-          ),
-    [selectedTag]
-  );
+          );
 
-  const avgRead = Math.round(
-    VERIFIED_INSIGHTS.reduce((sum, a) => sum + readingMinutes(a), 0) / VERIFIED_INSIGHTS.length
-  );
-  const isFeaturedLayout = filteredArticles.length > 2;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter((a) => {
+        const inTitle = a.title.toLowerCase().includes(q);
+        const inExcerpt = a.excerpt.toLowerCase().includes(q);
+                                                                                                                      const inAuthor = a.author.toLowerCase().includes(q);
+                                                                                                                      const inTags = a.tags.some((t) => t.toLowerCase().includes(q));
+                                                                                                                      return inTitle || inExcerpt || inAuthor || inTags;
+                                                                                                                    });
+                                                                                                                  }
 
-  return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
-      {/* ── Section 1: Hero + live filters ─────────────────────────── */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
-        {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
-        <img
-          src="/bg-insights-hero.svg"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-[72%_center] opacity-55 pointer-events-none select-none"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/85 via-[#0a0a0a]/60 to-[#0a0a0a]/90 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
-        <div className="absolute inset-0 hero-radial-glow pointer-events-none opacity-70" aria-hidden="true" />
-        {/* Slow gold scanline sweeping the lab grid */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="insights-scanline absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/45 to-transparent" />
-        </div>
+                                                                                                                  return result;
+                                                                                                                }, [selectedTag, searchQuery]);
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeader
-            align="center"
-            eyebrow="Engineered Knowledge Base"
-            title={
-              <>
-                Architectural Deep Dives from the{' '}
-                <span className="text-[#c9a84c]">VPD Engineering Lab</span>.
-              </>
-            }
-            subtitle="Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and enterprise Java systems."
-          />
+                                                                                                                const isFeaturedLayout = filteredArticles.length > 2 && !searchQuery;
 
+<<<<<<< Updated upstream
           {/* Lab stats bar with count-up numbers */}
           <StaggerContainer
             className="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto mb-10 pt-8 border-t border-[#1f1f1f]"
@@ -196,49 +177,104 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
               </StaggerItem>
             ))}
           </StaggerContainer>
+=======
+                                                                                                                return (
+                                                                                                                  <div className="pt-20 pb-0 bg-[#0a0a0a]">
+                                                                                                                    {/* ── Section 1: Hero + live filters ─────────────────────────── */}
+                                                                                                                    <section className="relative pt-4 pb-5 sm:pt-6 sm:pb-6 border-b border-[#1f1f1f] overflow-hidden">
+                                                                                                                      {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
+                                                                                                                      <img
+                                                                                                                        src="/bg-insights-hero.svg"
+                                                                                                                        alt=""
+                                                                                                                        aria-hidden="true"
+                                                                                                                        className="absolute inset-0 w-full h-full object-cover object-[72%_center] opacity-55 pointer-events-none select-none"
+                                                                                                                      />
+                                                                                                                      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/85 via-[#0a0a0a]/60 to-[#0a0a0a]/90 pointer-events-none" aria-hidden="true" />
+                                                                                                                      <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+                                                                                                                      <div className="absolute inset-0 hero-radial-glow pointer-events-none opacity-70" aria-hidden="true" />
+                                                                                                                      {/* Slow gold scanline sweeping the lab grid */}
+                                                                                                                      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+                                                                                                                        <div className="insights-scanline absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/45 to-transparent" />
+                                                                                                                      </div>
+>>>>>>> Stashed changes
 
-          {/* Animated filter pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {allTags.map((tag) => (
-              <TagPill
-                key={tag}
-                label={tag === 'all' ? 'ALL TOPICS' : tag.toUpperCase()}
-                active={selectedTag === tag}
-                onClick={() => setSelectedTag(tag)}
-              />
-            ))}
-          </div>
+                                                                                                                      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
+                                                                                                                        <SectionHeader
+                                                                                                                          align="center"
+                                                                                                                          eyebrow="Engineered Knowledge Base"
+                                                                                                                          title={
+                                                                                                                            <>
+                                                                                                                              Architectural Deep Dives from the{' '}
+                                                                                                                              <span className="text-[#c9a84c]">VPD Engineering Lab</span>.
+                                                                                                                            </>
+                                                                                                                          }
+                                                                                                                          subtitle="Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and enterprise Java systems."
+                                                                                                                          className="!mb-6 sm:!mb-8"
+                                                                                                                        />
 
-          {/* Live result counter */}
-          <div className="mt-5 text-center text-xs font-mono text-[#777777]" aria-live="polite">
-            SHOWING{' '}
-            <span className="text-[#c9a84c] font-bold">
-              {String(filteredArticles.length).padStart(2, '0')}
-            </span>{' '}
-            / {String(VERIFIED_INSIGHTS.length).padStart(2, '0')} BRIEFS
-          </div>
-        </div>
-      </section>
+                                                                                                                        {/* Search Bar */}
+                                                                                                                        <div className="relative max-w-md mx-auto mb-6">
+                                                                                                                          <Search className="w-4 h-4 text-[#777777] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                                                                                                          <input
+                                                                                                                            type="text"
+                                                                                                                            value={searchQuery}
+                                                                                                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                                                                                                            placeholder="Search technical briefs (e.g. React, Spring, Docker, Latency)..."
+                                                                                                                            className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-[#121212] border border-[#262626] focus:border-[#c9a84c] text-xs text-white placeholder-[#666666] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
+                                                                                                                          />
+                                                                                                                          {searchQuery && (
+                                                                                                                            <button
+                                                                                                                              type="button"
+                                                                                                                              onClick={() => setSearchQuery('')}
+                                                                                                                              className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded text-[#777777] hover:text-white transition-colors cursor-pointer"
+                                                                                                                              title="Clear search"
+                                                                                                                            >
+                                                                                                                              <X className="w-3.5 h-3.5" />
+                                                                                                                            </button>
+                                                                                                                          )}
+                                                                                                                        </div>
 
-      {/* ── Section 2: Bento article grid ──────────────────────────── */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredArticles.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-center">
-              <SearchX className="w-10 h-10 text-[#c9a84c] mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">No briefs on this topic yet</h3>
-              <p className="text-sm text-[#aaaaaa] mb-6 max-w-sm">
-                The lab is still cooking this one. Pick another topic or browse everything.
-              </p>
-              <Button variant="secondary" size="md" onClick={() => setSelectedTag('all')}>
-                Show All Topics
-              </Button>
-            </div>
-          ) : (
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              <AnimatePresence mode="popLayout" initial={false}>
+                                                                                                                        {/* Animated filter pills */}
+                                                                                                                        <div className="flex flex-wrap items-center justify-center gap-2">
+                                                                                                                          {allTags.map((tag) => (
+                                                                                                                            <TagPill
+                                                                                                                              key={tag}
+                                                                                                                              label={tag === 'all' ? 'ALL TOPICS' : tag.toUpperCase()}
+                                                                                                                              active={selectedTag === tag}
+                                                                                                                              onClick={() => setSelectedTag(tag)}
+                                                                                                                            />
+                                                                                                                          ))}
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                    </section>
+
+                                                                                                                    {/* ── Section 2: Bento article grid ──────────────────────────── */}
+                                                                                                                    <section className="pt-5 pb-8 sm:pt-6 sm:pb-10">
+                                                                                                                      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+                                                                                                                        {filteredArticles.length === 0 ? (
+                                                                                                                          <div className="flex flex-col items-center justify-center py-24 text-center">
+                                                                                                                            <SearchX className="w-10 h-10 text-[#c9a84c] mb-4" />
+                                                                                                                            <h3 className="text-xl font-bold text-white mb-2">No briefs on this topic yet</h3>
+                                                                                                                            <p className="text-sm text-[#aaaaaa] mb-6 max-w-sm">
+                                                                                                                              The lab is still cooking this one. Pick another topic or browse everything.
+                                                                                                                            </p>
+                                                                                                                            <Button
+                                                                                                                              variant="secondary"
+                                                                                                                              size="md"
+                                                                                                                              onClick={() => {
+                                                                                                                                setSelectedTag('all');
+                                                                                                                                setSearchQuery('');
+                                                                                                                              }}
+                                                                                                                            >
+                                                                                                                              Show All Topics
+                                                                                                                            </Button>
+                                                                                                                          </div>
+                                                                                                                        ) : (
+                                                                                                                          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                                                                                                                            <AnimatePresence mode="popLayout" initial={false}>
                 {filteredArticles.map((article, idx) => {
                   const featured = isFeaturedLayout && idx === 0;
+                  const relatedProject = getRelatedProjectForArticle(article.id);
                   return (
                     <motion.article
                       key={article.id}
@@ -265,6 +301,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
 
                       <div className={`flex flex-col justify-between flex-1 ${featured ? 'lg:w-2/5 p-7 sm:p-8' : ''}`}>
                         <div className={featured ? '' : 'p-6 sm:p-7'}>
+<<<<<<< Updated upstream
                           {featured && (
                             <div className="inline-flex items-center gap-2 mb-4 px-2.5 py-1 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/30">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
@@ -273,6 +310,31 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                               </span>
                             </div>
                           )}
+=======
+                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                            {featured && (
+                              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/30">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
+                                <span className="text-[10px] font-mono font-bold tracking-widest text-[#c9a84c]">
+                                  LATEST BRIEF
+                                </span>
+                              </div>
+                            )}
+
+                            {relatedProject && (
+                              <Link
+                                href={`/portfolio?case=${relatedProject.id}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#c9a84c]/10 hover:bg-[#c9a84c]/20 border border-[#c9a84c]/30 text-[10px] font-mono font-bold text-[#c9a84c] transition-colors"
+                                title="View verified real-world production case study"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+                                <span>Verified in Production: {relatedProject.title}</span>
+                                <ArrowUpRight className="w-3 h-3 text-[#c9a84c]" />
+                              </Link>
+                            )}
+                          </div>
+>>>>>>> Stashed changes
 
                           <div className="flex items-center gap-2 text-xs text-[#777777] font-mono mb-3">
                             <span className="text-[#aaaaaa]">{article.author}</span>
@@ -325,7 +387,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
       {/* ── Section 3: Infinite topic ticker ───────────────────────── */}
       <section
         aria-label="Topics covered by the engineering lab"
-        className="py-5 border-y border-[#1f1f1f] bg-[#0d0d0d] overflow-hidden"
+        className="py-3.5 border-y border-[#1f1f1f] bg-[#0d0d0d] overflow-hidden"
       >
         <div className="insights-marquee flex w-max gap-3 hover:[animation-play-state:paused]">
           {[...MARQUEE_TOPICS, ...MARQUEE_TOPICS].map((topic, idx) => (
@@ -341,7 +403,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
       </section>
 
       {/* ── Section 4: Consultation CTA with rotating gold border ──── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-10 sm:py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="relative rounded-2xl p-px overflow-hidden">

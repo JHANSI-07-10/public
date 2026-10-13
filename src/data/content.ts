@@ -11,6 +11,19 @@ export interface Service {
   capabilities: string[];
 }
 
+export interface CaseStudyMilestone {
+  phase: string;
+  duration: string;
+  title: string;
+  description: string;
+}
+
+export interface CaseStudyOutcome {
+  metric: string;
+  label: string;
+  detail: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -25,6 +38,14 @@ export interface Project {
   result: string;
   tags: string[];
   specs: { label: string; value: string }[];
+  overview?: string;
+  challenges?: string[];
+  solutionPillars?: { title: string; description: string }[];
+  timeline?: CaseStudyMilestone[];
+  outcomes?: CaseStudyOutcome[];
+  techStack?: { category: string; technologies: string[] }[];
+  testimonial?: Testimonial;
+  architectureFlow?: { step: string; label: string; detail: string }[];
 }
 
 export interface Testimonial {
@@ -44,6 +65,7 @@ export interface InsightArticle {
   date: string;
   tags: string[];
   image: string;
+  takeaways?: string[];
 }
 
 export const COMPANY_DATA = {
@@ -190,6 +212,59 @@ export const VERIFIED_PROJECTS: Project[] = [
       { label: "Performance Gain", value: "1.2s TTI Reduction" },
       { label: "Architecture", value: "Conversion-Focused Funnel" },
       { label: "Deployment", value: "Vercel / Edge Runtime" }
+    ],
+    overview: "An enterprise SaaS platform was experiencing significant drop-offs along critical conversion pathways due to heavy initial payload sizes and disjointed frontend state transitions. VPD Technologies re-architected the client layer into a cinematic React application with intelligent edge hydration and bidirectional CRM ingestion.",
+    challenges: [
+      "Fragmented user acquisition funnel resulting in a 62% abandonment rate before reaching registration forms.",
+      "Bloated bundle sizes causing an initial Time-to-Interactive (TTI) exceeding 4.8 seconds on 4G networks.",
+      "Inconsistent client session state leading to dropped form inputs and inaccurate attribution logs.",
+      "Unoptimized asset rendering with non-responsive layouts degrading performance on mobile viewports."
+    ],
+    solutionPillars: [
+      {
+        title: "Dynamic React 19 Client Core",
+        description: "Engineered a modular, atomic component hierarchy with route-level code splitting, reducing initial JavaScript execution overhead by 68%."
+      },
+      {
+        title: "Edge Routing & Distributed Hydration",
+        description: "Deployed intelligent edge middleware on Vercel Edge Runtime to deliver localized asset caches with sub-80ms Time to First Byte (TTFB)."
+      },
+      {
+        title: "Automated Enterprise Ingestion Pipeline",
+        description: "Configured resilient webhook gateways directly integrating user qualification signals into HubSpot & Salesforce CRM with automated deduplication."
+      }
+    ],
+    timeline: [
+      { phase: "Phase 1", duration: "Weeks 1–3", title: "Funnel Auditing & Performance Profiling", description: "Comprehensive analysis of Core Web Vitals, user flow drop-offs, and monolithic frontend code audits." },
+      { phase: "Phase 2", duration: "Weeks 4–7", title: "React Component Hierarchy & Design Tokens", description: "Built custom design system components, atomic form validation, and cinematic micro-interactions." },
+      { phase: "Phase 3", duration: "Weeks 8–10", title: "Edge Middleware & CRM Gateway Sync", description: "Implemented edge routing logic, distributed caching, and bidirectional lead scoring webhook queues." },
+      { phase: "Phase 4", duration: "Weeks 11–12", title: "Stress Benchmarking & Production Cutover", description: "Global load testing across 12 edge nodes with zero-downtime DNS cutover and live attribution verification." }
+    ],
+    outcomes: [
+      { metric: "+45%", label: "Verified Inbound Conversions", detail: "Significant uplift in completed demo requests and qualified sales registrations." },
+      { metric: "1.2s", label: "Time-to-Interactive Reduction", detail: "Frontend interactivity dropped from 4.8s down to sub-1.1s worldwide." },
+      { metric: "99.98%", label: "Form Ingestion Reliability", detail: "Zero dropped lead payloads with asynchronous edge retry mechanisms." },
+      { metric: "96", label: "Mobile Lighthouse Score", detail: "All Core Web Vitals comfortably within Google's green performance bracket." }
+    ],
+    techStack: [
+      { category: "Frontend Core", technologies: ["React 19", "TypeScript", "Tailwind CSS", "Motion"] },
+      { category: "Edge & Routing", technologies: ["Vercel Edge Runtime", "HTTP/3", "Edge Middleware"] },
+      { category: "State & Data", technologies: ["Atomic Client State", "Webhooks", "Zod Validation"] },
+      { category: "Integrations", technologies: ["Salesforce API", "HubSpot CRM", "Google Tag Manager"] }
+    ],
+    testimonial: {
+      id: "t1",
+      clientName: "Rahul Sharma",
+      clientRole: "Founder",
+      company: "GrowthDesk",
+      content: "VPD TECH helped us turn our website into a clearer lead generation system. The new structure feels premium, fast, and much easier for prospects to act on.",
+      rating: 5
+    },
+    architectureFlow: [
+      { step: "01", label: "Global Edge Ingestion", detail: "HTTP/3 traffic routed via geo-distributed Vercel edge nodes with sub-80ms TTFB." },
+      { step: "02", label: "Selective Hydration", detail: "React 19 atomic component hierarchy executing partial hydration to drop TTI to 1.1s." },
+      { step: "03", label: "Localized State Funnel", detail: "In-memory client state management with zero external store overhead." },
+      { step: "04", label: "CRM Webhook Gateway", detail: "Asynchronous webhook deduplication pipeline into HubSpot & Salesforce API." }
     ]
   },
   {
@@ -210,6 +285,59 @@ export const VERIFIED_PROJECTS: Project[] = [
       { label: "Backend Core", value: "Java / Spring Boot" },
       { label: "Concurrency", value: "High-Volume Stream Handling" },
       { label: "Sync Latency", value: "< 50ms Global" }
+    ],
+    overview: "A major logistics operator managing distribution hubs across regional corridors was handicapped by decentralized spreadsheets and delayed inventory reconciliations. VPD Technologies engineered a high-concurrency operations command center with WebSocket duplex communication and a Java Spring Boot streaming backend.",
+    challenges: [
+      "Decentralized manual logging caused frequent shipment routing miscalculations and costly dispatch delays.",
+      "Critical telemetry updates took up to 8 minutes to propagate between warehouse floors and headquarters.",
+      "Simultaneous manifest modifications triggered persistent write conflicts and database lockouts.",
+      "Lack of unified real-time dashboard visibility across 10+ distributed regional freight hubs."
+    ],
+    solutionPillars: [
+      {
+        title: "Bi-Directional WebSocket Sync Core",
+        description: "Implemented persistent STOMP/SockJS connections with Redis Pub/Sub, broadcasting state modifications in under 50 milliseconds."
+      },
+      {
+        title: "High-Throughput Java Spring Boot Engine",
+        description: "Architected a non-blocking Java 21 microservice suite capable of ingesting high-volume telemetry and barcode scan streams."
+      },
+      {
+        title: "Conflict-Free Optimistic Data Models",
+        description: "Implemented transactional version stamping and partitioned PostgreSQL storage to eradicate concurrent edit collisions."
+      }
+    ],
+    timeline: [
+      { phase: "Phase 1", duration: "Weeks 1–4", title: "Logistics Process Mapping & Schema Blueprint", description: "Mapped distributed warehouse state machines, manifest schemas, and multi-hub synchronization models." },
+      { phase: "Phase 2", duration: "Weeks 5–9", title: "Spring Boot Microservices & Redis Broker", description: "Engineered core messaging layers, persistent socket connections, and database partitioning." },
+      { phase: "Phase 3", duration: "Weeks 10–13", title: "Real-Time Operator Console & Scanners", description: "Built ergonomic React frontend with live fleet mapping, manifest diffing, and scanner input listeners." },
+      { phase: "Phase 4", duration: "Weeks 14–16", title: "Regional Pilot & Concurrency Hardening", description: "Simulated 5,000 active concurrent operators, audited sync accuracy, and deployed live across 10 distribution hubs." }
+    ],
+    outcomes: [
+      { metric: "90%", label: "Error Elimination", detail: "Human entry errors dropped by 90% through automated scanning and validation." },
+      { metric: "<50ms", label: "State Synchronization Latency", detail: "Real-time updates delivered instantly across all active dispatcher screens." },
+      { metric: "+35%", label: "Turnaround Velocity", detail: "Shipment sorting and vehicle departure cycles accelerated dramatically." },
+      { metric: "100%", label: "Audit Traceability", detail: "Complete historical revision logs for every parcel and container manifest." }
+    ],
+    techStack: [
+      { category: "Backend Engine", technologies: ["Java 21 LTS", "Spring Boot 3", "Spring WebFlux"] },
+      { category: "Real-Time Messaging", technologies: ["WebSockets (STOMP)", "SockJS", "Redis Pub/Sub"] },
+      { category: "Data Storage", technologies: ["PostgreSQL 16", "HikariCP", "Flyway Migration"] },
+      { category: "Frontend Interface", technologies: ["React", "TypeScript", "Tailwind CSS", "Canvas Mapping"] }
+    ],
+    testimonial: {
+      id: "t3",
+      clientName: "Priya Mehta",
+      clientRole: "Operations Lead",
+      company: "Nexora Systems",
+      content: "The team understood our workflow quickly and shaped a web application experience that feels clean, practical, and ready for everyday business use.",
+      rating: 5
+    },
+    architectureFlow: [
+      { step: "01", label: "Warehouse Scanner Inputs", detail: "Floor barcode terminals and manual dispatch consoles streaming live event inputs." },
+      { step: "02", label: "STOMP WebSocket Pipe", detail: "Persistent duplex socket connection maintaining bidirectional telemetry synchronization." },
+      { step: "03", label: "Spring Boot Reactive Core", detail: "Multi-threaded Java 21 engine resolving concurrent manifest updates." },
+      { step: "04", label: "Redis Broker & PostgreSQL", detail: "Distributed pub/sub fanout with partition-indexed database persistence." }
     ]
   },
   {
@@ -230,6 +358,59 @@ export const VERIFIED_PROJECTS: Project[] = [
       { label: "Data Encryption", value: "AES-256 / TLS 1.3" },
       { label: "Throughput", value: "10,000+ Tx / Second" },
       { label: "Availability", value: "99.99% Uptime SLA" }
+    ],
+    overview: "A fast-growing fintech firm handling institutional transaction clearing needed to replace a fragile legacy pipeline before expanding into cross-border settlements. VPD Technologies built a high-throughput Java core architecture adhering to ISO 27001 security controls with AES-256 protocol-level cryptography and sub-millisecond execution times.",
+    challenges: [
+      "Severe latency spikes and thread contention during market open spikes, triggering transaction dropouts.",
+      "Regulatory demands requiring airtight ISO 27001 data compliance, immutable audit journals, and HSM key lifecycle management.",
+      "Vulnerability of stateful sessions to replay attacks and unauthorized lateral service escalation.",
+      "Double-spend risks during transient network partitions across distributed bank gateway nodes."
+    ],
+    solutionPillars: [
+      {
+        title: "Ultra-Resilient Java Transaction Engine",
+        description: "Constructed a zero-garbage, non-blocking Java core handling 10,000+ transactions per second at sub-millisecond database latency."
+      },
+      {
+        title: "Hardware-Grade AES-256 Cryptography",
+        description: "Implemented protocol-level payload encryption with automated envelope key rotation and strict TLS 1.3 enforcement."
+      },
+      {
+        title: "ACID Double-Entry Ledger System",
+        description: "Built an immutable, event-sourced transaction journal guaranteeing mathematical balance and zero double-entry errors."
+      }
+    ],
+    timeline: [
+      { phase: "Phase 1", duration: "Weeks 1–6", title: "Compliance Audit & Cryptographic Specification", description: "Formalized ISO 27001 threat modeling, banking gateway requirements, and mathematical ledger invariants." },
+      { phase: "Phase 2", duration: "Weeks 7–14", title: "Settlement Engine Core & Kafka Ingestion", description: "Developed reactive Java microservices, event streaming partitions, and double-entry ledger state machine." },
+      { phase: "Phase 3", duration: "Weeks 15–19", title: "Penetration Testing & HSM Hardware Integration", description: "Executed third-party black-box security penetration tests and integrated cloud HSM key rotation." },
+      { phase: "Phase 4", duration: "Weeks 20–24", title: "High-Volume Stress Tests & Mainnet Launch", description: "Simulated 15,000 TPS peak load bursts, validated zero ledger drift, and launched live under production SLA." }
+    ],
+    outcomes: [
+      { metric: "99.99%", label: "Guaranteed Production Uptime", detail: "Zero unplanned downtime incidents through redundant multi-zone clustering." },
+      { metric: "10,000+", label: "Transactions per Second", detail: "High-frequency throughput handled with sub-millisecond internal database locks." },
+      { metric: "Zero", label: "Security Incidents", detail: "100% clean security record across all external penetration audits." },
+      { metric: "ISO 27001", label: "Certified Compliance", detail: "Full security certification approved on initial external submission." }
+    ],
+    techStack: [
+      { category: "Core Backend", technologies: ["Java 21 LTS", "Spring Boot", "Spring Security"] },
+      { category: "Security & Encryption", technologies: ["AES-256-GCM", "TLS 1.3", "Cloud HSM", "JWT / RBAC"] },
+      { category: "Event & Persistence", technologies: ["Apache Kafka", "PostgreSQL Enterprise", "Liquibase"] },
+      { category: "Infrastructure", technologies: ["Docker", "Kubernetes", "Prometheus & Grafana"] }
+    ],
+    testimonial: {
+      id: "t2",
+      clientName: "David Wilson",
+      clientRole: "CTO",
+      company: "CloudPeak",
+      content: "High-quality engineering combined with a deep understanding of cloud-native architecture. VPD TECH is our go-to partner for complex backend systems.",
+      rating: 5
+    },
+    architectureFlow: [
+      { step: "01", label: "Trading Terminal Request", detail: "Stateless JWT-authenticated request signed via client-side ephemeral keys." },
+      { step: "02", label: "AES-256 Envelope Crypto", detail: "Hardware Security Module (HSM) key rotation and protocol-level encryption." },
+      { step: "03", label: "Kafka Event Ledger", detail: "Partitioned, immutable append-only event stream guaranteeing strict ordering." },
+      { step: "04", label: "2PC Distributed Settlement", detail: "ACID double-entry ledger settlement completing at 10,000+ transactions per second." }
     ]
   }
 ];
@@ -387,3 +568,55 @@ export const VERIFIED_INSIGHTS: InsightArticle[] = [
     image: "/about3.webp"
   }
 ];
+
+export const getRelatedInsightArticle = (projectId: string): InsightArticle | undefined => {
+  const map: Record<string, string> = {
+    'lead-engine': 'b1',
+    'operational-hub': 'b3',
+    'financial-protocol': 'b2',
+  };
+  const articleId = map[projectId];
+  return VERIFIED_INSIGHTS.find((a) => a.id === articleId);
+};
+
+export const getRelatedProjectForArticle = (articleId: string): Project | undefined => {
+  const map: Record<string, string> = {
+    b1: 'lead-engine',
+    b3: 'operational-hub',
+    b2: 'financial-protocol',
+  };
+  const projectId = map[articleId];
+  return VERIFIED_PROJECTS.find((p) => p.id === projectId);
+};
+
+export const getArticleTakeaways = (article: InsightArticle): string[] => {
+  if (article.takeaways && article.takeaways.length > 0) return article.takeaways;
+  if (article.tags.some((t) => ['React', 'UX', 'Architecture'].includes(t))) {
+    return [
+      'Eliminate client runtime overhead with route-level code splitting and atomic component hydration.',
+      'Enforce strict Core Web Vitals budgets to maintain Time-to-Interactive (TTI) under 1.2 seconds.',
+      'Prioritize high-intent conversion pathways by decoupling state management from monolithic bundles.',
+    ];
+  }
+  if (article.tags.some((t) => ['Java', 'Security', 'FinTech'].includes(t))) {
+    return [
+      'Enforce compile-time type safety and predictable memory models using Java 21 LTS and Spring Boot 3.',
+      'Deploy protocol-level AES-256-GCM encryption and stateless token authorization barriers.',
+      'Guarantee audit compliance (ISO 27001) with immutable append-only event ledgers.',
+    ];
+  }
+  if (article.tags.some((t) => ['WebSockets', 'Real-Time'].includes(t))) {
+    return [
+      'Maintain sub-50ms bi-directional telemetry sync using persistent STOMP socket protocols.',
+      'Prevent database write collisions through partitioned PostgreSQL queues and optimistic locking.',
+      'Decouple telemetry brokers with Redis Pub/Sub for horizontal scaling across distributed nodes.',
+    ];
+  }
+  return [
+    'Enforce immutable deployment pipelines with Docker containerization and automated verification.',
+    'Decouple service boundaries with clean API contracts to eliminate cascade failures.',
+    'Maintain 100% continuous integration and automated static analysis before production rollout.',
+  ];
+};
+
+

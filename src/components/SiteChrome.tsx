@@ -109,7 +109,7 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
         <CursorTrail />
 
         {/* Page Content */}
-        <main className="relative z-10 flex-grow">{children}</main>
+        <main className="relative flex-grow">{children}</main>
 
         {/* Global Enterprise Footer */}
         {!isAdminRoute && <Footer />}

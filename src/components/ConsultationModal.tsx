@@ -203,6 +203,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                   <option value="Enterprise Architecture Consulting">
                     Enterprise Architecture Consulting
                   </option>
+                  {formData.service &&
+                    !CORE_SERVICES.some((s) => s.title === formData.service) &&
+                    formData.service !== 'Enterprise Architecture Consulting' && (
+                      <option value={formData.service}>{formData.service}</option>
+                    )}
                 </select>
               </div>
 

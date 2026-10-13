@@ -3,9 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { VERIFIED_PROJECTS, Service } from '../data/content';
-import { Card } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
-import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
+import { CaseStudyDeepDive } from '../components/portfolio/CaseStudyDeepDive';
+import { ArrowLeft } from 'lucide-react';
 
 interface PortfolioDetailPageProps {
   id: string;
@@ -18,7 +17,7 @@ export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ id, on
   return (
     <div className="pt-28 pb-20 bg-[#0a0a0a]">
       {/* Breadcrumb Header */}
-      <section className="py-8 border-b border-[#1f1f1f] bg-[#0d0d0d]">
+      <section className="py-6 border-b border-[#1f1f1f] bg-[#0d0d0d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-xs text-[#888888] font-medium">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -30,9 +29,10 @@ export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ id, on
         </div>
       </section>
 
-      {/* Case Study Hero */}
-      <section className="py-16 border-b border-[#1f1f1f] relative overflow-hidden">
+      {/* Case Study Deep Dive Content */}
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<<<<<<< Updated upstream
           <div className="max-w-3xl mb-10">
             <span className="text-xs font-mono font-bold text-[#c9a84c] uppercase tracking-wider block mb-2">
               Case Study · {project.sector} · {project.duration}
@@ -163,8 +163,12 @@ export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ id, on
           >
             Start Project Discussion
           </Button>
+=======
+          <CaseStudyDeepDive project={project} onOpenConsultation={onOpenConsultation} isModal={false} />
+>>>>>>> Stashed changes
         </div>
       </section>
     </div>
   );
 };
+

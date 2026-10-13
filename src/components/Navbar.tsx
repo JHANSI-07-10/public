@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           style={{ scaleX: shouldReduceMotion ? scrollYProgress : progressScaleX }}
           className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#c9a84c] via-[#D4AF37] to-[#f3d57b]"
         />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-8">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between gap-8">
           {/* Zone 1: Authentic Brand Monogram & Wordmark */}
           <Link
             href="/"
