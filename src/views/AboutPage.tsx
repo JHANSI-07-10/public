@@ -2,15 +2,13 @@
 
 import React from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
-import { Card } from '../components/ui/Card';
-import { COMPANY_DATA, DIFFERENTIATORS, Service } from '../data/content';
-import { Shield, Cpu, Target, Award, ArrowRight } from 'lucide-react';
+import { DIFFERENTIATORS, Service } from '../data/content';
+import { Shield, Cpu, Target, Award, ArrowRight, Rocket, Users } from 'lucide-react';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { InteractiveCard } from '../components/motion/InteractiveCard';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { Accordion } from '../components/motion/Accordion';
-import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 import { ProjectJourneyTimeline } from '../components/about/ProjectJourneyTimeline';
 
 interface AboutPageProps {
@@ -55,151 +53,178 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
   ];
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
-      {/* Page Hero */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
-        <PageHeroBackground imageSrc="/about1.webp" position="center 40%" />
-        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+    <div className="pt-20 sm:pt-24 pb-12 bg-[#0a0a0a]">
+      {/* 1. Page Hero: About VPD Technologies */}
+      <section className="relative py-10 sm:py-14 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+        {/* Ambient Brand Aesthetics & Golden Radial Glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(201,168,76,0.12),transparent_65%)] pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-25 pointer-events-none" />
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[640px] h-[260px] bg-[#c9a84c]/10 rounded-full blur-[100px] pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
-            <SectionHeader
-              eyebrow="Company Profile & Philosophy"
-              title="Standardizing High-Tier Software Engineering Globally."
-              subtitle={COMPANY_DATA.vision}
-              align="center"
-            />
+            <div className="flex flex-col items-center text-center">
+              {/* Category Eyebrow Pill */}
+              <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1 rounded-full bg-[#141414] border border-[#c9a84c]/30 shadow-[0_0_20px_-4px_rgba(201,168,76,0.18)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
+                <span className="text-[11px] font-mono font-bold tracking-widest text-[#d8b75b] uppercase select-none">
+                  About VPD Technologies
+                </span>
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-4">
+                Engineering Innovation.{' '}
+                <span className="text-[#DFC067] drop-shadow-[0_0_24px_rgba(201,168,76,0.22)]">
+                  Empowering Progress.
+                </span>
+              </h1>
+
+              <div className="max-w-4xl space-y-3 text-base sm:text-lg text-[#9e9e9e] leading-relaxed mb-6">
+                <p>
+                  VPD Technologies is a software engineering and digital solutions company committed to building reliable, scalable, and future-ready technology solutions. We focus on transforming business challenges into meaningful digital opportunities through modern engineering practices, innovation, and a commitment to quality.
+                </p>
+                <p className="text-sm sm:text-base text-[#7e7e7e]">
+                  Our approach combines technical expertise, strategic thinking, and collaborative execution to deliver software products and platforms that support operational excellence and long-term business growth.
+                </p>
+              </div>
+
+              {/* Engineering Pillars Micro-Strip */}
+              <div className="inline-flex flex-wrap items-center justify-center gap-2.5 pt-2 border-t border-[#1a1a1a]">
+                <span className="text-xs font-mono text-[#888888] px-3 py-1 rounded-md bg-[#121212] border border-[#222222]">
+                  Enterprise Architecture
+                </span>
+                <span className="text-xs font-mono text-[#888888] px-3 py-1 rounded-md bg-[#121212] border border-[#222222]">
+                  Scalable Cloud Platforms
+                </span>
+                <span className="text-xs font-mono text-[#888888] px-3 py-1 rounded-md bg-[#121212] border border-[#222222]">
+                  High-Precision Engineering
+                </span>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Facility Imagery Strip */}
-      <section className="relative border-b border-[#1f1f1f] bg-[#0a0a0a] py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <StaggerItem>
-              <div className="rounded-2xl overflow-hidden border border-[#262626] aspect-[4/3] bg-[#141414] relative group">
-                <img
-                  src="/about1.webp"
-                  alt="VPD Technologies Innovation Compound"
-                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono text-[#c9a84c]">
-                  R&D Architecture Hub
-                </div>
-              </div>
-            </StaggerItem>
+      {/* 2. Founding Leadership Section (Taste-Skill Double-Bezel Architecture) */}
+      <section className="relative isolate overflow-hidden py-8 sm:py-12 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_50%_0%,rgba(201,168,76,0.05),transparent_50%),linear-gradient(180deg,#0a0a0a_0%,#080808_100%)]">
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" aria-hidden="true" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Reveal>
+            {/* Outer Double-Bezel Shell */}
+            <div className="rounded-[2rem] p-1.5 sm:p-2 bg-white/[0.02] border border-white/[0.08] shadow-[0_24px_50px_-20px_rgba(0,0,0,0.9)]">
+              {/* Inner Core */}
+              <div className="rounded-[calc(2rem-0.375rem)] bg-gradient-to-b from-[#131313] via-[#0e0e0e] to-[#090909] p-6 sm:p-8 lg:p-9 border border-white/[0.05] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] relative overflow-hidden">
+                {/* Subtle ambient gold glow */}
+                <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#c9a84c]/[0.03] rounded-full blur-3xl pointer-events-none" />
 
-            <StaggerItem>
-              <div className="rounded-2xl overflow-hidden border border-[#262626] aspect-[4/3] bg-[#141414] relative group">
-                <img
-                  src="/about2.webp"
-                  alt="Technical Standards & Development"
-                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono text-[#c9a84c]">
-                  Engineering Lab
+                {/* Top Row: Eyebrow + Users Icon */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
+                    <span className="text-xs font-mono font-bold tracking-widest text-[#c9a84c] uppercase">
+                      Founding Leadership
+                    </span>
+                  </div>
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-[#DFC067] shadow-[0_0_12px_rgba(201,168,76,0.1)]">
+                    <Users className="w-4 h-4 text-[#DFC067]" />
+                  </div>
                 </div>
-              </div>
-            </StaggerItem>
 
-            <StaggerItem>
-              <div className="rounded-2xl overflow-hidden border border-[#262626] aspect-[4/3] bg-[#141414] relative group">
-                <img
-                  src="/about3.webp"
-                  alt="System Testing & Scalability Verification"
-                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono text-[#c9a84c]">
-                  Quality & Performance Lab
+                {/* Headline & Subtitle */}
+                <div className="max-w-5xl mb-6">
+                  <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2.5">
+                    Leadership With a{' '}
+                    <span className="text-[#DFC067]">Shared Purpose</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#9e9e9e] leading-relaxed">
+                    VPD Technologies is led by <strong className="text-white font-semibold">Sai Krishna Vuppala</strong>, Founder &amp; Chief Executive Officer, and <strong className="text-white font-semibold">Ramcharan Gottipati</strong>, Co-Founder &amp; Managing Director. Together, they provide strategic and operational leadership driven by a commitment to decentralized innovation—building world-class technology infrastructure, cultivating elite talent beyond conventional metropolitan centers, and delivering transformative digital solutions.
+                  </p>
+                </div>
+
+                {/* Machined Hairline Divider */}
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.1] to-transparent mb-6" />
+
+                {/* Two Leadership Columns */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                  {/* Sai Krishna Vuppala */}
+                  <div className="group">
+                    <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
+                      Founder &amp; CEO
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-1 group-hover:text-[#DFC067] transition-colors duration-300">
+                      Sai Krishna Vuppala
+                    </h3>
+                    <p className="text-sm text-[#aaaaaa] leading-relaxed">
+                      Strategic vision, enterprise architecture, and company direction
+                    </p>
+                  </div>
+
+                  {/* Ramcharan Gottipati */}
+                  <div className="group">
+                    <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
+                      Co-Founder &amp; Managing Director
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-1 group-hover:text-[#DFC067] transition-colors duration-300">
+                      Ramcharan Gottipati
+                    </h3>
+                    <p className="text-sm text-[#aaaaaa] leading-relaxed">
+                      Operational leadership, delivery governance, and organizational growth
+                    </p>
+                  </div>
                 </div>
               </div>
-            </StaggerItem>
-          </StaggerContainer>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Leadership & Story Section */}
-      <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_12%_45%,rgba(201,168,76,0.08),transparent_42%),linear-gradient(180deg,#0c0c0c_0%,#0a0a0a_100%)]">
-        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" aria-hidden="true" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <Reveal className="lg:col-span-7">
-              <div>
-                <div className="text-xs font-bold tracking-widest text-[#c9a84c] uppercase mb-3">
-                  Founding Leadership
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-6">
-                  Bridging Deep Engineering with Intuitive Business Value.
-                </h2>
-                <blockquote className="text-lg sm:text-xl font-medium text-white leading-relaxed mb-6 italic pl-4 border-l-2 border-[#c9a84c]">
-                  "{COMPANY_DATA.foundingStatement}"
-                </blockquote>
-                <div className="space-y-4 text-sm text-[#aaaaaa] leading-relaxed mb-8">
-                  <p>
-                    VPD Technologies Private Limited operates under three governing tenets: <strong>Vision</strong> to identify high-impact technical directions, <strong>Purpose</strong> to design architecture that serves business goals, and <strong>Delivery</strong> to execute on time with zero-defect rigor.
-                  </p>
-                  <p>
-                    Headquartered in Kurnool, Andhra Pradesh, our engineering squads collaborate directly with founders and enterprise technology teams worldwide to build scalable SaaS backends, real-time logistics hubs, and conversion-focused web ecosystems.
-                  </p>
-                </div>
+      {/* 3. Our Vision & Our Mission Section */}
+      <section className="relative py-8 sm:py-12 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_50%_50%,rgba(201,168,76,0.05),transparent_60%),#0c0c0c] overflow-hidden">
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Reveal>
+            <SectionHeader
+              eyebrow="Purpose & Direction"
+              title="Our Vision & Mission"
+              subtitle="The foundational principles driving our technical standards, innovation trajectory, and client partnerships."
+              align="center"
+              className="!mb-6 sm:!mb-8"
+            />
+          </Reveal>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                  {COMPANY_DATA.leadership.map((leader) => (
-                    <div key={leader.name} className="flex items-center gap-3.5">
-                      <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#c9a84c]/50 flex items-center justify-center text-[#c9a84c] font-black text-sm shrink-0">
-                        {leader.initials}
-                      </div>
-                      <div>
-                        <div className="text-sm sm:text-base font-bold text-white">
-                          {leader.name}
-                        </div>
-                        <div className="text-xs text-[#888888]">
-                          {leader.role}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Our Vision Card */}
+            <Reveal delay={0.05}>
+              <div className="h-full rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-7 relative overflow-hidden group hover:border-[#c9a84c]/40 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-[#181818] border border-[#c9a84c]/30 flex items-center justify-center text-[#DFC067] shadow-[0_0_12px_rgba(201,168,76,0.12)]">
+                    <Target className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                    Our Vision
+                  </h3>
                 </div>
+                <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
+                  To become a trusted and innovative technology company recognized for delivering scalable, reliable, and impactful software solutions that empower businesses and contribute to meaningful digital progress.
+                </p>
               </div>
             </Reveal>
 
-            <Reveal delay={0.15} className="lg:col-span-5">
-              <Card variant="raised" padding="lg">
-                <h3 className="text-lg font-bold text-white mb-4 pb-3 border-b border-[#2a2a2a]">
-                  Corporate Verification
-                </h3>
-                <div className="space-y-3.5 text-xs sm:text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">Legal Entity:</span>
-                    <span className="font-medium text-white">{COMPANY_DATA.legalName}</span>
+            {/* Our Mission Card */}
+            <Reveal delay={0.1}>
+              <div className="h-full rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-7 relative overflow-hidden group hover:border-[#c9a84c]/40 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-[#181818] border border-[#c9a84c]/30 flex items-center justify-center text-[#DFC067] shadow-[0_0_12px_rgba(201,168,76,0.12)]">
+                    <Rocket className="w-4 h-4" />
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">Incorporation:</span>
-                    <span className="font-medium text-white">Companies Act, India</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">HQ Jurisdiction:</span>
-                    <span className="font-medium text-white">{COMPANY_DATA.location}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">Security Standards:</span>
-                    <span className="font-mono text-[#c9a84c]">ISO 27001 Compliant</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">Direct Channels:</span>
-                    <span className="font-mono text-white">{COMPANY_DATA.phone}</span>
-                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                    Our Mission
+                  </h3>
                 </div>
-              </Card>
+                <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
+                  To design, develop, and deliver high-quality software products and digital platforms that simplify business operations, accelerate digital transformation, foster innovation, and create lasting value.
+                </p>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -207,8 +232,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
 
       <ProjectJourneyTimeline />
 
-      {/* 3 Engineering Pillars */}
-      <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_90%_35%,rgba(201,168,76,0.07),transparent_38%),#0d0d0d]">
+      {/* 4. Engineering Pillars */}
+      <section className="relative isolate overflow-hidden py-10 sm:py-14 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_90%_35%,rgba(201,168,76,0.07),transparent_38%),#0d0d0d]">
         <div className="absolute -right-24 top-12 h-72 w-72 rounded-full bg-[#c9a84c]/[0.04] blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
@@ -217,6 +242,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               title="The Structural DNA of Every VPD Deployment"
               subtitle="How we consistently maintain high velocity without sacrificing stability or security."
               align="center"
+              className="!mb-8 sm:!mb-10"
             />
           </Reveal>
 
@@ -243,14 +269,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
         </div>
       </section>
 
-      {/* 6 Capabilities Grid */}
-      <section className="relative isolate overflow-hidden py-20 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_8%_65%,rgba(201,168,76,0.055),transparent_38%)]">
+      {/* 5. Capabilities Grid */}
+      <section className="relative isolate overflow-hidden py-10 sm:py-14 border-b border-[#1f1f1f] bg-[radial-gradient(ellipse_at_8%_65%,rgba(201,168,76,0.055),transparent_38%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
               eyebrow="Standard Deliverables"
               title="What Every Client Engagement Guarantees"
               align="center"
+              className="!mb-8 sm:!mb-10"
             />
           </Reveal>
 
@@ -274,8 +301,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
         </div>
       </section>
 
-      {/* Verified Technical FAQs with Accessible Accordion */}
-      <section className="relative isolate overflow-hidden py-20 bg-[radial-gradient(ellipse_at_50%_100%,rgba(201,168,76,0.07),transparent_52%)]">
+      {/* 6. Verified Technical FAQs with Accessible Accordion */}
+      <section className="relative isolate overflow-hidden py-10 sm:py-14 bg-[radial-gradient(ellipse_at_50%_100%,rgba(201,168,76,0.07),transparent_52%)]">
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
@@ -283,6 +310,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               title="Technical & Engagement FAQs"
               subtitle="Straightforward answers about our engineering capabilities, tech stacks, and scalability strategies."
               align="center"
+              className="!mb-8 sm:!mb-10"
             />
           </Reveal>
 
@@ -290,7 +318,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
             <Accordion items={faqs} defaultOpenId="faq-1" />
           </Reveal>
 
-          <div className="mt-12 text-center">
+          <div className="mt-8 text-center">
             <AnimatedButton
               onClick={() => onOpenConsultation()}
               variant="primary"

@@ -1,15 +1,24 @@
 'use client';
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
-  Check,
   Code2,
   LifeBuoy,
   PenTool,
   Rocket,
   Search,
   ShieldCheck,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+  useReducedMotion,
+} from 'motion/react';
 import { SectionHeader } from '../ui/SectionHeader';
 
 const projectStages = [
@@ -19,7 +28,6 @@ const projectStages = [
     description:
       'We begin by understanding the problem, gathering requirements, identifying constraints, and agreeing on the project scope and success criteria.',
     icon: Search,
-    side: 'left',
   },
   {
     title: 'Design',
@@ -27,7 +35,6 @@ const projectStages = [
     description:
       'We shape user flows, wireframes, interface designs, and technical direction. The proposed experience is reviewed and aligned with the agreed requirements.',
     icon: PenTool,
-    side: 'right',
   },
   {
     title: 'Engineer',
@@ -35,7 +42,6 @@ const projectStages = [
     description:
       'Our team develops the frontend, backend, database, and required integrations using suitable technologies and maintainable engineering practices.',
     icon: Code2,
-    side: 'left',
   },
   {
     title: 'Validate',
@@ -43,7 +49,6 @@ const projectStages = [
     description:
       'We test features, responsiveness, integrations, and agreed acceptance criteria. Findings are resolved, and the client reviews the solution before release.',
     icon: ShieldCheck,
-    side: 'right',
   },
   {
     title: 'Deploy',
@@ -51,7 +56,6 @@ const projectStages = [
     description:
       'We prepare the production environment, deploy the approved application, verify critical workflows, and provide the agreed documentation and handover.',
     icon: Rocket,
-    side: 'left',
   },
   {
     title: 'Support',
@@ -59,226 +63,257 @@ const projectStages = [
     description:
       'We provide maintenance, issue resolution, and improvements according to the agreed support arrangement and future project priorities.',
     icon: LifeBuoy,
-    side: 'right',
   },
 ] as const;
 
+// Generous scroll thresholds to give plenty of time to view information
+const SCROLL_START = 0.08;
+const SCROLL_END = 0.92;
+
 export const ProjectJourneyTimeline: React.FC = () => {
-  const timelineRef = useRef<HTMLOListElement>(null);
-  const markerRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [activeStage, setActiveStage] = useState(0);
-  const [enteredStages, setEnteredStages] = useState<boolean[]>(
-    () => projectStages.map(() => false),
-  );
-  const [track, setTrack] = useState({ top: 0, height: 0 });
-  const [progress, setProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
-  useLayoutEffect(() => {
-    const timeline = timelineRef.current;
-    if (!timeline) return;
+  // Increased mouse wheel scroll length (min-h-[350vh]) for comfortable reading
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 80px', 'end end'],
+  });
 
-    const updateTrack = () => {
-      const firstMarker = markerRefs.current[0];
-      const lastMarker = markerRefs.current[projectStages.length - 1];
-      if (!firstMarker || !lastMarker) return;
-
-      const timelineTop = timeline.getBoundingClientRect().top;
-      const firstCenter =
-        firstMarker.getBoundingClientRect().top +
-        firstMarker.getBoundingClientRect().height / 2;
-      const lastCenter =
-        lastMarker.getBoundingClientRect().top +
-        lastMarker.getBoundingClientRect().height / 2;
-
-      setTrack({
-        top: firstCenter - timelineTop,
-        height: Math.max(0, lastCenter - firstCenter),
-      });
-    };
-
-    updateTrack();
-    const resizeObserver = new ResizeObserver(updateTrack);
-    resizeObserver.observe(timeline);
-    window.addEventListener('resize', updateTrack);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateTrack);
-    };
-  }, []);
-
-  useEffect(() => {
-    const timeline = timelineRef.current;
-    if (!timeline) return;
-
-    const updateProgress = () => {
-      const rect = timeline.getBoundingClientRect();
-      const firstMarkerY = rect.top + track.top;
-      const viewportTarget = window.innerHeight * 0.5;
-      const nextProgress =
-        track.height > 0
-          ? Math.min(1, Math.max(0, (viewportTarget - firstMarkerY) / track.height))
-          : 0;
-      setProgress(nextProgress);
-    };
-
-    let frame = 0;
-    const scheduleProgressUpdate = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(updateProgress);
-    };
-
-    scheduleProgressUpdate();
-    window.addEventListener('scroll', scheduleProgressUpdate, { passive: true });
-    window.addEventListener('resize', scheduleProgressUpdate);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', scheduleProgressUpdate);
-      window.removeEventListener('resize', scheduleProgressUpdate);
-    };
-  }, [track]);
-
-  useEffect(() => {
-    const timeline = timelineRef.current;
-    if (!timeline || !('IntersectionObserver' in window)) {
-      setEnteredStages(projectStages.map(() => true));
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (latest < SCROLL_START) {
+      setActiveStage(0);
       return;
     }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = Number((entry.target as HTMLElement).dataset.stageIndex);
-          if (!entry.isIntersecting || Number.isNaN(index)) return;
-
-          setActiveStage(index);
-          setEnteredStages((previous) =>
-            previous[index] ? previous : previous.map((entered, i) => entered || i === index),
-          );
-        });
-      },
-      {
-        rootMargin: '-44% 0px -44% 0px',
-        threshold: 0,
-      },
+    if (latest >= SCROLL_END) {
+      setActiveStage(projectStages.length - 1);
+      return;
+    }
+    const normalized = (latest - SCROLL_START) / (SCROLL_END - SCROLL_START);
+    const nextIndex = Math.min(
+      projectStages.length - 1,
+      Math.max(0, Math.floor(normalized * projectStages.length)),
     );
+    setActiveStage(nextIndex);
+  });
 
-    timeline.querySelectorAll<HTMLElement>('[data-stage-index]').forEach((stage) => {
-      observer.observe(stage);
-    });
+  // Smooth line progress mapped across the extended scroll distance
+  const progressWidth = useTransform(
+    scrollYProgress,
+    [0, SCROLL_START, SCROLL_END, 1],
+    ['0%', '0%', '100%', '100%'],
+  );
 
-    return () => observer.disconnect();
-  }, []);
+  const handleJumpToStage = (index: number) => {
+    if (!containerRef.current) {
+      setActiveStage(index);
+      return;
+    }
+    const rect = containerRef.current.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const containerTop = rect.top + scrollTop;
+    const totalScrollable = rect.height - window.innerHeight;
+    const targetFraction =
+      SCROLL_START + ((index + 0.4) / projectStages.length) * (SCROLL_END - SCROLL_START);
+    const targetY = containerTop + targetFraction * totalScrollable;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+
+  const handleNext = () => {
+    const nextIndex = (activeStage + 1) % projectStages.length;
+    handleJumpToStage(nextIndex);
+  };
+
+  const handlePrev = () => {
+    const prevIndex = (activeStage - 1 + projectStages.length) % projectStages.length;
+    handleJumpToStage(prevIndex);
+  };
+
+  const current = projectStages[activeStage];
+  const CurrentIcon = current.icon;
 
   return (
-    <section className="relative overflow-hidden border-y border-[#2A2A2A] bg-[#111111] py-20 sm:py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(212,175,55,0.07),transparent_45%)]" aria-hidden="true" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Our Delivery Approach"
-          title="From Vision to Reality"
-          subtitle="Every successful digital product starts with understanding the problem and ends with a solution built to deliver lasting value. Here's how we turn ideas into working software."
-          align="center"
-          className="mb-12 sm:mb-16"
-        />
+    <section
+      ref={containerRef}
+      className="relative min-h-[350vh] border-b border-[#1f1f1f] bg-[#0c0c0c]"
+    >
+      {/* Ambient background glow */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_25%,rgba(201,168,76,0.07),transparent_55%)]"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
 
-        <ol
-          ref={timelineRef}
-          aria-label="VPD Technologies project delivery stages"
-          className="relative mx-auto max-w-6xl list-none p-0"
-        >
-          {track.height > 0 && (
-            <div
-              className="pointer-events-none absolute bottom-auto left-[1.375rem] z-0 w-px -translate-x-1/2 bg-[rgba(212,175,55,0.2)] lg:left-1/2"
-              style={{ top: track.top, height: track.height }}
-              aria-hidden="true"
-            >
-              <div
-                className="h-full w-full origin-top bg-[#D4AF37]"
-                style={{ transform: `scaleY(${progress})` }}
-              />
+      {/* Sticky Viewport Container:
+          Pinned right in the vertical MIDDLE of the screen (top-[max(5rem,calc(50vh-215px))])
+          without cutting off at top or bottom! */}
+      <div className="sticky top-20 sm:top-[max(5rem,calc(50vh-215px))] z-10 w-full pt-4 sm:pt-6 pb-6">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 w-full">
+          {/* Section Header: Clean centered typography with pixel-exact spacing */}
+          <SectionHeader
+            eyebrow="Our Delivery Approach"
+            title="From Vision to Reality"
+            subtitle="Every successful digital product starts with understanding the problem and ends with a solution built to deliver lasting value."
+            align="center"
+            className="!mb-5 sm:!mb-6"
+          />
+
+          {/* Stepper Pipeline Bar */}
+          <div className="mb-5 sm:mb-6">
+            {/* Scroll-Driven Progress Track */}
+            <div className="hidden lg:block relative mb-3 px-6">
+              <div className="h-1 w-full bg-[#1e1e1e] rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-[#c9a84c] to-[#d8b75b]"
+                  style={shouldReduceMotion ? { width: `${(activeStage / 5) * 100}%` } : { width: progressWidth }}
+                />
+              </div>
             </div>
-          )}
 
-          {projectStages.map((stage, index) => {
-            const Icon = stage.icon;
-            const isActive = activeStage === index;
-            const isComplete = index < activeStage;
-            const hasEntered = enteredStages[index];
-            const status = isComplete ? 'completed' : isActive ? 'active' : 'upcoming';
-            const cardSideClass =
-              stage.side === 'left'
-                ? 'lg:col-start-1 lg:justify-self-end'
-                : 'lg:col-start-3 lg:justify-self-start';
+            {/* Stepper Tabs */}
+            <div
+              role="tablist"
+              aria-label="Project Delivery Stages"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5"
+            >
+              {projectStages.map((stage, idx) => {
+                const Icon = stage.icon;
+                const isActive = activeStage === idx;
+                const isPast = idx < activeStage;
 
-            return (
-              <li
-                key={stage.title}
-                data-stage-index={index}
-                className="relative z-10 grid min-h-[15rem] grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-x-4 lg:grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] lg:gap-x-6"
-              >
-                <div
-                  ref={(element) => {
-                    markerRefs.current[index] = element;
-                  }}
-                  className={`col-start-1 row-start-1 flex h-12 w-12 items-center justify-center justify-self-center rounded-full border transition-[background-color,border-color,box-shadow] duration-300 lg:col-start-2 ${
-                    isComplete
-                      ? 'border-[#D4AF37] bg-[#D4AF37] text-[#111111]'
-                      : isActive
-                        ? 'border-[#DFC067] bg-[#171717] text-[#DFC067] shadow-[0_0_24px_rgba(212,175,55,0.16)]'
-                        : 'border-[#3A3A3A] bg-[#171717] text-[#71717A]'
-                  }`}
-                  aria-hidden="true"
-                >
-                  {isComplete ? (
-                    <Check className="h-5 w-5" strokeWidth={2.5} />
-                  ) : (
-                    <span className="font-mono text-sm font-bold">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  )}
-                </div>
+                return (
+                  <button
+                    key={stage.title}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`stage-panel-${idx}`}
+                    id={`stage-tab-${idx}`}
+                    onClick={() => handleJumpToStage(idx)}
+                    className={`group relative flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border text-left transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
+                      isActive
+                        ? 'border-[#c9a84c]/70 bg-[#171717] shadow-[0_0_22px_-4px_rgba(201,168,76,0.3)]'
+                        : isPast
+                          ? 'border-[#262626] bg-[#121212]/80 hover:border-[#383838]'
+                          : 'border-[#1f1f1f] bg-[#0e0e0e]/80 hover:border-[#2a2a2a]'
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTimelineGlow"
+                        className="absolute inset-0 rounded-xl bg-gradient-to-b from-[#c9a84c]/12 to-transparent pointer-events-none"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
 
-                <article
-                  aria-current={isActive ? 'step' : undefined}
-                  className={`col-start-2 row-start-1 w-full max-w-xl rounded-2xl border bg-[#1D1D1D] p-5 transition-[opacity,transform,border-color,box-shadow] duration-500 ease-out sm:p-6 ${cardSideClass} ${
-                    isActive
-                      ? 'border-[rgba(212,175,55,0.5)] shadow-[0_0_32px_rgba(212,175,55,0.08)]'
-                      : 'border-[#2A2A2A]'
-                  } ${
-                    hasEntered
-                      ? 'translate-x-0 opacity-100'
-                      : stage.side === 'left'
-                        ? 'opacity-90 lg:-translate-x-3'
-                        : 'translate-x-0 opacity-90 lg:translate-x-3'
-                  } motion-reduce:translate-x-0 motion-reduce:opacity-100 motion-reduce:transition-none`}
-                >
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(212,175,55,0.3)] bg-[rgba(212,175,55,0.1)] text-[#DFC067]">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                        isActive
+                          ? 'bg-[#c9a84c]/20 text-[#c9a84c]'
+                          : isPast
+                            ? 'bg-[#1a1a1a] text-[#888888]'
+                            : 'bg-[#151515] text-[#555555] group-hover:text-[#777777]'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
                     </div>
-                    <div>
-                      <p className="font-mono text-xs font-bold tracking-[0.16em] text-[#DFC067]">
-                        STAGE {String(index + 1).padStart(2, '0')}
-                      </p>
-                      <h3 className="mt-0.5 text-xl font-bold text-white sm:text-2xl">
+                    <div className="flex flex-col min-w-0">
+                      <span
+                        className={`text-[10px] font-mono font-bold leading-none mb-0.5 ${
+                          isActive
+                            ? 'text-[#c9a84c]'
+                            : isPast
+                              ? 'text-[#777777]'
+                              : 'text-[#555555]'
+                        }`}
+                      >
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span
+                        className={`text-xs sm:text-sm font-bold truncate leading-tight transition-colors ${
+                          isActive ? 'text-white' : 'text-[#888888] group-hover:text-white'
+                        }`}
+                      >
                         {stage.title}
-                      </h3>
+                      </span>
                     </div>
-                    <span className="sr-only">{status}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Centered Stage Card */}
+          <div className="mx-auto max-w-4xl">
+            <div className="relative rounded-2xl border border-[#c9a84c]/40 bg-[#141414] p-6 sm:p-7 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300">
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current.title}
+                  id={`stage-panel-${activeStage}`}
+                  role="tabpanel"
+                  aria-labelledby={`stage-tab-${activeStage}`}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.24, ease: 'easeOut' }}
+                  className="relative z-10 flex flex-col md:flex-row md:items-center gap-6"
+                >
+                  {/* Glowing Stage Icon Anchor */}
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/25 via-[#c9a84c]/15 to-transparent border border-[#c9a84c]/60 flex items-center justify-center text-[#DFC067] shadow-[0_0_28px_rgba(201,168,76,0.35)] shrink-0">
+                    <CurrentIcon className="w-7 h-7 sm:w-8 sm:h-8" />
                   </div>
-                  <p className="text-sm font-medium leading-relaxed text-[#A1A1AA] sm:text-base">
-                    {stage.shortDescription}
-                  </p>
-                  <p className="mt-3 border-t border-[#2A2A2A] pt-3 text-sm leading-relaxed text-[#88888F]">
-                    {stage.description}
-                  </p>
-                </article>
-              </li>
-            );
-          })}
-        </ol>
+
+                  {/* Core Highlighted Narrative */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#c9a84c]/20 border border-[#c9a84c]/45 text-[#d8b75b] font-mono font-bold text-[11px] uppercase tracking-wider shadow-[0_0_14px_rgba(201,168,76,0.25)]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
+                        Stage {String(activeStage + 1).padStart(2, '0')} of 06
+                      </span>
+                      <span className="text-[#555555]">·</span>
+                      <span className="text-xs text-[#888888] font-medium tracking-wide">Delivery Workflow</span>
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 leading-snug">
+                      {current.title} — <span className="text-[#DFC067] font-semibold drop-shadow-[0_0_16px_rgba(201,168,76,0.25)]">{current.shortDescription}</span>
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-[#cccccc] leading-relaxed">
+                      {current.description}
+                    </p>
+                  </div>
+
+                  {/* Highlighted Step Controls */}
+                  <div className="flex md:flex-col items-center justify-between md:justify-center gap-2.5 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#c9a84c]/20 md:pl-6 shrink-0">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={handlePrev}
+                        aria-label="Previous Stage"
+                        className="w-8 h-8 rounded-lg border border-[#c9a84c]/30 bg-[#161616] hover:bg-[#c9a84c]/20 hover:border-[#c9a84c] text-white hover:text-[#DFC067] flex items-center justify-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] shadow-sm"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        aria-label="Next Stage"
+                        className="w-8 h-8 rounded-lg border border-[#c9a84c]/30 bg-[#161616] hover:bg-[#c9a84c]/20 hover:border-[#c9a84c] text-white hover:text-[#DFC067] flex items-center justify-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] shadow-sm"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <span className="text-[11px] font-mono text-[#d8b75b] font-semibold">
+                      {activeStage + 1} / {projectStages.length}
+                    </span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
