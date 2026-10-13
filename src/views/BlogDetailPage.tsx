@@ -493,13 +493,8 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
                       href={`/blogs/${rel.id}`}
                       className="group block h-full rounded-xl border border-[#262626] bg-[#141414] p-5 card-hover"
                     >
-<<<<<<< Updated upstream
-                      <div className="text-xs font-mono text-[#777777] mb-2">
-                        {rel.date}
-=======
                       <div className="text-[10px] font-mono text-[#777777] mb-2">
                         {rel.author} · {rel.date}
->>>>>>> Stashed changes
                       </div>
                       <h4 className="text-sm font-bold text-white mb-2 group-hover:text-[#c9a84c] transition-colors leading-snug">
                         {rel.title}

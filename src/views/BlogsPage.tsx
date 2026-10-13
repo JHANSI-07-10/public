@@ -155,30 +155,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
 
                                                                                                                 const isFeaturedLayout = filteredArticles.length > 2 && !searchQuery;
 
-<<<<<<< Updated upstream
-          {/* Lab stats bar with count-up numbers */}
-          <StaggerContainer
-            className="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto mb-10 pt-8 border-t border-[#1f1f1f]"
-            staggerDelay={0.1}
-          >
-            {[
-              { icon: Layers, target: VERIFIED_INSIGHTS.length, suffix: '', label: 'Published briefs' },
-              { icon: ShieldCheck, target: allTags.length - 1, suffix: '', label: 'Technical topics' },
-              { icon: Gauge, target: avgRead, suffix: ' Min', label: 'Average read time' },
-            ].map((stat) => (
-              <StaggerItem key={stat.label} className="text-center">
-                <stat.icon className="w-4 h-4 text-[#c9a84c] mx-auto mb-2" />
-                <div className="text-2xl sm:text-3xl font-black tracking-tight text-white tabular-nums">
-                  <CountingNumber value={`${stat.target}${stat.suffix}`} duration={1.2} />
-                </div>
-                <div className="mt-1 text-xs font-mono uppercase tracking-wider text-[#777777]">
-                  {stat.label}
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-=======
-                                                                                                                return (
+return (
                                                                                                                   <div className="pt-20 pb-0 bg-[#0a0a0a]">
                                                                                                                     {/* ── Section 1: Hero + live filters ─────────────────────────── */}
                                                                                                                     <section className="relative pt-4 pb-5 sm:pt-6 sm:pb-6 border-b border-[#1f1f1f] overflow-hidden">
@@ -196,7 +173,6 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                                                                                                                       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
                                                                                                                         <div className="insights-scanline absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/45 to-transparent" />
                                                                                                                       </div>
->>>>>>> Stashed changes
 
                                                                                                                       <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
                                                                                                                         <SectionHeader
@@ -301,17 +277,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
 
                       <div className={`flex flex-col justify-between flex-1 ${featured ? 'lg:w-2/5 p-7 sm:p-8' : ''}`}>
                         <div className={featured ? '' : 'p-6 sm:p-7'}>
-<<<<<<< Updated upstream
-                          {featured && (
-                            <div className="inline-flex items-center gap-2 mb-4 px-2.5 py-1 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/30">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
-                              <span className="text-xs font-mono font-bold tracking-widest text-[#c9a84c]">
-                                LATEST BRIEF
-                              </span>
-                            </div>
-                          )}
-=======
-                          <div className="flex flex-wrap items-center gap-2 mb-3">
+<div className="flex flex-wrap items-center gap-2 mb-3">
                             {featured && (
                               <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/30">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
@@ -334,7 +300,6 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                               </Link>
                             )}
                           </div>
->>>>>>> Stashed changes
 
                           <div className="flex items-center gap-2 text-xs text-[#777777] font-mono mb-3">
                             <span className="text-[#aaaaaa]">{article.author}</span>

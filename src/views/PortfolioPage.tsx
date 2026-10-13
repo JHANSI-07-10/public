@@ -802,40 +802,6 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
             </div>
           </Reveal>
 
-<<<<<<< Updated upstream
-                      <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">
-                        {project.title}
-                      </h3>
-
-                      <div className="space-y-3 text-sm text-[#aaaaaa] leading-relaxed mb-6">
-                        <p>
-                          <strong className="text-white font-semibold">The Challenge: </strong>
-                          {project.problem}
-                        </p>
-                        <p>
-                          <strong className="text-white font-semibold">Our Architecture: </strong>
-                          {project.solution}
-                        </p>
-                        <p>
-                          <strong className="text-[#c9a84c] font-semibold">The Outcome: </strong>
-                          {project.result}
-                        </p>
-                      </div>
-
-                      {/* Spec tags */}
-                      <div className="grid grid-cols-2 gap-3 p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6">
-                        {project.specs.map((spec, sIdx) => (
-                          <div key={sIdx} className="text-xs">
-                            <span className="text-[#666666] block text-xs uppercase font-semibold">
-                              {spec.label}
-                            </span>
-                            <span className="font-mono font-medium text-[#dddddd]">
-                              {spec.value}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-=======
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {DELIVERY_STANDARDS.map((standard, sIdx) => {
               const Icon = standard.icon;
@@ -847,7 +813,6 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                   <div>
                     <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 text-[#c9a84c] flex items-center justify-center mb-4">
                       <Icon className="w-5 h-5" />
->>>>>>> Stashed changes
                     </div>
                     <span className="text-[10px] font-mono uppercase font-bold text-[#666666] tracking-wider block mb-1">
                       Standard {standard.number}
