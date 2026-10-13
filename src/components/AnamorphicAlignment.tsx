@@ -93,7 +93,7 @@ export const AnamorphicAlignment: React.FC<AnamorphicAlignmentProps> = ({
       <div className="relative z-10 flex items-center justify-between border-b border-[#1f2127] pb-4 mb-8">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
-          <span className="text-[11px] font-mono tracking-widest text-[#a0a5b2] uppercase">
+          <span className="text-xs font-mono tracking-widest text-[#a0a5b2] uppercase">
             ANAMORPHIC ALIGNMENT · 2.39:1 CINEMATIC RATIO
           </span>
         </div>
@@ -191,11 +191,11 @@ export const AnamorphicAlignment: React.FC<AnamorphicAlignmentProps> = ({
       </div>
 
       {/* Assembly Diagnostic Status */}
-      <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-[#6e7485] pt-6 border-t border-[#1f2127] mt-4">
+      <div className="relative z-10 flex items-center justify-between text-xs font-mono text-[#6e7485] pt-6 border-t border-[#1f2127] mt-4">
         <div className="flex items-center gap-3">
           <span>STATUS:</span>
           <span
-            className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
+            className={`px-2 py-0.5 rounded text-xs uppercase font-bold ${
               phase === 'assembled'
                 ? 'bg-[#c9a84c]/20 text-[#ffd977] border border-[#c9a84c]/40'
                 : 'bg-[#22252e] text-[#a0a5b2]'

@@ -797,7 +797,7 @@ export const TechnologyCube: React.FC<TechnologyCubeProps> = ({
       <div className="relative z-20 w-full px-4 pt-3 flex items-center justify-between text-xs pointer-events-none">
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141416]/90 border border-[#2A2A2A] shadow-md backdrop-blur-md">
           <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
-          <span className="font-mono font-bold text-[#DFC067] tracking-wider uppercase text-[11px]">
+          <span className="font-mono font-bold text-[#DFC067] tracking-wider uppercase text-xs">
             {activeFace.code} // {activeFace.badge}
           </span>
         </div>
@@ -856,7 +856,7 @@ export const TechnologyCube: React.FC<TechnologyCubeProps> = ({
                 <span className="text-[#D4AF37]">✦</span> {activeFace.title}
               </span>
             </div>
-            <p className="text-[11px] text-[#A1A1AA] leading-snug line-clamp-1 mt-0.5">
+            <p className="text-xs text-[#A1A1AA] leading-snug line-clamp-1 mt-0.5">
               {activeFace.description}
             </p>
           </div>
@@ -880,7 +880,7 @@ export const TechnologyCube: React.FC<TechnologyCubeProps> = ({
               <button
                 key={face.id}
                 onClick={() => snapToFace(face)}
-                className={`px-2 py-1.5 text-[10px] sm:text-[11px] font-medium rounded-lg transition-all text-center truncate ${
+                className={`px-2 py-1.5 text-xs font-medium rounded-lg transition-all text-center truncate ${
                   isActive
                     ? 'bg-[#22222A] text-[#DFC067] font-bold shadow-sm border border-[#D4AF37]/50'
                     : 'text-[#888890] hover:text-white hover:bg-[#16161C]'

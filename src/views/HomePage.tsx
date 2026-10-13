@@ -22,7 +22,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenConsultation }) => {
       <Hero onOpenConsultation={() => onOpenConsultation()} />
 
       {/* Section 2: What We Engineer — Spotlight Cards */}
-      <WhatWeEngineer />
+      <WhatWeEngineer onOpenConsultation={() => onOpenConsultation()} />
 
       {/* Section 3: Company Introduction & Leadership */}
       <CompanyIntro />

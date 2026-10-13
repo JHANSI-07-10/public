@@ -127,7 +127,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
         ) : (
           <div>
             <div className="mb-6">
-              <div className="text-[11px] font-bold text-[#c9a84c] uppercase tracking-wider mb-1">
+              <div className="text-xs font-bold text-[#c9a84c] uppercase tracking-wider mb-1">
                 Engineering Consultation
               </div>
               <h3 id="consultation-modal-title" className="text-2xl font-bold text-white">

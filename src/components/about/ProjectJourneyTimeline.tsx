@@ -259,7 +259,7 @@ export const ProjectJourneyTimeline: React.FC = () => {
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </div>
                     <div>
-                      <p className="font-mono text-[11px] font-bold tracking-[0.16em] text-[#DFC067]">
+                      <p className="font-mono text-xs font-bold tracking-[0.16em] text-[#DFC067]">
                         STAGE {String(index + 1).padStart(2, '0')}
                       </p>
                       <h3 className="mt-0.5 text-xl font-bold text-white sm:text-2xl">

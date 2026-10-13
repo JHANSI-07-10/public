@@ -193,7 +193,7 @@ export const ServiceComparisonMatrix: React.FC<ServiceComparisonMatrixProps> = (
               key={idx}
               className="p-4 rounded-xl bg-[#121212] border border-[#222222] space-y-1"
             >
-              <div className="text-[11px] font-bold text-[#777777] uppercase tracking-wider">
+              <div className="text-xs font-bold text-[#777777] uppercase tracking-wider">
                 {row.dimension}
               </div>
               <div className="text-xs font-mono text-[#dddddd] leading-relaxed">

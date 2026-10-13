@@ -34,20 +34,20 @@ export const Footer: React.FC = () => {
                     <span className="text-lg font-black tracking-tight text-white leading-tight">
                       VPD <span className="text-[#c9a84c]">Technologies</span>
                     </span>
-                    <span className="text-[10px] font-mono text-[#777777] uppercase tracking-wider">
+                    <span className="text-xs font-mono text-[#777777] tracking-wider">
                       Private Limited
                     </span>
                   </div>
                 </Link>
 
-                <p className="text-sm text-[#888888] leading-relaxed max-w-sm mb-6">
+                <p className="text-sm text-[#aaaaaa] leading-relaxed max-w-sm mb-6">
                   Engineering high-performance web ecosystems, scalable SaaS platforms, and enterprise Java solutions for forward-thinking organizations.
                 </p>
 
                 {/* Status Indicator */}
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141414] border border-[#222222] text-xs">
                   <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
-                  <span className="text-xs font-mono text-[#cccccc]">Engineering Lab Active</span>
+                  <span className="text-xs font-mono text-[#aaaaaa]">Engineering Lab Active</span>
                 </div>
               </div>
 
@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
 
             {/* Column 2: Core Services */}
             <div className="lg:col-span-3 space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-white">
+              <h3 className="text-sm font-semibold text-white">
                 Engineering Services
               </h3>
               <ul className="space-y-2.5 text-sm">
@@ -90,7 +90,7 @@ export const Footer: React.FC = () => {
 
             {/* Column 3: Navigation & Sections */}
             <div className="lg:col-span-2 space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-white">
+              <h3 className="text-sm font-semibold text-white">
                 Company & Work
               </h3>
               <ul className="space-y-2.5 text-sm">
@@ -142,7 +142,7 @@ export const Footer: React.FC = () => {
               <h3 className="text-xs font-bold uppercase tracking-widest text-white">
                 Headquarters & Channels
               </h3>
-              <div className="space-y-2.5 text-sm text-[#999999]">
+              <div className="space-y-2.5 text-sm text-[#aaaaaa]">
                 <div className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-[#c9a84c] shrink-0 mt-0.5" />
                   <span>{COMPANY_DATA.location}</span>
@@ -192,7 +192,7 @@ export const Footer: React.FC = () => {
         </Reveal>
 
         {/* Bottom Legal Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#666666]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#777777]">
           <div className="text-center sm:text-left">
             © {new Date().getFullYear()} VPD Technologies Private Limited. All rights reserved.
           </div>

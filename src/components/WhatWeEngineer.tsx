@@ -2,159 +2,121 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { SectionHeader } from './ui/SectionHeader';
-import { CardSpotlight } from './ui/card-spotlight';
+import { ArrowUpRight } from 'lucide-react';
+import { HoverRevealCards, CardItem } from './ui/cards';
 import { Reveal } from './motion/Reveal';
-import { StaggerContainer, StaggerItem } from './motion/StaggerContainer';
 
-const svgProps = {
-  viewBox: '0 0 96 72',
-  fill: 'none',
-  xmlns: 'http://www.w3.org/2000/svg',
-  className: 'h-auto w-full max-w-[104px]',
-  'aria-hidden': true,
-  focusable: 'false' as const,
-};
+interface WhatWeEngineerProps {
+  onOpenConsultation?: () => void;
+}
 
-const WebExperiencesVisual = () => (
-  <svg {...svgProps}>
-    <rect x="6" y="6" width="84" height="60" rx="6" fill="#171717" stroke="#2A2A2A" />
-    <path d="M6 20 H90" stroke="#2A2A2A" />
-    <circle cx="14" cy="13" r="2" fill="#D4AF37" />
-    <circle cx="21" cy="13" r="2" fill="#3A3A3A" />
-    <circle cx="28" cy="13" r="2" fill="#3A3A3A" />
-    <rect x="14" y="28" width="32" height="3" rx="1.5" fill="#FFFFFF" opacity="0.85" />
-    <rect x="14" y="37" width="22" height="3" rx="1.5" fill="#A1A1AA" opacity="0.45" />
-    <rect x="14" y="46" width="28" height="3" rx="1.5" fill="#A1A1AA" opacity="0.3" />
-    <rect x="58" y="28" width="24" height="28" rx="3" fill="#1D1D1D" stroke="#2A2A2A" />
-    <rect x="63" y="35" width="14" height="2.5" rx="1.25" fill="#D4AF37" />
-    <rect x="63" y="42" width="14" height="2.5" rx="1.25" fill="#D4AF37" opacity="0.55" />
-    <rect x="63" y="49" width="9" height="2.5" rx="1.25" fill="#D4AF37" opacity="0.3" />
-  </svg>
-);
-
-const ApplicationEngineeringVisual = () => (
-  <svg {...svgProps}>
-    <rect x="6" y="18" width="54" height="46" rx="5" fill="#171717" stroke="#2A2A2A" />
-    <rect x="16" y="12" width="58" height="46" rx="5" fill="#1D1D1D" stroke="#2A2A2A" />
-    <rect x="26" y="6" width="62" height="46" rx="5" fill="#222222" stroke="#D4AF37" strokeOpacity="0.4" />
-    <rect x="33" y="14" width="30" height="3" rx="1.5" fill="#FFFFFF" opacity="0.7" />
-    <rect x="33" y="22" width="20" height="3" rx="1.5" fill="#A1A1AA" opacity="0.4" />
-    <rect x="33" y="30" width="24" height="3" rx="1.5" fill="#A1A1AA" opacity="0.28" />
-    <rect x="33" y="38" width="14" height="3" rx="1.5" fill="#A1A1AA" opacity="0.2" />
-    <path d="M48 52 H78" stroke="#D4AF37" strokeOpacity="0.6" />
-    <circle cx="48" cy="52" r="2" fill="#D4AF37" />
-    <circle cx="78" cy="52" r="2" fill="#D4AF37" />
-    <path d="M14 40 V54" stroke="#D4AF37" strokeOpacity="0.4" />
-  </svg>
-);
-
-const FullStackVisual = () => (
-  <svg {...svgProps}>
-    <rect x="24" y="5" width="48" height="14" rx="3" fill="#171717" stroke="#2A2A2A" />
-    <rect x="38" y="10" width="20" height="3.5" rx="1.75" fill="#FFFFFF" opacity="0.8" />
-    <rect x="16" y="29" width="64" height="14" rx="3" fill="#1D1D1D" stroke="#D4AF37" strokeOpacity="0.45" />
-    <rect x="34" y="34" width="28" height="3.5" rx="1.75" fill="#D4AF37" opacity="0.9" />
-    <ellipse cx="48" cy="54" rx="22" ry="6" fill="#171717" stroke="#2A2A2A" />
-    <path d="M26 54 v8 a22 6 0 0 0 44 0 v-8" fill="#171717" stroke="#2A2A2A" />
-    <path d="M48 19 V29" stroke="#D4AF37" strokeOpacity="0.6" />
-    <circle cx="48" cy="24" r="1.5" fill="#D4AF37" />
-    <path d="M48 43 V48" stroke="#D4AF37" strokeOpacity="0.6" />
-    <circle cx="48" cy="47" r="1.5" fill="#D4AF37" />
-  </svg>
-);
-
-const CustomSoftwareVisual = () => (
-  <svg {...svgProps}>
-    <rect x="10" y="10" width="28" height="17" rx="3" fill="#171717" stroke="#2A2A2A" />
-    <rect x="58" y="10" width="28" height="17" rx="3" fill="#171717" stroke="#2A2A2A" />
-    <rect x="10" y="45" width="28" height="17" rx="3" fill="#1D1D1D" stroke="#2A2A2A" />
-    <rect x="58" y="45" width="28" height="17" rx="3" fill="#1D1D1D" stroke="#D4AF37" strokeOpacity="0.45" />
-    <rect x="16" y="17" width="12" height="2.5" rx="1.25" fill="#FFFFFF" opacity="0.6" />
-    <rect x="64" y="17" width="12" height="2.5" rx="1.25" fill="#FFFFFF" opacity="0.6" />
-    <rect x="16" y="52" width="12" height="2.5" rx="1.25" fill="#FFFFFF" opacity="0.45" />
-    <rect x="64" y="52" width="12" height="2.5" rx="1.25" fill="#D4AF37" opacity="0.8" />
-    <path d="M38 18 H58 M38 53 H58 M24 27 V45 M72 27 V45" stroke="#D4AF37" strokeOpacity="0.45" />
-    <circle cx="48" cy="18" r="2" fill="#D4AF37" />
-    <circle cx="48" cy="53" r="2" fill="#D4AF37" />
-    <circle cx="24" cy="36" r="2" fill="#D4AF37" />
-    <circle cx="72" cy="36" r="2" fill="#D4AF37" />
-  </svg>
-);
-
-const CARDS = [
+const CAPABILITY_CARDS: CardItem[] = [
   {
+    id: 'web-experiences',
     title: 'Web Experiences',
-    description: 'High-quality, responsive websites that communicate your brand and turn complex ideas into clear digital experiences.',
-    visual: <WebExperiencesVisual />,
+    description:
+      'Responsive, accessible websites designed to deliver clear user experiences and support business goals.',
+    image: '/images/what-we-engineer/web-experiences-v2.webp',
   },
   {
-    title: 'Application Engineering',
-    description: 'Purpose-built web applications that help businesses streamline workflows, connect systems, and deliver useful functionality.',
-    visual: <ApplicationEngineeringVisual />,
+    id: 'business-applications',
+    title: 'Business Applications',
+    description:
+      'Purpose-built web applications that connect users, data, and business workflows in one cohesive experience.',
+    image: '/images/what-we-engineer/business-applications-v2.webp',
   },
   {
-    title: 'Full-Stack Development',
-    description: 'Reliable frontend and backend engineering for connected, maintainable, and scalable software solutions.',
-    visual: <FullStackVisual />,
+    id: 'full-stack-systems',
+    title: 'Full-Stack Systems',
+    description:
+      'Integrated frontend, backend, API, and database engineering for reliable digital products.',
+    image: '/images/what-we-engineer/full-stack-systems-v2.webp',
   },
   {
+    id: 'custom-software',
     title: 'Custom Software',
-    description: 'Software solutions shaped around your business requirements, technical constraints, and long-term goals.',
-    visual: <CustomSoftwareVisual />,
+    description:
+      'Software solutions tailored to specific operational requirements, integrations, and business processes.',
+    image: '/images/what-we-engineer/custom-software-v2.webp',
   },
 ];
 
-export const WhatWeEngineer: React.FC = () => {
+export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultation }) => {
   return (
-    <section id="what-we-engineer" className="bg-[#111111] pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24 lg:pb-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="what-we-engineer"
+      className="relative bg-[#181818] pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 overflow-hidden border-t border-[#2a2a2a]"
+      aria-label="What We Engineer"
+    >
+      {/* Subtle Radial Glow Separation from Hero */}
+      <div
+        className="absolute top-0 inset-x-0 h-40 pointer-events-none opacity-25"
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 100% at 50% 0%, rgba(212, 175, 55, 0.14) 0%, transparent 80%)',
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <Reveal>
-          <SectionHeader
-            align="center"
-            eyebrow="Engineered for What's Next"
-            title={
-              <>
-                What We <span className="text-[#D4AF37]">Engineer</span>
-              </>
-            }
-            subtitle="From digital experiences to connected software systems, we engineer solutions designed around the way your business works."
-          />
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            <span className="text-xs font-bold tracking-[0.2em] text-[#D4AF37] uppercase select-none mb-3.5">
+              WHAT WE ENGINEER
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-balance mb-4">
+              Engineering Digital Solutions That{' '}
+              <span className="text-[#D4AF37]">Move Business Forward</span>.
+            </h2>
+            <p className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-balance max-w-2xl">
+              From engaging web experiences to integrated business systems, we engineer digital
+              solutions designed around real business needs.
+            </p>
+          </div>
         </Reveal>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {CARDS.map((card) => (
-            <StaggerItem key={card.title} distance={30} className="h-full">
-              <CardSpotlight
-                radius={280}
-                color="#262114"
-                className="p-6 sm:p-7 motion-safe:hover:scale-[1.02]"
-              >
-                <div className="flex h-full flex-col">
-                  <div className="mb-6">{card.visual}</div>
-                  <h3 className="text-lg font-bold text-white tracking-tight mb-3">{card.title}</h3>
-                  <div className="mb-4 h-px w-8 bg-[#D4AF37]/50 transition-all duration-300 group-hover/spotlight:w-14 group-hover/spotlight:bg-[#D4AF37]/80" />
-                  <p className="text-sm text-[#A1A1AA] leading-relaxed">{card.description}</p>
-                </div>
-              </CardSpotlight>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        {/* 4-Card Capability Showcase with HoverRevealCards */}
+        <div className="mb-14 sm:mb-16">
+          <HoverRevealCards
+            items={CAPABILITY_CARDS}
+            gridClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+            cardBg="bg-[#303030]"
+            borderColor="border-[#494949]"
+            hoverBorderColor="hover:border-[#D4AF37] focus-within:border-[#D4AF37]"
+            heightClass="h-[400px] sm:h-[420px] lg:h-[440px]"
+          />
+        </div>
 
-        <Reveal delay={0.1}>
-          <div className="mt-14 sm:mt-16 flex flex-col items-center gap-5 text-center">
-            <p className="text-base sm:text-lg text-[#A1A1AA]">Have a project in mind?</p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 h-11 px-6 text-sm font-semibold bg-[#c9a84c] text-black hover:bg-[#d8b75b] rounded-xl shadow-lg shadow-[#c9a84c]/20 hover:shadow-[#c9a84c]/35 transition-all duration-200 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111111]"
-            >
-              <span>Let's Talk</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+        {/* Closing CTA */}
+        <Reveal delay={0.15}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left bg-[#242424] border border-[#383838] rounded-2xl px-6 py-5 sm:px-8 sm:py-6 max-w-2xl mx-auto shadow-xl">
+            <p className="text-sm sm:text-base text-[#A1A1AA] font-medium">
+              Have a project in mind? Let&apos;s discuss the right solution.
+            </p>
+            {onOpenConsultation ? (
+              <button
+                type="button"
+                onClick={onOpenConsultation}
+                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#E5C15D] text-black px-5 py-2.5 text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer"
+              >
+                <span>Let&apos;s Talk</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <Link
+                href="/contact"
+                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#E5C15D] text-black px-5 py-2.5 text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+              >
+                <span>Let&apos;s Talk</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         </Reveal>
       </div>
     </section>
   );
 };
+
+export default WhatWeEngineer;

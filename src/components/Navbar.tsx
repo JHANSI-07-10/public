@@ -53,6 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
+    { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
     { label: 'Portfolio', path: '/portfolio' },
@@ -100,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 <span>VPD</span>
                 <span className="text-[#c9a84c]">Technologies</span>
               </span>
-              <span className="text-[10px] font-mono tracking-wider text-[#777777] uppercase">
+              <span className="text-xs font-mono tracking-wider text-[#777777]">
                 Digital Engineering
               </span>
             </div>
@@ -114,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 <Link
                   key={link.label}
                   href={link.path}
-                  className={`relative transition-colors duration-200 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-md px-1.5 py-1 ${
+                  className={`relative transition-colors duration-200 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-lg px-1.5 py-1 ${
                     isActive ? 'text-[#c9a84c] font-bold' : 'hover:text-white'
                   }`}
                 >
@@ -169,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             aria-modal="true"
           >
             <div className="space-y-2">
-              <div className="text-[11px] font-bold tracking-widest text-[#777777] uppercase mb-4 px-2">
+              <div className="text-xs font-bold tracking-widest text-[#777777] uppercase mb-4 px-2">
                 Navigation
               </div>
               {navLinks.map((link, index) => {
@@ -189,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                       href={link.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className={`block text-lg font-bold transition-colors py-3 px-2 border-b border-[#1c1c1c] active:bg-[#161616] rounded-lg ${
-                        isActive ? 'text-[#c9a84c]' : 'text-[#cccccc] hover:text-white'
+                        isActive ? 'text-[#c9a84c]' : 'text-[#aaaaaa] hover:text-white'
                       }`}
                     >
                       {link.label}

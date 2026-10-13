@@ -70,7 +70,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
     <section id="contact" className="py-24 bg-[#0a0a0a] border-t border-[#1f1f1f] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="rounded-3xl bg-gradient-to-b from-[#141414] to-[#0f0f0f] border border-[#262626] p-8 sm:p-12 lg:p-16 relative overflow-hidden">
+          <div className="rounded-2xl bg-gradient-to-b from-[#141414] to-[#0f0f0f] border border-[#262626] p-8 sm:p-12 lg:p-16 relative overflow-hidden">
             {/* Subtle gold radial aura */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#c9a84c]/8 rounded-full blur-3xl pointer-events-none" />
 
@@ -98,7 +98,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                         <Phone className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        <div className="text-xs text-[#777777] font-medium uppercase tracking-wider">
                           Direct Voice Line
                         </div>
                         <div className="text-sm font-bold text-white group-hover:text-[#c9a84c] transition-colors">
@@ -117,7 +117,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                         <MessageSquare className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        <div className="text-xs text-[#777777] font-medium uppercase tracking-wider">
                           Instant WhatsApp Chat
                         </div>
                         <div className="text-sm font-bold text-white group-hover:text-[#22c55e] transition-colors">
@@ -134,7 +134,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                         <Mail className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-[11px] text-[#777777] font-medium uppercase tracking-wider">
+                        <div className="text-xs text-[#777777] font-medium uppercase tracking-wider">
                           Corporate Email
                         </div>
                         <div className="text-sm font-bold text-white group-hover:text-[#c9a84c] transition-colors">
@@ -146,7 +146,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                 </div>
 
                 {/* Response Time Guarantee */}
-                <div className="flex items-center gap-2 text-xs text-[#888888] pt-4 border-t border-[#222222]">
+                <div className="flex items-center gap-2 text-xs text-[#777777] pt-4 border-t border-[#222222]">
                   <Clock className="w-4 h-4 text-[#c9a84c]" />
                   <span>Average engineer response time: &lt; 4 business hours</span>
                 </div>
@@ -180,7 +180,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                       <h3 className="text-lg font-bold text-white">
                         Request Project Consultation
                       </h3>
-                      <p className="text-xs text-[#888888]">
+                      <p className="text-xs text-[#777777]">
                         Fill out your requirements below for an upfront architectural assessment.
                       </p>
                     </div>
@@ -192,54 +192,59 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                        <label htmlFor="contact-name" className="block text-xs font-semibold text-[#aaaaaa] mb-1.5">
                           Full Name *
                         </label>
                         <input
                           type="text"
+                          id="contact-name"
                           required
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="e.g. Alex Morgan"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#666666] focus:border-[#c9a84c] text-sm text-white placeholder-[#777777] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                        <label htmlFor="contact-email" className="block text-xs font-semibold text-[#aaaaaa] mb-1.5">
                           Business Email *
                         </label>
                         <input
                           type="email"
+                          id="contact-email"
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="alex@company.com"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#666666] focus:border-[#c9a84c] text-sm text-white placeholder-[#777777] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                        <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#aaaaaa] mb-1.5">
                           Phone / WhatsApp (Optional)
                         </label>
                         <input
                           type="tel"
+                          id="contact-phone"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="+91 or country code"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#666666] focus:border-[#c9a84c] text-sm text-white placeholder-[#777777] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                        <label htmlFor="contact-service" className="block text-xs font-semibold text-[#aaaaaa] mb-1.5">
                           Primary Service Area *
                         </label>
                         <select
+                          id="contact-service"
+                          required
                           value={formData.service}
                           onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#666666] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         >
                           {CORE_SERVICES.map((s) => (
                             <option key={s.id} value={s.title} className="bg-[#161616]">
@@ -254,16 +259,17 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                      <label htmlFor="contact-message" className="block text-xs font-semibold text-[#aaaaaa] mb-1.5">
                         Project Requirements & Goals *
                       </label>
                       <textarea
                         required
+                        id="contact-message"
                         rows={4}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder="Briefly describe what you're building, target timelines, or technical challenges..."
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#2e2e2e] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300 resize-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#101010] border border-[#666666] focus:border-[#c9a84c] text-sm text-white placeholder-[#777777] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300 resize-none"
                       />
                     </div>
 

@@ -60,7 +60,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                       <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                         <Icon className="w-6 h-6 text-[#c9a84c]" />
                       </div>
-                      <span className="text-[11px] font-mono font-medium text-[#c9a84c] tracking-wide">
+                      <span className="text-xs font-mono font-medium text-[#c9a84c] tracking-wide">
                         {service.category}
                       </span>
                     </div>
@@ -75,29 +75,29 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
 
                     {/* Architecture Specs Box — subtle scroll parallax, alternating depth per card */}
                     <Parallax distance={idx % 2 === 0 ? 10 : -10}>
-                      <div className="p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6 space-y-2.5">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-[#777777]">Technology Stack:</span>
-                          <span className="font-mono font-semibold text-white">{service.stack}</span>
+                      <dl className="mb-6 space-y-3 rounded-xl border border-[#222222] bg-[#0e0e0e] p-4">
+                        <div>
+                          <dt className="text-xs text-[#777777]">Technology stack</dt>
+                          <dd className="mt-1 text-sm font-mono font-semibold text-white">{service.stack}</dd>
                         </div>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-[#777777]">Latency Benchmark:</span>
-                          <span className="font-mono font-semibold text-[#c9a84c]">{service.latency}</span>
+                        <div>
+                          <dt className="text-xs text-[#777777]">Latency benchmark</dt>
+                          <dd className="mt-1 text-sm font-mono font-semibold text-[#c9a84c]">{service.latency}</dd>
                         </div>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-[#777777]">Security Standard:</span>
-                          <span className="font-mono font-semibold text-white">{service.security}</span>
+                        <div>
+                          <dt className="text-xs text-[#777777]">Security standard</dt>
+                          <dd className="mt-1 text-sm font-mono font-semibold text-white">{service.security}</dd>
                         </div>
-                      </div>
+                      </dl>
                     </Parallax>
 
                     {/* Benefits Checklist */}
                     <div className="space-y-2.5 mb-8">
-                      <div className="text-xs font-bold text-[#888888] uppercase tracking-wider mb-2">
+                      <div className="text-xs font-bold text-[#777777] uppercase tracking-wider mb-2">
                         Key Deliverables
                       </div>
                       {service.benefits.map((benefit, bIdx) => (
-                        <div key={bIdx} className="flex items-start gap-2.5 text-xs text-[#cccccc]">
+                        <div key={bIdx} className="flex items-start gap-2.5 text-xs text-[#aaaaaa]">
                           <Check className="w-4 h-4 text-[#c9a84c] shrink-0 mt-0.5" />
                           <span>{benefit}</span>
                         </div>
@@ -112,7 +112,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                     size="md"
                     fullWidth
                     icon={<ArrowRight className="w-3.5 h-3.5" />}
-                    className="group-hover:border-[#c9a84c]/60 group-hover:bg-[#1a1a1a]"
                   >
                     Inquire for {service.title}
                   </AnimatedButton>

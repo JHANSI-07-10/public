@@ -166,7 +166,7 @@ export const TestimonialsSection: React.FC = () => {
                     </div>
 
                     {/* Testimonial Quote */}
-                    <p className="text-sm sm:text-base text-[#cccccc] leading-relaxed mb-8 italic">
+                    <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed mb-8 italic">
                       &ldquo;{item.content}&rdquo;
                     </p>
                   </div>
@@ -180,7 +180,7 @@ export const TestimonialsSection: React.FC = () => {
                       <div className="text-sm font-bold text-white leading-tight">
                         {item.clientName}
                       </div>
-                      <div className="text-xs text-[#888888] font-medium">
+                      <div className="text-xs text-[#777777] font-medium">
                         {item.clientRole} · <span className="text-[#c9a84c]">{item.company}</span>
                       </div>
                     </div>

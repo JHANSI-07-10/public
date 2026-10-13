@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
 @layer base {
   :root {
     --accent: #c9a84c;
@@ -23,7 +28,7 @@
 
   html {
     color-scheme: dark;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -126,5 +131,87 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* Uiverse.io by eslam-hany adapted for VPD Leadership Card */
+.uiverse-leadership-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: border-color 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+              box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.uiverse-leadership-card::before,
+.uiverse-leadership-card::after {
+  position: absolute;
+  content: "";
+  width: 80px;
+  height: 80px;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .uiverse-leadership-card::before,
+  .uiverse-leadership-card::after {
+    width: 120px;
+    height: 100px;
+  }
+}
+
+.uiverse-leadership-card::before {
+  top: 0;
+  right: 0;
+  border-radius: 0 1rem 0 100%;
+  background: radial-gradient(circle at top right, rgba(242, 217, 141, 0.2) 0%, rgba(242, 217, 141, 0.06) 65%, transparent 100%), rgba(242, 217, 141, 0.03);
+  border-bottom: 1px solid rgba(242, 217, 141, 0.24);
+  border-left: 1px solid rgba(242, 217, 141, 0.24);
+}
+
+.uiverse-leadership-card::after {
+  bottom: 0;
+  left: 0;
+  border-radius: 0 100% 0 1rem;
+  background: radial-gradient(circle at bottom left, rgba(242, 217, 141, 0.2) 0%, rgba(242, 217, 141, 0.06) 65%, transparent 100%), rgba(242, 217, 141, 0.03);
+  border-top: 1px solid rgba(242, 217, 141, 0.24);
+  border-right: 1px solid rgba(242, 217, 141, 0.24);
+}
+
+.uiverse-leadership-card:hover,
+.uiverse-leadership-card:focus-within {
+  border-color: rgba(242, 217, 141, 0.45);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8), 0 0 25px -6px rgba(242, 217, 141, 0.12);
+}
+
+.uiverse-leadership-card:hover::before,
+.uiverse-leadership-card:hover::after,
+.uiverse-leadership-card:focus-within::before,
+.uiverse-leadership-card:focus-within::after {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.uiverse-leadership-card:hover::before,
+.uiverse-leadership-card:focus-within::before {
+  background: radial-gradient(ellipse at top right, rgba(242, 217, 141, 0.08) 0%, rgba(242, 217, 141, 0.02) 55%, transparent 80%);
+  border-color: rgba(242, 217, 141, 0.15);
+}
+
+.uiverse-leadership-card:hover::after,
+.uiverse-leadership-card:focus-within::after {
+  background: radial-gradient(ellipse at bottom left, rgba(242, 217, 141, 0.08) 0%, rgba(242, 217, 141, 0.02) 55%, transparent 80%);
+  border-color: rgba(242, 217, 141, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uiverse-leadership-card::before,
+  .uiverse-leadership-card::after {
+    transition: none !important;
   }
 }

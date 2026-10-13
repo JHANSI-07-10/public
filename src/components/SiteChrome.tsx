@@ -17,8 +17,8 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const pathname = usePathname() ?? '';
 
-  // Brand Intro: disabled on initial load so landing page and video display immediately
-  const [showBrandIntro, setShowBrandIntro] = useState<boolean>(false);
+  // Cinematic Photon Knot Page Preloader: plays while page is loading and while data is rendering
+  const [showBrandIntro, setShowBrandIntro] = useState<boolean>(true);
 
   const handleDismissIntro = () => {
     setShowBrandIntro(false);

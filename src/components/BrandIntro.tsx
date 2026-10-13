@@ -3,25 +3,30 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { VpdPhotonKnotLogo } from './photonKnot/VpdPhotonKnotLogo';
 
 interface BrandIntroProps {
   onDismiss: () => void;
-  autoDismissDelay?: number;
+  minDuration?: number;
 }
 
 /**
- * VPD Technologies — Brand Intro
+ * VPD Technologies — Cinematic Brand Intro & Page Preloader
  *
- * A short, reliable cinematic reveal using the official logo asset directly:
- * 1. Fade + scale the logo in over a gold bloom.
- * 2. Cascade the tagline in beneath it.
- * 3. Hold briefly, then auto-dismiss (or on click / keypress / skip).
+ * Displays during initial page load and component/data rendering.
+ * Features:
+ * - 3D WebGL Photon Ribbon animation with champagne-gold highlights.
+ * - Clean contour tracing and reveal of the authentic VPD logo.
+ * - Background matched to website background (#0A0A0A) with zero box boundaries.
+ * - Clean presentation focused on the animated brand ident (no clutter or extra text).
+ * - Smooth fade-out into the homepage upon completion.
+ * - Instant skip via click anywhere, Escape, Space, Enter, or discrete top-right button.
  */
 export const BrandIntro: React.FC<BrandIntroProps> = ({
   onDismiss,
-  autoDismissDelay = 3200,
+  minDuration = 3400,
 }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = Boolean(useReducedMotion());
   const [isDismissing, setIsDismissing] = useState(false);
   const hasDismissedRef = useRef(false);
 
@@ -31,7 +36,7 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
     setIsDismissing(true);
   }, []);
 
-  // Lock body overflow while intro is running
+  // Lock body scroll while the preloader is active
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -40,10 +45,10 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
     };
   }, []);
 
-  // Keyboard: Enter / Space / Escape skips the intro
+  // Keyboard controls: Escape, Space, or Enter skips immediately
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         handleDismiss();
       }
@@ -52,82 +57,85 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleDismiss]);
 
-  // Auto-dismiss fallback so the visitor is never trapped
+  // Reduced motion: bypass immediately
   useEffect(() => {
-    const timer = setTimeout(handleDismiss, shouldReduceMotion ? 1200 : autoDismissDelay);
-    return () => clearTimeout(timer);
-  }, [autoDismissDelay, handleDismiss, shouldReduceMotion]);
+    if (shouldReduceMotion) {
+      handleDismiss();
+    }
+  }, [shouldReduceMotion, handleDismiss]);
+
+  // Callback when the Photon Knot logo has finished its crisp reveal sequence
+  const handleRevealComplete = useCallback(() => {
+    // Hold briefly in crisp focus so the user takes in the authentic resolved logo, then dismiss
+    const exitDelay = 600;
+    setTimeout(() => {
+      handleDismiss();
+    }, exitDelay);
+  }, [handleDismiss]);
 
   return (
     <AnimatePresence onExitComplete={onDismiss}>
       {!isDismissing && (
         <motion.div
-          key="vpd-brand-intro-overlay"
+          key="vpd-photon-knot-preloader"
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.04,
-            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+            scale: 1.02,
+            filter: 'blur(8px)',
+            transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
           }}
-          onClick={handleDismiss}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#000000] overflow-hidden select-none cursor-pointer"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-[#0A0A0A] overflow-hidden select-none cursor-pointer"
           role="dialog"
-          aria-label="VPD Technologies brand intro"
+          aria-label="VPD Technologies Brand Presentation"
+          onClick={handleDismiss}
         >
-          {/* Cinematic radial vignette */}
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_70%_55%_at_50%_50%,rgba(212,175,55,0.07),rgba(0,0,0,0.98)_75%)]" />
-
-          {/* Skip control */}
-          <button
-            onClick={handleDismiss}
-            className="absolute top-6 right-6 z-30 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#141414]/85 border border-[#262626] hover:border-[#D4AF37]/60 text-xs font-medium text-[#cccccc] hover:text-[#DFC067] transition-all duration-200 cursor-pointer shadow-lg backdrop-blur-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
-            aria-label="Skip intro and proceed to website"
-          >
-            <span>Skip</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Gold bloom behind the logo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: [0, 0.4, 0.25], scale: [0.8, 1.1, 1] }}
-            transition={{ duration: 1.8, ease: 'easeOut', repeat: Infinity, repeatType: 'reverse' }}
-            className="absolute w-[420px] h-[220px] sm:w-[620px] sm:h-[300px] rounded-full blur-[100px] bg-gradient-to-r from-[#D4AF37]/25 via-[#DFC067]/35 to-[#D4AF37]/25 pointer-events-none"
+          {/* Subtle Ambient Radial Gold Glow (Zero box boundaries, seamlessly blends into #0A0A0A) */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.07) 0%, rgba(10, 10, 10, 0) 65%)',
+            }}
           />
 
-          {/* Logo + tagline */}
-          <div className="relative z-20 flex flex-col items-center px-6">
-            <motion.img
-              src="/logo.webp"
-              alt="VPD Technologies"
-              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[260px] sm:w-[360px] lg:w-[420px] h-auto drop-shadow-[0_0_36px_rgba(212,175,55,0.25)]"
-              draggable={false}
-            />
-
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 flex flex-col items-center gap-3"
+          {/* Minimal Discrete Skip Control (Top Right) */}
+          <div className="absolute top-6 right-6 sm:top-8 sm:right-10 z-30 pointer-events-auto">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDismiss();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#141414]/70 hover:bg-[#1C1C1C] border border-[#262626]/70 hover:border-[#D4AF37]/50 text-xs font-medium text-[#777777] hover:text-[#DFC067] transition-all duration-200 cursor-pointer backdrop-blur-md focus:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37]"
+              aria-label="Skip intro"
             >
-              <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#D4AF37]/70 to-transparent" />
-              <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase text-[#A1A1AA] text-center">
-                Engineering High-Performance Digital Ecosystems
-              </p>
-            </motion.div>
+              <span>Skip</span>
+              <span className="text-xs font-mono text-[#555555] bg-[#1E1E1E] px-1 py-0.2 rounded border border-[#2B2B2B]">
+                ESC
+              </span>
+              <ArrowRight className="w-3 h-3 text-[#666666]" />
+            </button>
           </div>
 
-          {/* Bottom baseline */}
-          <div className="absolute bottom-6 left-0 right-0 text-center pointer-events-none">
-            <span className="text-[10px] tracking-[0.3em] uppercase text-[#555555]">
-              ENTERPRISE SOFTWARE ARCHITECTURE &bull; VPD TECHNOLOGIES
-            </span>
+          {/* Central Showcase: Pure Animated VPD Logo */}
+          <div
+            className="relative z-20 w-full max-w-2xl px-4 sm:px-6 flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-full max-w-[500px]">
+              <VpdPhotonKnotLogo
+                borderless={true}
+                showControls={false}
+                duration={minDuration}
+                interactive={true}
+                onRevealComplete={handleRevealComplete}
+              />
+            </div>
           </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 };
+
+export default BrandIntro;

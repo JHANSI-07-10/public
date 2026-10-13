@@ -55,15 +55,29 @@ export const COMPANY_DATA = {
   location: "Kurnool, Andhra Pradesh, India",
   coordinates: { lat: 15.838556, lng: 78.015556 },
   phone: "+91 83339 19447",
-  email: "info@vpdtechnologies.com",
-  supportEmail: "support@vpdtechnologiespvtltd.com",
+  email: "support@vpdtechnologiespvtltd.com",
   whatsappUrl: "https://wa.me/918333919447",
   mapsUrl: "https://maps.app.goo.gl/zC4rwmytTXbwNfTW7",
   founder: {
-    name: "Sai Krishna",
-    role: "Founder & CEO",
+    name: "Sai Krishna Vuppala",
+    role: "Founder & Chief Executive Officer",
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results."
-  }
+  },
+  leadership: [
+    {
+      name: "Sai Krishna Vuppala",
+      role: "Founder and Chief Executive Officer",
+      shortRole: "Founder & CEO",
+      initials: "SK"
+    },
+    {
+      name: "Ramcharan Gottipati",
+      role: "Co-Founder and Managing Director",
+      shortRole: "Co-Founder & MD",
+      initials: "RG"
+    }
+  ],
+  foundingStatement: "VPD Technologies is led by Sai Krishna Vuppala, Founder and Chief Executive Officer, and Ramcharan Gottipati, Co-Founder and Managing Director. Together, they provide the strategic and operational leadership guiding the Company's growth in Kurnool."
 };
 
 export const KEY_METRICS = [

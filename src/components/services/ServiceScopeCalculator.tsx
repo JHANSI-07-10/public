@@ -181,7 +181,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
                       </span>
                       {isSelected && <span className="w-2 h-2 rounded-full bg-[#c9a84c]" />}
                     </div>
-                    <span className="text-[11px] font-mono text-[#c9a84c] block">
+                    <span className="text-xs font-mono text-[#c9a84c] block">
                       {service.category.split(' ')[0]}
                     </span>
                   </button>
@@ -213,7 +213,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
                     }`}
                   >
                     <div className="text-xs font-bold mb-0.5">{scale.label}</div>
-                    <div className="text-[10px] text-[#777777]">{scale.desc}</div>
+                    <div className="text-xs text-[#777777]">{scale.desc}</div>
                   </button>
                 );
               })}
@@ -242,12 +242,12 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
                       <div className="text-xs font-semibold text-white flex items-center gap-2">
                         <span>{cap.label}</span>
                         {isChecked && (
-                          <span className="text-[10px] font-mono text-[#c9a84c]">
+                          <span className="text-xs font-mono text-[#c9a84c]">
                             (+{cap.sprintImpact} sprint)
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-[#888888] mt-0.5">
+                      <div className="text-xs text-[#888888] mt-0.5">
                         {cap.description}
                       </div>
                     </div>
@@ -275,7 +275,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
               <span className="text-xs font-mono font-bold text-[#c9a84c] uppercase">
                 Architecture Blueprint Estimate
               </span>
-              <span className="text-[11px] font-mono text-[#777777]">
+              <span className="text-xs font-mono text-[#777777]">
                 Configured Real-Time
               </span>
             </div>
@@ -296,7 +296,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
               {/* Calculated Metrics */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-xl bg-[#161616] border border-[#262626]">
-                  <span className="text-[10px] text-[#777777] uppercase font-bold block mb-1">
+                  <span className="text-xs text-[#777777] uppercase font-bold block mb-1">
                     Sprint Count
                   </span>
                   <span className="text-lg font-mono font-black text-white">
@@ -304,7 +304,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
                   </span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-[#161616] border border-[#262626]">
-                  <span className="text-[10px] text-[#777777] uppercase font-bold block mb-1">
+                  <span className="text-xs text-[#777777] uppercase font-bold block mb-1">
                     Turnaround Time
                   </span>
                   <span className="text-lg font-mono font-black text-[#c9a84c]">
@@ -314,7 +314,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#161616] border border-[#262626]">
-                <span className="text-[10px] text-[#777777] uppercase font-bold block mb-1">
+                <span className="text-xs text-[#777777] uppercase font-bold block mb-1">
                   Dedicated Squad Structure
                 </span>
                 <span className="text-xs text-white font-medium block">
@@ -323,7 +323,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#161616] border border-[#262626]">
-                <span className="text-[10px] text-[#777777] uppercase font-bold block mb-1">
+                <span className="text-xs text-[#777777] uppercase font-bold block mb-1">
                   Enterprise SLA & Warranty
                 </span>
                 <span className="text-xs text-[#c9a84c] font-medium block">

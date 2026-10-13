@@ -104,13 +104,13 @@ const CoverFrame: React.FC<{ article: InsightArticle; featured?: boolean }> = ({
       {article.tags.map((t) => (
         <span
           key={t}
-          className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-[#c9a84c] font-bold"
+          className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-xs font-mono text-[#c9a84c] font-bold"
         >
           {t.toUpperCase()}
         </span>
       ))}
     </div>
-    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-[#cccccc]">
+    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-xs font-mono font-bold text-[#cccccc]">
       <Clock className="w-3 h-3 text-[#c9a84c]" />
       {readingMinutes(article)} MIN
     </span>
@@ -190,7 +190,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                 <div className="text-2xl sm:text-3xl font-black tracking-tight text-white tabular-nums">
                   <CountingNumber value={`${stat.target}${stat.suffix}`} duration={1.2} />
                 </div>
-                <div className="mt-1 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-[#777777]">
+                <div className="mt-1 text-xs font-mono uppercase tracking-wider text-[#777777]">
                   {stat.label}
                 </div>
               </StaggerItem>
@@ -268,7 +268,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                           {featured && (
                             <div className="inline-flex items-center gap-2 mb-4 px-2.5 py-1 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/30">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
-                              <span className="text-[10px] font-mono font-bold tracking-widest text-[#c9a84c]">
+                              <span className="text-xs font-mono font-bold tracking-widest text-[#c9a84c]">
                                 LATEST BRIEF
                               </span>
                             </div>
@@ -306,7 +306,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
                             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                           </Link>
                           {!featured && (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[#555555]">
+                            <span className="inline-flex items-center gap-1 text-xs font-mono text-[#555555]">
                               <Clock className="w-3 h-3" />
                               {readingMinutes(article)} MIN
                             </span>
@@ -331,7 +331,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ onOpenConsultation }) => {
           {[...MARQUEE_TOPICS, ...MARQUEE_TOPICS].map((topic, idx) => (
             <span
               key={`${topic}-${idx}`}
-              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-[#242424] bg-[#141414] text-[11px] font-mono font-semibold tracking-wider text-[#888888] whitespace-nowrap"
+              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-[#242424] bg-[#141414] text-xs font-mono font-semibold tracking-wider text-[#888888] whitespace-nowrap"
             >
               <span className="w-1 h-1 rounded-full bg-[#c9a84c]" aria-hidden="true" />
               {topic}

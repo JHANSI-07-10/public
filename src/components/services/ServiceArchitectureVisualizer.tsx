@@ -174,19 +174,19 @@ export const ServiceArchitectureVisualizer: React.FC<ServiceArchitectureVisualiz
                   >
                     <TierIcon className="w-5 h-5" />
                   </div>
-                  <span className="text-[11px] font-mono text-[#666666]">
+                  <span className="text-xs font-mono text-[#666666]">
                     0{idx + 1}
                   </span>
                 </div>
 
-                <div className="text-[11px] font-semibold text-[#888888] uppercase tracking-wider">
+                <div className="text-xs font-semibold text-[#888888] uppercase tracking-wider">
                   {tier.category}
                 </div>
                 <div className="text-sm sm:text-base font-bold text-white mt-0.5 truncate">
                   {tier.name.split(' ')[0]} {tier.name.split(' ')[1] || ''}
                 </div>
 
-                <div className="mt-3 flex items-center justify-between text-[11px] pt-3 border-t border-[#1f1f1f]">
+                <div className="mt-3 flex items-center justify-between text-xs pt-3 border-t border-[#1f1f1f]">
                   <span className="font-mono text-[#c9a84c]">{tier.latency}</span>
                   <span className="text-[#666666] group-hover:text-white transition-colors">
                     {isSelected ? 'Viewing' : 'Inspect'}
@@ -280,7 +280,7 @@ export const ServiceArchitectureVisualizer: React.FC<ServiceArchitectureVisualiz
 
                 <div className="pt-3 border-t border-[#202020] grid grid-cols-2 gap-3">
                   <div className="p-3 rounded-xl bg-[#141414] border border-[#242424]">
-                    <span className="text-[10px] text-[#777777] uppercase font-bold block mb-1">
+                    <span className="text-xs text-[#777777] uppercase font-bold block mb-1">
                       Latency Target
                     </span>
                     <span className="text-xs font-mono font-bold text-[#c9a84c]">
@@ -288,7 +288,7 @@ export const ServiceArchitectureVisualizer: React.FC<ServiceArchitectureVisualiz
                     </span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#141414] border border-[#242424]">
-                    <span className="text-[10px] text-[#777777] uppercase font-bold block mb-1">
+                    <span className="text-xs text-[#777777] uppercase font-bold block mb-1">
                       Reliability Target
                     </span>
                     <span className="text-xs font-mono font-bold text-white">

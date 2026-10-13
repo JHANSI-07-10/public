@@ -18,10 +18,10 @@ export const SceneFallback: React.FC = () => {
             </div>
             <div>
               <div className="text-xs font-bold text-white">Frontend Web Client</div>
-              <div className="text-[10px] font-mono text-[#c9a84c]">React 19 · Vite · Edge</div>
+              <div className="text-xs font-mono text-[#c9a84c]">React 19 · Vite · Edge</div>
             </div>
           </div>
-          <span className="text-[10px] font-mono font-bold text-[#22c55e] px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-500/30">
+          <span className="text-xs font-mono font-bold text-[#22c55e] px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-500/30">
             ONLINE
           </span>
         </div>
@@ -34,7 +34,7 @@ export const SceneFallback: React.FC = () => {
             </div>
             <div>
               <div className="text-xs font-bold text-white">Cloud Architecture</div>
-              <div className="text-[10px] text-[#888888]">Spring Boot Core</div>
+              <div className="text-xs text-[#888888]">Spring Boot Core</div>
             </div>
           </div>
 
@@ -44,13 +44,13 @@ export const SceneFallback: React.FC = () => {
             </div>
             <div>
               <div className="text-xs font-bold text-white">Database Cluster</div>
-              <div className="text-[10px] text-[#888888]">PostgreSQL · Redis</div>
+              <div className="text-xs text-[#888888]">PostgreSQL · Redis</div>
             </div>
           </div>
         </div>
 
         {/* Bottom Microservice Console */}
-        <div className="p-3.5 rounded-xl bg-[#0f0f0f] border border-[#222222] font-mono text-[11px] text-[#aaaaaa] flex items-center justify-between">
+        <div className="p-3.5 rounded-xl bg-[#0f0f0f] border border-[#222222] font-mono text-xs text-[#aaaaaa] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-[#c9a84c]" />
             <span>&gt; cluster.health: 100% nominal</span>

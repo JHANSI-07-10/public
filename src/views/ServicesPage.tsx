@@ -91,7 +91,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 <span className="text-xs font-semibold text-white mt-0.5">
                   Time to Interactive (TTI)
                 </span>
-                <span className="text-[11px] text-[#71717a]">
+                <span className="text-xs text-[#71717a]">
                   Core Web Vitals Pass
                 </span>
               </div>
@@ -103,7 +103,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 <span className="text-xs font-semibold text-white mt-0.5">
                   High-Availability Uptime
                 </span>
-                <span className="text-[11px] text-[#71717a]">
+                <span className="text-xs text-[#71717a]">
                   Enterprise SLA Guaranteed
                 </span>
               </div>
@@ -115,7 +115,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 <span className="text-xs font-semibold text-white mt-0.5">
                   IP & Code Ownership
                 </span>
-                <span className="text-[11px] text-[#71717a]">
+                <span className="text-xs text-[#71717a]">
                   Full Git Repository Transfer
                 </span>
               </div>
@@ -127,7 +127,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 <span className="text-xs font-semibold text-white mt-0.5">
                   Vendor Lock-In
                 </span>
-                <span className="text-[11px] text-[#71717a]">
+                <span className="text-xs text-[#71717a]">
                   Standard Docker & Cloud Stacks
                 </span>
               </div>

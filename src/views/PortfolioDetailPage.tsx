@@ -114,7 +114,7 @@ export const PortfolioDetailPage: React.FC<PortfolioDetailPageProps> = ({ id, on
                 <div className="space-y-4">
                   {project.specs.map((spec, sIdx) => (
                     <div key={sIdx} className="text-xs">
-                      <span className="text-[#777777] block text-[10px] uppercase font-bold">
+                      <span className="text-[#777777] block text-xs uppercase font-bold">
                         {spec.label}
                       </span>
                       <span className="font-mono text-sm font-semibold text-white">

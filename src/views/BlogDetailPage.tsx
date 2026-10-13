@@ -116,7 +116,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
               {article.tags.map((t) => (
                 <span
                   key={t}
-                  className="px-2.5 py-1 rounded bg-[#181818] border border-[#2a2a2a] text-[10px] font-mono font-bold text-[#c9a84c]"
+                  className="px-2.5 py-1 rounded bg-[#181818] border border-[#2a2a2a] text-xs font-mono font-bold text-[#c9a84c]"
                 >
                   {t.toUpperCase()}
                 </span>
@@ -237,7 +237,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
                       href={`/blogs/${rel.id}`}
                       className="group block h-full rounded-xl border border-[#262626] bg-[#141414] p-5 card-hover"
                     >
-                      <div className="text-[10px] font-mono text-[#777777] mb-2">
+                      <div className="text-xs font-mono text-[#777777] mb-2">
                         {rel.date}
                       </div>
                       <h4 className="text-base font-bold text-white leading-snug mb-2 group-hover:text-[#c9a84c] transition-colors">

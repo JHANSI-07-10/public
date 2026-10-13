@@ -26,7 +26,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           {eyebrow}
         </div>
       )}
-      <h2 className="text-3xl sm:text-4xl lg:text-[2.65rem] font-black text-white tracking-tight leading-[1.15] text-balance mb-4">
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-balance mb-4">
         {title}
       </h2>
       {subtitle && (

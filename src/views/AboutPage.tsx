@@ -135,13 +135,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
             <Reveal className="lg:col-span-7">
               <div>
                 <div className="text-xs font-bold tracking-widest text-[#c9a84c] uppercase mb-3">
-                  Founder's Perspective
+                  Founding Leadership
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-6">
                   Bridging Deep Engineering with Intuitive Business Value.
                 </h2>
                 <blockquote className="text-lg sm:text-xl font-medium text-white leading-relaxed mb-6 italic pl-4 border-l-2 border-[#c9a84c]">
-                  "{COMPANY_DATA.founder.quote}"
+                  "{COMPANY_DATA.foundingStatement}"
                 </blockquote>
                 <div className="space-y-4 text-sm text-[#aaaaaa] leading-relaxed mb-8">
                   <p>
@@ -152,18 +152,22 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#1c1c1c] border border-[#c9a84c]/50 flex items-center justify-center text-[#c9a84c] font-black text-lg">
-                    SK
-                  </div>
-                  <div>
-                    <div className="text-base font-bold text-white">
-                      {COMPANY_DATA.founder.name}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {COMPANY_DATA.leadership.map((leader) => (
+                    <div key={leader.name} className="flex items-center gap-3.5">
+                      <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#c9a84c]/50 flex items-center justify-center text-[#c9a84c] font-black text-sm shrink-0">
+                        {leader.initials}
+                      </div>
+                      <div>
+                        <div className="text-sm sm:text-base font-bold text-white">
+                          {leader.name}
+                        </div>
+                        <div className="text-xs text-[#888888]">
+                          {leader.role}
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-xs text-[#888888]">
-                      {COMPANY_DATA.founder.role} · {COMPANY_DATA.legalName}
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </Reveal>

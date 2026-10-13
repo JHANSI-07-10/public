@@ -92,7 +92,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                           <div className="text-2xl font-black text-[#c9a84c] tracking-tight tabular-nums">
                             {project.metricHighlight}
                           </div>
-                          <div className="text-xs font-medium text-[#cccccc] leading-tight max-w-[180px]">
+                          <div className="text-xs font-medium text-[#aaaaaa] leading-tight max-w-[180px]">
                             {project.metricLabel}
                           </div>
                         </div>
@@ -109,7 +109,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                     >
                       <div>
                         {/* Metadata line: No pills, unboxed clean text with separators */}
-                        <div className="flex items-center gap-2 text-xs text-[#888888] font-medium mb-3">
+                        <div className="flex items-center gap-2 text-xs text-[#777777] font-medium mb-3">
                           <span>{project.client}</span>
                           <span aria-hidden="true">·</span>
                           <span>{project.sector}</span>
@@ -139,11 +139,11 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                         {/* Technical Specs Strip */}
                         <div className="grid grid-cols-2 gap-3 p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6">
                           {project.specs.map((spec, sIdx) => (
-                            <div key={sIdx} className="text-xs">
-                              <span className="text-[#666666] block text-[10px] uppercase font-semibold">
+                            <div key={sIdx} className="text-sm">
+                              <span className="mb-1 block text-xs uppercase font-semibold text-[#777777]">
                                 {spec.label}
                               </span>
-                              <span className="font-mono font-medium text-[#dddddd]">
+                              <span className="font-mono font-medium text-white">
                                 {spec.value}
                               </span>
                             </div>
@@ -152,7 +152,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                       </div>
 
                       {/* Actions */}
-                      <div className="flex items-center gap-4 pt-2">
+                      <div className="flex flex-wrap items-center gap-3 pt-2">
                         <AnimatedButton
                           onClick={() => setSelectedProject(project)}
                           variant="secondary"
@@ -161,14 +161,16 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                         >
                           View Project Breakdown
                         </AnimatedButton>
-                        <button
+                        <Button
                           type="button"
                           onClick={onOpenConsultation}
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#888888] hover:text-white transition-colors py-2 ml-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded cursor-pointer"
+                          className="text-xs font-semibold"
+                          variant="ghost"
+                          size="sm"
+                          icon={<ChevronRight className="w-3.5 h-3.5" />}
                         >
-                          <span>Discuss Similar Project</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
+                          Discuss Similar Project
+                        </Button>
                       </div>
                     </motion.div>
                   </div>
@@ -212,12 +214,12 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
                 <h3 className="text-2xl font-bold text-white mt-1">
                   {selectedProject.title}
                 </h3>
-                <p className="text-sm text-[#888888]">
+                <p className="text-sm text-[#777777]">
                   Client: {selectedProject.client}
                 </p>
               </div>
 
-              <div className="space-y-4 text-sm text-[#cccccc] mb-8">
+              <div className="space-y-4 text-sm text-[#aaaaaa] mb-8">
                 <div>
                   <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
                     Challenge

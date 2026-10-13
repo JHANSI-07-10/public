@@ -1,143 +1,243 @@
 'use client';
 
-import React from 'react';
-import { Shield, Cpu, Target, Award } from 'lucide-react';
-import { motion, useReducedMotion, Variants } from 'motion/react';
+import React, { useRef } from 'react';
+import Image from 'next/image';
+import { Award } from 'lucide-react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
-import { SectionHeader } from './ui/SectionHeader';
-import { Card } from './ui/Card';
-import { Reveal } from './motion/Reveal';
-import { StaggerContainer } from './motion/StaggerContainer';
 import { WordMaskReveal } from './motion/WordMaskReveal';
-import { InteractiveCard } from './motion/InteractiveCard';
+
+const PRINCIPLES = [
+  {
+    title: 'Engineering Precision',
+    description:
+      'Our codebases are built upon rigid technical benchmarks, eliminating bloat to guarantee sub-100ms response times and high-density performance.',
+  },
+  {
+    title: 'Multi-Tier Stack Harmony',
+    description:
+      'Unified full-stack synergy across React client applications, real-time message brokers, and enterprise Java Spring backends.',
+  },
+  {
+    title: 'Protocol-Grade Security',
+    description:
+      'Enterprise data compliance with AES-256 encryption, strict RBAC authorization boundaries, and ISO 27001 security standards.',
+  },
+];
 
 export const CompanyIntro: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const pillarVariants: Variants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.5, ease: 'easeOut' },
-    },
-  };
+  // Scroll-linked parallax animation for background image
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
 
-  const principles = [
-    {
-      icon: Cpu,
-      title: 'Engineered Precision',
-      description: 'Our codebases are built upon rigid technical benchmarks, eliminating bloat to guarantee sub-100ms response times and high-density performance.'
-    },
-    {
-      icon: Target,
-      title: 'Multi-Tier Stack Harmony',
-      description: 'Unified full-stack synergy across React client applications, real-time message brokers, and enterprise Java Spring backends.'
-    },
-    {
-      icon: Shield,
-      title: 'Protocol-Grade Security',
-      description: 'Enterprise data compliance with AES-256 encryption, strict RBAC authorization boundaries, and ISO 27001 security standards.'
-    }
-  ];
+  const bgY = useTransform(scrollYProgress, [0, 1], ['-7%', '7%']);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1.02, 1.08]);
 
   return (
-    <section id="about" className="py-24 bg-[#0d0d0d] border-t border-[#1f1f1f] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <Reveal>
-          <SectionHeader
-            eyebrow="Company Philosophy & Pedigree"
-            title={<WordMaskReveal text="Vision, Purpose, Delivery. The Foundations of Our Craft." />}
-            subtitle={`${COMPANY_DATA.vision} We reject off-the-shelf compromises and opaque agency jargon, replacing them with verifiable architecture and direct accountability.`}
-            align="center"
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative py-24 sm:py-28 lg:py-32 bg-[#0c0c0c] border-t border-[#1f1f1f] overflow-hidden"
+      aria-label="Company Introduction & Leadership"
+    >
+      {/* 1. Cinematic Background Image Layer with Parallax Scroll Animation */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
+        <motion.div
+          style={{
+            y: shouldReduceMotion ? 0 : bgY,
+            scale: shouldReduceMotion ? 1 : bgScale,
+          }}
+          className="absolute -inset-y-16 inset-x-0 w-full h-[calc(100%+8rem)]"
+        >
+          <Image
+            src="/images/company-intro/bg-company-intro.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover object-center"
           />
-        </Reveal>
+        </motion.div>
 
-        {/* 3 Core Engineering Principles Bento Strip */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {principles.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={idx}
-                variants={shouldReduceMotion ? undefined : pillarVariants}
-                className="h-full"
+        {/* Seamless Top Vignette transitioning from Section 2 (#181818) */}
+        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#181818] via-[#181818]/70 to-transparent" />
+
+        {/* Ambient Darkening Scrim to keep luminous gold ribbons visible while guaranteeing text legibility */}
+        <div className="absolute inset-0 bg-[#0a0a0a]/75" />
+
+        {/* Radial Gold Focal Lighting */}
+        <div
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none opacity-25"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%)',
+          }}
+        />
+
+        {/* Seamless Bottom Vignette blending into Section 4 */}
+        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* 2. Section Header with Scroll Reveal Animations */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+          {/* Eyebrow badge */}
+          <motion.div
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, ease: [0.19, 1, 0.22, 1] }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161616]/90 border border-[#D4AF37]/35 text-xs font-bold tracking-widest text-[#D4AF37] uppercase mb-4 backdrop-blur-md shadow-md"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+            <span>Company Philosophy & Pedigree</span>
+          </motion.div>
+
+          {/* Main Title with word mask scroll reveal */}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.18] text-balance mb-5">
+            <WordMaskReveal
+              text="Vision, Purpose, Delivery. The Foundations of Our Craft."
+              highlightWords={['Vision,', 'Purpose,', 'Delivery.']}
+              highlightClassName="text-[#D4AF37]"
+              stagger={0.045}
+              duration={0.65}
+            />
+          </h2>
+
+          {/* Subtitle with scroll fade-in */}
+          <motion.p
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+            className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-balance"
+          >
+            {COMPANY_DATA.vision} We reject off-the-shelf compromises and opaque agency jargon,
+            replacing them with verifiable architecture and direct accountability.
+          </motion.p>
+        </div>
+
+        {/* 3. Core Engineering Principles — Refined Glassmorphic Panel with Scroll Reveal */}
+        <motion.div
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 35 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.19, 1, 0.22, 1] }}
+          className="mt-10 sm:mt-12 mb-14 sm:mb-16 rounded-2xl border border-[#2a2a2a]/90 bg-[#121212]/80 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-[#262626] md:divide-x md:divide-y-0">
+            {PRINCIPLES.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.15 + index * 0.12,
+                  ease: [0.19, 1, 0.22, 1],
+                }}
+                className="py-6 md:px-7 md:py-3 first:md:pl-0 last:md:pr-0 flex flex-col justify-between group"
               >
-                <InteractiveCard
-                  variant="card"
-                  padding="lg"
-                  className="flex flex-col justify-between h-full"
-                >
-                  <div>
-                    <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/25 flex items-center justify-center mb-6">
-                      <Icon className="w-6 h-6 text-[#c9a84c]" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-[#aaaaaa] leading-relaxed">
-                      {item.description}
-                    </p>
+                <div>
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="font-mono text-sm font-bold text-[#D4AF37]">
+                      0{index + 1}
+                    </span>
+                    <span
+                      className="h-px w-8 bg-[#D4AF37]/50 transition-all duration-500 group-hover:w-14 group-hover:bg-[#D4AF37]"
+                      aria-hidden="true"
+                    />
                   </div>
-                </InteractiveCard>
-              </motion.div>
-            );
-          })}
-        </StaggerContainer>
+                  <h3 className="mb-3 text-xl font-bold text-white group-hover:text-[#F2D98D] transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[#A1A1AA]">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </motion.div>
 
-        {/* Founder & Leadership Credibility Card */}
-        <Reveal delay={0.1}>
-          <Card variant="card" padding="lg" hoverable={false} className="relative overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <Award className="w-4 h-4 text-[#c9a84c]" />
-                  <span className="text-xs font-bold text-[#c9a84c] uppercase tracking-wider">
-                    Leadership Statement
-                  </span>
-                </div>
-                <blockquote className="text-lg sm:text-xl font-medium text-white leading-relaxed mb-6 italic">
-                  "{COMPANY_DATA.founder.quote}"
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] font-black text-lg">
-                    SK
-                  </div>
-                  <div>
-                    <div className="text-base font-bold text-white">
-                      {COMPANY_DATA.founder.name}
-                    </div>
-                    <div className="text-xs text-[#888888] font-medium">
-                      {COMPANY_DATA.founder.role} · VPD Technologies Private Limited
-                    </div>
-                  </div>
-                </div>
+        {/* 4. Founder & Leadership Credibility Card with Uiverse Corner-Expand Animation & Scroll Reveal */}
+        <motion.div
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 35 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.19, 1, 0.22, 1] }}
+          tabIndex={0}
+          role="region"
+          aria-label="Leadership Statement and Corporate Registration"
+          className="uiverse-leadership-card group border border-[#2a2a2a]/90 bg-[#141414]/85 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F2D98D]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
+        >
+          {/* Subtle ambient light gold accent glow */}
+          <div
+            className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#F2D98D]/5 to-transparent rounded-full pointer-events-none blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+            aria-hidden="true"
+          />
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Award className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider">
+                  Founding Leadership
+                </span>
               </div>
+              <p className="text-base sm:text-lg font-medium text-white/95 leading-relaxed mb-6 group-hover:text-white transition-colors duration-300">
+                {COMPANY_DATA.foundingStatement}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
+                {COMPANY_DATA.leadership.map((leader) => (
+                  <div key={leader.name} className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] font-black text-sm shrink-0 group-hover:border-[#F2D98D]/60 group-hover:shadow-[0_0_12px_rgba(242,217,141,0.2)] transition-all duration-500">
+                      {leader.initials}
+                    </div>
+                    <div>
+                      <div className="text-sm sm:text-base font-bold text-white group-hover:text-[#F2D98D] transition-colors duration-300">
+                        {leader.name}
+                      </div>
+                      <div className="text-xs text-[#888888] font-medium">
+                        {leader.role}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-              <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#242424] pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-center space-y-4">
-                <div className="text-xs font-bold uppercase text-[#888888] tracking-wider">
-                  Corporate Registration
+            <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#262626] pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-center space-y-4">
+              <div className="text-xs font-bold uppercase text-[#888888] tracking-wider">
+                Corporate Registration
+              </div>
+              <div className="space-y-2.5 text-sm text-[#A1A1AA]">
+                <div className="flex justify-between">
+                  <span className="text-[#777777]">Entity:</span>
+                  <span className="font-medium text-white">{COMPANY_DATA.legalName}</span>
                 </div>
-                <div className="space-y-2.5 text-sm text-[#cccccc]">
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">Entity:</span>
-                    <span className="font-medium text-white">{COMPANY_DATA.legalName}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">HQ Location:</span>
-                    <span className="font-medium text-white">{COMPANY_DATA.location}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#777777]">Active Stack:</span>
-                    <span className="font-mono text-xs font-semibold text-[#c9a84c]">Java 21 · React 19 · WebSockets</span>
-                  </div>
+                <div className="flex justify-between">
+                  <span className="text-[#777777]">HQ Location:</span>
+                  <span className="font-medium text-white">{COMPANY_DATA.location}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#777777]">Active Stack:</span>
+                  <span className="font-mono text-xs font-semibold text-[#D4AF37]">
+                    Java 21 · React 19 · WebSockets
+                  </span>
                 </div>
               </div>
             </div>
-          </Card>
-        </Reveal>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
+
+export default CompanyIntro;

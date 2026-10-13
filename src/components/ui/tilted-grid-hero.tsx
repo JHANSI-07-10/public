@@ -261,11 +261,11 @@ export const TiltedGridHero: React.FC<TiltedGridHeroProps> = ({
                 />
 
                 {/* Minimal discreet tag for context without intrusive card chrome */}
-                <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-[11px] font-mono">
+                <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-xs font-mono">
                   <span className="text-[#A1A1AA] truncate tracking-wider">
                     {image.title}
                   </span>
-                  <span className="text-[#DFC067] text-[10px] uppercase font-semibold shrink-0 ml-2">
+                  <span className="text-[#DFC067] text-xs uppercase font-semibold shrink-0 ml-2">
                     {image.tag}
                   </span>
                 </div>

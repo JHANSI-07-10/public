@@ -604,7 +604,7 @@ export const SoftwareArchitectureScene: React.FC<SoftwareArchitectureSceneProps>
       <div className="absolute inset-0 bg-radial-gradient from-[#c9a84c]/10 via-transparent to-transparent pointer-events-none" />
 
       {/* Floating status pill for authentic enterprise polish */}
-      <div className="absolute bottom-4 right-4 z-10 hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141414]/90 backdrop-blur-md border border-[#262626] text-[11px] font-mono text-[#aaaaaa] pointer-events-none shadow-xl">
+      <div className="absolute bottom-4 right-4 z-10 hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141414]/90 backdrop-blur-md border border-[#262626] text-xs font-mono text-[#aaaaaa] pointer-events-none shadow-xl">
         <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
         <span>Live WebGL Architecture Runtime</span>
       </div>

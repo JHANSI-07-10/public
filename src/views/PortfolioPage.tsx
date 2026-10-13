@@ -189,7 +189,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                       <div className="grid grid-cols-2 gap-3 p-4 rounded-xl bg-[#0e0e0e] border border-[#222222] mb-6">
                         {project.specs.map((spec, sIdx) => (
                           <div key={sIdx} className="text-xs">
-                            <span className="text-[#666666] block text-[10px] uppercase font-semibold">
+                            <span className="text-[#666666] block text-xs uppercase font-semibold">
                               {spec.label}
                             </span>
                             <span className="font-mono font-medium text-[#dddddd]">

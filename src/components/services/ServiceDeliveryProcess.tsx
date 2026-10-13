@@ -154,7 +154,7 @@ export const ServiceDeliveryProcess: React.FC<ServiceDeliveryProcessProps> = ({
                   <span className="text-xs font-mono text-[#777777]">{phase.duration}</span>
                 </div>
 
-                <div className="text-[11px] font-mono text-[#c9a84c] uppercase">
+                <div className="text-xs font-mono text-[#c9a84c] uppercase">
                   {phase.phase}
                 </div>
                 <div className="text-sm sm:text-base font-bold text-white mt-0.5 truncate">
