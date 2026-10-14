@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
-import { DIFFERENTIATORS, Service } from '../data/content';
+import { DIFFERENTIATORS, KEY_METRICS, Service } from '../data/content';
 import { Shield, Cpu, Target, Award, ArrowRight, Rocket, Users } from 'lucide-react';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
@@ -102,6 +102,27 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Verified Company Track Record Strip */}
+      <section className="py-8 bg-[#0c0c0c] border-b border-[#1f1f1f]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            {KEY_METRICS.map((metric, idx) => (
+              <div key={idx} className="flex flex-col items-center text-center p-4 rounded-xl bg-[#121212] border border-[#222222]">
+                <span className="text-2xl sm:text-3xl font-black text-[#c9a84c] mb-1 font-mono">
+                  {metric.value}
+                </span>
+                <span className="text-xs sm:text-sm font-bold text-white mb-1">
+                  {metric.label}
+                </span>
+                <span className="text-[11px] text-[#777777] max-w-[200px]">
+                  {metric.context}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -219,7 +240,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                   </h3>
                 </div>
                 <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
-                  To become a trusted and innovative technology company recognized for delivering scalable, reliable, and impactful software solutions that empower businesses and contribute to meaningful digital progress.
+                  Create a trusted digital presence that clearly explains VPD Technologies’ capabilities and helps prospective clients, partners, and candidates understand the company and contact the team.
                 </p>
               </div>
             </Reveal>
@@ -240,6 +261,40 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                 </p>
               </div>
             </Reveal>
+          </div>
+
+          {/* Strategic Objectives (PRD Section 2) */}
+          <div className="mt-8 rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-8">
+            <h4 className="text-base sm:text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#c9a84c]" />
+              Strategic Objectives &amp; Delivery Commitments
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs sm:text-sm text-[#aaaaaa]">
+              <div className="flex items-start gap-2.5">
+                <span className="text-[#c9a84c] font-bold">✓</span>
+                <span>Establish a credible digital presence for VPD Technologies Private Limited.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-[#c9a84c] font-bold">✓</span>
+                <span>Explain company profile, founders, leadership, vision, mission, services, and industries.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-[#c9a84c] font-bold">✓</span>
+                <span>Present B2B Logistics Platform, AgriFlow ERP, and Enterprise SaaS Suite with verified status labels.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-[#c9a84c] font-bold">✓</span>
+                <span>Showcase approved portfolio examples, project metrics, and client references where permission exists.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-[#c9a84c] font-bold">✓</span>
+                <span>Make it seamless for prospective clients and partners to contact VPD via email, phone, or simple enquiry.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="text-[#c9a84c] font-bold">✓</span>
+                <span>Provide a mobile-friendly, accessible, search-engine-friendly platform that is easy to maintain.</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -54,15 +54,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
 
   const navLinks = [
     { label: 'Home', path: '/' },
-    { label: 'About', path: '/about' },
-    { label: 'Leadership', path: '/leadership' },
+    { label: 'About Us', path: '/about' },
+    { label: 'Founders & Leadership', shortLabel: 'Leadership', path: '/leadership' },
     { label: 'Services', path: '/services' },
     { label: 'Industries', path: '/industries' },
-    { label: 'Products', path: '/products' },
+    { label: 'Products & Platforms', shortLabel: 'Products', path: '/products' },
     { label: 'Portfolio', path: '/portfolio' },
     { label: 'Careers', path: '/careers' },
     { label: 'Insights', path: '/insights' },
-    { label: 'Contact', path: '/contact' },
+    { label: 'Contact Us', path: '/contact' },
   ];
 
   return (
@@ -123,7 +123,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                     isActive ? 'text-[#c9a84c] font-bold' : 'hover:text-white'
                   }`}
                 >
-                  {link.label}
+                  <span className={link.shortLabel ? 'hidden 2xl:inline' : ''}>{link.label}</span>
+                  {link.shortLabel && <span className="inline 2xl:hidden">{link.shortLabel}</span>}
                   {isActive && (
                     <motion.span
                       layoutId="navIndicator"

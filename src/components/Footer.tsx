@@ -133,7 +133,7 @@ export const Footer: React.FC = () => {
                     href="/about"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
-                    About VPD
+                    About Us
                   </Link>
                 </li>
                 <li>
