@@ -19,10 +19,11 @@ import {
   Activity,
   Cpu
 } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
-import { ServiceDetailedCard } from '../components/services/ServiceDetailedCard';
+import { ServiceShowcase } from '../components/services/ServiceShowcase';
 import { ServiceDeliveryApproach } from '../components/services/ServiceDeliveryApproach';
 import { ServicesFAQ } from '../components/services/ServicesFAQ';
 
@@ -30,17 +31,31 @@ interface ServicesPageProps {
   onOpenConsultation: (service?: Service) => void;
 }
 
+const ROTATING_TARGETS = [
+  'SaaS & Enterprise',
+  'Cloud & DevOps',
+  'AI & Machine Learning',
+  'Web & Mobile Platforms',
+  'Enterprise ERP & CRM',
+  'Mission-Critical Systems',
+];
+
 export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }) => {
-  const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [rotatingIndex, setRotatingIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
-  const filteredServices =
-    activeFilter === 'all'
-      ? CORE_SERVICES
-      : CORE_SERVICES.filter((s) => s.id === activeFilter);
+  // Cycle rotating terms every 3.2 seconds
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setRotatingIndex((prev) => (prev + 1) % ROTATING_TARGETS.length);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -72,12 +87,26 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.1] text-balance mb-5">
-                Software Engineering Services for <span className="text-[#c9a84c]">SaaS & Enterprise</span> Leaders.
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.2] mb-5">
+                Software Engineering Services for{' '}
+                <span className="inline-block relative overflow-hidden align-baseline">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={ROTATING_TARGETS[rotatingIndex]}
+                      initial={shouldReduceMotion ? undefined : { opacity: 0, y: '65%' }}
+                      animate={{ opacity: 1, y: '0%' }}
+                      exit={shouldReduceMotion ? undefined : { opacity: 0, y: '-65%' }}
+                      transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                      className="inline-block text-[#c9a84c]"
+                    >
+                      {ROTATING_TARGETS[rotatingIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
               </h1>
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl text-balance">
-                Explore VPD Technologies' engineering disciplines: custom SaaS development, enterprise Java backend solutions, and high-performance React frontends. Built for high-frequency workflows, durability, and conversion velocity.
+                Explore VPD Technologies' comprehensive digital engineering services, including custom software development, web and mobile applications, enterprise ERP and CRM solutions, AI and machine learning, cloud infrastructure, and UI/UX design. We focus on building reliable, scalable, and user-friendly digital solutions tailored to evolving business needs.
               </p>
             </div>
           </Reveal>
@@ -166,61 +195,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         </div>
       </section>
 
-      {/* 2. Core Service Blueprints & Filter */}
-      <section id="core-services" className="py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-            <div>
-              <span className="text-xs font-mono font-bold text-[#c9a84c] uppercase tracking-wider block mb-2">
-                Core Engineering Disciplines
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-                Inspect Our Architectural Offerings
-              </h2>
-              <p className="text-sm text-[#999999] mt-1 max-w-xl">
-                Switch between Overview, Benchmarks, and Tangible Deliverables inside each service card.
-              </p>
-            </div>
-
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                onClick={() => setActiveFilter('all')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
-                  activeFilter === 'all'
-                    ? 'bg-[#c9a84c] text-black shadow-md'
-                    : 'bg-[#141414] text-[#aaaaaa] hover:text-white border border-[#242424]'
-                }`}
-              >
-                All Disciplines ({CORE_SERVICES.length})
-              </button>
-              {CORE_SERVICES.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setActiveFilter(s.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
-                    activeFilter === s.id
-                      ? 'bg-[#c9a84c] text-black shadow-md'
-                      : 'bg-[#141414] text-[#aaaaaa] hover:text-white border border-[#242424]'
-                  }`}
-                >
-                  {s.title}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <StaggerContainer className="space-y-10">
-            {filteredServices.map((service, index) => (
-              <StaggerItem key={service.id}>
-                <ServiceDetailedCard
-                  service={service}
-                  index={index}
-                  onOpenConsultation={(s) => onOpenConsultation(s)}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+      {/* 2. Core Engineering Capabilities Showcase */}
+      <section id="core-services" className="py-16 sm:py-24 border-t border-[#181818]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ServiceShowcase onOpenConsultation={(s) => onOpenConsultation(s)} />
         </div>
       </section>
 

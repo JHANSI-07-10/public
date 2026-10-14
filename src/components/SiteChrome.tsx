@@ -23,13 +23,14 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
   useEffect(() => {
     try {
       const hasSeen = sessionStorage.getItem('vpd_intro_shown') || sessionStorage.getItem('vpd_brand_intro_seen');
-      if (!hasSeen) {
+      // Only play the brand intro animation on the home page root ('/')
+      if (!hasSeen && (pathname === '/' || pathname === '')) {
         setShowBrandIntro(true);
       }
     } catch {
       // Ignore sessionStorage errors
     }
-  }, []);
+  }, [pathname]);
 
   const handleDismissIntro = () => {
     setShowBrandIntro(false);
