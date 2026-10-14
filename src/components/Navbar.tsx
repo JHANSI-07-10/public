@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
     { label: 'Products', path: '/products' },
     { label: 'Portfolio', path: '/portfolio' },
     { label: 'Careers', path: '/careers' },
-    { label: 'Insights', path: '/blogs' },
+    { label: 'Insights', path: '/insights' },
     { label: 'Contact', path: '/contact' },
   ];
 

@@ -19,8 +19,9 @@ export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    company: '',
     phone: '',
-    service: 'Website Development',
+    service: 'Website & Web Application Development',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -258,6 +259,20 @@ export const ContactPage: React.FC = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
+                        <label htmlFor="contact-company" className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                          Company / Organization (Optional)
+                        </label>
+                        <input
+                          id="contact-company"
+                          name="company"
+                          type="text"
+                          value={formData.company}
+                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                          placeholder="Your Company Name"
+                          className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
+                        />
+                      </div>
+                      <div>
                         <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#cccccc] mb-1.5">
                           Phone / WhatsApp (Optional)
                         </label>
@@ -271,27 +286,34 @@ export const ContactPage: React.FC = () => {
                           className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
-                      <div>
-                        <label htmlFor="contact-service" className="block text-xs font-semibold text-[#cccccc] mb-1.5">
-                          Service Engagement Tier *
-                        </label>
-                        <select
-                          id="contact-service"
-                          name="service"
-                          value={formData.service}
-                          onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
-                        >
-                          {CORE_SERVICES.map((s) => (
-                            <option key={s.id} value={s.title} className="bg-[#161616]">
-                              {s.title}
-                            </option>
-                          ))}
-                          <option value="Enterprise Architecture Consulting" className="bg-[#161616]">
-                            Enterprise Architecture Consulting
+                    </div>
+
+                    <div>
+                      <label htmlFor="contact-service" className="block text-xs font-semibold text-[#cccccc] mb-1.5">
+                        Enquiry Type / Service Interest *
+                      </label>
+                      <select
+                        id="contact-service"
+                        name="service"
+                        value={formData.service}
+                        onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
+                      >
+                        {CORE_SERVICES.map((s) => (
+                          <option key={s.id} value={s.title} className="bg-[#161616]">
+                            {s.title}
                           </option>
-                        </select>
-                      </div>
+                        ))}
+                        <option value="B2B Logistics Platform Demonstration" className="bg-[#161616]">
+                          B2B Logistics Platform Demonstration
+                        </option>
+                        <option value="AgriFlow ERP Pilot Evaluation" className="bg-[#161616]">
+                          AgriFlow ERP Pilot Evaluation
+                        </option>
+                        <option value="Enterprise Architecture Consulting" className="bg-[#161616]">
+                          Enterprise Architecture Consulting
+                        </option>
+                      </select>
                     </div>
 
                     <div>

@@ -16,14 +16,14 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'VPD Technologies | Digital Engineering',
+  title: 'VPD Technologies Private Limited | Transforming Ideas into Intelligent Digital Solutions',
   description:
-    'VPD Technologies engineers high-performance web ecosystems, scalable SaaS platforms, and enterprise Java solutions for industry leaders.',
+    'VPD Technologies Private Limited builds software products, enterprise applications, and digital solutions that help organizations modernize operations and support business growth from Kurnool, Andhra Pradesh.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
-    title: 'VPD Technologies | Digital Engineering',
+    title: 'VPD Technologies Private Limited | Transforming Ideas into Intelligent Digital Solutions',
     description:
-      'VPD Technologies engineers high-performance web ecosystems, scalable SaaS platforms, and enterprise Java solutions for industry leaders.',
+      'VPD Technologies Private Limited builds software products, enterprise applications, and digital solutions that help organizations modernize operations and support business growth.',
     type: 'website',
   },
   twitter: { card: 'summary_large_image' },
