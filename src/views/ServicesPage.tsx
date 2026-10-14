@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { CORE_SERVICES, Service, COMPANY_DATA } from '../data/content';
 import { 
@@ -23,9 +23,7 @@ import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { ServiceDetailedCard } from '../components/services/ServiceDetailedCard';
-import { ServiceArchitectureVisualizer } from '../components/services/ServiceArchitectureVisualizer';
-import { ServiceComparisonMatrix } from '../components/services/ServiceComparisonMatrix';
-import { ServiceDeliveryProcess } from '../components/services/ServiceDeliveryProcess';
+import { ServiceDeliveryApproach } from '../components/services/ServiceDeliveryApproach';
 import { ServicesFAQ } from '../components/services/ServicesFAQ';
 
 interface ServicesPageProps {
@@ -34,6 +32,10 @@ interface ServicesPageProps {
 
 export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
 
   const filteredServices =
     activeFilter === 'all'
@@ -48,9 +50,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
   };
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
-      {/* Services Hero */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+    <div className="bg-[#0a0a0a] pb-20">
+      {/* Services Hero - Full Viewport First Fold */}
+      <section className="relative min-h-screen pt-24 sm:pt-28 pb-10 sm:pb-14 flex flex-col justify-center border-b border-[#1f1f1f] overflow-hidden">
         {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
         <img
           src="/bg-services-hero.svg"
@@ -60,7 +62,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/25 pointer-events-none" aria-hidden="true" />
         <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center my-auto">
           <Reveal>
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616] border border-[#2a2a2a]">
@@ -145,29 +147,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
               </button>
 
               <button
-                onClick={() => scrollToSection('architecture-visualizer')}
-                className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
-              >
-                <Cpu className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Architecture Topology</span>
-              </button>
-
-
-
-              <button
-                onClick={() => scrollToSection('comparison-matrix')}
-                className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
-              >
-                <Server className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Spec Comparison</span>
-              </button>
-
-              <button
-                onClick={() => scrollToSection('delivery-process')}
+                onClick={() => scrollToSection('delivery-approach')}
                 className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
               >
                 <Rocket className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Delivery Process</span>
+                <span>Delivery Approach</span>
               </button>
 
               <button
@@ -240,35 +224,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         </div>
       </section>
 
-      {/* 3. Interactive Topology Visualizer */}
-      <section id="architecture-visualizer" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
+      {/* 3. Our Delivery Approach (6-Stage Lifecycle) */}
+      <section id="delivery-approach" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <ServiceArchitectureVisualizer
-              onOpenConsultation={() => onOpenConsultation()}
-            />
-          </Reveal>
-        </div>
-      </section>
-
-
-
-      {/* 5. Head-to-Head Technical Spec Matrix */}
-      <section id="comparison-matrix" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <ServiceComparisonMatrix
-              onOpenConsultation={(s) => onOpenConsultation(s)}
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 6. 4-Phase Delivery Lifecycle */}
-      <section id="delivery-process" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <ServiceDeliveryProcess
+            <ServiceDeliveryApproach
               onOpenConsultation={() => onOpenConsultation()}
             />
           </Reveal>
