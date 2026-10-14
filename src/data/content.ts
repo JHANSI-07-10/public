@@ -102,6 +102,7 @@ export interface FounderProfile {
   location: string;
   education?: string;
   linkedin?: string;
+  image?: string;
 }
 
 export interface DeliveryStage {
@@ -130,6 +131,7 @@ export const COMPANY_DATA = {
   mission: "We engineer high-performance software products, enterprise applications, and modern digital solutions that help organizations modernize operations and support business growth.",
   vision: "To establish a trusted digital technology presence recognized for delivering scalable, reliable, and impactful software solutions from Kurnool, Andhra Pradesh to enterprises globally.",
   location: "Kurnool, Andhra Pradesh, India",
+  streetAddress: "Kurnool, Andhra Pradesh, India",
   coordinates: { lat: 15.838556, lng: 78.015556 },
   phone: "+91 83339 19447",
   email: "support@vpdtechnologiespvtltd.com",
@@ -140,6 +142,8 @@ export const COMPANY_DATA = {
   founder: {
     name: "Sai Krishna Vuppala",
     role: "Founder & Chief Executive Officer",
+    image: "/sai-krishna-vuppala.webp",
+    linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/",
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results."
   },
   leadership: [
@@ -147,13 +151,17 @@ export const COMPANY_DATA = {
       name: "Sai Krishna Vuppala",
       role: "Founder and Chief Executive Officer",
       shortRole: "Founder & CEO",
-      initials: "SK"
+      initials: "SK",
+      image: "/sai-krishna-vuppala.webp",
+      linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/"
     },
     {
       name: "Ramcharan Gottipati",
       role: "Co-Founder and Managing Director",
       shortRole: "Co-Founder & MD",
-      initials: "RG"
+      initials: "RG",
+      image: "/ramcharan-gottipati.webp",
+      linkedin: "https://www.linkedin.com/in/ramcharangottipati/"
     }
   ]
 };
@@ -164,6 +172,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     role: "Founder & Chief Executive Officer (CEO)",
     shortRole: "Founder & CEO",
     initials: "SK",
+    image: "/sai-krishna-vuppala.webp",
     bio: "Sai Krishna Vuppala is the Founder and Chief Executive Officer of VPD Technologies Private Limited. Leading the company from Kurnool, Andhra Pradesh, Sai Krishna drives the overarching strategic vision, enterprise software architecture, and technology roadmap. With deep domain expertise in scalable full-stack ecosystems, enterprise Java backends, and modern web engineering, he oversees technology innovation and institutional client engagements. Under his stewardship, VPD Technologies delivers mission-critical software solutions for organizations modernizing their operations, instilling an engineering culture centered on precision, architectural integrity, and measurable business outcomes.",
     focusAreas: [
       "Enterprise Software Architecture",
@@ -174,13 +183,14 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results.",
     location: "Kurnool, Andhra Pradesh, India",
     education: "Bachelor of Technology in Computer Science & Engineering",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/"
   },
   {
     name: "Ramcharan Gottipati",
     role: "Co-Founder & Managing Director (MD)",
     shortRole: "Co-Founder & MD",
     initials: "RG",
+    image: "/ramcharan-gottipati.webp",
     bio: "Ramcharan Gottipati is the Co-Founder and Managing Director of VPD Technologies Private Limited. He spearheads delivery governance, client engagement models, operational execution, and organizational growth from the company's headquarters in Kurnool. With a focus on engineering rigor and process agility, Ramcharan ensures projects transition smoothly from architectural blueprint through pilot deployment and global scale. His leadership guarantees that client solutions meet strict quality standards, enterprise service level agreements, and reliable timelines, driving VPD’s reputation as an accountable digital engineering partner.",
     focusAreas: [
       "Delivery Governance & Project Operations",
@@ -191,7 +201,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     quote: "True engineering value lies in disciplined execution and dependable delivery. We are committed to building high-tier software capabilities and decentralized engineering talent that clients can rely on every single day.",
     location: "Kurnool, Andhra Pradesh, India",
     education: "Management & Technology Leadership",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/ramcharangottipati/"
   }
 ];
 

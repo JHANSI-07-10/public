@@ -15,12 +15,12 @@ export const PageHeroBackground: React.FC<PageHeroBackgroundProps> = ({
     <img
       src={imageSrc}
       alt=""
-      className="absolute inset-0 h-full w-full scale-105 object-cover opacity-75 contrast-150 grayscale-[10%]"
+      className="absolute inset-0 h-full w-full scale-105 object-cover opacity-90 contrast-105"
       style={{ objectPosition: position }}
       loading="eager"
       decoding="async"
     />
-    <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,10,10,0.76)_0%,rgba(10,10,10,0.58)_48%,rgba(10,10,10,0.36)_100%)]" />
-    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.06)_0%,rgba(10,10,10,0.02)_48%,rgba(10,10,10,0.92)_100%)]" />
+    <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/80 via-[#0a0a0a]/45 to-[#0a0a0a]/15" />
+    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/30 to-transparent" />
   </div>
 );
