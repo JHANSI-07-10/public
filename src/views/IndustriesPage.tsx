@@ -47,12 +47,11 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
   };
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+    <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* 1. Hero Section */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
-        <PageHeroBackground imageSrc="/about3.webp" position="center 35%" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/30 pointer-events-none" />
-        <div className="absolute inset-0 hero-tech-grid opacity-35 pointer-events-none" />
+      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+        <PageHeroBackground imageSrc="/industries-hero.webp" position="center 40%" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -96,7 +95,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
       </section>
 
       {/* 2. Industries Detailed Showcase Grid */}
-      <section className="py-20 border-b border-[#1f1f1f]">
+      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
@@ -104,7 +103,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
               title="Tailored Engineering for High-Stakes Operations"
               subtitle="Explore how VPD Technologies resolves industry-specific bottlenecks with high-throughput architectures and intuitive user workflows."
               align="center"
-              className="mb-16"
+              className="mb-10 sm:mb-12"
             />
           </Reveal>
 
@@ -115,9 +114,9 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
                 <Reveal key={industry.id} delay={index * 0.08}>
                   <div
                     id={industry.id}
-                    className="rounded-2xl border border-[#262626] bg-[#121212]/90 backdrop-blur-xl p-8 sm:p-10 lg:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:border-[#c9a84c]/40 transition-colors duration-300"
+                    className="silver-card-hover group rounded-2xl border border-[#262626] bg-[#121212]/90 backdrop-blur-xl p-8 sm:p-10 lg:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden"
                   >
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                       {/* Left: Sector Header, Icon, Tagline, Overview */}
                       <div className="lg:col-span-5 space-y-4">
                         <div className="flex items-center gap-4">
@@ -199,25 +198,27 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
       </section>
 
       {/* 3. Bottom Consultation Callout */}
-      <section className="py-16">
+      <section className="pt-8 sm:pt-10 pb-4 sm:pb-6">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
-              Need a Domain-Tailored Software Solution?
-            </h2>
-            <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
-              Our engineering team works closely with your operational leaders to design, pilot, and deploy software tailored precisely to your sector.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/contact">
-                <AnimatedButton
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Schedule an Industry Discovery Call
-                </AnimatedButton>
-              </Link>
+          <div className="silver-card-hover group rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
+                Need a Domain-Tailored Software Solution?
+              </h2>
+              <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
+                Our engineering team works closely with your operational leaders to design, pilot, and deploy software tailored precisely to your sector.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/contact">
+                  <AnimatedButton
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Schedule an Industry Discovery Call
+                  </AnimatedButton>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -82,12 +82,10 @@ export const ServiceDetailedCard: React.FC<ServiceDetailedCardProps> = ({
   ];
 
   return (
-    <div className="rounded-3xl bg-[#0f0f0f] border border-[#222222] hover:border-[#c9a84c]/40 transition-all duration-300 p-6 sm:p-8 lg:p-10 relative overflow-hidden group">
-      {/* Subtle Corner Glow on Hover */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[#c9a84c]/10 transition-colors" />
-
-      {/* Header Block */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#1c1c1c]">
+    <div className="silver-card-hover group rounded-3xl bg-[#0f0f0f] border border-[#222222] p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+      <div className="relative z-10">
+        {/* Header Block */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#1c1c1c]">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#c9a84c]/10 border border-[#c9a84c]/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
             <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-[#c9a84c]" />
@@ -371,5 +369,6 @@ export const ServiceDetailedCard: React.FC<ServiceDetailedCardProps> = ({
         </AnimatePresence>
       </div>
     </div>
+  </div>
   );
 };

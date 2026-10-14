@@ -55,12 +55,11 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
   };
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+    <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* 1. Hero Section */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
         <PageHeroBackground imageSrc="/about2.webp" position="center 40%" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/30 pointer-events-none" />
-        <div className="absolute inset-0 hero-tech-grid opacity-35 pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -112,7 +111,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
       </section>
 
       {/* 2. Platforms Detailed Showcase */}
-      <section className="py-20 border-b border-[#1f1f1f]">
+      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
@@ -120,7 +119,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
               title="Architectural Overviews of VPD Platforms"
               subtitle="Each platform is engineered with strict type safety, event streaming, and modular database schemas to support real-world operating environments."
               align="center"
-              className="mb-16"
+              className="mb-10 sm:mb-12"
             />
           </Reveal>
 
@@ -131,9 +130,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 <Reveal key={platform.id} delay={index * 0.1}>
                   <div
                     id={platform.id}
-                    className="rounded-2xl border border-[#282828] bg-[#121212]/90 backdrop-blur-xl p-8 sm:p-10 lg:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:border-[#c9a84c]/40 transition-colors duration-300 relative overflow-hidden"
+                    className="silver-card-hover group rounded-2xl border border-[#282828] bg-[#121212]/90 backdrop-blur-xl p-8 sm:p-10 lg:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden"
                   >
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                       {/* Left: Platform Overview, Status Badge, Target Audience */}
                       <div className="lg:col-span-5 space-y-4">
                         <div className="flex items-center justify-between">
@@ -160,7 +159,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                         </p>
 
                         <div className="pt-4 border-t border-[#222222] space-y-2 text-xs">
-                          <span className="text-[#666666] font-mono uppercase tracking-wider block font-bold">
+                          <span className="text-[#aaaaaa] font-mono uppercase tracking-wider block font-bold">
                             Target Sector / Audience
                           </span>
                           <p className="text-[#dddddd] leading-relaxed">
@@ -200,13 +199,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                           </div>
                         </div>
 
-                        <div className="pt-2 flex items-center justify-between">
-                          <span className="text-xs text-[#666666] font-mono">
+                        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <span className="text-xs font-mono text-[#d4d4d8] flex items-center gap-2 font-medium">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] shrink-0" />
                             Informational briefing available upon request
                           </span>
                           <Link
                             href="/contact"
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c9a84c] hover:text-[#DFC067] transition-colors"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c9a84c] hover:text-[#DFC067] transition-colors shrink-0"
                           >
                             <span>Enquire About {platform.name}</span>
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -223,25 +223,27 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
       </section>
 
       {/* 3. Bottom CTA */}
-      <section className="py-16">
+      <section className="pt-8 sm:pt-10 pb-4 sm:pb-6">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
-              Explore Enterprise Integration &amp; Pilot Opportunities
-            </h2>
-            <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
-              If your organization is seeking to pilot AgriFlow ERP in your agricultural network, or evaluate the B2B Logistics Platform for regional freight management, our engineering leadership is ready to discuss technical prerequisites.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/contact">
-                <AnimatedButton
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Request Technical Briefing
-                </AnimatedButton>
-              </Link>
+          <div className="silver-card-hover group rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
+                Explore Enterprise Integration &amp; Pilot Opportunities
+              </h2>
+              <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
+                If your organization is seeking to pilot AgriFlow ERP in your agricultural network, or evaluate the B2B Logistics Platform for regional freight management, our engineering leadership is ready to discuss technical prerequisites.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/contact">
+                  <AnimatedButton
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Request Technical Briefing
+                  </AnimatedButton>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

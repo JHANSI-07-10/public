@@ -50,11 +50,11 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+    <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* Contact Hero */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden">
         <PageHeroBackground imageSrc="/about2.webp" position="center 45%" />
-        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
             <SectionHeader
@@ -67,7 +67,7 @@ export const ContactPage: React.FC = () => {
       </section>
 
       {/* Main Form & Channels Grid */}
-      <section className="py-20">
+      <section className="pt-10 sm:pt-12 pb-12 sm:pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Column: Direct Channels & Maps */}

@@ -28,12 +28,11 @@ interface CareersPageProps {
 
 export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) => {
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+    <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* 1. Hero Section */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
         <PageHeroBackground imageSrc="/about1.webp" position="center 20%" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/30 pointer-events-none" />
-        <div className="absolute inset-0 hero-tech-grid opacity-35 pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -73,7 +72,7 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
       </section>
 
       {/* 2. Engineering Culture & Values */}
-      <section className="py-20 border-b border-[#1f1f1f]">
+      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeader
@@ -81,7 +80,7 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
               title="A Culture Founded on Craft, Ownership &amp; Precision"
               subtitle="We offer high-ownership roles free of corporate hierarchy where your engineering directly impacts production deployments."
               align="center"
-              className="mb-16"
+              className="mb-10 sm:mb-12"
             />
           </Reveal>
 
@@ -123,55 +122,57 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
           <div className="space-y-8 max-w-4xl mx-auto">
             {CAREERS_DATA.openRoles.map((role, idx) => (
               <Reveal key={role.id} delay={idx * 0.1}>
-                <div className="rounded-2xl border border-[#262626] bg-[#141414] p-7 sm:p-8 hover:border-[#c9a84c]/40 transition-colors">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#1c1c1c] border border-[#333333] text-[11px] font-mono text-[#c9a84c]">
-                          {role.department}
-                        </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#1c1c1c] border border-[#333333] text-[11px] font-mono text-[#888888]">
-                          {role.type}
-                        </span>
+                <div className="silver-card-hover group rounded-2xl border border-[#262626] bg-[#141414] p-7 sm:p-8 relative overflow-hidden">
+                  <div className="relative z-10">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="px-2.5 py-0.5 rounded-full bg-[#1c1c1c] border border-[#333333] text-[11px] font-mono text-[#c9a84c]">
+                            {role.department}
+                          </span>
+                          <span className="px-2.5 py-0.5 rounded-full bg-[#1c1c1c] border border-[#333333] text-[11px] font-mono text-[#888888]">
+                            {role.type}
+                          </span>
+                        </div>
+                        <h2 className="text-xl sm:text-2xl font-bold text-white">
+                          {role.title}
+                        </h2>
                       </div>
-                      <h2 className="text-xl sm:text-2xl font-bold text-white">
-                        {role.title}
-                      </h2>
+
+                      <a
+                        href={`mailto:${COMPANY_DATA.recruitmentEmail}?subject=${encodeURIComponent(`Application: ${role.title}`)}`}
+                        className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-xl border border-[#c9a84c]/50 bg-[#1c1c1c] px-4 text-xs font-bold text-white hover:bg-[#c9a84c] hover:text-black transition-colors shrink-0"
+                      >
+                        <span>Apply via Email</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </a>
                     </div>
 
-                    <a
-                      href={`mailto:${COMPANY_DATA.recruitmentEmail}?subject=${encodeURIComponent(`Application: ${role.title}`)}`}
-                      className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-xl border border-[#c9a84c]/50 bg-[#1c1c1c] px-4 text-xs font-bold text-white hover:bg-[#c9a84c] hover:text-black transition-colors shrink-0"
-                    >
-                      <span>Apply via Email</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
+                    <p className="text-sm text-[#aaaaaa] leading-relaxed mb-6">
+                      {role.overview}
+                    </p>
 
-                  <p className="text-sm text-[#aaaaaa] leading-relaxed mb-6">
-                    {role.overview}
-                  </p>
+                    <div>
+                      <h3 className="text-xs font-mono uppercase tracking-wider text-[#777777] mb-2 font-bold">
+                        Key Competencies &amp; Prerequisites:
+                      </h3>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#cccccc]">
+                        {role.requirements.map((req, rIdx) => (
+                          <li key={rIdx} className="flex items-start gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c] shrink-0 mt-0.5" />
+                            <span>{req}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div>
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-[#777777] mb-2 font-bold">
-                      Key Competencies &amp; Prerequisites:
-                    </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#cccccc]">
-                      {role.requirements.map((req, rIdx) => (
-                        <li key={rIdx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c] shrink-0 mt-0.5" />
-                          <span>{req}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-6 pt-4 border-t border-[#222222] flex items-center justify-between text-xs text-[#777777]">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#c9a84c]" />
-                      {role.location}
-                    </span>
-                    <span className="font-mono">Direct Founder &amp; Lead Review</span>
+                    <div className="mt-6 pt-4 border-t border-[#222222] flex items-center justify-between text-xs text-[#777777]">
+                      <span className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-[#c9a84c]" />
+                        {role.location}
+                      </span>
+                      <span className="font-mono">Direct Founder &amp; Lead Review</span>
+                    </div>
                   </div>
                 </div>
               </Reveal>
@@ -181,7 +182,7 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
       </section>
 
       {/* 4. Direct Email Submission Callout */}
-      <section className="py-16">
+      <section className="pt-8 sm:pt-10 pb-4 sm:pb-6">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-10 text-center relative overflow-hidden">
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">

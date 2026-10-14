@@ -138,54 +138,53 @@ export const ServiceDeliveryApproach: React.FC<ServiceDeliveryApproachProps> = (
           return (
             <div
               key={stage.step}
-              className="group rounded-2xl bg-[#131313]/90 border border-[#202020] hover:border-[#c9a84c]/50 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-black/60 relative overflow-hidden"
+              className="silver-card-hover group rounded-2xl bg-[#131313]/90 border border-[#202020] p-6 flex flex-col justify-between relative overflow-hidden"
             >
-              {/* Subtle top card accent line */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#c9a84c]/0 to-transparent group-hover:via-[#c9a84c]/70 transition-all duration-500" />
+              <div className="relative z-10 flex flex-col justify-between h-full">
+                <div>
+                  {/* Top Row: Stage Number, Icon & Duration */}
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/25 flex items-center justify-center text-[#c9a84c] group-hover:scale-105 group-hover:bg-[#c9a84c]/15 transition-all">
+                      <StageIcon className="w-6 h-6" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-[#777777] bg-[#1a1a1a] border border-[#262626] px-2 py-0.5 rounded-md">
+                        {stage.duration}
+                      </span>
+                      <span className="text-xl font-mono font-black text-[#c9a84c]">
+                        {stage.step}
+                      </span>
+                    </div>
+                  </div>
 
-              <div>
-                {/* Top Row: Stage Number, Icon & Duration */}
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/25 flex items-center justify-center text-[#c9a84c] group-hover:scale-105 group-hover:bg-[#c9a84c]/15 transition-all">
-                    <StageIcon className="w-6 h-6" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-[#777777] bg-[#1a1a1a] border border-[#262626] px-2 py-0.5 rounded-md">
-                      {stage.duration}
-                    </span>
-                    <span className="text-xl font-mono font-black text-[#c9a84c]">
-                      {stage.step}
-                    </span>
-                  </div>
+                  {/* Title */}
+                  <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-[#DFC067] transition-colors mb-2">
+                    {stage.title}
+                  </h4>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-[#a1a1aa] leading-relaxed mb-6">
+                    {stage.description}
+                  </p>
                 </div>
 
-                {/* Title */}
-                <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-[#DFC067] transition-colors mb-2">
-                  {stage.title}
-                </h4>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-[#a1a1aa] leading-relaxed mb-6">
-                  {stage.description}
-                </p>
-              </div>
-
-              {/* Tangible Deliverables Block */}
-              <div className="pt-4 border-t border-[#1c1c1c]">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#71717a] block mb-2 font-semibold">
-                  Key Deliverables
-                </span>
-                <ul className="space-y-1.5">
-                  {stage.deliverables.map((item) => (
-                    <li
-                      key={item}
-                      className="text-xs text-[#cccccc] flex items-center gap-2"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c] shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Tangible Deliverables Block */}
+                <div className="pt-4 border-t border-[#1c1c1c]">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#71717a] block mb-2 font-semibold">
+                    Key Deliverables
+                  </span>
+                  <ul className="space-y-1.5">
+                    {stage.deliverables.map((item) => (
+                      <li
+                        key={item}
+                        className="text-xs text-[#cccccc] flex items-center gap-2"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c] shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           );

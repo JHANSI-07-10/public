@@ -187,44 +187,90 @@
   border-color: rgba(242, 217, 141, 0.15);
 }
 
-/* Silverish Shade Card Hover Animation */
+/* Silverish Shade Card Hover Animation (Signature expanding corner geometry + metallic silver glow) */
 .silver-card-hover {
   position: relative;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.35s ease;
+  overflow: hidden;
+  transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+              border-color 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+              box-shadow 0.45s cubic-bezier(0.19, 1, 0.22, 1);
   will-change: transform, box-shadow, border-color;
 }
 
-.silver-card-hover::before {
-  content: "";
+.silver-card-hover::before,
+.silver-card-hover::after {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.14) 0%, rgba(203, 213, 225, 0.05) 50%, transparent 85%);
-  opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  content: "";
+  width: 90px;
+  height: 90px;
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
-.silver-card-hover:hover {
+@media (min-width: 640px) {
+  .silver-card-hover::before,
+  .silver-card-hover::after {
+    width: 140px;
+    height: 120px;
+  }
+}
+
+.silver-card-hover::before {
+  top: 0;
+  right: 0;
+  border-radius: 0 1rem 0 100%;
+  background: radial-gradient(circle at top right, rgba(248, 250, 252, 0.25) 0%, rgba(203, 213, 225, 0.08) 65%, transparent 100%), rgba(226, 232, 240, 0.03);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.3);
+  border-left: 1px solid rgba(226, 232, 240, 0.3);
+}
+
+.silver-card-hover::after {
+  bottom: 0;
+  left: 0;
+  border-radius: 0 100% 0 1rem;
+  background: radial-gradient(circle at bottom left, rgba(248, 250, 252, 0.25) 0%, rgba(203, 213, 225, 0.08) 65%, transparent 100%), rgba(226, 232, 240, 0.03);
+  border-top: 1px solid rgba(226, 232, 240, 0.3);
+  border-right: 1px solid rgba(226, 232, 240, 0.3);
+}
+
+.silver-card-hover:hover,
+.silver-card-hover:focus-within {
   transform: translateY(-4px);
-  border-color: rgba(226, 232, 240, 0.65) !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85),
-              0 0 28px -4px rgba(203, 213, 225, 0.28),
-              0 0 10px 1px rgba(248, 250, 252, 0.14),
-              inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  border-color: rgba(226, 232, 240, 0.75) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85),
+              0 0 35px -5px rgba(226, 232, 240, 0.35),
+              0 0 14px 1px rgba(255, 255, 255, 0.2),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.silver-card-hover:hover::before {
-  opacity: 1;
+.silver-card-hover:hover::before,
+.silver-card-hover:hover::after,
+.silver-card-hover:focus-within::before,
+.silver-card-hover:focus-within::after {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.silver-card-hover:hover::before,
+.silver-card-hover:focus-within::before {
+  background: radial-gradient(ellipse at top right, rgba(248, 250, 252, 0.15) 0%, rgba(203, 213, 225, 0.05) 55%, transparent 80%);
+  border-color: rgba(226, 232, 240, 0.25);
+}
+
+.silver-card-hover:hover::after,
+.silver-card-hover:focus-within::after {
+  background: radial-gradient(ellipse at bottom left, rgba(248, 250, 252, 0.15) 0%, rgba(203, 213, 225, 0.05) 55%, transparent 80%);
+  border-color: rgba(226, 232, 240, 0.25);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .uiverse-leadership-card::before,
-  .uiverse-leadership-card::after {
+  .uiverse-leadership-card::after,
+  .silver-card-hover::before,
+  .silver-card-hover::after {
     transition: none !important;
   }
   .silver-card-hover {
@@ -234,7 +280,5 @@
   .silver-card-hover:hover {
     transform: none !important;
   }
-  .silver-card-hover::before {
-    display: none !important;
-  }
 }
+

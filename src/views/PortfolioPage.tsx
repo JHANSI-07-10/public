@@ -402,7 +402,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
       {/* Portfolio Hero */}
       <section className="relative pt-14 pb-4 sm:pt-18 sm:pb-6 border-b border-[#1f1f1f] overflow-hidden">
         <PageHeroBackground imageSrc="/about3.webp" position="center 42%" />
-        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <Reveal>
             <SectionHeader
@@ -644,12 +644,10 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                     layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                   }}
                 >
-                  <Card
-                    variant="card"
-                    padding="lg"
-                    className="overflow-hidden hover:border-[#c9a84c]/40 transition-colors duration-300"
+                  <div
+                    className="silver-card-hover group rounded-2xl border border-[#262626] bg-[#141414] p-7 sm:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden"
                   >
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                       {/* Media Image */}
                       <motion.div
                         initial={shouldReduceMotion ? false : { opacity: 0, x: -22 }}
@@ -777,7 +775,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
                         </div>
                       </motion.div>
                     </div>
-                  </Card>
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -808,25 +806,27 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
               return (
                 <div
                   key={sIdx}
-                  className="p-6 rounded-2xl bg-[#121212] border border-[#222222] hover:border-[#c9a84c]/40 transition-colors flex flex-col justify-between"
+                  className="silver-card-hover group p-6 rounded-2xl bg-[#121212] border border-[#222222] flex flex-col justify-between relative overflow-hidden"
                 >
-                  <div>
-                    <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 text-[#c9a84c] flex items-center justify-center mb-4">
-                      <Icon className="w-5 h-5" />
+                  <div className="relative z-10 flex flex-col justify-between h-full">
+                    <div>
+                      <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 text-[#c9a84c] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-[10px] font-mono uppercase font-bold text-[#888888] tracking-wider block mb-1">
+                        Standard {standard.number}
+                      </span>
+                      <h4 className="text-sm font-bold text-white mb-2 leading-snug">
+                        {standard.title}
+                      </h4>
+                      <p className="text-xs text-[#999999] leading-relaxed mb-4">
+                        {standard.description}
+                      </p>
                     </div>
-                    <span className="text-[10px] font-mono uppercase font-bold text-[#666666] tracking-wider block mb-1">
-                      Standard {standard.number}
-                    </span>
-                    <h4 className="text-sm font-bold text-white mb-2 leading-snug">
-                      {standard.title}
-                    </h4>
-                    <p className="text-xs text-[#999999] leading-relaxed mb-4">
-                      {standard.description}
-                    </p>
-                  </div>
-                  <div className="pt-3 border-t border-[#1c1c1c] text-[11px] font-mono text-[#c9a84c] flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#22c55e]" />
-                    <span>{standard.benchmark}</span>
+                    <div className="pt-3 border-t border-[#1c1c1c] text-[11px] font-mono text-[#c9a84c] flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#22c55e]" />
+                      <span>{standard.benchmark}</span>
+                    </div>
                   </div>
                 </div>
               );
@@ -838,22 +838,26 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenConsultation
       {/* Consultation Banner */}
       <section className="py-8 sm:py-10 border-t border-[#1f1f1f] bg-[#0d0d0d]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <Reveal>
-            <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">
-              Have a Complex Engineering Milestone?
-            </h3>
-            <p className="text-sm text-[#aaaaaa] mb-6 max-w-xl mx-auto">
-              Our engineers are standing by to review your system requirements and architect your digital future.
-            </p>
-            <AnimatedButton
-              onClick={() => onOpenConsultation()}
-              variant="primary"
-              size="lg"
-              icon={<ArrowRight className="w-4 h-4" />}
-            >
-              Schedule Project Discovery Call
-            </AnimatedButton>
-          </Reveal>
+          <div className="silver-card-hover group rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="relative z-10">
+              <Reveal>
+                <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">
+                  Have a Complex Engineering Milestone?
+                </h3>
+                <p className="text-sm text-[#aaaaaa] mb-6 max-w-xl mx-auto">
+                  Our engineers are standing by to review your system requirements and architect your digital future.
+                </p>
+                <AnimatedButton
+                  onClick={() => onOpenConsultation()}
+                  variant="primary"
+                  size="lg"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                >
+                  Schedule Project Discovery Call
+                </AnimatedButton>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 

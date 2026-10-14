@@ -58,10 +58,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
           src="/bg-services-hero.svg"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-55 pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-90 pointer-events-none select-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/25 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/75 via-[#0a0a0a]/35 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center my-auto">
           <Reveal>
             <div className="max-w-4xl">
