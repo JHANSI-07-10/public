@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Globe, Layers, Code2, ArrowRight, Check } from 'lucide-react';
+import { Globe, Layers, Code2, ArrowRight, Check, Server, Smartphone, Cpu, Cloud, Palette } from 'lucide-react';
 import { CORE_SERVICES, Service } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { Reveal } from './motion/Reveal';
@@ -17,13 +17,22 @@ interface ServicesSectionProps {
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectService }) => {
   const getIcon = (id: string) => {
     switch (id) {
+      case 'custom-software':
+        return Code2;
       case 'web-dev':
         return Globe;
-      case 'web-app':
-        return Layers;
-      case 'java-stack':
+      case 'enterprise-software':
+        return Server;
+      case 'mobile-apps':
+        return Smartphone;
+      case 'ai-ml':
+        return Cpu;
+      case 'cloud-devops':
+        return Cloud;
+      case 'ui-ux-engineering':
+        return Palette;
       default:
-        return Code2;
+        return Layers;
     }
   };
 

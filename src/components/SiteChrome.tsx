@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -17,11 +17,26 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const pathname = usePathname() ?? '';
 
-  // Cinematic Photon Knot Page Preloader: plays while page is loading and while data is rendering
-  const [showBrandIntro, setShowBrandIntro] = useState<boolean>(true);
+  // Cinematic Photon Knot Page Preloader: plays once on homepage root visit only
+  const [showBrandIntro, setShowBrandIntro] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Only show on homepage if user hasn't seen it this session
+    if (pathname === '/') {
+      const hasSeen = typeof window !== 'undefined' ? sessionStorage.getItem('vpd_brand_intro_seen') : null;
+      if (!hasSeen) {
+        setShowBrandIntro(true);
+      }
+    } else {
+      setShowBrandIntro(false);
+    }
+  }, [pathname]);
 
   const handleDismissIntro = () => {
     setShowBrandIntro(false);
+    try {
+      sessionStorage.setItem('vpd_brand_intro_seen', 'true');
+    } catch {}
   };
 
   // Support replaying intro via custom event if triggered from footer or elsewhere
@@ -32,53 +47,6 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
     window.addEventListener('replay_brand_intro', handleReplayIntro);
     return () => window.removeEventListener('replay_brand_intro', handleReplayIntro);
   }, []);
-
-  useLayoutEffect(() => {
-    const main = document.querySelector('main');
-    if (
-      !main ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      typeof IntersectionObserver === 'undefined'
-    ) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.setAttribute('data-scroll-reveal', 'visible');
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' }
-    );
-
-    const observePageSections = (root: ParentNode) => {
-      root.querySelectorAll<HTMLElement>('section:not(#hero), article').forEach((element) => {
-        if (element.hasAttribute('data-scroll-reveal')) return;
-        const bounds = element.getBoundingClientRect();
-        const isOnScreen = bounds.top < window.innerHeight && bounds.bottom > 0;
-        element.setAttribute('data-scroll-reveal', isOnScreen ? 'visible' : 'pending');
-        if (!isOnScreen) observer.observe(element);
-      });
-    };
-
-    observePageSections(main);
-    const mutationObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node instanceof HTMLElement) observePageSections(node);
-        });
-      });
-    });
-    mutationObserver.observe(main, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-      mutationObserver.disconnect();
-    };
-  }, [pathname]);
 
   const handleOpenConsultation = (service?: Service) => {
     setSelectedService(service || null);

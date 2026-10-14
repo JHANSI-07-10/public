@@ -40,14 +40,18 @@ export const Footer: React.FC = () => {
                   </div>
                 </Link>
 
-                <p className="text-sm text-[#aaaaaa] leading-relaxed max-w-sm mb-6">
-                  Engineering high-performance web ecosystems, scalable SaaS platforms, and enterprise Java solutions for forward-thinking organizations.
+                <p className="text-sm text-[#aaaaaa] leading-relaxed max-w-sm mb-4">
+                  Engineering high-performance software products, enterprise applications, and modern digital solutions that help organizations modernize operations and support business growth.
                 </p>
+
+                <div className="text-xs font-mono text-[#D4AF37] font-semibold mb-6">
+                  {COMPANY_DATA.brandLine}
+                </div>
 
                 {/* Status Indicator */}
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141414] border border-[#222222] text-xs">
                   <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
-                  <span className="text-xs font-mono text-[#aaaaaa]">Engineering Lab Active</span>
+                  <span className="text-xs font-mono text-[#aaaaaa]">Engineering Operations Active</span>
                 </div>
               </div>
 
@@ -58,7 +62,7 @@ export const Footer: React.FC = () => {
               <h3 className="text-sm font-semibold text-white">
                 Engineering Services
               </h3>
-              <ul className="space-y-2.5 text-sm">
+              <ul className="space-y-2 text-xs sm:text-sm">
                 {CORE_SERVICES.map((s) => (
                   <li key={s.id}>
                     <Link
@@ -69,45 +73,83 @@ export const Footer: React.FC = () => {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link
-                    href="/services"
-                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
-                  >
-                    Cloud Edge Deployment & CI/CD
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/services"
-                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
-                  >
-                    System Migration & Performance Audits
-                  </Link>
-                </li>
               </ul>
             </div>
 
-            {/* Column 3: Navigation & Sections */}
+            {/* Column 3: Industries & Platforms */}
             <div className="lg:col-span-2 space-y-4">
               <h3 className="text-sm font-semibold text-white">
-                Company & Work
+                Sectors & Platforms
               </h3>
-              <ul className="space-y-2.5 text-sm">
+              <ul className="space-y-2 text-xs sm:text-sm">
+                <li>
+                  <Link
+                    href="/industries"
+                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
+                  >
+                    All Industry Capabilities
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products"
+                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
+                  >
+                    Products &amp; Platforms
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products#b2b-logistics"
+                    className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
+                  >
+                    B2B Logistics Platform
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products#agriflow-erp"
+                    className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
+                  >
+                    AgriFlow ERP
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products#enterprise-saas-suite"
+                    className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
+                  >
+                    Enterprise SaaS Suite
+                  </Link>
+                </li>
+              </ul>
+
+              <h3 className="text-sm font-semibold text-white pt-2">
+                Company Profile
+              </h3>
+              <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
                   <Link
                     href="/about"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
-                    About VPD Technologies
+                    About VPD
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/services"
+                    href="/leadership"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
-                    Technical Capabilities
+                    Founders &amp; Leadership
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/careers"
+                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
+                  >
+                    Careers &amp; Culture
                   </Link>
                 </li>
                 <li>
@@ -115,7 +157,7 @@ export const Footer: React.FC = () => {
                     href="/portfolio"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
-                    Featured Case Studies
+                    Approved Case Studies
                   </Link>
                 </li>
                 <li>
@@ -131,7 +173,7 @@ export const Footer: React.FC = () => {
                     href="/contact"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
-                    Schedule Consultation
+                    Contact Us
                   </Link>
                 </li>
               </ul>

@@ -68,18 +68,75 @@ export interface InsightArticle {
   takeaways?: string[];
 }
 
+export interface Industry {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  challenges: string[];
+  vpdSolutions: string[];
+  keyTech: string[];
+  icon: string;
+}
+
+export interface ProductPlatform {
+  id: string;
+  name: string;
+  category: string;
+  status: 'Available' | 'Pilot' | 'In Development' | 'Planned';
+  statusBadge: string;
+  summary: string;
+  highLevelConcepts: string[];
+  targetAudience: string;
+  architectureNote: string;
+}
+
+export interface FounderProfile {
+  name: string;
+  role: string;
+  shortRole: string;
+  initials: string;
+  bio: string;
+  focusAreas: string[];
+  quote: string;
+  location: string;
+  education?: string;
+  linkedin?: string;
+}
+
+export interface DeliveryStage {
+  step: string;
+  title: string;
+  tagline: string;
+  description: string;
+  deliverables: string[];
+}
+
+export interface CareerRole {
+  id: string;
+  title: string;
+  department: string;
+  type: string;
+  location: string;
+  overview: string;
+  requirements: string[];
+}
+
 export const COMPANY_DATA = {
   name: "VPD Technologies",
   legalName: "VPD Technologies Private Limited",
-  tagline: "Engineering High-Performance Digital Ecosystems",
-  mission: "We engineer high-performance web ecosystems, scalable SaaS platforms, and enterprise Java solutions for industry leaders.",
-  vision: "Standardizing high-tier software engineering for small to mid-scale enterprises globally with Java-grade stability and modern web agility.",
+  brandLine: "Vision. Purpose. Delivery.",
+  tagline: "Transforming Ideas into Intelligent Digital Solutions",
+  mission: "We engineer high-performance software products, enterprise applications, and modern digital solutions that help organizations modernize operations and support business growth.",
+  vision: "To establish a trusted digital technology presence recognized for delivering scalable, reliable, and impactful software solutions from Kurnool, Andhra Pradesh to enterprises globally.",
   location: "Kurnool, Andhra Pradesh, India",
   coordinates: { lat: 15.838556, lng: 78.015556 },
   phone: "+91 83339 19447",
   email: "support@vpdtechnologiespvtltd.com",
+  recruitmentEmail: "support@vpdtechnologiespvtltd.com",
   whatsappUrl: "https://wa.me/918333919447",
   mapsUrl: "https://maps.app.goo.gl/zC4rwmytTXbwNfTW7",
+  foundingStatement: "VPD Technologies is led by its founding team, Sai Krishna Vuppala, Founder and Chief Executive Officer, and Ramcharan Gottipati, Co-Founder and Managing Director. The leadership team is focused on building technology capabilities, delivering software solutions, and supporting digital innovation from Kurnool, Andhra Pradesh.",
   founder: {
     name: "Sai Krishna Vuppala",
     role: "Founder & Chief Executive Officer",
@@ -98,67 +155,483 @@ export const COMPANY_DATA = {
       shortRole: "Co-Founder & MD",
       initials: "RG"
     }
-  ],
-  foundingStatement: "VPD Technologies is led by Sai Krishna Vuppala, Founder and Chief Executive Officer, and Ramcharan Gottipati, Co-Founder and Managing Director. Together, they provide the strategic and operational leadership guiding the Company's growth in Kurnool."
+  ]
 };
 
+export const FOUNDER_PROFILES: FounderProfile[] = [
+  {
+    name: "Sai Krishna Vuppala",
+    role: "Founder & Chief Executive Officer (CEO)",
+    shortRole: "Founder & CEO",
+    initials: "SK",
+    bio: "Sai Krishna Vuppala is the Founder and Chief Executive Officer of VPD Technologies Private Limited. Leading the company from Kurnool, Andhra Pradesh, Sai Krishna drives the overarching strategic vision, enterprise software architecture, and technology roadmap. With deep domain expertise in scalable full-stack ecosystems, enterprise Java backends, and modern web engineering, he oversees technology innovation and institutional client engagements. Under his stewardship, VPD Technologies delivers mission-critical software solutions for organizations modernizing their operations, instilling an engineering culture centered on precision, architectural integrity, and measurable business outcomes.",
+    focusAreas: [
+      "Enterprise Software Architecture",
+      "Strategic Technology Roadmap",
+      "Full-Stack Ecosystems & Java Engineering",
+      "Global Client Partnerships"
+    ],
+    quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results.",
+    location: "Kurnool, Andhra Pradesh, India",
+    education: "Bachelor of Technology in Computer Science & Engineering",
+    linkedin: "https://linkedin.com"
+  },
+  {
+    name: "Ramcharan Gottipati",
+    role: "Co-Founder & Managing Director (MD)",
+    shortRole: "Co-Founder & MD",
+    initials: "RG",
+    bio: "Ramcharan Gottipati is the Co-Founder and Managing Director of VPD Technologies Private Limited. He spearheads delivery governance, client engagement models, operational execution, and organizational growth from the company's headquarters in Kurnool. With a focus on engineering rigor and process agility, Ramcharan ensures projects transition smoothly from architectural blueprint through pilot deployment and global scale. His leadership guarantees that client solutions meet strict quality standards, enterprise service level agreements, and reliable timelines, driving VPD’s reputation as an accountable digital engineering partner.",
+    focusAreas: [
+      "Delivery Governance & Project Operations",
+      "Organizational Growth & Talent Development",
+      "Enterprise Service Level Agreements (SLAs)",
+      "Process Optimization & Quality Assurance"
+    ],
+    quote: "True engineering value lies in disciplined execution and dependable delivery. We are committed to building high-tier software capabilities and decentralized engineering talent that clients can rely on every single day.",
+    location: "Kurnool, Andhra Pradesh, India",
+    education: "Management & Technology Leadership",
+    linkedin: "https://linkedin.com"
+  }
+];
+
 export const KEY_METRICS = [
-  { value: "+240%", label: "Conversion & Pipeline Growth", context: "Average lead velocity improvement" },
-  { value: "99.99%", label: "High-Availability Uptime", context: "Enterprise SLA guaranteed" },
-  { value: "2–4 Wk", label: "Rapid Deployment Sprint", context: "From architecture to first launch" },
-  { value: "5.0 ★", label: "Client Satisfaction Rating", context: "Across all verified production deployments" },
+  { value: "110+", label: "Completed Projects", context: "Delivered across web, enterprise, and custom software" },
+  { value: "12+", label: "Websites & Web Apps", context: "Production-ready platforms launched for clients" },
+  { value: "99.99%", label: "High-Availability Uptime", context: "Guaranteed architectural SLA benchmark" },
+  { value: "< 100ms", label: "Frontend TTI Latency", context: "Core Web Vitals optimized for conversion velocity" }
 ];
 
 export const CORE_SERVICES: Service[] = [
   {
+    id: "custom-software",
+    title: "Custom Software Development",
+    category: "Tailored Business Systems",
+    description: "Design and develop applications tailored to business requirements, internal workflows, and operational efficiency.",
+    target: "Organizations needing purpose-built software architectures that map precisely to their proprietary business logic.",
+    stack: "React / Node.js / Java Spring / PostgreSQL",
+    latency: "< 80ms API Latency",
+    security: "Role-Based Access Control (RBAC) & AES-256",
+    benefits: [
+      "Bespoke Workflows Built to Exact Business Specifications",
+      "Seamless Legacy API & Database Integrations",
+      "High-Density Architecture Engineered for Longevity"
+    ],
+    capabilities: [
+      "Custom Workflow Automation",
+      "Microservice-Based Architecture",
+      "Data Pipeline Integration"
+    ]
+  },
+  {
     id: "web-dev",
-    title: "Website Development",
-    category: "High-Conversion Frontends",
-    description: "High-performing, SEO-optimized digital frontends engineered for professional credibility, rapid user onboarding, and measurable conversion.",
+    title: "Website & Web Application Development",
+    category: "High-Conversion Frontends & Portals",
+    description: "Create responsive websites, interactive customer portals, and web applications for business communication and digital services.",
     target: "Businesses requiring an authoritative online presence, brand credibility, and high lead capture velocity.",
-    stack: "React / Vite / Tailwind CSS",
+    stack: "React / Next.js / TypeScript / Tailwind CSS",
     latency: "< 100ms TTI",
-    security: "Standard SSL / CSP Strict",
+    security: "Standard SSL / Strict Content Security Policy (CSP)",
     benefits: [
       "Conversion-Focused Layout Architecture",
-      "SEO-Ready Metadata & Structured Schema",
-      "Mobile-First Responsive Engineering"
+      "SEO-Ready Metadata & Schema.org Structured Data",
+      "Mobile-First Precision Responsive Engineering"
     ],
-    capabilities: ["UI/UX Design Systems", "Core Web Vitals Optimization", "Headless CMS Integration"]
+    capabilities: [
+      "Corporate Web Portals",
+      "Core Web Vitals Optimization",
+      "Headless CMS & Content Management"
+    ]
   },
   {
-    id: "web-app",
-    title: "Web Application Development",
-    category: "Scalable SaaS & Portals",
-    description: "Custom internal systems, real-time SaaS dashboards, and complex enterprise portals engineered for high-frequency workflows.",
-    target: "Growing enterprises requiring automated operations, multi-tenant workflows, or scalable SaaS applications.",
-    stack: "MERN / WebSockets / Edge Runtime",
-    latency: "Real-Time < 50ms Sync",
-    security: "Role-Based Access Control (RBAC)",
-    benefits: [
-      "Horizontally Scalable Architecture",
-      "Real-Time Bi-Directional State Synchronization",
-      "Intuitive Multi-Role Admin Controls"
-    ],
-    capabilities: ["Custom Operations Dashboards", "Event-Driven Real-Time APIs", "Enterprise User Management"]
-  },
-  {
-    id: "java-stack",
-    title: "Java Full Stack Development",
-    category: "Enterprise-Grade Backends",
-    description: "Robust enterprise backends and full stack platforms built with the rigorous type-safety, durability, and resilience of the Java ecosystem.",
-    target: "Organizations demanding heavy-duty transaction processing, banking-grade security, or complex ERP integrations.",
-    stack: "Java / Spring Boot / PostgreSQL / Docker",
+    id: "enterprise-software",
+    title: "Enterprise Software / ERP / CRM",
+    category: "Enterprise Business Engines",
+    description: "Develop or implement business-focused applications, ERP modules, and CRM integrations where offered by VPD.",
+    target: "Enterprises seeking centralized operational command, structured data integrity, and unified multi-department workflows.",
+    stack: "Java 21 / Spring Boot 3 / PostgreSQL / Redis",
     latency: "High-Throughput Concurrent Stream",
-    security: "Enterprise ISO 27001 & AES-256",
+    security: "Enterprise ISO 27001 & AES-256 Protocol",
     benefits: [
-      "Mission-Critical Enterprise Stability",
-      "High-Concurrency Load Resilience",
-      "Long-Term Maintainability & Type-Safety"
+      "Mission-Critical Enterprise Stability & Durability",
+      "Conflict-Free Optimistic Data Models for High Volume",
+      "Scalable Multi-Tenant Isolation & Role Governance"
     ],
-    capabilities: ["Microservices Architecture", "Distributed Database Optimization", "Core System Integration"]
+    capabilities: [
+      "Enterprise Resource Planning Modules",
+      "Customer Relationship Management Engines",
+      "Distributed Database Clustering & Optimization"
+    ]
+  },
+  {
+    id: "mobile-apps",
+    title: "Mobile Application Development",
+    category: "Cross-Platform Mobile Experiences",
+    description: "Build intuitive, high-performance mobile experiences for business services, field operations, and customer engagement.",
+    target: "Companies extending operational tools to mobile teams, field workers, or mobile-first end consumers.",
+    stack: "React Native / Flutter / Android SDK / iOS Swift",
+    latency: "60 FPS Native Touch Response",
+    security: "Biometric Authentication & Keychain Encryption",
+    benefits: [
+      "Unified Codebase Across iOS & Android Platforms",
+      "Offline-First Data Caching & Automatic Sync",
+      "Ergonomic Touch-Optimized Design Systems"
+    ],
+    capabilities: [
+      "Field Operations & Dispatch Apps",
+      "Customer Self-Service Mobile Portals",
+      "Push Notification & Real-Time Telemetry Engines"
+    ]
+  },
+  {
+    id: "ai-ml",
+    title: "AI & Machine Learning",
+    category: "Intelligent Software Capabilities",
+    description: "Explore data-driven intelligence, automated classification, and predictive software capabilities where appropriate.",
+    target: "Forward-thinking businesses looking to extract actionable insights from structured data and automate repetitive decisions.",
+    stack: "Python / PyTorch / FastEmbed / Vector DBs",
+    latency: "Sub-Second Inference Pipelines",
+    security: "Data Privacy Sandboxing & Anonymization",
+    benefits: [
+      "Automated Data Categorization & Document Extraction",
+      "Context-Aware Search & Retrieval Augmented Generation (RAG)",
+      "Predictive Analytics for Demand and Inventory Optimization"
+    ],
+    capabilities: [
+      "Intelligent Document Processing",
+      "Natural Language Query Interfaces",
+      "Predictive Operational Analytics"
+    ]
+  },
+  {
+    id: "cloud-devops",
+    title: "Cloud Infrastructure & DevOps",
+    category: "Reliable Infrastructure Environments",
+    description: "Support modern application deployment, cloud infrastructure environments, CI/CD pipelines, and automated monitoring.",
+    target: "Organizations moving away from fragile server management toward automated, resilient cloud environments.",
+    stack: "Docker / Kubernetes / AWS / Vercel Edge / GitHub Actions",
+    latency: "Zero-Downtime Rolling Deployments",
+    security: "Infrastructure as Code (IaC) & Secret Management",
+    benefits: [
+      "Automated CI/CD Testing and Deployment Pipelines",
+      "Elastic Auto-Scaling for Unpredictable Traffic Bursts",
+      "Comprehensive Observability, Telemetry & Real-Time Alerts"
+    ],
+    capabilities: [
+      "Container Orchestration & Dockerization",
+      "Multi-Region Edge Routing & Caching",
+      "Automated Security Audits & Vulnerability Scanning"
+    ]
+  },
+  {
+    id: "ui-ux-engineering",
+    title: "UI/UX Design & Product Engineering",
+    category: "Usable Digital Experiences",
+    description: "Design usable digital experiences, design systems, and support holistic product development and iteration.",
+    target: "Teams looking to eliminate user friction, upgrade software aesthetic appeal, and improve retention through design excellence.",
+    stack: "Figma / React 19 / Design Tokens / WCAG 2.2 AA",
+    latency: "Accessible Contrast & Instant Feedback",
+    security: "Compliant Interaction Patterns",
+    benefits: [
+      "Systematic Design Systems That Scale With Growth",
+      "User-Centric Usability Research & Wireframing",
+      "WCAG 2.2 AA Accessibility Compliance Built-In"
+    ],
+    capabilities: [
+      "Interactive High-Fidelity Prototypes",
+      "Enterprise Design Token Systems",
+      "Ergonomic Dashboard & Workflow Refinement"
+    ]
   }
 ];
+
+export const INDUSTRIES: Industry[] = [
+  {
+    id: "agritech",
+    name: "Agriculture & AgriTech",
+    tagline: "Empowering Rural & Agri-Business Workflows",
+    description: "Digital platforms and ERP solutions engineered to streamline crop tracking, farmer registrations, procurement logistics, and transparent mandi operations.",
+    challenges: [
+      "Decentralized farmer records and fragmented harvest reporting",
+      "Manual weighing, quality inspection, and paper-based mandi receipts",
+      "Delayed payment reconciliations between grain buyers and producers"
+    ],
+    vpdSolutions: [
+      "Centralized farmer profiles and crop lifecycle monitoring modules",
+      "Digitized procurement checkpoints with automated batch tagging",
+      "Integrated settlement ledger tracking for transparent payments"
+    ],
+    keyTech: ["AgriFlow ERP Core", "Offline Sync", "GPS Mapping", "PostgreSQL"],
+    icon: "Sprout"
+  },
+  {
+    id: "healthcare",
+    name: "Healthcare Technology",
+    tagline: "Secure, Data-Compliant Health Systems",
+    description: "Reliable web applications and management systems supporting patient appointment scheduling, clinic coordination, and diagnostic reporting.",
+    challenges: [
+      "Strict data privacy regulations and sensitive health record management",
+      "Disjointed scheduling across clinics, specialists, and diagnostic labs",
+      "Latency during patient check-in and medical history retrievals"
+    ],
+    vpdSolutions: [
+      "AES-256 encrypted health record management with strict role-based access",
+      "Unified appointment coordination portals with automated reminders",
+      "Interoperable REST APIs connecting laboratory results with doctor dashboards"
+    ],
+    keyTech: ["HIPAA/DISHA Security Patterns", "Java 21", "React", "Audit Trails"],
+    icon: "Activity"
+  },
+  {
+    id: "edtech",
+    name: "Education Technology",
+    tagline: "Scalable Learning & Institutional Administration",
+    description: "Digital learning platforms, student information systems, and academic administration portals designed for institutions and educational startups.",
+    challenges: [
+      "High concurrent traffic surges during admissions and exam results",
+      "Disorganized curriculum delivery and student engagement tracking",
+      "Inefficient fee collection workflows and fragmented parent communications"
+    ],
+    vpdSolutions: [
+      "High-concurrency cloud architectures capable of handling peak exam traffic",
+      "Interactive student portals with progress tracking and course delivery",
+      "Automated fee collection reminders and administrative reporting dashboards"
+    ],
+    keyTech: ["Next.js", "Redis Caching", "PostgreSQL", "Cloud Edge"],
+    icon: "GraduationCap"
+  },
+  {
+    id: "manufacturing",
+    name: "Manufacturing",
+    tagline: "Shop-Floor Visibility & Process Automation",
+    description: "Operational software linking raw material procurement, equipment maintenance cycles, quality check inspection, and inventory output.",
+    challenges: [
+      "Production bottlenecks caused by paper-based job card tracking",
+      "Unplanned machine downtime due to reactive maintenance schedules",
+      "Discrepancies between physical inventory and warehouse reports"
+    ],
+    vpdSolutions: [
+      "Digital shop-floor dashboards displaying live machine throughput",
+      "Scheduled preventive maintenance trackers with automated alerts",
+      "Barcode-enabled inventory logging for real-time stock reconciliation"
+    ],
+    keyTech: ["WebSockets", "Java Spring Boot", "Industrial Dashboards", "Docker"],
+    icon: "Factory"
+  },
+  {
+    id: "logistics",
+    name: "Logistics & Supply Chain",
+    tagline: "Multi-Hub Coordination & Real-Time Tracking",
+    description: "High-frequency operational applications connecting distribution hubs, automated manifest generation, and fleet dispatch coordination.",
+    challenges: [
+      "Manual spreadsheet dispatching leading to transit misrouting",
+      "Delayed telemetry between regional dispatch depots and head offices",
+      "Simultaneous edits causing manifest collisions during peak shift handovers"
+    ],
+    vpdSolutions: [
+      "Persistent WebSocket streams updating dispatch boards in under 50ms",
+      "Conflict-free optimistic locking ensuring manifest data integrity",
+      "Automated route optimization and vehicle turnaround metrics"
+    ],
+    keyTech: ["B2B Logistics Platform Core", "STOMP Sockets", "Redis Pub/Sub", "Kafka"],
+    icon: "Truck"
+  },
+  {
+    id: "enterprise-retail",
+    name: "Retail, FMCG & Enterprise Technology",
+    tagline: "High-Velocity Digital Commerce & Portals",
+    description: "Scalable B2B catalog applications, distributor ordering systems, and corporate partner portals built for reliable transaction execution.",
+    challenges: [
+      "Slow loading product catalogs dampening B2B buyer ordering velocity",
+      "Fragmented dealer/distributor tiers with conflicting price rules",
+      "Lack of centralized business intelligence across sales territories"
+    ],
+    vpdSolutions: [
+      "Sub-100ms response time digital catalogs with instant search indexing",
+      "Multi-tier pricing matrix engines tailored for regional distributors",
+      "Consolidated executive analytics reporting sales performance in real time"
+    ],
+    keyTech: ["React 19", "Microservices", "Elasticsearch", "PostgreSQL"],
+    icon: "Briefcase"
+  }
+];
+
+export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
+  {
+    id: "b2b-logistics",
+    name: "B2B Logistics Platform",
+    category: "Supply Chain & Freight Coordination",
+    status: "In Development",
+    statusBadge: "In Development",
+    summary: "An intended logistics and supply-chain platform designed to streamline high-level procurement, inventory, warehousing, transportation, and delivery workflows across distributed distribution networks.",
+    highLevelConcepts: [
+      "Multi-Hub Warehouse Inventory Tracking",
+      "Automated Digital Manifest Creation & Consignment Dispatch",
+      "Real-Time Freight Telemetry & Transit Milestone Monitoring",
+      "Carrier Route Optimization & Vehicle Turnaround Metrics"
+    ],
+    targetAudience: "Logistics providers, freight operators, and distribution enterprises seeking unified fleet and inventory visibility.",
+    architectureNote: "Descriptive concept only. Engineered around event-driven Java Spring microservices, persistent WebSocket state synchronization, and partition-indexed PostgreSQL storage."
+  },
+  {
+    id: "agriflow-erp",
+    name: "AgriFlow ERP",
+    category: "Agribusiness & Mandi Management",
+    status: "Pilot",
+    statusBadge: "Pilot Stage",
+    summary: "An intended agricultural platform covering end-to-end agribusiness workflows including farmer registration, crop lifecycle tracking, field inspection audits, grain procurement coordination, and transparent settlements.",
+    highLevelConcepts: [
+      "Comprehensive Farmer Registration & Landholding Database",
+      "Crop Lifecycle Monitoring & Quality Inspection Checkpoints",
+      "Digital Grain Mandi Procurement Logs & Batch Tagging",
+      "Automated Warehouse Storage Coordination & Settlement Pipelines"
+    ],
+    targetAudience: "Agribusiness cooperatives, grain procurement agencies, farmer producer organizations (FPOs), and agricultural input distributors.",
+    architectureNote: "Descriptive concept only. Designed with mobile-responsive offline sync capabilities for rural field agents, integrated with secure ledger reconciliation backends."
+  },
+  {
+    id: "enterprise-saas-suite",
+    name: "Enterprise SaaS Suite",
+    category: "Multi-Tenant Business Operations",
+    status: "Planned",
+    statusBadge: "Planned",
+    summary: "An intended modular SaaS suite offering integrated software modules across HRMS, healthcare practice workflows, manufacturing operations, and institutional education administration.",
+    highLevelConcepts: [
+      "Modular HRMS with Attendance, Leave, and Policy Governance",
+      "Healthcare Practice Management & Clinic Scheduling Systems",
+      "Manufacturing Shop-Floor Metrics & Equipment Lifecycle Tracking",
+      "Institutional Education Portals & Academic Data Management"
+    ],
+    targetAudience: "Small to mid-scale enterprises modernizing business operations with turnkey, configurable software modules.",
+    architectureNote: "Descriptive concept only. Architected around multi-tenant isolation patterns, strict Role-Based Access Control (RBAC), and centralized API gateways."
+  }
+];
+
+export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
+  {
+    step: "01",
+    title: "Design",
+    tagline: "Architecture & User Experience Blueprinting",
+    description: "We map business processes, system boundaries, data contracts, and high-fidelity interface wireframes before a single line of application code is written.",
+    deliverables: [
+      "Technical Architecture Specifications & Data Schemas",
+      "Interactive Wireframes & Component Design System",
+      "Sprint Milestones, Performance Budgets & Risk Analysis"
+    ]
+  },
+  {
+    step: "02",
+    title: "Develop",
+    tagline: "Sprint-Based Rigorous Engineering",
+    description: "Disciplined engineering execution with modern tech stacks: React 19, TypeScript, Java 21, and Spring Boot. Clean type-safe code with automated testing.",
+    deliverables: [
+      "Modular Frontend & Backend Microservices",
+      "Strict Unit & Integration Test Coverage",
+      "Continuous Integration (CI/CD) Pipeline Automation"
+    ]
+  },
+  {
+    step: "03",
+    title: "Pilot",
+    tagline: "Staging Validation & User Testing",
+    description: "Deploying to controlled staging environments to stress-test real-world data flows, gather stakeholder feedback, and calibrate performance benchmarks.",
+    deliverables: [
+      "Staging Sandbox Environment Deployment",
+      "Core Web Vitals & Load Concurrency Benchmarking",
+      "User Acceptance Testing (UAT) Sign-off"
+    ]
+  },
+  {
+    step: "04",
+    title: "Scale",
+    tagline: "Production Cutover & Cloud Orchestration",
+    description: "Zero-downtime production cutovers with distributed cloud edge infrastructure, automated failover routines, and high-availability monitoring.",
+    deliverables: [
+      "Zero-Downtime DNS Cutover & Database Migration",
+      "Multi-Region Edge Caching & Content Delivery",
+      "Real-Time Telemetry, Error Logging & Uptime SLAs"
+    ]
+  },
+  {
+    step: "05",
+    title: "Support",
+    tagline: "Ongoing Performance Tuning & Governance",
+    description: "Dependable post-deployment engineering governance, proactive security patch management, performance audits, and long-term feature iteration.",
+    deliverables: [
+      "Guaranteed High-Availability Response Support",
+      "Scheduled Security Audits & Dependency Patching",
+      "Continuous Performance Tuning & Feature Roadmapping"
+    ]
+  }
+];
+
+export const CAREERS_DATA = {
+  headline: "Build World-Class Engineering from Kurnool",
+  subheadline: "Join a dedicated team creating high-tier software products, scalable cloud platforms, and modern enterprise systems.",
+  overview: "At VPD Technologies Private Limited, we believe exceptional software engineering does not have to be confined to traditional metropolitan centers. Headquartered in Kurnool, Andhra Pradesh, we are cultivating elite engineering talent focused on architectural precision, clean code, and verifiable business value. We offer an environment where your work has direct impact, free of corporate bureaucracy.",
+  values: [
+    {
+      title: "Direct Technical Transparency",
+      description: "We solve real engineering problems with clear architectural blueprints and direct accountability."
+    },
+    {
+      title: "Modern Engineering Stack",
+      description: "Hands-on experience with modern tools: React 19, Next.js, Java 21 LTS, Spring Boot 3, Docker, and Cloud Edge."
+    },
+    {
+      title: "Culture of Continuous Learning",
+      description: "Mentorship directly from senior engineering leaders, code reviews that challenge you, and room to take ownership."
+    },
+    {
+      title: "Decentralized Innovation",
+      description: "Demonstrating that tier-2 and tier-3 regional hubs can deliver software that rivals top global standards."
+    }
+  ],
+  openRoles: [
+    {
+      id: "full-stack-engineer",
+      title: "Full-Stack Software Engineer (Java & React)",
+      department: "Core Engineering",
+      type: "Full-time",
+      location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
+      overview: "Develop mission-critical web applications, high-throughput Spring Boot backends, and responsive React client frontends.",
+      requirements: [
+        "Proficiency in Java / Spring Boot and modern TypeScript / React",
+        "Understanding of relational databases (PostgreSQL) and RESTful API design",
+        "Familiarity with Git, Docker, and CI/CD pipelines",
+        "Passionate about writing clean, maintainable, and type-safe code"
+      ]
+    },
+    {
+      id: "frontend-developer",
+      title: "Frontend Engineer (Next.js & UI/UX)",
+      department: "Frontend Experience",
+      type: "Full-time",
+      location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
+      overview: "Craft cinematic, high-performance web experiences with sub-100ms Time-to-Interactive and pixel-perfect design systems.",
+      requirements: [
+        "Strong expertise in React 19, Next.js, TypeScript, and Tailwind CSS",
+        "Deep understanding of Core Web Vitals, accessibility (WCAG), and responsive layouts",
+        "Experience translating Figma design systems into reusable atomic components",
+        "Attention to micro-animations, layout rhythm, and mobile polish"
+      ]
+    },
+    {
+      id: "qa-devops",
+      title: "DevOps & Quality Assurance Engineer",
+      department: "Infrastructure & Quality",
+      type: "Full-time",
+      location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
+      overview: "Maintain high-availability deployment pipelines, Docker environments, and automated regression test suites.",
+      requirements: [
+        "Hands-on experience with Docker, Linux administration, and CI/CD workflows",
+        "Experience authoring automated end-to-end and integration tests",
+        "Familiarity with cloud hosting (AWS, Vercel, VPS) and monitoring tools",
+        "Strong focus on system reliability, zero-downtime deploys, and security standards"
+      ]
+    }
+  ]
+};
 
 export const DIFFERENTIATORS = [
   {

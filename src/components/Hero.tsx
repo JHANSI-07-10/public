@@ -32,6 +32,19 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
         {/* Hero Composition */}
         <div className="max-w-3xl flex flex-col items-start text-left pt-12 sm:pt-14">
 
+          {/* Eyebrow badge */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={itemTransition(0.08)}
+            className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616]/90 border border-[#c9a84c]/30 shadow-md backdrop-blur-md"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
+            <span className="text-xs font-mono font-bold tracking-widest text-[#DFC067] uppercase select-none">
+              {COMPANY_DATA.brandLine} · Kurnool, Andhra Pradesh
+            </span>
+          </motion.div>
+
           {/* H1 Headline */}
           <motion.h1
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
@@ -40,10 +53,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-white leading-[1.08] text-balance mb-6"
           >
             <WordMaskReveal
-              text="We Engineer the Digital Core for Industry Leaders."
+              text="Transforming Ideas into Intelligent Digital Solutions."
               delay={0.18}
               stagger={0.05}
-              highlightWords={['Digital', 'Core']}
+              highlightWords={['Intelligent', 'Digital', 'Solutions.']}
               highlightClassName="text-[#c9a84c] drop-shadow-[0_0_24px_rgba(201,168,76,0.22)]"
             />
           </motion.h1>
@@ -55,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             transition={itemTransition(0.2)}
             className="text-base sm:text-lg text-[#aaaaaa] leading-relaxed max-w-2xl mb-8 text-balance"
           >
-            {COMPANY_DATA.mission} We connect mission-critical system stability with intuitive, conversion-focused user interfaces to accelerate business momentum.
+            VPD Technologies builds software products, enterprise applications, and digital solutions that help organizations modernize operations and support business growth.
           </motion.p>
 
           {/* Action Group */}
@@ -65,22 +78,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             transition={itemTransition(0.28)}
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-10"
           >
-            <AnimatedButton
-              onClick={onOpenConsultation}
-              variant="primary"
-              size="lg"
-              icon={<ArrowRight className="w-4 h-4" />}
-            >
-              Book Free Consultation
-            </AnimatedButton>
-
-            <a
-              href="#case-studies"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-5 text-xs font-bold tracking-wide text-white transition-colors hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] sm:text-sm"
-            >
-              <span>Explore Case Studies</span>
-              <ChevronRight className="w-4 h-4 text-[#aaaaaa]" />
+            <a href="/services">
+              <AnimatedButton
+                variant="primary"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
+              >
+                Explore Our Services
+              </AnimatedButton>
             </a>
+
+            <button
+              type="button"
+              onClick={onOpenConsultation}
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-xs font-bold tracking-wide text-white transition-colors hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] sm:text-sm cursor-pointer"
+            >
+              <span>Contact Us</span>
+              <ChevronRight className="w-4 h-4 text-[#aaaaaa]" />
+            </button>
           </motion.div>
 
           {/* Micro Value Indicators */}
@@ -92,17 +107,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
           >
             <span className="flex items-center gap-1.5 text-[#aaaaaa]">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c]" />
-              Zero-obligation architectural audit
+              110+ Completed Projects
             </span>
             <span className="hidden sm:inline text-[#777777]" aria-hidden="true">·</span>
             <span className="flex items-center gap-1.5 text-[#aaaaaa]">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c]" />
-              Full-stack Java & React mastery
+              Kurnool, Andhra Pradesh
             </span>
             <span className="hidden sm:inline text-[#777777]" aria-hidden="true">·</span>
             <span className="flex items-center gap-1.5 text-[#aaaaaa]">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c]" />
-              Direct founder-level oversight
+              Direct Founder Governance
             </span>
           </motion.div>
         </div>

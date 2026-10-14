@@ -5,6 +5,8 @@ import { Hero } from '../components/Hero';
 import { WhatWeEngineer } from '../components/WhatWeEngineer';
 import { CompanyIntro } from '../components/CompanyIntro';
 import { ServicesSection } from '../components/ServicesSection';
+import { PlatformsPreviewSection } from '../components/PlatformsPreviewSection';
+import { DeliveryApproachSection } from '../components/DeliveryApproachSection';
 import { DifferentiatorsSection } from '../components/DifferentiatorsSection';
 import { FeaturedProjects } from '../components/FeaturedProjects';
 import { TestimonialsSection } from '../components/TestimonialsSection';
@@ -18,28 +20,34 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onOpenConsultation }) => {
   return (
     <>
-      {/* Section 1: Hero */}
+      {/* Section 1: Hero with PRD Headline & Dual CTAs */}
       <Hero onOpenConsultation={() => onOpenConsultation()} />
 
       {/* Section 2: What We Engineer — Spotlight Cards */}
       <WhatWeEngineer onOpenConsultation={() => onOpenConsultation()} />
 
-      {/* Section 3: Company Introduction & Leadership */}
+      {/* Section 3: Company Introduction & Founders Preview */}
       <CompanyIntro />
 
-      {/* Section 3: Core Engineering Services */}
+      {/* Section 4: Core Engineering Services */}
       <ServicesSection onSelectService={(service) => onOpenConsultation(service)} />
 
-      {/* Section 4: Engineering Capabilities & Differentiators */}
+      {/* Section 5: Products & Platforms with Status Labels & Industries Preview */}
+      <PlatformsPreviewSection />
+
+      {/* Section 6: Delivery Approach (Design → Develop → Pilot → Scale → Support) */}
+      <DeliveryApproachSection />
+
+      {/* Section 7: Engineering Capabilities & Differentiators */}
       <DifferentiatorsSection />
 
-      {/* Section 5: Featured Real Projects */}
+      {/* Section 8: Approved Case Studies & Portfolio */}
       <FeaturedProjects onOpenConsultation={() => onOpenConsultation()} />
 
-      {/* Section 6: Verified Client Testimonials */}
+      {/* Section 9: Verified Client Testimonials */}
       <TestimonialsSection />
 
-      {/* Section 7: Project Inquiry Banner & Form */}
+      {/* Section 10: Project Inquiry Banner & Form */}
       <ContactCTA onOpenConsultation={() => onOpenConsultation()} />
     </>
   );

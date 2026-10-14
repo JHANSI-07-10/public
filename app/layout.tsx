@@ -39,7 +39,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetBrainsMono.variable}`} suppressHydrationWarning>
       <body
-        className="bg-[#0a0a0a] text-white selection:bg-[#c9a84c]/20 selection:text-[#c9a84c] antialiased"
+        className="bg-[#0a0a0a] text-white selection:bg-[#c9a84c]/20 selection:text-[#c9a84c] antialiased min-h-screen"
+        style={{ backgroundColor: '#0a0a0a', color: '#ffffff' }}
         suppressHydrationWarning
       >
         <SiteChrome>{children}</SiteChrome>

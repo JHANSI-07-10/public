@@ -80,8 +80,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               </h1>
 
               <div className="max-w-4xl space-y-3 text-base sm:text-lg text-[#9e9e9e] leading-relaxed mb-6">
-                <p>
-                  VPD Technologies is a software engineering and digital solutions company committed to building reliable, scalable, and future-ready technology solutions. We focus on transforming business challenges into meaningful digital opportunities through modern engineering practices, innovation, and a commitment to quality.
+                <p className="text-white font-medium text-lg sm:text-xl">
+                  VPD Technologies Private Limited is a technology company headquartered in Kurnool, Andhra Pradesh, India. We focus on software products, enterprise applications, and digital solutions that help organizations modernize operations and support business growth.
                 </p>
                 <p className="text-sm sm:text-base text-[#7e7e7e]">
                   Our approach combines technical expertise, strategic thinking, and collaborative execution to deliver software products and platforms that support operational excellence and long-term business growth.
@@ -171,6 +171,20 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                       Operational leadership, delivery governance, and organizational growth
                     </p>
                   </div>
+                </div>
+
+                {/* Link to Dedicated Leadership Page */}
+                <div className="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between">
+                  <span className="text-xs text-[#888888]">
+                    Read full professional biographies and governance focus
+                  </span>
+                  <a
+                    href="/leadership"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#DFC067] hover:text-white transition-colors"
+                  >
+                    <span>Meet Our Full Leadership Team</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
             </div>

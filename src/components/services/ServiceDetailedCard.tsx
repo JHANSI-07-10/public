@@ -14,7 +14,10 @@ import {
   Server,
   Activity,
   CheckCircle2,
-  ExternalLink
+  ExternalLink,
+  Smartphone,
+  Cloud,
+  Palette
 } from 'lucide-react';
 import { Service } from '../../data/content';
 import { AnimatedButton } from '../motion/AnimatedButton';
@@ -35,13 +38,22 @@ export const ServiceDetailedCard: React.FC<ServiceDetailedCardProps> = ({
 
   const getIcon = (id: string) => {
     switch (id) {
+      case 'custom-software':
+        return Code2;
       case 'web-dev':
         return Globe;
-      case 'web-app':
-        return Layers;
-      case 'java-stack':
+      case 'enterprise-software':
+        return Server;
+      case 'mobile-apps':
+        return Smartphone;
+      case 'ai-ml':
+        return Cpu;
+      case 'cloud-devops':
+        return Cloud;
+      case 'ui-ux-engineering':
+        return Palette;
       default:
-        return Code2;
+        return Layers;
     }
   };
 

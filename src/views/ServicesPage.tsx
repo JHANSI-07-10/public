@@ -24,7 +24,6 @@ import { StaggerContainer, StaggerItem } from '../components/motion/StaggerConta
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { ServiceDetailedCard } from '../components/services/ServiceDetailedCard';
 import { ServiceArchitectureVisualizer } from '../components/services/ServiceArchitectureVisualizer';
-import { ServiceScopeCalculator } from '../components/services/ServiceScopeCalculator';
 import { ServiceComparisonMatrix } from '../components/services/ServiceComparisonMatrix';
 import { ServiceDeliveryProcess } from '../components/services/ServiceDeliveryProcess';
 import { ServicesFAQ } from '../components/services/ServicesFAQ';
@@ -153,13 +152,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 <span>Architecture Topology</span>
               </button>
 
-              <button
-                onClick={() => scrollToSection('scope-calculator')}
-                className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
-              >
-                <Calculator className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Scope Estimator</span>
-              </button>
+
 
               <button
                 onClick={() => scrollToSection('comparison-matrix')}
@@ -258,16 +251,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         </div>
       </section>
 
-      {/* 4. Interactive Scope & Sprint Estimator */}
-      <section id="scope-calculator" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <ServiceScopeCalculator
-              onOpenConsultation={(s) => onOpenConsultation(s)}
-            />
-          </Reveal>
-        </div>
-      </section>
+
 
       {/* 5. Head-to-Head Technical Spec Matrix */}
       <section id="comparison-matrix" className="py-12 sm:py-16 border-t border-[#1c1c1c]">

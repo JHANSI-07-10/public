@@ -216,7 +216,7 @@ export const CompanyIntro: React.FC = () => {
               <div className="text-xs font-bold uppercase text-[#888888] tracking-wider">
                 Corporate Registration
               </div>
-              <div className="space-y-2.5 text-sm text-[#A1A1AA]">
+              <div className="space-y-2.5 text-sm text-[#A1A1AA] mb-4">
                 <div className="flex justify-between">
                   <span className="text-[#777777]">Entity:</span>
                   <span className="font-medium text-white">{COMPANY_DATA.legalName}</span>
@@ -226,12 +226,19 @@ export const CompanyIntro: React.FC = () => {
                   <span className="font-medium text-white">{COMPANY_DATA.location}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#777777]">Active Stack:</span>
+                  <span className="text-[#777777]">Brand Line:</span>
                   <span className="font-mono text-xs font-semibold text-[#D4AF37]">
-                    Java 21 · React 19 · WebSockets
+                    {COMPANY_DATA.brandLine}
                   </span>
                 </div>
               </div>
+              <a
+                href="/leadership"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#1c1c1c] border border-[#D4AF37]/40 text-xs font-bold text-white hover:bg-[#252525] hover:border-[#D4AF37] transition-colors group/link"
+              >
+                <span>View Full Executive Profiles</span>
+                <span className="text-[#D4AF37] group-hover/link:translate-x-1 transition-transform">→</span>
+              </a>
             </div>
           </div>
         </motion.div>

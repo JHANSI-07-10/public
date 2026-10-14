@@ -55,8 +55,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
+    { label: 'Leadership', path: '/leadership' },
     { label: 'Services', path: '/services' },
+    { label: 'Industries', path: '/industries' },
+    { label: 'Products', path: '/products' },
     { label: 'Portfolio', path: '/portfolio' },
+    { label: 'Careers', path: '/careers' },
     { label: 'Insights', path: '/blogs' },
     { label: 'Contact', path: '/contact' },
   ];
@@ -108,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           </Link>
 
           {/* Zone 2: Navigation Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#aaaaaa]">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-4.5 2xl:gap-6 text-[13px] xl:text-sm font-medium text-[#aaaaaa]">
             {navLinks.map((link) => {
               const isActive = pathname === link.path;
               return (
@@ -137,9 +141,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             <AnimatedButton
               onClick={onOpenConsultation}
               variant="primary"
-              size="md"
+              size="sm"
               icon={<ArrowRight className="w-3.5 h-3.5" />}
-              className="hidden sm:inline-flex md:hidden lg:inline-flex"
+              className="hidden xl:inline-flex"
             >
               Get a Quote
             </AnimatedButton>
@@ -147,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-[#aaaaaa] hover:text-white bg-[#161616] border border-[#2a2a2a] rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer"
+              className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-[#aaaaaa] hover:text-white bg-[#161616] border border-[#2a2a2a] rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer"
               aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
               aria-expanded={mobileMenuOpen}
             >
