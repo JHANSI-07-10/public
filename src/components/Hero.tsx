@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   });
 
   return (
-    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-18 overflow-hidden bg-[#0A0A0A]">
+    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-18 overflow-hidden bg-transparent">
       {/* Ambient Video Background — blended into the dark bg: vivid on the right, scrimmed on the left for text clarity */}
       <HeroVideoBackground />
 

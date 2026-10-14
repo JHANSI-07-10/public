@@ -312,7 +312,12 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
             <g filter="url(#vpdPhotonGlow)">
               {Object.entries(VPD_LOGO_PATHS).map(([key, item]) => {
                 const totalLen = item.length;
-                const offset = totalLen * (1.0 - strokeProgress);
+                const progress = Number.isFinite(strokeProgress)
+                  ? Math.min(1, Math.max(0, strokeProgress))
+                  : 0;
+                if (!Number.isFinite(totalLen) || totalLen <= 0) return null;
+                const offset = totalLen * (1 - progress);
+                if (!Number.isFinite(offset)) return null;
 
                 return (
                   <path

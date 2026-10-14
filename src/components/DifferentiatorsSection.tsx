@@ -10,7 +10,7 @@ import { BorderTrace } from './motion/BorderTrace';
 
 export const DifferentiatorsSection: React.FC = () => {
   return (
-    <section id="capabilities" className="py-24 bg-[#0d0d0d] border-t border-[#1f1f1f] relative">
+    <section id="capabilities" className="py-24 bg-[#0d0d0d]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <Reveal>

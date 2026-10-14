@@ -17,26 +17,28 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const pathname = usePathname() ?? '';
 
-  // Cinematic Photon Knot Page Preloader: plays once on homepage root visit only
+  // Cinematic Photon Knot Page Preloader: plays on initial visit, session-cached
   const [showBrandIntro, setShowBrandIntro] = useState<boolean>(false);
 
   useEffect(() => {
-    // Only show on homepage if user hasn't seen it this session
-    if (pathname === '/') {
-      const hasSeen = typeof window !== 'undefined' ? sessionStorage.getItem('vpd_brand_intro_seen') : null;
+    try {
+      const hasSeen = sessionStorage.getItem('vpd_intro_shown') || sessionStorage.getItem('vpd_brand_intro_seen');
       if (!hasSeen) {
         setShowBrandIntro(true);
       }
-    } else {
-      setShowBrandIntro(false);
+    } catch {
+      // Ignore sessionStorage errors
     }
-  }, [pathname]);
+  }, []);
 
   const handleDismissIntro = () => {
     setShowBrandIntro(false);
     try {
+      sessionStorage.setItem('vpd_intro_shown', 'true');
       sessionStorage.setItem('vpd_brand_intro_seen', 'true');
-    } catch {}
+    } catch {
+      // Ignore sessionStorage errors
+    }
   };
 
   // Support replaying intro via custom event if triggered from footer or elsewhere

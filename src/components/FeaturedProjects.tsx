@@ -32,7 +32,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onOpenConsul
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="case-studies" className="py-24 bg-[#0a0a0a] border-t border-[#1f1f1f] relative">
+    <section id="case-studies" className="py-24 bg-[#080808]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <Reveal>

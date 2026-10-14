@@ -33,17 +33,31 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
   const handleDismiss = useCallback(() => {
     if (hasDismissedRef.current) return;
     hasDismissedRef.current = true;
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
     setIsDismissing(true);
   }, []);
 
-  // Lock body scroll while the preloader is active
+  // Lock body scroll while the preloader is active, guaranteed clean unlock on dismiss/unmount
   useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
     return () => {
-      document.body.style.overflow = originalOverflow;
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+      }
     };
   }, []);
+
+  // Automatic dismiss safety timeout (in case requestAnimationFrame is throttled or user is passive)
+  useEffect(() => {
+    const safetyTimer = setTimeout(() => {
+      handleDismiss();
+    }, minDuration + 800);
+    return () => clearTimeout(safetyTimer);
+  }, [handleDismiss, minDuration]);
 
   // Keyboard controls: Escape, Space, or Enter skips immediately
   useEffect(() => {

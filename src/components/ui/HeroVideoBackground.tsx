@@ -32,7 +32,7 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
 
   return (
     <div
-      className={`absolute inset-0 overflow-hidden pointer-events-none select-none bg-[#0A0A0A] ${className}`}
+      className={`absolute inset-0 overflow-hidden pointer-events-none select-none bg-transparent ${className}`}
       aria-hidden="true"
     >
       {/* Video: nudged right so its subject sits in the uncovered half, with a

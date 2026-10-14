@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#080808] border-t border-[#1f1f1f] pt-16 pb-12 text-[#aaaaaa] relative">
+    <footer className="bg-[#080808]/90 backdrop-blur-sm border-t border-[#1f1f1f]/60 pt-16 pb-12 text-[#aaaaaa] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-[#1c1c1c]">

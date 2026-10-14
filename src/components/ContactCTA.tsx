@@ -67,7 +67,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ onOpenConsultation }) =>
   };
 
   return (
-    <section id="contact" className="py-24 bg-[#0a0a0a] border-t border-[#1f1f1f] relative">
+    <section id="contact" className="py-24 bg-[#080808]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="rounded-2xl bg-gradient-to-b from-[#141414] to-[#0f0f0f] border border-[#262626] p-8 sm:p-12 lg:p-16 relative overflow-hidden">

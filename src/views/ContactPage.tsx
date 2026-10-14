@@ -41,10 +41,10 @@ export const ContactPage: React.FC = () => {
     const res = await submitContactInquiry(formData);
     if (res.success) {
       setIsSuccess(true);
-      setFormData({ name: '', email: '', phone: '', service: 'Website Development', message: '' });
+      setFormData({ name: '', email: '', company: '', phone: '', service: 'Website Development', message: '' });
     } else {
       setIsSuccess(true);
-      setFormData({ name: '', email: '', phone: '', service: 'Website Development', message: '' });
+      setFormData({ name: '', email: '', company: '', phone: '', service: 'Website Development', message: '' });
     }
     setIsSubmitting(false);
   };

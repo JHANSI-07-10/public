@@ -45,7 +45,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
   return (
     <section
       id="what-we-engineer"
-      className="relative bg-[#181818] pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 overflow-hidden border-t border-[#2a2a2a]"
+      className="relative bg-[#0a0a0a]/25 backdrop-blur-[1px] pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 overflow-hidden border-t border-[#222222]/40"
       aria-label="What We Engineer"
     >
       {/* Subtle Radial Glow Separation from Hero */}

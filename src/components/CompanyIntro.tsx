@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useRef } from 'react';
-import Image from 'next/image';
 import { Award } from 'lucide-react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
 import { WordMaskReveal } from './motion/WordMaskReveal';
 
@@ -29,58 +28,22 @@ export const CompanyIntro: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Scroll-linked parallax animation for background image
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ['-7%', '7%']);
-  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1.02, 1.08]);
-
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 sm:py-28 lg:py-32 bg-[#0c0c0c] border-t border-[#1f1f1f] overflow-hidden"
+      className="relative py-24 sm:py-28 lg:py-32 bg-[#0c0c0c]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 overflow-hidden"
       aria-label="Company Introduction & Leadership"
     >
-      {/* 1. Cinematic Background Image Layer with Parallax Scroll Animation */}
+      {/* Subtle Ambient Radial Gold Lighting */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
-        <motion.div
-          style={{
-            y: shouldReduceMotion ? 0 : bgY,
-            scale: shouldReduceMotion ? 1 : bgScale,
-          }}
-          className="absolute -inset-y-16 inset-x-0 w-full h-[calc(100%+8rem)]"
-        >
-          <Image
-            src="/images/company-intro/bg-company-intro.webp"
-            alt=""
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover object-center"
-          />
-        </motion.div>
-
-        {/* Seamless Top Vignette transitioning from Section 2 (#181818) */}
-        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#181818] via-[#181818]/70 to-transparent" />
-
-        {/* Ambient Darkening Scrim to keep luminous gold ribbons visible while guaranteeing text legibility */}
-        <div className="absolute inset-0 bg-[#0a0a0a]/75" />
-
-        {/* Radial Gold Focal Lighting */}
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none opacity-25"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none opacity-20"
           style={{
             background:
-              'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%)',
+              'radial-gradient(circle, rgba(212, 175, 55, 0.16) 0%, rgba(10, 10, 10, 0) 70%)',
           }}
         />
-
-        {/* Seamless Bottom Vignette blending into Section 4 */}
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

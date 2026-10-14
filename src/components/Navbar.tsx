@@ -105,9 +105,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 <span>VPD</span>
                 <span className="text-[#c9a84c]">Technologies</span>
               </span>
-              <span className="text-xs font-mono tracking-wider text-[#777777]">
-                Digital Engineering
-              </span>
             </div>
           </Link>
 

@@ -73,7 +73,6 @@
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px -6px rgba(201, 168, 76, 0.18);
 }
 
-
 /* Insights page: slow gold scanline sweeping the hero grid */
 @keyframes insights-scan {
   0% { top: -2%; opacity: 0; }
@@ -112,7 +111,6 @@
     animation: none !important;
   }
 }
-
 
 /* Uiverse.io by eslam-hany adapted for VPD Leadership Card */
 .uiverse-leadership-card {
