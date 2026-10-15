@@ -37,7 +37,11 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({
       document.body.style.overflow = '';
     }
     setIsDismissing(true);
-  }, []);
+    // Reliable dismiss fallback in case motion exit event is throttled
+    setTimeout(() => {
+      onDismiss();
+    }, 700);
+  }, [onDismiss]);
 
   // Lock body scroll while the preloader is active, guaranteed clean unlock on dismiss/unmount
   useEffect(() => {

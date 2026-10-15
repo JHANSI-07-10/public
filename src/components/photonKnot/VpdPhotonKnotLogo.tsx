@@ -54,7 +54,7 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
     onRevealCompleteRef.current = onRevealComplete;
   }, [onRevealComplete]);
 
-  // Master Choreography Timeline Loop — direct VPD logo animation only
+  // Master Choreography Timeline Loop — direct authentic VPD logo animation only
   useEffect(() => {
     if (shouldReduceMotion) {
       setPhase('ambient');
@@ -205,6 +205,22 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
+            {/* D Monogram White-to-Gold Diagonal Gradient */}
+            <linearGradient id="vpdDGoldGrad" x1="30%" y1="10%" x2="85%" y2="85%">
+              <stop offset="0%" stopColor="#FFFFFF" />
+              <stop offset="40%" stopColor="#FFFFFF" />
+              <stop offset="62%" stopColor="#F2D98D" />
+              <stop offset="85%" stopColor="#D4AF37" />
+              <stop offset="100%" stopColor="#C59B27" />
+            </linearGradient>
+
+            {/* V Gold Wing Accent Gradient */}
+            <linearGradient id="vpdVGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#E5C15D" />
+              <stop offset="50%" stopColor="#D4AF37" />
+              <stop offset="100%" stopColor="#B8860B" />
+            </linearGradient>
+
             {/* Photon Tracer Gold-to-White Linear Gradient */}
             <linearGradient id="vpdPhotonTracerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
@@ -233,8 +249,8 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
               y2="100%"
             >
               <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
-              <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.65" />
-              <stop offset="55%" stopColor="#F2D98D" stopOpacity="0.8" />
+              <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.75" />
+              <stop offset="55%" stopColor="#F2D98D" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
             </linearGradient>
 
@@ -249,8 +265,10 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
           </defs>
 
           {/* ----------------------------------------------------
-              STAGE A: PROGRESSIVE SOLID FILLS (The Real VPD Logo)
+              STAGE A: PROGRESSIVE SOLID FILLS (The Authentic VPD Logo)
               Renders exact authentic shapes with crisp white and gold
+              Zero dividing lines between V and P
+              Open horseshoe for D with smooth gradient and rounded tips
               ---------------------------------------------------- */}
           <g
             style={{
@@ -258,39 +276,25 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
               transition: phase === 'resolving' ? 'opacity 0.6s ease-out' : 'none',
             }}
           >
-            {/* V White */}
+            {/* Unified VP Monogram Ribbon (Pure solid white, zero internal dividing line) */}
             <path
-              d={VPD_LOGO_PATHS.v_white.d}
-              fill={VPD_LOGO_PATHS.v_white.color}
+              d={VPD_LOGO_PATHS.vp_body.d}
+              fill="#FFFFFF"
               fillRule="evenodd"
             />
 
-            {/* V Gold Accent Wing */}
+            {/* V Inverted Gold Triangle Accent */}
             <path
               d={VPD_LOGO_PATHS.v_gold.d}
-              fill={VPD_LOGO_PATHS.v_gold.color}
+              fill="url(#vpdVGoldGrad)"
               fillRule="evenodd"
               filter={ambientPulse > 0.05 ? 'url(#vpdAccentPulseGlow)' : undefined}
             />
 
-            {/* P White */}
+            {/* D Monogram Open Horseshoe (White-to-Gold gradient, open on left, rounded tips) */}
             <path
-              d={VPD_LOGO_PATHS.p_white.d}
-              fill={VPD_LOGO_PATHS.p_white.color}
-              fillRule="evenodd"
-            />
-
-            {/* D White */}
-            <path
-              d={VPD_LOGO_PATHS.d_white.d}
-              fill={VPD_LOGO_PATHS.d_white.color}
-              fillRule="evenodd"
-            />
-
-            {/* D Gold Swoosh Accent */}
-            <path
-              d={VPD_LOGO_PATHS.d_gold.d}
-              fill={VPD_LOGO_PATHS.d_gold.color}
+              d={VPD_LOGO_PATHS.d_shape.d}
+              fill="url(#vpdDGoldGrad)"
               fillRule="evenodd"
               filter={ambientPulse > 0.05 ? 'url(#vpdAccentPulseGlow)' : undefined}
             />
@@ -298,7 +302,7 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
             {/* TECHNOLOGIES Wordmark */}
             <path
               d={VPD_LOGO_PATHS.text.d}
-              fill={VPD_LOGO_PATHS.text.color}
+              fill="#FFFFFF"
               fillRule="evenodd"
               opacity={Math.min(fillOpacity * 1.1, 1)}
             />
@@ -319,18 +323,27 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
                 const offset = totalLen * (1 - progress);
                 if (!Number.isFinite(offset)) return null;
 
+                const isGold = item.isGold;
+                const isText = key === 'text';
+
+                const pStroke = Number.isFinite(strokeProgress) ? strokeProgress : 0;
+                const pFill = Number.isFinite(fillOpacity) ? fillOpacity : 0;
+                const tracerOpacity = isText
+                  ? Math.max(0, Math.min(1.0, pStroke * 1.2) * (1.0 - pFill * 0.5))
+                  : Math.max(0, 1.0 - pFill * 0.75);
+
                 return (
                   <path
                     key={`tracer-${key}`}
                     d={item.d}
                     fill="none"
-                    stroke={item.isGold ? '#FFE58F' : 'url(#vpdPhotonTracerGrad)'}
-                    strokeWidth={item.isGold ? 3.0 : 2.2}
+                    stroke={isGold ? '#FFE58F' : isText ? '#FFFFFF' : 'url(#vpdPhotonTracerGrad)'}
+                    strokeWidth={isGold ? 3.0 : isText ? 1.0 : 2.4}
                     strokeDasharray={totalLen}
                     strokeDashoffset={offset}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    opacity={1.0 - fillOpacity * 0.75}
+                    opacity={tracerOpacity}
                   />
                 );
               })}
@@ -342,14 +355,14 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
               Sweeps across gold and white surfaces during reveal
               ---------------------------------------------------- */}
           {phase === 'resolving' && sheenOffset > -90 && sheenOffset < 250 && (
-            <g opacity="0.75">
+            <g opacity="0.8">
               <path
                 d={VPD_LOGO_PATHS.v_gold.d}
                 fill="url(#vpdSheenGrad)"
                 fillRule="evenodd"
               />
               <path
-                d={VPD_LOGO_PATHS.d_gold.d}
+                d={VPD_LOGO_PATHS.d_shape.d}
                 fill="url(#vpdSheenGrad)"
                 fillRule="evenodd"
               />
@@ -360,20 +373,20 @@ export const VpdPhotonKnotLogo: React.FC<VpdPhotonKnotLogoProps> = ({
               STAGE D: AMBIENT GOLDEN PULSE (Ambient Phase)
               Subtle pulse tracing along gold accents every few seconds
               ---------------------------------------------------- */}
-          {phase === 'ambient' && ambientPulse > 0.05 && (
-            <g opacity={ambientPulse}>
+          {phase === 'ambient' && Number.isFinite(ambientPulse) && ambientPulse > 0.05 && (
+            <g opacity={Math.max(0, Math.min(1, ambientPulse))}>
               <path
                 d={VPD_LOGO_PATHS.v_gold.d}
                 fill="none"
-                stroke="#FFFFFF"
-                strokeWidth="1.8"
+                stroke="#FFE58F"
+                strokeWidth="2.0"
                 filter="url(#vpdPhotonGlow)"
               />
               <path
-                d={VPD_LOGO_PATHS.d_gold.d}
+                d={VPD_LOGO_PATHS.d_shape.d}
                 fill="none"
-                stroke="#FFFFFF"
-                strokeWidth="1.8"
+                stroke="#FFE58F"
+                strokeWidth="2.0"
                 filter="url(#vpdPhotonGlow)"
               />
             </g>

@@ -33,11 +33,23 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
   return (
     <div
       className={`absolute inset-0 overflow-hidden pointer-events-none select-none bg-transparent ${className}`}
+      style={{
+        // 1. Bottom blend: completely dissolves the video layer and scrims to 0 opacity
+        // before reaching the bottom edge, ensuring zero visible cut line and zero separation
+        WebkitMaskImage:
+          'linear-gradient(to bottom, black 0%, black 35%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.45) 70%, rgba(0,0,0,0.12) 84%, transparent 96%)',
+        maskImage:
+          'linear-gradient(to bottom, black 0%, black 35%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.45) 70%, rgba(0,0,0,0.12) 84%, transparent 96%)',
+      }}
       aria-hidden="true"
     >
-      {/* Video: nudged right so its subject sits in the uncovered half, with a
-          low-contrast, desaturated grade so it stays ambient and never competes
-          with the copy or the metric numbers */}
+      {/* 
+        Video layer:
+        - Enhanced contrast, saturation, and luminance overall so the right side is vivid, punchy, and prominent.
+        - Horizontal gradient mask deeply reduces video visibility on the left side (down to 4-8%) so that
+          the headline text, paragraph, and CTAs have crystal-clear readability with zero competing contrast.
+        - The right side receives full 100% opacity with rich, high-contrast dynamic range.
+      */}
       <video
         ref={videoRef}
         src={videoSrc}
@@ -47,45 +59,49 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
         playsInline
         preload="auto"
         disablePictureInPicture
-        className="absolute inset-0 w-full h-full object-cover object-[68%_center] contrast-[0.95] saturate-[0.85] brightness-[0.95]"
+        style={{
+          WebkitMaskImage:
+            'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
+          maskImage:
+            'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
+        }}
+        className="absolute inset-0 w-full h-full object-cover object-[72%_center] contrast-[0.70] saturate-[1.25] brightness-[1.08]"
       />
 
-      {/* Global tone-down so the video melts into the page background */}
-      <div className="absolute inset-0 bg-[#0A0A0A]/30" />
-
-      {/* Left scrim: heavy over the text column, fading out to the right so the
-          video stays vivid on the right half of the hero */}
+      {/* 
+        Left Scrim: Deeply softens and darkens the left side to guarantee high-contrast
+        readability for all text contents, allowing the subtle procedural gold/silver lines to show cleanly.
+      */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to right, #0A0A0A 0%, rgba(10,10,10,0.97) 34%, rgba(10,10,10,0.9) 52%, rgba(10,10,10,0.55) 68%, rgba(10,10,10,0.18) 82%, transparent 100%)',
+            'linear-gradient(to right, #08080A 0%, rgba(8,8,10,0.96) 28%, rgba(8,8,10,0.80) 45%, rgba(8,8,10,0.22) 65%, transparent 82%)',
         }}
       />
 
-      {/* Mobile: text spans the full width, so use a heavier uniform wash */}
+      {/* 
+        Right Side Contrast Accent:
+        Enhances the dynamic depth of the technical visualization on the right half.
+      */}
       <div
-        className="absolute inset-0 md:hidden"
+        className="absolute inset-y-0 right-0 w-1/2 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.75) 45%, rgba(10,10,10,0.92) 100%)',
+            'radial-gradient(ellipse 80% 60% at 85% 45%, rgba(212,175,55,0.06) 0%, transparent 70%)',
         }}
       />
 
-      {/* Edge fades: blend into the navbar above and the next section below */}
+      {/* Feathered bottom blend: dissolves into transparent well before the bottom of the section */}
       <div
-        className="absolute inset-x-0 top-0 h-24 sm:h-32"
-        style={{
-          background: 'linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0) 100%)',
-        }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-32 sm:h-40"
+        className="absolute inset-x-0 bottom-0 h-48 sm:h-64 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to top, #0A0A0A 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0) 100%)',
+            'linear-gradient(to top, transparent 0%, rgba(8,8,10,0.18) 35%, rgba(8,8,10,0.40) 65%, transparent 100%)',
         }}
       />
     </div>
   );
 };
+
+export default HeroVideoBackground;

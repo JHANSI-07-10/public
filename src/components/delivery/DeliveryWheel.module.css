@@ -1,0 +1,344 @@
+/* DeliveryDial — CodeFronts "Donut Segment Radial Dropdown" (reference prefix
+ * ccm-13) adapted to VPD's five-stage delivery lifecycle: five SVG arc strokes
+ * that draw themselves in around an always-visible hub, thickening like dial
+ * detents on hover. Geometry is five equal 72° segments with a 6° gap.
+ * All selectors are scoped to this CSS module.
+ */
+
+.layout {
+  --dial: clamp(272px, 33vw, 348px);
+  --gold: #d4af37;
+  --gold-soft: #f2d98d;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: clamp(26px, 4vw, 54px);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-items: start;
+  }
+}
+
+.dialCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.fieldset {
+  border: none;
+  display: grid;
+  place-items: center;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.dial {
+  position: relative;
+  width: var(--dial);
+  height: var(--dial);
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+/* Undrawn state: the arc is collapsed to zero length and invisible. */
+.seg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 30;
+  stroke-linecap: butt;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  opacity: 0;
+  pointer-events: stroke;
+  cursor: pointer;
+  transition:
+    stroke-dashoffset 0.6s cubic-bezier(0.3, 1, 0.4, 1) var(--d),
+    opacity 0.3s linear var(--d),
+    stroke-width 0.25s cubic-bezier(0.34, 1.4, 0.4, 1),
+    stroke 0.3s ease,
+    filter 0.3s ease;
+}
+
+.drawn .seg {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.seg:hover {
+  stroke-width: 38;
+  stroke: rgba(212, 175, 55, 0.45);
+}
+
+/* Stages already passed sit between the track and the active detent. */
+.segDone {
+  stroke: rgba(212, 175, 55, 0.26);
+}
+
+.segActive {
+  stroke: var(--gold);
+  stroke-width: 40;
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.45));
+}
+
+.labels {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.labelItem {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  translate: -50% -50%;
+  pointer-events: auto;
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+
+.lab {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 7px 9px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  width: max-content;
+  max-width: 108px;
+  opacity: 0;
+  translate: 0 6px;
+  transition:
+    opacity 0.35s ease var(--labD),
+    translate 0.35s ease var(--labD),
+    background 0.25s ease;
+}
+
+.drawn .lab {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.lab:hover {
+  background: rgba(212, 175, 55, 0.07);
+}
+
+.labIcon {
+  color: #8a7340;
+  transition: color 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.4, 1);
+}
+
+.labName {
+  font-size: clamp(0.7rem, 0.95vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  color: #d8d8d8;
+  transition: color 0.25s ease;
+}
+
+.input:checked + .lab .labName {
+  color: var(--gold-soft);
+}
+
+.input:checked + .lab .labIcon {
+  color: var(--gold);
+  transform: scale(1.12);
+}
+
+.input:focus-visible + .lab {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ---- Always-visible centre hub ---- */
+.hub {
+  position: absolute;
+  inset: 50%;
+  translate: -50% -50%;
+  width: calc(var(--dial) * 0.38);
+  height: calc(var(--dial) * 0.38);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, #1c1c1c 0%, #0b0b0b 72%);
+  border: 1px solid rgba(212, 175, 55, 0.34);
+  box-shadow:
+    0 0 34px -8px rgba(212, 175, 55, 0.22),
+    inset 0 1px 14px rgba(0, 0, 0, 0.85);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1px;
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hubIcon {
+  color: var(--gold);
+}
+
+.hubName {
+  font-size: clamp(0.86rem, 1.2vw, 1rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.hubStep {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gold-soft);
+  line-height: 1;
+}
+
+.hubKicker {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7d6a3c;
+}
+
+.instruction {
+  font-size: 0.72rem;
+  color: #6f6f6f;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+/* ---- Compact detail panel ---- */
+.panel {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #242424;
+  background: rgba(20, 20, 20, 0.66);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: clamp(20px, 2.3vw, 28px);
+  box-shadow: 0 26px 60px -30px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+
+.panelTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.panelKicker {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.panelCount {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: #666666;
+}
+
+.panelTitle {
+  margin-top: 10px;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.panelSummary {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #a1a1aa;
+  text-wrap: pretty;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #202020;
+}
+
+.dot {
+  width: 26px;
+  height: 3px;
+  border-radius: 999px;
+  background: #262626;
+  transition: background 0.35s ease, width 0.35s ease;
+}
+
+.dotDone {
+  background: rgba(212, 175, 55, 0.4);
+}
+
+.dotNow {
+  width: 40px;
+  background: linear-gradient(90deg, #e9cd76, #c9a84c);
+}
+
+.dotLabel {
+  margin-left: 6px;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  color: #666666;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seg,
+  .lab,
+  .labIcon,
+  .dot {
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, CheckCircle, MessageSquare } from 'lucide-react';
+import { X, ArrowRight, CheckCircle } from 'lucide-react';
 import { CORE_SERVICES, COMPANY_DATA, Service } from '../data/content';
+import { WhatsAppIcon } from './ui/WhatsAppIcon';
 import { Button } from './ui/Button';
 import { submitContactInquiry } from '../config/api';
 
@@ -119,7 +120,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 rel="noreferrer"
                 className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#22c55e] hover:bg-[#1fa951] text-black font-bold text-xs flex items-center justify-center gap-2 transition-colors"
               >
-                <MessageSquare className="w-4 h-4" />
+                <WhatsAppIcon size={18} className="w-4 h-4 shrink-0" />
                 <span>Chat on WhatsApp</span>
               </a>
             </div>

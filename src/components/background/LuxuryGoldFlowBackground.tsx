@@ -1,81 +1,43 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-interface SculpturalSilkBackgroundProps {
+interface LuxuryArchitecturalBackgroundProps {
   className?: string;
   intensity?: number;
 }
 
 /**
- * LuxurySculpturalSilkBackground
+ * LuxuryGoldFlowBackground
  *
- * Procedural generative canvas background matching the requested dark stealth aesthetic:
- * 1. Deep Obsidian Void (#000000) base.
- * 2. Continuous Solid Silk Surfaces in BLACK AND GREY SHADES ONLY (NO stark white, NO glow).
- * 3. Soft muted metallic grey / slate crest rims (rgba(155, 155, 165, 0.65)) with zero blurry halos.
- * 4. Secondary lower-right bifurcated satin ribbon surface in charcoal/grey tones.
- * 5. Upper dark sculptural hood plane in deep charcoal.
- * 6. NO dots, NO particles, NO glints, NO circles anywhere.
- * 7. "Live but little" micro-motion: gentle slow breathing flex (18-20s period, 4-8px amplitude) and scroll parallax.
+ * Procedural Architectural Background in matte charcoal and dual metallic (Gold + Silver) rim lighting.
+ * Recreates the exact luxury aesthetic requested:
+ * 1. Base Deep Obsidian Void (#08080A) with soft atmospheric light dome.
+ * 2. Giant Upper Dome Surface with realistic volumetric drop shadow.
+ * 3. Secondary Horizon Ledge (Curve 2) with horizontal golden rim and razor hairline.
+ * 4. Lower Foreground Curved Plane (Curve 1) with primary metallic gold line.
+ * 5. Reduced Slight Glow: Tight, restrained focal bloom that does NOT overlap or wash out text.
+ * 6. Crisp Silver Line along the gold line: Razor-sharp metallic chrome/silver filament with ZERO glow.
+ * 7. Multi-layered 3D depth with zero raster images — 100% procedural vector canvas rendering.
+ * 8. Stationary & Zero-CPU: Renders with DPR-aware precision on mount/resize with zero shaking/movement.
  */
-export const LuxuryGoldFlowBackground: React.FC<SculpturalSilkBackgroundProps> = ({
+export const LuxuryGoldFlowBackground: React.FC<LuxuryArchitecturalBackgroundProps> = ({
   className = '',
-  intensity = 1.0,
+  intensity = 0.9,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-    if (typeof window !== 'undefined') {
-      const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setShouldReduceMotion(media.matches);
-      const handler = (e: MediaQueryListEvent) => setShouldReduceMotion(e.matches);
-      media.addEventListener('change', handler);
-      return () => media.removeEventListener('change', handler);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
-
-    // Smooth scroll interpolation
-    let targetScrollRatio = 0;
-    let currentScrollRatio = 0;
-
-    const updateScroll = () => {
-      const docHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        window.innerHeight * 2
-      ) - window.innerHeight;
-
-      if (docHeight > 0) {
-        targetScrollRatio = Math.min(Math.max(window.scrollY / docHeight, 0), 1);
-      }
-    };
-
-    window.addEventListener('scroll', updateScroll, { passive: true });
-    updateScroll();
-
-    // High-DPR resize handler
-    const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const draw = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const dpr = Math.max(window.devicePixelRatio || 1, 2);
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
@@ -85,324 +47,320 @@ export const LuxuryGoldFlowBackground: React.FC<SculpturalSilkBackgroundProps> =
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
-    };
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
+      const W = width;
+      const H = height;
 
-    let startTime = performance.now();
-    let isVisible = true;
+      // -----------------------------------------------------------
+      // 1. BASE OBSIDIAN CANVAS (#08080A)
+      // -----------------------------------------------------------
+      ctx.fillStyle = '#08080A';
+      ctx.fillRect(0, 0, W, H);
 
-    const handleVisibilityChange = () => {
-      isVisible = !document.hidden;
-      if (isVisible) startTime = performance.now();
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+      // Exact curve geometry:
+      // Primary sweeping curve (C1) from top-left through apex to bottom-right
+      const c1_x0 = W * 0.115, c1_y0 = -H * 0.05;
+      const c1_cp1x = W * 0.14, c1_cp1y = H * 0.26;
+      const c1_cp2x = W * 0.25, c1_cp2y = H * 0.54;
+      const c1_midx = W * 0.442, c1_midy = H * 0.716;
+      const c1_cp3x = W * 0.58, c1_cp3y = H * 0.83;
+      const c1_cp4x = W * 0.74, c1_cp4y = H * 0.93;
+      const c1_x1 = W * 0.94, c1_y1 = H * 1.05;
 
-    // ========================================================
-    // RENDER LOOP (Live, subtle micro-motion: gentle satin flex)
-    // ========================================================
-    const render = (now: number) => {
-      animationFrameId = requestAnimationFrame(render);
+      // Secondary horizon curve (C2) across right side
+      const c2_x0 = c1_midx - W * 0.005, c2_y0 = c1_midy + H * 0.004;
+      const c2_cp1x = W * 0.58, c2_cp1y = H * 0.728;
+      const c2_cp2x = W * 0.78, c2_cp2y = H * 0.710;
+      const c2_x1 = W * 1.05, c2_y1 = H * 0.615;
 
-      if (!isVisible) return;
-
-      const elapsed = (now - startTime) * 0.001;
-      const t = shouldReduceMotion ? 0 : elapsed;
-
-      // Smooth scroll lerp (very soft)
-      currentScrollRatio += (targetScrollRatio - currentScrollRatio) * 0.045;
-
-      // ------------------------------------------------------
-      // 1. PURE OBSIDIAN VOID (#000000)
-      // ------------------------------------------------------
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, width, height);
-
-      // Subtle atmospheric volumetric depth in upper right corner (deep dark charcoal)
-      const upperAmb = ctx.createRadialGradient(
-        width * 0.72, height * 0.18, 40,
-        width * 0.72, height * 0.18, width * 0.65
-      );
-      upperAmb.addColorStop(0, 'rgba(22, 22, 24, 0.35)');
-      upperAmb.addColorStop(0.4, 'rgba(12, 12, 13, 0.18)');
-      upperAmb.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = upperAmb;
-      ctx.fillRect(0, 0, width, height);
-
-      // Tiny, subtle live breathing oscillations (gentle: 4px to 8px max amplitude)
-      const b1 = Math.sin(t * 0.32) * 6;
-      const b2 = Math.cos(t * 0.24) * 7;
-      const b3 = Math.sin(t * 0.28) * 5;
-      const b4 = Math.cos(t * 0.18) * 8;
-
-      // Smooth scroll parallax displacement
-      const scrollShiftY = currentScrollRatio * height * 0.14;
-
-      // ------------------------------------------------------
-      // 2. UPPER SCULPTURAL HOOD ARC (Top framing surface)
-      // ------------------------------------------------------
-      const hoodStartX = width * 0.26;
-      const hoodStartY = -height * 0.03;
-
-      const hoodCP1X = width * 0.54;
-      const hoodCP1Y = height * 0.11 + b1 * 0.4 - scrollShiftY * 0.2;
-
-      const hoodCP2X = width * 0.80;
-      const hoodCP2Y = height * 0.21 + b2 * 0.4 - scrollShiftY * 0.16;
-
-      const hoodEndX = width * 1.04;
-      const hoodEndY = height * 0.42 - scrollShiftY * 0.12;
-
-      // Hood dark body fill (deep charcoal)
+      // -----------------------------------------------------------
+      // 2. RECESSED INTERMEDIATE VOID (Between C1 and C2 on right)
+      // -----------------------------------------------------------
       ctx.save();
       ctx.beginPath();
-      ctx.moveTo(hoodStartX, hoodStartY);
-      ctx.bezierCurveTo(hoodCP1X, hoodCP1Y, hoodCP2X, hoodCP2Y, hoodEndX, hoodEndY);
-      ctx.lineTo(width, 0);
-      ctx.lineTo(hoodStartX, 0);
+      ctx.moveTo(c2_x0, c2_y0);
+      ctx.bezierCurveTo(c2_cp1x, c2_cp1y, c2_cp2x, c2_cp2y, c2_x1, c2_y1);
+      ctx.lineTo(W * 1.05, H * 1.05);
+      ctx.lineTo(c1_x1, c1_y1);
+      ctx.bezierCurveTo(c1_cp4x, c1_cp4y, c1_cp3x, c1_cp3y, c1_midx, c1_midy);
       ctx.closePath();
 
-      const hoodFill = ctx.createLinearGradient(width * 0.5, 0, width * 0.88, height * 0.32);
-      hoodFill.addColorStop(0, 'rgba(40, 42, 48, 0.75)');
-      hoodFill.addColorStop(0.55, 'rgba(22, 24, 28, 0.45)');
-      hoodFill.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = hoodFill;
+      const recessGrad = ctx.createLinearGradient(W * 0.70, H * 0.68, W * 0.70, H * 0.95);
+      recessGrad.addColorStop(0, 'rgba(26, 26, 28, 1)');
+      recessGrad.addColorStop(0.35, 'rgba(18, 18, 20, 1)');
+      recessGrad.addColorStop(0.75, 'rgba(10, 10, 12, 1)');
+      recessGrad.addColorStop(1, 'rgba(7, 7, 8, 1)');
+      ctx.fillStyle = recessGrad;
+      ctx.fill();
+      ctx.restore();
+
+      // -----------------------------------------------------------
+      // 3. GIANT UPPER SPHERE / DOME (Above C1 on left, and C2 on right)
+      // -----------------------------------------------------------
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(c1_x0, c1_y0);
+      ctx.bezierCurveTo(c1_cp1x, c1_cp1y, c1_cp2x, c1_cp2y, c1_midx, c1_midy);
+      ctx.bezierCurveTo(c2_cp1x, c2_cp1y, c2_cp2x, c2_cp2y, c2_x1, c2_y1);
+      ctx.lineTo(W * 1.05, -H * 0.05);
+      ctx.lineTo(c1_x0, -H * 0.05);
+      ctx.closePath();
+
+      // Deep volumetric drop shadow cast downwards
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.96)';
+      ctx.shadowBlur = 45;
+      ctx.shadowOffsetX = -10;
+      ctx.shadowOffsetY = 24;
+      ctx.fillStyle = '#0a0a0c';
       ctx.fill();
 
-      // Hood lower rim (clean, metallic silver-grey hairline)
-      const hoodRimGrad = ctx.createLinearGradient(hoodStartX, hoodStartY, hoodEndX, hoodEndY);
-      hoodRimGrad.addColorStop(0, 'rgba(120, 125, 135, 0.05)');
-      hoodRimGrad.addColorStop(0.35, 'rgba(180, 185, 195, 0.6)');
-      hoodRimGrad.addColorStop(0.7, 'rgba(140, 145, 155, 0.35)');
-      hoodRimGrad.addColorStop(1, 'rgba(120, 125, 135, 0.05)');
+      // Smooth matte charcoal surface with subtle ambient light dome
+      const domeGrad = ctx.createRadialGradient(W * 0.54, H * 0.20, 30, W * 0.54, H * 0.20, W * 0.60);
+      domeGrad.addColorStop(0, 'rgba(29, 29, 31, 1)');
+      domeGrad.addColorStop(0.35, 'rgba(24, 24, 26, 1)');
+      domeGrad.addColorStop(0.70, 'rgba(15, 15, 17, 1)');
+      domeGrad.addColorStop(1, 'rgba(9, 9, 10, 1)');
+      ctx.fillStyle = domeGrad;
+      ctx.fill();
+      ctx.restore();
 
+      // -----------------------------------------------------------
+      // 4. LOWER FOREGROUND SURFACE (Below C1 in bottom-left/center)
+      // -----------------------------------------------------------
+      ctx.save();
       ctx.beginPath();
-      ctx.moveTo(hoodStartX, hoodStartY);
-      ctx.bezierCurveTo(hoodCP1X, hoodCP1Y, hoodCP2X, hoodCP2Y, hoodEndX, hoodEndY);
-      ctx.strokeStyle = hoodRimGrad;
-      ctx.lineWidth = 1.4;
-      ctx.shadowBlur = 0;
+      ctx.moveTo(c1_x0, c1_y0);
+      ctx.bezierCurveTo(c1_cp1x, c1_cp1y, c1_cp2x, c1_cp2y, c1_midx, c1_midy);
+      ctx.bezierCurveTo(c1_cp3x, c1_cp3y, c1_cp4x, c1_cp4y, c1_x1, c1_y1);
+      ctx.lineTo(-W * 0.05, H * 1.05);
+      ctx.lineTo(-W * 0.05, -H * 0.05);
+      ctx.closePath();
+
+      // Realistic drop shadow under the foreground curve
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.92)';
+      ctx.shadowBlur = 32;
+      ctx.shadowOffsetX = 10;
+      ctx.shadowOffsetY = 15;
+
+      const lowerGrad = ctx.createLinearGradient(0, H * 0.35, W * 0.55, H * 0.95);
+      lowerGrad.addColorStop(0, 'rgba(10, 10, 12, 1)');
+      lowerGrad.addColorStop(0.35, 'rgba(24, 24, 26, 1)');
+      lowerGrad.addColorStop(0.75, 'rgba(34, 34, 36, 1)');
+      lowerGrad.addColorStop(1, 'rgba(19, 19, 21, 1)');
+      ctx.fillStyle = lowerGrad;
+      ctx.fill();
+      ctx.restore();
+
+      // -----------------------------------------------------------
+      // 5. REDUCED SLIGHT GLOW (RESTRICTED TO APEX, DOES NOT OVERLAP TEXT)
+      // User: "reduce the glow because it iverlaps the text , just a slight glow os wnough"
+      // -----------------------------------------------------------
+      // Slight tight apex bloom (tight radius, reduced opacity, hugs curve apex)
+      ctx.save();
+      ctx.translate(c1_midx, c1_midy);
+      ctx.rotate(-0.35);
+      ctx.scale(1.2, 0.55);
+      const slightApexGlow = ctx.createRadialGradient(0, 0, 1, 0, 0, W * 0.040);
+      slightApexGlow.addColorStop(0, `rgba(255, 245, 190, ${0.35 * intensity})`);
+      slightApexGlow.addColorStop(0.25, `rgba(245, 200, 70, ${0.16 * intensity})`);
+      slightApexGlow.addColorStop(0.55, `rgba(210, 150, 30, ${0.04 * intensity})`);
+      slightApexGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = slightApexGlow;
+      ctx.beginPath();
+      ctx.arc(0, 0, W * 0.040, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // Slight compact horizontal beam glow on C2
+      ctx.save();
+      ctx.translate(W * 0.665, H * 0.720);
+      ctx.scale(2.0, 0.40);
+      const slightBeamGlow = ctx.createRadialGradient(0, 0, 1, 0, 0, W * 0.035);
+      slightBeamGlow.addColorStop(0, `rgba(255, 238, 160, ${0.30 * intensity})`);
+      slightBeamGlow.addColorStop(0.30, `rgba(250, 195, 60, ${0.12 * intensity})`);
+      slightBeamGlow.addColorStop(0.65, `rgba(200, 140, 20, ${0.03 * intensity})`);
+      slightBeamGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = slightBeamGlow;
+      ctx.beginPath();
+      ctx.arc(0, 0, W * 0.035, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // -----------------------------------------------------------
+      // 6. C2 HORIZON GOLD RIM & RAZOR HAIRLINE
+      // -----------------------------------------------------------
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(c2_x0, c2_y0);
+      ctx.bezierCurveTo(c2_cp1x, c2_cp1y, c2_cp2x, c2_cp2y, c2_x1, c2_y1);
+      const c2Grad = ctx.createLinearGradient(W * 0.44, 0, W * 1.05, 0);
+      c2Grad.addColorStop(0, 'rgba(100, 70, 20, 0.05)');
+      c2Grad.addColorStop(0.12, 'rgba(215, 165, 55, 0.60)');
+      c2Grad.addColorStop(0.28, 'rgba(255, 225, 95, 0.95)');
+      c2Grad.addColorStop(0.40, 'rgba(255, 255, 220, 1.0)');
+      c2Grad.addColorStop(0.55, 'rgba(255, 220, 80, 0.90)');
+      c2Grad.addColorStop(0.72, 'rgba(215, 150, 40, 0.55)');
+      c2Grad.addColorStop(0.88, 'rgba(140, 90, 25, 0.22)');
+      c2Grad.addColorStop(1, 'rgba(80, 50, 10, 0.02)');
+      ctx.strokeStyle = c2Grad;
+      ctx.lineWidth = 2.0;
+      ctx.stroke();
+
+      // Razor-sharp bright hairline on C2
+      ctx.beginPath();
+      ctx.moveTo(W * 0.58, H * 0.728);
+      ctx.bezierCurveTo(W * 0.63, H * 0.724, W * 0.68, H * 0.718, W * 0.75, H * 0.710);
+      const c2Core = ctx.createLinearGradient(W * 0.58, 0, W * 0.75, 0);
+      c2Core.addColorStop(0, 'rgba(255, 255, 240, 0)');
+      c2Core.addColorStop(0.4, 'rgba(255, 255, 255, 0.95)');
+      c2Core.addColorStop(0.6, 'rgba(255, 255, 255, 0.95)');
+      c2Core.addColorStop(1, 'rgba(255, 255, 240, 0)');
+      ctx.strokeStyle = c2Core;
+      ctx.lineWidth = 1.1;
       ctx.stroke();
       ctx.restore();
 
-      // ------------------------------------------------------
-      // 3. SECONDARY BIFURCATED WING (Lower Right Ribbon Surface)
-      // Solid continuous satin ribbon band in high-contrast silver & charcoal
-      // ------------------------------------------------------
-      const secStartX = width * 0.58 + b3 * 0.3;
-      const secStartY = height * 0.61 + b2 * 0.5 - scrollShiftY * 0.42;
-
-      const secCP1X = width * 0.73;
-      const secCP1Y = height * 0.65 + b1 * 0.4 - scrollShiftY * 0.38;
-
-      const secCP2X = width * 0.88;
-      const secCP2Y = height * 0.66 + b4 * 0.4 - scrollShiftY * 0.34;
-
-      const secEndX = width * 1.06;
-      const secEndY = height * 0.73 - scrollShiftY * 0.3;
-
-      // Trailing inner edge of the lower ribbon
-      const secRibbonDepth = 76;
-      const secInnerCP1Y = secCP1Y + secRibbonDepth * 0.6;
-      const secInnerCP2Y = secCP2Y + secRibbonDepth * 0.9;
-      const secInnerEndY = secEndY + secRibbonDepth * 1.1;
-
+      // -----------------------------------------------------------
+      // 7. PRIMARY METALLIC GOLD LINE (Along C1)
+      // -----------------------------------------------------------
       ctx.save();
-      // Continuous solid ribbon fill in high-contrast charcoal & platinum tones
       ctx.beginPath();
-      ctx.moveTo(secStartX, secStartY);
-      ctx.bezierCurveTo(secCP1X, secCP1Y, secCP2X, secCP2Y, secEndX, secEndY);
-      ctx.lineTo(secEndX, secInnerEndY);
-      ctx.bezierCurveTo(secCP2X, secInnerCP2Y, secCP1X, secInnerCP1Y, secStartX - 10, secStartY + secRibbonDepth * 0.2);
-      ctx.closePath();
+      ctx.moveTo(c1_x0, c1_y0);
+      ctx.bezierCurveTo(c1_cp1x, c1_cp1y, c1_cp2x, c1_cp2y, c1_midx, c1_midy);
+      ctx.bezierCurveTo(c1_cp3x, c1_cp3y, c1_cp4x, c1_cp4y, c1_x1, c1_y1);
 
-      const secFill = ctx.createLinearGradient(secStartX, secStartY, secEndX, secInnerEndY);
-      secFill.addColorStop(0, 'rgba(205, 212, 226, 0.68)');
-      secFill.addColorStop(0.2, 'rgba(145, 150, 165, 0.52)');
-      secFill.addColorStop(0.55, 'rgba(70, 75, 85, 0.35)');
-      secFill.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = secFill;
-      ctx.fill();
-
-      // Satin micro-striation folds in rich silver-grey shades
-      const secLayers = 18;
-      for (let i = 1; i < secLayers; i++) {
-        const u = i / secLayers;
-        const off = u * secRibbonDepth;
-
-        ctx.beginPath();
-        ctx.moveTo(secStartX - u * 10, secStartY + off * 0.2);
-        ctx.bezierCurveTo(
-          secCP1X, secCP1Y + off * 0.6,
-          secCP2X, secCP2Y + off * 0.9,
-          secEndX, secEndY + off * 1.1
-        );
-
-        const a = Math.pow(1 - u, 1.25) * 0.82 * intensity;
-        const g = ctx.createLinearGradient(secStartX, secStartY, secEndX, secEndY);
-        g.addColorStop(0, `rgba(140, 145, 160, ${a * 0.3})`);
-        g.addColorStop(0.35, `rgba(215, 222, 235, ${a * 0.95})`);
-        g.addColorStop(0.85, `rgba(165, 170, 185, ${a * 0.55})`);
-        g.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.strokeStyle = g;
-        ctx.lineWidth = 1.4;
-        ctx.stroke();
-      }
-
-      // Crisp crest rim in sleek metallic platinum-grey
-      ctx.beginPath();
-      ctx.moveTo(secStartX, secStartY);
-      ctx.bezierCurveTo(secCP1X, secCP1Y, secCP2X, secCP2Y, secEndX, secEndY);
-      ctx.strokeStyle = 'rgba(240, 245, 255, 0.96)';
+      const c1Gold = ctx.createLinearGradient(W * 0.11, H * 0.10, W * 0.90, H * 1.0);
+      c1Gold.addColorStop(0, 'rgba(200, 175, 110, 0.15)');
+      c1Gold.addColorStop(0.18, 'rgba(225, 185, 85, 0.55)');
+      c1Gold.addColorStop(0.35, 'rgba(255, 225, 95, 0.95)');
+      c1Gold.addColorStop(0.44, 'rgba(255, 250, 195, 1.0)');
+      c1Gold.addColorStop(0.53, 'rgba(255, 215, 80, 0.95)');
+      c1Gold.addColorStop(0.72, 'rgba(215, 155, 45, 0.60)');
+      c1Gold.addColorStop(0.90, 'rgba(140, 95, 25, 0.22)');
+      c1Gold.addColorStop(1, 'rgba(80, 50, 10, 0.04)');
+      ctx.strokeStyle = c1Gold;
       ctx.lineWidth = 2.2;
-      ctx.shadowBlur = 0;
+      ctx.stroke();
+
+      // Fine core highlight at gold apex
+      ctx.beginPath();
+      ctx.moveTo(W * 0.40, H * 0.67);
+      ctx.bezierCurveTo(W * 0.42, H * 0.69, c1_midx, c1_midy, W * 0.48, H * 0.75);
+      const goldApexCore = ctx.createLinearGradient(W * 0.40, H * 0.67, W * 0.48, H * 0.75);
+      goldApexCore.addColorStop(0, 'rgba(255, 255, 220, 0)');
+      goldApexCore.addColorStop(0.5, 'rgba(255, 255, 250, 0.90)');
+      goldApexCore.addColorStop(1, 'rgba(255, 255, 220, 0)');
+      ctx.strokeStyle = goldApexCore;
+      ctx.lineWidth = 1.0;
       ctx.stroke();
       ctx.restore();
 
-      // ------------------------------------------------------
-      // 4. MASTER SCULPTURAL SILK RIBBON (Hero Feature)
-      // Solid continuous 3D satin ribbon surface in HIGH-CONTRAST SILVER & CHARCOAL
-      // ------------------------------------------------------
-      // Outer crest spine curve (leading edge)
-      const pStartX = width * 0.77 + b2 * 0.35;
-      const pStartY = height * 0.07 + b1 * 0.45 - scrollShiftY * 0.18;
+      // -----------------------------------------------------------
+      // 8. CRISP SILVER LINE ALONG THE GOLD LINE (NO GLOW)
+      // User: "and also add a silver line along the gold line but no glow should be present"
+      // -----------------------------------------------------------
+      const getBezierPointAndNormal = (
+        p0: { x: number; y: number },
+        p1: { x: number; y: number },
+        p2: { x: number; y: number },
+        p3: { x: number; y: number },
+        t: number
+      ) => {
+        const mt = 1 - t;
+        const mt2 = mt * mt;
+        const t2 = t * t;
+        const x = mt2 * mt * p0.x + 3 * mt2 * t * p1.x + 3 * mt * t2 * p2.x + t2 * t * p3.x;
+        const y = mt2 * mt * p0.y + 3 * mt2 * t * p1.y + 3 * mt * t2 * p2.y + t2 * t * p3.y;
 
-      const pCP1X = width * 0.93 + b3 * 0.45;
-      const pCP1Y = height * 0.31 + b4 * 0.5 - scrollShiftY * 0.3;
+        const dx = 3 * mt2 * (p1.x - p0.x) + 6 * mt * t * (p2.x - p1.x) + 3 * t2 * (p3.x - p2.x);
+        const dy = 3 * mt2 * (p1.y - p0.y) + 6 * mt * t * (p2.y - p1.y) + 3 * t2 * (p3.y - p2.y);
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
 
-      const pCP2X = width * 0.67 + b1 * 0.55;
-      const pCP2Y = height * 0.53 + b2 * 0.5 - scrollShiftY * 0.42;
+        const nx = -dy / len;
+        const ny = dx / len;
 
-      const pCP3X = width * 0.43 + b4 * 0.5;
-      const pCP3Y = height * 0.73 + b3 * 0.5 - scrollShiftY * 0.54;
+        return { x, y, nx, ny };
+      };
 
-      const pEndX = width * 0.31 + b1 * 0.4;
-      const pEndY = height * 1.08 - scrollShiftY * 0.66;
-
-      ctx.save();
-
-      // 1. Broad continuous satin ribbon gradient fill (rich silver & charcoal)
-      const ribbonWidth = width * 0.26;
-      ctx.beginPath();
-      ctx.moveTo(pStartX, pStartY);
-      ctx.bezierCurveTo(pCP1X, pCP1Y, pCP2X, pCP2Y, pCP2X + (pCP3X - pCP2X) * 0.5, (pCP2Y + pCP3Y) * 0.5);
-      ctx.bezierCurveTo(pCP3X, pCP3Y, pEndX, pEndY - height * 0.05, pEndX, pEndY);
-
-      // Connect to inner trailing edge of ribbon and trace back
-      ctx.lineTo(pEndX - ribbonWidth * 0.5, pEndY);
-      ctx.bezierCurveTo(
-        pCP3X - ribbonWidth * 0.6, pCP3Y - ribbonWidth * 0.1,
-        pCP2X - ribbonWidth * 0.9, pCP2Y - ribbonWidth * 0.2,
-        pCP1X - ribbonWidth * 0.8, pCP1Y - ribbonWidth * 0.3
-      );
-      ctx.bezierCurveTo(
-        pCP1X - ribbonWidth * 0.7, pCP1Y - ribbonWidth * 0.4,
-        pStartX - ribbonWidth * 0.5, pStartY + ribbonWidth * 0.2,
-        pStartX - ribbonWidth * 0.4, pStartY
-      );
-      ctx.closePath();
-
-      const ribbonFill = ctx.createLinearGradient(pCP1X, pCP1Y, pCP2X - ribbonWidth * 0.8, pCP2Y);
-      ribbonFill.addColorStop(0, 'rgba(215, 222, 235, 0.72)');
-      ribbonFill.addColorStop(0.2, 'rgba(155, 160, 175, 0.58)');
-      ribbonFill.addColorStop(0.55, 'rgba(80, 85, 96, 0.38)');
-      ribbonFill.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = ribbonFill;
-      ctx.fill();
-
-      // 2. High-density, smoothly blended satin striations in high-contrast silver/grey shades
-      const striations = 38;
-      for (let i = striations - 1; i >= 1; i--) {
-        const u = i / striations; // 0 near crest, 1 deep inside
-        const fanning = Math.pow(u, 1.25);
-
-        const sOffX = -fanning * (ribbonWidth * 0.65);
-        const sOffY = fanning * (height * 0.08);
-
-        const cp1OffX = -fanning * (ribbonWidth * 0.95);
-        const cp1OffY = fanning * (height * 0.12);
-
-        const cp2OffX = -fanning * (ribbonWidth * 0.92);
-        const cp2OffY = fanning * (height * 0.1);
-
-        const cp3OffX = -fanning * (ribbonWidth * 0.6);
-        const cp3OffY = fanning * (height * 0.05);
-
-        const endOffX = -fanning * (ribbonWidth * 0.4);
-        const endOffY = fanning * (height * 0.02);
+      const drawOffsetSilverCurve = (offsetDist: number) => {
+        const steps = 140;
+        ctx.save();
+        // Strictly NO GLOW or blur
+        ctx.filter = 'none';
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = 'transparent';
 
         ctx.beginPath();
-        ctx.moveTo(pStartX + sOffX, pStartY + sOffY);
-        ctx.bezierCurveTo(
-          pCP1X + cp1OffX, pCP1Y + cp1OffY,
-          pCP2X + cp2OffX, pCP2Y + cp2OffY,
-          pCP2X + (pCP3X - pCP2X) * 0.5 + (cp2OffX + cp3OffX) * 0.5,
-          (pCP2Y + pCP3Y) * 0.5 + (cp2OffY + cp3OffY) * 0.5
-        );
-        ctx.bezierCurveTo(
-          pCP3X + cp3OffX, pCP3Y + cp3OffY,
-          pEndX + endOffX * 0.8, pEndY - height * 0.05 + endOffY,
-          pEndX + endOffX, pEndY + endOffY
-        );
+        const seg1_p0 = { x: c1_x0, y: c1_y0 };
+        const seg1_p1 = { x: c1_cp1x, y: c1_cp1y };
+        const seg1_p2 = { x: c1_cp2x, y: c1_cp2y };
+        const seg1_p3 = { x: c1_midx, y: c1_midy };
 
-        // High-contrast silver & slate gradient decay
-        const a = Math.pow(1 - u, 1.25) * 0.88 * intensity;
-        const grad = ctx.createLinearGradient(
-          pStartX + sOffX, pStartY + sOffY,
-          pEndX + endOffX, pEndY + endOffY
-        );
-        grad.addColorStop(0, `rgba(145, 150, 165, ${a * 0.3})`);
-        grad.addColorStop(0.25, `rgba(220, 226, 238, ${a * 0.95})`);
-        grad.addColorStop(0.55, `rgba(240, 246, 255, ${a * 1.0})`);
-        grad.addColorStop(0.85, `rgba(165, 172, 186, ${a * 0.6})`);
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          const pt = getBezierPointAndNormal(seg1_p0, seg1_p1, seg1_p2, seg1_p3, t);
+          const px = pt.x + pt.nx * offsetDist;
+          const py = pt.y + pt.ny * offsetDist;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
 
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.6;
+        const seg2_p0 = { x: c1_midx, y: c1_midy };
+        const seg2_p1 = { x: c1_cp3x, y: c1_cp3y };
+        const seg2_p2 = { x: c1_cp4x, y: c1_cp4y };
+        const seg2_p3 = { x: c1_x1, y: c1_y1 };
+
+        for (let i = 1; i <= steps; i++) {
+          const t = i / steps;
+          const pt = getBezierPointAndNormal(seg2_p0, seg2_p1, seg2_p2, seg2_p3, t);
+          const px = pt.x + pt.nx * offsetDist;
+          const py = pt.y + pt.ny * offsetDist;
+          ctx.lineTo(px, py);
+        }
+
+        // Razor-sharp metallic chrome / silver gradient
+        const silverGrad = ctx.createLinearGradient(W * 0.11, H * 0.10, W * 0.90, H * 1.0);
+        silverGrad.addColorStop(0, 'rgba(165, 180, 200, 0.12)');
+        silverGrad.addColorStop(0.18, 'rgba(195, 210, 225, 0.50)');
+        silverGrad.addColorStop(0.35, 'rgba(235, 245, 255, 0.88)');
+        silverGrad.addColorStop(0.44, 'rgba(255, 255, 255, 0.98)');
+        silverGrad.addColorStop(0.53, 'rgba(225, 238, 252, 0.88)');
+        silverGrad.addColorStop(0.72, 'rgba(185, 200, 218, 0.55)');
+        silverGrad.addColorStop(0.90, 'rgba(150, 165, 185, 0.20)');
+        silverGrad.addColorStop(1, 'rgba(120, 135, 150, 0.04)');
+
+        ctx.strokeStyle = silverGrad;
+        ctx.lineWidth = 1.4; // Crisp, razor-sharp metallic line
         ctx.stroke();
-      }
+        ctx.restore();
+      };
 
-      // 3. Crisp crest rim along leading edge in radiant metallic silver
-      ctx.beginPath();
-      ctx.moveTo(pStartX, pStartY);
-      ctx.bezierCurveTo(pCP1X, pCP1Y, pCP2X, pCP2Y, pCP2X + (pCP3X - pCP2X) * 0.5, (pCP2Y + pCP3Y) * 0.5);
-      ctx.bezierCurveTo(pCP3X, pCP3Y, pEndX, pEndY - height * 0.05, pEndX, pEndY);
+      // Draw parallel silver line alongside the gold line with zero glow
+      drawOffsetSilverCurve(-3.5);
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.98)';
-      ctx.lineWidth = 2.6;
-      ctx.shadowBlur = 0;
-      ctx.stroke();
-
-      ctx.restore();
-
-      // ------------------------------------------------------
-      // 5. CLEAN PERIPHERAL VIGNETTE
-      // ------------------------------------------------------
-      const vignette = ctx.createRadialGradient(
-        width * 0.5, height * 0.5, width * 0.38,
-        width * 0.5, height * 0.5, width * 0.8
-      );
+      // -----------------------------------------------------------
+      // 9. PERIPHERAL CORNER VIGNETTE
+      // -----------------------------------------------------------
+      const vignette = ctx.createRadialGradient(W * 0.5, H * 0.5, W * 0.38, W * 0.5, H * 0.5, W * 0.78);
       vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      vignette.addColorStop(1, 'rgba(0, 0, 0, 0.55)');
+      vignette.addColorStop(1, 'rgba(0, 0, 0, 0.50)');
       ctx.fillStyle = vignette;
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillRect(0, 0, W, H);
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    draw();
 
+    window.addEventListener('resize', draw);
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('scroll', updateScroll);
-      window.removeEventListener('resize', handleResize);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('resize', draw);
     };
-  }, [isClient, shouldReduceMotion, intensity]);
+  }, [intensity]);
 
   return (
     <div
-      className={`fixed inset-0 pointer-events-none select-none z-0 overflow-hidden bg-black ${className}`}
+      className={`fixed inset-0 pointer-events-none select-none z-0 overflow-hidden bg-[#08080A] ${className}`}
       aria-hidden="true"
     >
       <canvas

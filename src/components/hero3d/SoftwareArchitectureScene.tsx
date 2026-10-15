@@ -11,12 +11,14 @@ interface SoftwareArchitectureSceneProps {
 
 export const SoftwareArchitectureScene: React.FC<SoftwareArchitectureSceneProps> = ({ className = '' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hasWebGl, setHasWebGl] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
 
     // Check WebGL availability
     try {
@@ -44,6 +46,7 @@ export const SoftwareArchitectureScene: React.FC<SoftwareArchitectureSceneProps>
     camera.position.set(0, 0.8, 7.2);
 
     const renderer = new THREE.WebGLRenderer({
+      canvas,
       alpha: true,
       antialias: true,
       powerPreference: 'high-performance',
@@ -52,7 +55,6 @@ export const SoftwareArchitectureScene: React.FC<SoftwareArchitectureSceneProps>
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
-    container.appendChild(renderer.domElement);
 
     // Root Assembly Group
     const rootGroup = new THREE.Group();
@@ -581,9 +583,6 @@ export const SoftwareArchitectureScene: React.FC<SoftwareArchitectureSceneProps>
         }
       });
 
-      if (renderer.domElement && renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement);
-      }
       renderer.dispose();
     };
   }, []);
@@ -602,6 +601,9 @@ export const SoftwareArchitectureScene: React.FC<SoftwareArchitectureSceneProps>
     >
       {/* Subtle background ambient radial bloom */}
       <div className="absolute inset-0 bg-radial-gradient from-[#c9a84c]/10 via-transparent to-transparent pointer-events-none" />
+
+      {/* WebGL canvas — owned by React, no manual DOM append/remove */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" aria-hidden="true" />
 
       {/* Floating status pill for authentic enterprise polish */}
       <div className="absolute bottom-4 right-4 z-10 hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141414]/90 backdrop-blur-md border border-[#262626] text-xs font-mono text-[#aaaaaa] pointer-events-none shadow-xl">

@@ -8,6 +8,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
+  outlineAnimation?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -17,20 +18,31 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   iconPosition = 'right',
   fullWidth = false,
+  outlineAnimation = true,
   className = '',
   disabled,
   ...props
 }) => {
-  const baseStyles =
-    'inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] disabled:opacity-50 disabled:pointer-events-none select-none active:scale-[0.98] whitespace-nowrap';
+  const baseStyles = `inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-colors duration-200 focus:outline-none ${
+    outlineAnimation
+      ? ''
+      : 'focus-visible:ring-2 focus-visible:ring-[#c9a84c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] transition-all active:scale-[0.98]'
+  }`;
 
   const sizeStyles = {
-    sm: 'h-9 px-3.5 text-xs gap-1.5',
-    md: 'h-11 px-5 text-xs sm:text-sm gap-2',
-    lg: 'h-13 px-7 text-sm sm:text-base gap-2.5',
+    sm: 'h-8 px-3 text-[11px] gap-1',
+    md: 'h-10 px-4 text-xs sm:text-[13px] gap-1.5',
+    lg: 'h-11 px-5 text-sm gap-2',
   };
 
-  const variantStyles = {
+  const outlineVariantStyles = {
+    primary: 'text-white',
+    secondary: 'text-white',
+    outline: 'text-[#cccccc]',
+    ghost: 'text-[#aaaaaa]',
+  };
+
+  const legacyVariantStyles = {
     primary:
       'bg-[#c9a84c] text-black hover:bg-[#d8b75b] shadow-lg shadow-[#c9a84c]/20 hover:shadow-[#c9a84c]/35',
     secondary:
@@ -42,16 +54,19 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const widthStyle = fullWidth ? 'w-full' : '';
+  const interactionStyles = outlineAnimation
+    ? `vpd-outline-cta ${outlineVariantStyles[variant]}`
+    : legacyVariantStyles[variant];
 
   return (
     <button
-      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${widthStyle} ${className}`}
+      className={`${baseStyles} ${sizeStyles[size]} ${interactionStyles} ${widthStyle} ${className}`}
       disabled={disabled}
       {...props}
     >
-      {icon && iconPosition === 'left' && <span className="shrink-0">{icon}</span>}
+      {icon && iconPosition === 'left' && <span className="vpd-cta-icon vpd-cta-icon-left shrink-0">{icon}</span>}
       <span>{children}</span>
-      {icon && iconPosition === 'right' && <span className="shrink-0">{icon}</span>}
+      {icon && iconPosition === 'right' && <span className="vpd-cta-icon vpd-cta-icon-right shrink-0">{icon}</span>}
     </button>
   );
 };

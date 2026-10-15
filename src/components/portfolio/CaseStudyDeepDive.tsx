@@ -31,9 +31,9 @@ import {
   Linkedin,
   Twitter,
   Mail,
-  MessageSquare,
   Printer,
 } from 'lucide-react';
+import { WhatsAppIcon } from '../ui/WhatsAppIcon';
 
 interface CaseStudyDeepDiveProps {
   project: Project;
@@ -91,7 +91,7 @@ export const CaseStudyDeepDive: React.FC<CaseStudyDeepDiveProps> = ({
     },
     {
       name: 'WhatsApp',
-      icon: MessageSquare,
+      icon: WhatsAppIcon,
       color: 'bg-[#22c55e]/15 text-[#22c55e]',
       href: `https://api.whatsapp.com/send?text=${encodeURIComponent(
         `Review this technical case study: "${project.title}" by VPD Technologies: ${shareUrl}`

@@ -23,7 +23,6 @@ import {
   Check,
   Linkedin,
   Twitter,
-  MessageSquare,
   Code2,
   GitBranch,
   CheckCircle2,
@@ -34,6 +33,7 @@ import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 import { CaseStudyDeepDive } from '../components/portfolio/CaseStudyDeepDive';
+import { WhatsAppIcon } from '../components/ui/WhatsAppIcon';
 
 interface PortfolioPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -234,8 +234,8 @@ const ProjectCardQuickShare: React.FC<{ project: Project }> = ({ project }) => {
               onClick={() => setIsOpen(false)}
               className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
             >
-              <div className="w-5 h-5 rounded bg-[#22c55e]/15 text-[#22c55e] flex items-center justify-center shrink-0">
-                <MessageSquare className="w-3 h-3" />
+              <div className="w-5 h-5 rounded bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0">
+                <WhatsAppIcon size={12} className="w-3 h-3 shrink-0" />
               </div>
               <span>WhatsApp</span>
             </a>

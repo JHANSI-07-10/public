@@ -68,9 +68,7 @@ export const OrbitRing: React.FC<OrbitRingProps> = ({
   // SVG Unique IDs
   const uniqueId = useId();
   const goldGradId = `orbit-gold-grad-${uniqueId}`;
-  const coreHaloId = `orbit-core-halo-${uniqueId}`;
   const particleFilterId = `orbit-particle-filter-${uniqueId}`;
-  const sheenGradId = `orbit-sheen-grad-${uniqueId}`;
 
   // Canvas Center in 560x560 coordinate space
   const CENTER_X = 280;
@@ -185,9 +183,6 @@ export const OrbitRing: React.FC<OrbitRingProps> = ({
       className={`relative w-full max-w-[450px] sm:max-w-[480px] lg:max-w-[510px] xl:max-w-[540px] aspect-square select-none ${className}`}
       aria-label="VPD Technologies Orbit Ring - Official Logo Core and System Lifecycle"
     >
-      {/* Ambient background gold glow & subtle radial warmth */}
-      <div className="absolute inset-0 pointer-events-none rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.10),transparent_72%)]" />
-
       {/* Main SVG Orbit Canvas with 560x560 coordinate space */}
       <svg
         viewBox="0 0 560 560"
@@ -201,24 +196,6 @@ export const OrbitRing: React.FC<OrbitRingProps> = ({
             <stop offset="100%" stopColor="#9C781A" />
           </linearGradient>
 
-          {/* Restrained Gold Halo for Center Official Logo */}
-          <radialGradient id={coreHaloId} cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#DFC067" stopOpacity="0.38" />
-            <stop offset="45%" stopColor="#D4AF37" stopOpacity="0.16" />
-            <stop offset="80%" stopColor="#D4AF37" stopOpacity="0.04" />
-            <stop offset="100%" stopColor="#0A0A0A" stopOpacity="0" />
-          </radialGradient>
-
-          {/* Subtle light sweep across logo */}
-          <linearGradient id={sheenGradId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="45%" stopColor="transparent" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0.22)" />
-            <stop offset="55%" stopColor="rgba(223,192,103,0.28)" />
-            <stop offset="60%" stopColor="transparent" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-
           {/* Glow filter for photon nodes & hover highlights */}
           <filter id={particleFilterId} x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
@@ -228,15 +205,6 @@ export const OrbitRing: React.FC<OrbitRingProps> = ({
             </feMerge>
           </filter>
         </defs>
-
-        {/* Ambient Halo behind stationary center logo */}
-        <circle
-          cx={CENTER_X}
-          cy={CENTER_Y}
-          r="105"
-          fill={`url(#${coreHaloId})`}
-          className="pointer-events-none"
-        />
 
         {/* ========================================================
             ORBIT PATHS: 3 Sophisticated, Elliptical Orbits
@@ -423,19 +391,6 @@ export const OrbitRing: React.FC<OrbitRingProps> = ({
           tabIndex={0}
           aria-label="VPD Technologies Central Brand Anchor"
         >
-          {/* Gentle, Slow Glow Pulse Ring around logo (3.6s) */}
-          <circle
-            cx={CENTER_X}
-            cy={CENTER_Y}
-            r="44"
-            fill="none"
-            stroke="#D4AF37"
-            strokeWidth="1.2"
-            strokeOpacity="0.32"
-            className="animate-ping pointer-events-none origin-center"
-            style={{ animationDuration: '3.6s' }}
-          />
-
           {/* Near-Black Circular Area for High Contrast */}
           <circle
             cx={CENTER_X}
@@ -455,15 +410,6 @@ export const OrbitRing: React.FC<OrbitRingProps> = ({
             fill="#0D0D0D"
             stroke="#2A2A2A"
             strokeWidth="1"
-          />
-
-          {/* Subtle slow moving light sweep overlay */}
-          <circle
-            cx={CENTER_X}
-            cy={CENTER_Y}
-            r="34"
-            fill={`url(#${sheenGradId})`}
-            className="pointer-events-none"
           />
 
           {/* EXACT OFFICIAL VPD TECHNOLOGIES LOGO ASSET (/logo.webp)

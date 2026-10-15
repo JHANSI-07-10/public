@@ -7,18 +7,14 @@ import {
   Globe, 
   Layers, 
   Code2, 
-  ArrowRight, 
-  CheckCircle2, 
-  MessageSquare,
-  Calculator,
+  ArrowRight,
+  Activity,
+  Cpu,
   Server,
   Rocket,
-  HelpCircle,
-  Shield,
-  Zap,
-  Activity,
-  Cpu
+  HelpCircle
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/ui/WhatsAppIcon';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
@@ -323,7 +319,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 rel="noreferrer"
                 className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm font-semibold text-white bg-[#141414] hover:bg-[#1a1a1a] border border-[#282828] hover:border-[#22c55e]/50 rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e]"
               >
-                <MessageSquare className="w-4 h-4 text-[#22c55e]" />
+                <WhatsAppIcon size={18} className="w-4.5 h-4.5 shrink-0" />
                 <span>Chat with Architect on WhatsApp</span>
               </a>
             </div>

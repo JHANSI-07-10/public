@@ -6,9 +6,9 @@ import { motion, useReducedMotion } from 'motion/react';
 import { KEY_METRICS, COMPANY_DATA } from '../data/content';
 import { AnimatedButton } from './motion/AnimatedButton';
 import { motionTokens } from './motion/motionTokens';
-import { HeroVideoBackground } from './ui/HeroVideoBackground';
 import { CountingNumber } from './ui/counting-number';
 import { WordMaskReveal } from './motion/WordMaskReveal';
+import { HeroVideoBackground } from './ui/HeroVideoBackground';
 
 interface HeroProps {
   onOpenConsultation: () => void;
@@ -24,8 +24,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   });
 
   return (
-    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-18 overflow-hidden bg-transparent">
-      {/* Ambient Video Background — blended into the dark bg: vivid on the right, scrimmed on the left for text clarity */}
+    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-18 overflow-hidden bg-[#060606]">
+      {/* Background Video with seamless feathered bottom blend */}
       <HeroVideoBackground />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -91,7 +91,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             <button
               type="button"
               onClick={onOpenConsultation}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-xs font-bold tracking-wide text-white transition-colors hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] sm:text-sm cursor-pointer"
+              className="vpd-outline-cta inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-xs font-bold tracking-wide text-white transition-colors hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] focus:outline-none sm:text-sm cursor-pointer"
             >
               <span>Contact Us</span>
               <ChevronRight className="w-4 h-4 text-[#aaaaaa]" />

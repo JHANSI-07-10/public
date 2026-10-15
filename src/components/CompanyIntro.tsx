@@ -32,10 +32,10 @@ export const CompanyIntro: React.FC = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 sm:py-28 lg:py-32 bg-[#0c0c0c]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 overflow-hidden"
+      className="relative py-24 sm:py-28 lg:py-32 border-t border-[#1f1f1f]/50 overflow-hidden"
       aria-label="Company Introduction & Leadership"
     >
-      {/* Subtle Ambient Radial Gold Lighting */}
+      {/* Pure coded ambient gold lighting */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         <div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none opacity-20"

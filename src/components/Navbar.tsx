@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, Phone, MessageSquare } from 'lucide-react';
+import { Menu, X, ArrowRight, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
+import { WhatsAppIcon } from './ui/WhatsAppIcon';
+import { AnimatedVPDLogo } from './AnimatedVPDLogo';
 import { Button } from './ui/Button';
 import { AnimatedButton } from './motion/AnimatedButton';
 import { motionTokens } from './motion/motionTokens';
@@ -90,21 +92,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl p-1"
             aria-label="VPD Technologies - Home"
           >
-            <div className={`rounded-xl overflow-hidden bg-[#161616] border border-[#2a2a2a] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-all duration-300 ${isScrolled ? 'w-9 h-9' : 'w-10 h-10'}`}>
-              <img
-                src="/logo.webp"
-                alt="VPD Technologies"
-                className="w-full h-full object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/favicon.svg';
-                }}
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-black tracking-tight text-white leading-tight flex items-center gap-1">
-                <span>VPD</span>
-                <span className="text-[#c9a84c]">Technologies</span>
-              </span>
+            <div className={`rounded-xl overflow-hidden bg-[#161616] border border-[#2a2a2a] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-all duration-300 ${isScrolled ? 'w-11 h-11' : 'w-12 h-12'}`}>
+              <AnimatedVPDLogo />
             </div>
           </Link>
 
@@ -229,7 +218,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                   rel="noreferrer"
                   className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#22c55e]/40 transition-colors"
                 >
-                  <MessageSquare className="w-3.5 h-3.5 text-[#22c55e]" />
+                  <WhatsAppIcon size={16} className="w-4 h-4 shrink-0" />
                   <span>WhatsApp</span>
                 </a>
               </div>

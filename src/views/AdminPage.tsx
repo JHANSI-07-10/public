@@ -108,6 +108,7 @@ export const AdminPage: React.FC = () => {
               variant="primary"
               size="md"
               fullWidth
+              outlineAnimation={false}
               className="mt-2"
             >
               {isLoading ? 'Verifying Credentials...' : 'Authenticate Operator'}

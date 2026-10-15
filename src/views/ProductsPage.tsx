@@ -100,7 +100,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 </Link>
                 <Link
                   href="/services"
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-5 text-sm font-bold text-white hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] transition-colors"
+                  className="vpd-outline-cta inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-5 text-sm font-bold text-white hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] transition-colors"
                 >
                   <span>Explore Custom Engineering Services</span>
                   <ChevronRight className="w-4 h-4 text-[#aaaaaa]" />

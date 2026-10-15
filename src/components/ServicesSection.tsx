@@ -1,47 +1,27 @@
 'use client';
 
-import React from 'react';
-import { Globe, Layers, Code2, ArrowRight, Check, Server, Smartphone, Cpu, Cloud, Palette } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { CORE_SERVICES, Service } from '../data/content';
 import { SectionHeader } from './ui/SectionHeader';
 import { Reveal } from './motion/Reveal';
-import { StaggerContainer, StaggerItem } from './motion/StaggerContainer';
-import { InteractiveCard } from './motion/InteractiveCard';
+import { StackedServiceDeck } from './services/StackedServiceDeck';
 import { AnimatedButton } from './motion/AnimatedButton';
-import { Parallax } from './motion/Parallax';
 
 interface ServicesSectionProps {
   onSelectService: (service: Service) => void;
 }
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectService }) => {
-  const getIcon = (id: string) => {
-    switch (id) {
-      case 'custom-software':
-        return Code2;
-      case 'web-dev':
-        return Globe;
-      case 'enterprise-software':
-        return Server;
-      case 'mobile-apps':
-        return Smartphone;
-      case 'ai-ml':
-        return Cpu;
-      case 'cloud-devops':
-        return Cloud;
-      case 'ui-ux-engineering':
-        return Palette;
-      default:
-        return Layers;
-    }
-  };
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeService = CORE_SERVICES[activeIndex];
 
   return (
     <section id="services" className="py-24 bg-[#0a0a0a]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <Reveal>
-          <div className="mb-16 flex w-full justify-center text-center">
+          <div className="mb-14 sm:mb-16 flex w-full justify-center text-center">
             <SectionHeader
               eyebrow="Core Technical Offerings"
               title="Software Engineering Built for Uncompromising Scale."
@@ -52,84 +32,38 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
           </div>
         </Reveal>
 
-        {/* 3-Column Service Card Grid */}
-        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {CORE_SERVICES.map((service, idx) => {
-            const Icon = getIcon(service.id);
-            return (
-              <StaggerItem key={service.id}>
-                <InteractiveCard
-                  variant="card"
-                  padding="lg"
-                  className="flex flex-col justify-between group h-full"
-                >
-                  <div>
-                    {/* Top Bar: Icon & Category */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                        <Icon className="w-6 h-6 text-[#c9a84c]" />
-                      </div>
-                      <span className="text-xs font-mono font-medium text-[#c9a84c] tracking-wide">
-                        {service.category}
-                      </span>
-                    </div>
+        {/* Stacked-card service deck (scd-29 hover reveal) */}
+        <Reveal delay={0.1}>
+          <StackedServiceDeck
+            services={CORE_SERVICES}
+            activeIndex={activeIndex}
+            onActiveChange={setActiveIndex}
+          />
+        </Reveal>
 
-                    {/* Title & Description */}
-                    <h3 className="text-2xl font-bold text-white mb-3">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-[#aaaaaa] leading-relaxed mb-6">
-                      {service.description}
-                    </p>
+        <Reveal delay={0.15}>
+          <p className="mt-6 text-center text-[11px] font-mono tracking-wider text-[#666666] uppercase select-none">
+            The deck flows continuously — hover a card to pause and read it
+          </p>
 
-                    {/* Architecture Specs Box — subtle scroll parallax, alternating depth per card */}
-                    <Parallax distance={idx % 2 === 0 ? 10 : -10}>
-                      <dl className="mb-6 space-y-3 rounded-xl border border-[#222222] bg-[#0e0e0e] p-4">
-                        <div>
-                          <dt className="text-xs text-[#777777]">Technology stack</dt>
-                          <dd className="mt-1 text-sm font-mono font-semibold text-white">{service.stack}</dd>
-                        </div>
-                        <div>
-                          <dt className="text-xs text-[#777777]">Latency benchmark</dt>
-                          <dd className="mt-1 text-sm font-mono font-semibold text-[#c9a84c]">{service.latency}</dd>
-                        </div>
-                        <div>
-                          <dt className="text-xs text-[#777777]">Security standard</dt>
-                          <dd className="mt-1 text-sm font-mono font-semibold text-white">{service.security}</dd>
-                        </div>
-                      </dl>
-                    </Parallax>
-
-                    {/* Benefits Checklist */}
-                    <div className="space-y-2.5 mb-8">
-                      <div className="text-xs font-bold text-[#777777] uppercase tracking-wider mb-2">
-                        Key Deliverables
-                      </div>
-                      {service.benefits.map((benefit, bIdx) => (
-                        <div key={bIdx} className="flex items-start gap-2.5 text-xs text-[#aaaaaa]">
-                          <Check className="w-4 h-4 text-[#c9a84c] shrink-0 mt-0.5" />
-                          <span>{benefit}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Card Action */}
-                  <AnimatedButton
-                    onClick={() => onSelectService(service)}
-                    variant="secondary"
-                    size="md"
-                    fullWidth
-                    icon={<ArrowRight className="w-3.5 h-3.5" />}
-                  >
-                    Inquire for {service.title}
-                  </AnimatedButton>
-                </InteractiveCard>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+          {/* Section-level consultation CTA — opens the modal pre-selected to the active service */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <p className="text-sm text-[#A1A1AA]">
+              Discussing <span className="font-semibold text-white">{activeService.title}</span>?
+            </p>
+            <AnimatedButton
+              onClick={() => onSelectService(activeService)}
+              variant="primary"
+              size="md"
+              icon={<ArrowRight className="w-3.5 h-3.5" />}
+            >
+              Discuss Your Project
+            </AnimatedButton>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 };
+
+export default ServicesSection;

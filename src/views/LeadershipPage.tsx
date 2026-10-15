@@ -248,7 +248,7 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
               </Link>
               <a
                 href={`mailto:${COMPANY_DATA.email}`}
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-sm font-bold text-white hover:border-[#c9a84c]/50 hover:bg-[#1f1f1f] transition-colors"
+                className="vpd-outline-cta inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-sm font-bold text-white hover:border-[#c9a84c]/50 hover:bg-[#1f1f1f] transition-colors"
               >
                 <Mail className="w-4 h-4 text-[#c9a84c]" />
                 <span>{COMPANY_DATA.email}</span>

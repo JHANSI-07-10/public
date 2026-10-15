@@ -1,0 +1,250 @@
+/* StackedServiceDeck — scd-29 adapted.
+ * Phase 1: all cards merged in a pile at the visible centre, then deployed one
+ * by one into a horizontal line. Phase 2: the line flows continuously; each
+ * card shows only its heading while moving and expands open (revealing two
+ * short lines) when hovered, focused or tapped.
+ * All selectors are scoped to this CSS module.
+ */
+
+.viewport {
+  --card-w: clamp(280px, 24vw, 340px);
+  --card-h: clamp(185px, 14vw, 210px);
+  --deck-gap: clamp(14px, 1.5vw, 20px);
+  --set-w: calc(var(--card-count, 7) * (var(--card-w) + var(--deck-gap)));
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  min-height: calc(var(--card-h) + 32px);
+  padding: 16px 0 24px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  padding-left: calc(max(0px, (100% - var(--set-w)) / 2));
+  will-change: transform;
+}
+
+.trackScrolling {
+  animation: vpd-deck-marquee 52s linear infinite;
+}
+
+/* Pause the flow while the pointer (or keyboard focus) is inside the strip,
+ * and while a touch user has explicitly paused it. */
+.viewport:hover .trackScrolling,
+.viewport:focus-within .trackScrolling,
+.trackPaused {
+  animation-play-state: paused;
+}
+
+@keyframes vpd-deck-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-1 * var(--set-w)));
+  }
+}
+
+.card {
+  position: relative;
+  flex: 0 0 var(--card-w);
+  height: var(--card-h);
+  margin-right: var(--deck-gap);
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    160deg,
+    rgba(24, 24, 26, 0.94) 0%,
+    rgba(14, 14, 16, 0.96) 60%,
+    rgba(10, 10, 12, 0.98) 100%
+  );
+  box-shadow:
+    0 16px 36px -12px rgba(0, 0, 0, 0.75),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition:
+    border-color 0.35s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+}
+
+.card:focus-visible {
+  outline: 2px solid rgba(201, 168, 76, 0.8);
+  outline-offset: 4px;
+}
+
+.card:hover,
+.cardRevealed,
+.cardOpen {
+  border-color: rgba(201, 168, 76, 0.45);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.85),
+    0 0 24px -6px rgba(201, 168, 76, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Gold sheen sweep on hover / reveal */
+.sheen {
+  position: absolute;
+  top: -60%;
+  left: -40%;
+  width: 50%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.16), transparent);
+  transform: rotate(18deg) translateX(-260%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.card:hover .sheen,
+.card:focus-visible .sheen {
+  transform: rotate(18deg) translateX(560%);
+}
+
+.edgeGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    340px circle at 50% 0%,
+    rgba(242, 217, 141, 0.09) 0%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.card:hover .edgeGlow,
+.cardRevealed .edgeGlow,
+.cardOpen .edgeGlow {
+  opacity: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: clamp(18px, 1.8vw, 22px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.category {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.title {
+  margin-top: 6px;
+  margin-bottom: 0;
+  font-size: clamp(1.05rem, 1.3vw, 1.22rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  min-height: 2.5em;
+  display: flex;
+  align-items: flex-start;
+  transition: color 0.3s ease;
+}
+
+.card:hover .title,
+.cardRevealed .title,
+.cardOpen .title {
+  color: #f2d98d;
+}
+
+.separator {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(201, 168, 76, 0.65);
+  transition: width 0.35s cubic-bezier(0.19, 1, 0.22, 1), background 0.3s ease;
+}
+
+.card:hover .rule,
+.card:focus-visible .rule,
+.cardRevealed .rule,
+.cardOpen .rule {
+  width: 44px;
+  background: #d4af37;
+}
+
+.descLine {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #9e9ea8;
+  transition: color 0.3s ease;
+}
+
+.card:hover .descLine,
+.card:focus-visible .descLine,
+.cardRevealed .descLine,
+.cardOpen .descLine {
+  color: #dcdce2;
+}
+
+/* Reduced-motion / static fallback grid */
+.flat {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.flatCard {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(20, 20, 22, 0.9);
+  padding: 20px 22px;
+}
+
+@media (min-width: 768px) {
+  .flat {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .flat {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trackScrolling {
+    animation: none;
+  }
+
+  .sheen,
+  .edgeGlow,
+  .rule,
+  .card,
+  .descLine {
+    transition: none !important;
+  }
+}

@@ -8,5 +8,6 @@ coverage/
 !.env.example
 .originkit/
 .next/
+.next-build/
 next-env.d.ts
 tsconfig.tsbuildinfo

@@ -24,17 +24,29 @@ export const PageLoader: React.FC = () => {
           }}
         />
 
-        {/* Authentic VPD Logo with subtle pulse */}
+        {/* Authentic VPD Logo */}
         <svg
           viewBox={VPD_LOGO_VIEWBOX}
           className="w-full h-full object-contain drop-shadow-[0_2px_20px_rgba(212,175,55,0.25)] animate-pulse"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d={VPD_LOGO_PATHS.v_white.d} fill="#FFFFFF" fillRule="evenodd" />
-          <path d={VPD_LOGO_PATHS.v_gold.d} fill="#D4AF37" fillRule="evenodd" />
-          <path d={VPD_LOGO_PATHS.p_white.d} fill="#FFFFFF" fillRule="evenodd" />
-          <path d={VPD_LOGO_PATHS.d_white.d} fill="#FFFFFF" fillRule="evenodd" />
-          <path d={VPD_LOGO_PATHS.d_gold.d} fill="#D4AF37" fillRule="evenodd" />
+          <defs>
+            <linearGradient id="pageLoaderDGoldGrad" x1="30%" y1="10%" x2="85%" y2="85%">
+              <stop offset="0%" stopColor="#FFFFFF" />
+              <stop offset="40%" stopColor="#FFFFFF" />
+              <stop offset="62%" stopColor="#F2D98D" />
+              <stop offset="85%" stopColor="#D4AF37" />
+              <stop offset="100%" stopColor="#C59B27" />
+            </linearGradient>
+            <linearGradient id="pageLoaderVGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#E5C15D" />
+              <stop offset="50%" stopColor="#D4AF37" />
+              <stop offset="100%" stopColor="#B8860B" />
+            </linearGradient>
+          </defs>
+          <path d={VPD_LOGO_PATHS.vp_body.d} fill="#FFFFFF" fillRule="evenodd" />
+          <path d={VPD_LOGO_PATHS.v_gold.d} fill="url(#pageLoaderVGoldGrad)" fillRule="evenodd" />
+          <path d={VPD_LOGO_PATHS.d_shape.d} fill="url(#pageLoaderDGoldGrad)" fillRule="evenodd" />
           <path d={VPD_LOGO_PATHS.text.d} fill="#FFFFFF" fillRule="evenodd" opacity="0.9" />
         </svg>
       </div>

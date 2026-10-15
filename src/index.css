@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../app";
+@source "../src";
 
 @theme inline {
   --font-sans: var(--font-inter);
@@ -71,6 +73,165 @@
   border-color: rgba(201, 168, 76, 0.45);
   transform: translateY(-3px);
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px -6px rgba(201, 168, 76, 0.18);
+}
+
+.vpd-outline-cta {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #ffffff;
+  box-shadow: none !important;
+  transition-property: color, transform;
+  transition-duration: 300ms, 150ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.vpd-outline-cta::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(110deg, #27272a 0%, #a1a1aa 34%, #f2d36f 66%, #d4af37 82%, #3f3f46 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  clip-path: inset(0 calc(100% - 18px) 0 0 round 999px);
+  content: "";
+  pointer-events: none;
+  filter: drop-shadow(0 0 2px rgba(161, 161, 170, 0.35))
+    drop-shadow(0 0 5px rgba(212, 175, 55, 0.32));
+  transition: clip-path 300ms cubic-bezier(0.19, 1, 0.22, 1), filter 300ms ease;
+}
+
+.vpd-outline-cta > * {
+  position: relative;
+  z-index: 1;
+}
+
+.vpd-outline-cta:hover:not(:disabled),
+.vpd-outline-cta:focus-visible {
+  background-color: transparent !important;
+  color: #ffffff;
+}
+
+.vpd-outline-cta:hover:not(:disabled)::before,
+.vpd-outline-cta:focus-visible::before {
+  clip-path: inset(0 0 0 0 round 999px);
+  filter: drop-shadow(0 0 3px rgba(161, 161, 170, 0.48))
+    drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));
+}
+
+.vpd-outline-cta:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 3px;
+}
+
+.vpd-outline-cta:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.vpd-outline-cta:disabled::before {
+  opacity: 0.45;
+}
+
+.cta-talk {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid transparent;
+  transition: transform 200ms ease;
+}
+
+.cta-talk::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  width: 42px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(110deg, #27272a 0%, #71717a 42%, #d4af37 78%, #3f3f46 100%) border-box;
+  content: "";
+  pointer-events: none;
+  transition: width 300ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.cta-talk > * {
+  position: relative;
+}
+
+.cta-talk > svg {
+  transform: translateX(-5px);
+  transition: transform 300ms ease;
+}
+
+.cta-talk:hover::before,
+.cta-talk:focus-visible::before {
+  width: 100%;
+}
+
+.cta-talk:hover > svg,
+.cta-talk:focus-visible > svg {
+  transform: translateX(0);
+}
+
+.cta-talk:hover::before,
+.cta-talk:focus-visible::before {
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.22);
+}
+
+.cta-talk:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 3px;
+}
+
+.cta-talk:active {
+  transform: scale(0.95);
+}
+
+.vpd-cta-icon {
+  display: inline-flex;
+  transition: transform 300ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.vpd-cta-icon-right,
+.vpd-outline-cta > svg:last-child {
+  transform: translateX(4px);
+}
+
+.vpd-cta-icon-left,
+.vpd-outline-cta > svg:first-child {
+  transform: translateX(-4px);
+}
+
+.vpd-outline-cta:hover:not(:disabled) .vpd-cta-icon,
+.vpd-outline-cta:focus-visible .vpd-cta-icon,
+.vpd-outline-cta:hover:not(:disabled) > svg,
+.vpd-outline-cta:focus-visible > svg {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpd-outline-cta,
+  .vpd-cta-icon,
+  .cta-talk,
+  .cta-talk::before,
+  .cta-talk > svg {
+    transition: none !important;
+  }
+
+  .vpd-outline-cta:active:not(:disabled) {
+    transform: none;
+  }
+
+  .cta-talk:active {
+    transform: none;
+  }
 }
 
 /* Insights page: slow gold scanline sweeping the hero grid */

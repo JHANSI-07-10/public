@@ -45,7 +45,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
   return (
     <section
       id="what-we-engineer"
-      className="relative bg-[#0a0a0a]/25 backdrop-blur-[1px] pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 overflow-hidden border-t border-[#222222]/40"
+      className="relative bg-transparent pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 overflow-hidden border-t-0"
       aria-label="What We Engineer"
     >
       {/* Subtle Radial Glow Separation from Hero */}
@@ -98,7 +98,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
               <button
                 type="button"
                 onClick={onOpenConsultation}
-                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#E5C15D] text-black px-5 py-2.5 text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer"
+                className="cta-talk inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-transparent text-white px-5 py-2.5 text-xs sm:text-sm font-bold tracking-wide focus:outline-none cursor-pointer"
               >
                 <span>Let&apos;s Talk</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -106,7 +106,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
             ) : (
               <Link
                 href="/contact"
-                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#E5C15D] text-black px-5 py-2.5 text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                className="cta-talk inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-transparent text-white px-5 py-2.5 text-xs sm:text-sm font-bold tracking-wide focus:outline-none"
               >
                 <span>Let&apos;s Talk</span>
                 <ArrowUpRight className="w-4 h-4" />

@@ -9,6 +9,8 @@ export interface Service {
   security: string;
   benefits: string[];
   capabilities: string[];
+  /** Three short display lines used by the homepage stacked-card deck */
+  stackLines?: string[];
 }
 
 export interface CaseStudyMilestone {
@@ -108,6 +110,8 @@ export interface DeliveryStage {
   step: string;
   title: string;
   tagline: string;
+  /** One-line explanation used by the homepage delivery dial. */
+  summary: string;
   description: string;
   deliverables: string[];
 }
@@ -157,6 +161,33 @@ export const COMPANY_DATA = {
     }
   ]
 };
+
+export type SocialPlatform = "linkedin" | "facebook" | "instagram";
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  label: string;
+  href: string;
+}
+
+/** Official VPD Technologies profiles, shared by the social rail and mobile dock. */
+export const SOCIAL_LINKS: SocialLink[] = [
+  {
+    platform: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/vpdtechnologies/"
+  },
+  {
+    platform: "facebook",
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61591199148003"
+  },
+  {
+    platform: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/vpdtechnologiespvtltd/"
+  }
+];
 
 export const FOUNDER_PROFILES: FounderProfile[] = [
   {
@@ -221,6 +252,11 @@ export const CORE_SERVICES: Service[] = [
       "Custom Workflow Automation",
       "Microservice-Based Architecture",
       "Data Pipeline Integration"
+    ],
+    stackLines: [
+      "Purpose-built systems shaped around your workflows.",
+      "Seamless integration with your existing APIs and data.",
+      "Clean, structured code built for long-term maintainability."
     ]
   },
   {
@@ -241,6 +277,11 @@ export const CORE_SERVICES: Service[] = [
       "Corporate Web Portals",
       "Core Web Vitals Optimization",
       "Headless CMS & Content Management"
+    ],
+    stackLines: [
+      "Corporate websites and web apps that load fast and convert.",
+      "Responsive, accessible layouts with SEO-ready structure.",
+      "From landing pages to complex portals, engineered end to end."
     ]
   },
   {
@@ -261,6 +302,11 @@ export const CORE_SERVICES: Service[] = [
       "Enterprise Resource Planning Modules",
       "Customer Relationship Management Engines",
       "Distributed Database Clustering & Optimization"
+    ],
+    stackLines: [
+      "ERP and CRM engines that centralize operational command.",
+      "Unified workflows and structured data across departments.",
+      "Multi-tenant architecture with enterprise-grade governance."
     ]
   },
   {
@@ -281,6 +327,11 @@ export const CORE_SERVICES: Service[] = [
       "Field Operations & Dispatch Apps",
       "Customer Self-Service Mobile Portals",
       "Push Notification & Real-Time Telemetry Engines"
+    ],
+    stackLines: [
+      "Native-feel apps for iOS and Android from one codebase.",
+      "Offline-first data with reliable automatic synchronization.",
+      "Touch-optimized interfaces for field teams and customers."
     ]
   },
   {
@@ -301,6 +352,11 @@ export const CORE_SERVICES: Service[] = [
       "Intelligent Document Processing",
       "Natural Language Query Interfaces",
       "Predictive Operational Analytics"
+    ],
+    stackLines: [
+      "Practical AI that turns your data into working decisions.",
+      "Document extraction, semantic search and predictive analytics.",
+      "Privacy-sandboxed pipelines engineered for production."
     ]
   },
   {
@@ -321,6 +377,11 @@ export const CORE_SERVICES: Service[] = [
       "Container Orchestration & Dockerization",
       "Multi-Region Edge Routing & Caching",
       "Automated Security Audits & Vulnerability Scanning"
+    ],
+    stackLines: [
+      "Automated CI/CD pipelines with zero-downtime releases.",
+      "Elastic infrastructure that absorbs unpredictable traffic.",
+      "Continuous observability, telemetry and security auditing."
     ]
   },
   {
@@ -341,6 +402,11 @@ export const CORE_SERVICES: Service[] = [
       "Interactive High-Fidelity Prototypes",
       "Enterprise Design Token Systems",
       "Ergonomic Dashboard & Workflow Refinement"
+    ],
+    stackLines: [
+      "Design systems and prototypes that scale with growth.",
+      "User-centric research translated into interface clarity.",
+      "WCAG 2.2 AA accessibility engineered from day one."
     ]
   }
 ];
@@ -512,6 +578,7 @@ export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
     step: "01",
     title: "Design",
     tagline: "Architecture & User Experience Blueprinting",
+    summary: "Map business goals, workflows and system architecture before development begins.",
     description: "We map business processes, system boundaries, data contracts, and high-fidelity interface wireframes before a single line of application code is written.",
     deliverables: [
       "Technical Architecture Specifications & Data Schemas",
@@ -523,6 +590,7 @@ export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
     step: "02",
     title: "Develop",
     tagline: "Sprint-Based Rigorous Engineering",
+    summary: "Build, integrate and test reliable application components.",
     description: "Disciplined engineering execution with modern tech stacks: React 19, TypeScript, Java 21, and Spring Boot. Clean type-safe code with automated testing.",
     deliverables: [
       "Modular Frontend & Backend Microservices",
@@ -534,6 +602,7 @@ export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
     step: "03",
     title: "Pilot",
     tagline: "Staging Validation & User Testing",
+    summary: "Validate the solution in a controlled staging environment before release.",
     description: "Deploying to controlled staging environments to stress-test real-world data flows, gather stakeholder feedback, and calibrate performance benchmarks.",
     deliverables: [
       "Staging Sandbox Environment Deployment",
@@ -545,6 +614,7 @@ export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
     step: "04",
     title: "Scale",
     tagline: "Production Cutover & Cloud Orchestration",
+    summary: "Launch the solution and prepare infrastructure for reliable growth.",
     description: "Zero-downtime production cutovers with distributed cloud edge infrastructure, automated failover routines, and high-availability monitoring.",
     deliverables: [
       "Zero-Downtime DNS Cutover & Database Migration",
@@ -556,6 +626,7 @@ export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
     step: "05",
     title: "Support",
     tagline: "Ongoing Performance Tuning & Governance",
+    summary: "Maintain, secure and continuously improve the production system.",
     description: "Dependable post-deployment engineering governance, proactive security patch management, performance audits, and long-term feature iteration.",
     deliverables: [
       "Guaranteed High-Availability Response Support",
@@ -593,6 +664,10 @@ export const CAREERS_DATA = {
       title: "Full-Stack Software Engineer (Java & React)",
       department: "Core Engineering",
       type: "Full-time",
+      postedDate: "12 Oct 2026",
+      experienceLevel: "Mid – Senior",
+      workMode: "On-site / Hybrid",
+      shortLocation: "Kurnool, AP",
       location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
       overview: "Develop mission-critical web applications, high-throughput Spring Boot backends, and responsive React client frontends.",
       requirements: [
@@ -607,6 +682,10 @@ export const CAREERS_DATA = {
       title: "Frontend Engineer (Next.js & UI/UX)",
       department: "Frontend Experience",
       type: "Full-time",
+      postedDate: "03 Oct 2026",
+      experienceLevel: "Mid – Senior",
+      workMode: "On-site / Hybrid",
+      shortLocation: "Kurnool, AP",
       location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
       overview: "Craft cinematic, high-performance web experiences with sub-100ms Time-to-Interactive and pixel-perfect design systems.",
       requirements: [
@@ -621,6 +700,10 @@ export const CAREERS_DATA = {
       title: "DevOps & Quality Assurance Engineer",
       department: "Infrastructure & Quality",
       type: "Full-time",
+      postedDate: "24 Sep 2026",
+      experienceLevel: "Mid-level",
+      workMode: "On-site / Hybrid",
+      shortLocation: "Kurnool, AP",
       location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
       overview: "Maintain high-availability deployment pipelines, Docker environments, and automated regression test suites.",
       requirements: [

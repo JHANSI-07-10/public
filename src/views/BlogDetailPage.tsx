@@ -11,6 +11,7 @@ import {
 } from '../data/content';
 import { getArticleBreakdown } from '../data/articleBreakdowns';
 import { Button } from '../components/ui/Button';
+import { WhatsAppIcon } from '../components/ui/WhatsAppIcon';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import {
@@ -25,7 +26,6 @@ import {
   Copy,
   Linkedin,
   Twitter,
-  MessageSquare,
   Mail,
   CheckCircle2,
   ShieldCheck,
@@ -149,8 +149,8 @@ const ArticleShareMenu: React.FC<{ article: InsightArticle }> = ({ article }) =>
               onClick={() => setIsOpen(false)}
               className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
             >
-              <div className="w-5 h-5 rounded bg-[#22c55e]/15 text-[#22c55e] flex items-center justify-center shrink-0">
-                <MessageSquare className="w-3 h-3" />
+              <div className="w-5 h-5 rounded bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0">
+                <WhatsAppIcon size={12} className="w-3 h-3 shrink-0" />
               </div>
               <span>WhatsApp</span>
             </a>
@@ -449,7 +449,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
                   </span>
                   <Link
                     href={`/portfolio?case=${relatedProject.id}`}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-black bg-[#c9a84c] hover:bg-[#d4b55c] transition-colors shrink-0"
+                    className="vpd-outline-cta inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-black bg-[#c9a84c] hover:bg-[#d4b55c] transition-colors shrink-0"
                   >
                     <span>Explore Production Case Study</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -513,4 +513,3 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
     </div>
   );
 };
-
