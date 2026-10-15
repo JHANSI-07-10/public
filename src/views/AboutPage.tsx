@@ -10,6 +10,7 @@ import { InteractiveCard } from '../components/motion/InteractiveCard';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { Accordion } from '../components/motion/Accordion';
 import { ProjectJourneyTimeline } from '../components/about/ProjectJourneyTimeline';
+import { CurvedTravelingBeam } from '../components/motion/CurvedTravelingBeam';
 
 interface AboutPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -276,7 +277,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           <Reveal>
             <SectionHeader
               eyebrow="Purpose & Direction"
-              title="Our Vision & Mission"
+              title="What Drives Us Forward"
               subtitle="The foundational principles driving our technical standards, innovation trajectory, and client partnerships."
               align="center"
               className="!mb-6 sm:!mb-8"
@@ -284,7 +285,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* Our Vision Card */}
+            {/* Vision Card */}
             <Reveal delay={0.05}>
               <div className="h-full rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-7 relative overflow-hidden group hover:border-[#c9a84c]/40 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-3">
@@ -292,7 +293,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                     <Target className="w-4 h-4" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                    Our Vision
+                    Vision
                   </h3>
                 </div>
                 <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
@@ -301,7 +302,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               </div>
             </Reveal>
 
-            {/* Our Mission Card */}
+            {/* Mission Card */}
             <Reveal delay={0.1}>
               <div className="h-full rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-7 relative overflow-hidden group hover:border-[#c9a84c]/40 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-3">
@@ -309,7 +310,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                     <Rocket className="w-4 h-4" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                    Our Mission
+                    Mission
                   </h3>
                 </div>
                 <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
@@ -408,18 +409,24 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {DIFFERENTIATORS.map((diff) => (
-              <StaggerItem key={diff.number}>
-                <InteractiveCard variant="card" padding="md" className="h-full">
-                  <div className="text-xs font-mono font-bold text-[#c9a84c] mb-2">
-                    {diff.number}.
-                  </div>
-                  <h4 className="text-lg font-bold text-white mb-2">
-                    {diff.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed">
-                    {diff.description}
-                  </p>
-                </InteractiveCard>
+              <StaggerItem key={diff.title}>
+                <CurvedTravelingBeam className="h-full" radius={16} duration={2.4}>
+                  <InteractiveCard
+                    variant="card"
+                    padding="md"
+                    hoverable={false}
+                    className="h-full flex flex-col justify-between border-[#242424] bg-[#141414] transition-colors duration-300 group-hover:border-[#383838]"
+                  >
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-2 transition-all duration-300 group-hover:text-[#DFC067] group-hover:drop-shadow-[0_0_14px_rgba(223,192,103,0.35)]">
+                        {diff.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed">
+                        {diff.description}
+                      </p>
+                    </div>
+                  </InteractiveCard>
+                </CurvedTravelingBeam>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -446,9 +453,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           <div className="mt-8 text-center">
             <AnimatedButton
               onClick={() => onOpenConsultation()}
-              variant="primary"
+              variant="outline-gold"
               size="lg"
-              icon={<ArrowRight className="w-4 h-4" />}
+              icon={<ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />}
+              className="group transition-all duration-300"
             >
               Discuss Your Project Requirements
             </AnimatedButton>

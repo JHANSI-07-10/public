@@ -215,46 +215,6 @@ export const KEY_METRICS = [
 
 export const CORE_SERVICES: Service[] = [
   {
-    id: "custom-software",
-    title: "Custom Software Development",
-    category: "Tailored Business Systems",
-    description: "Design and develop applications tailored to business requirements and workflows.",
-    target: "Organizations needing purpose-built software architectures that map precisely to their proprietary business logic.",
-    stack: "React / Node.js / Java Spring / PostgreSQL",
-    latency: "< 80ms API Latency",
-    security: "Role-Based Access Control (RBAC) & AES-256",
-    benefits: [
-      "Bespoke Workflows Built to Exact Business Specifications",
-      "Seamless Legacy API & Database Integrations",
-      "High-Density Architecture Engineered for Longevity"
-    ],
-    capabilities: [
-      "Custom Workflow Automation",
-      "Microservice-Based Architecture",
-      "Data Pipeline Integration"
-    ]
-  },
-  {
-    id: "web-dev",
-    title: "Website & Web Application Development",
-    category: "High-Conversion Frontends & Portals",
-    description: "Create responsive websites and web applications for business communication and digital services.",
-    target: "Businesses requiring an authoritative online presence, brand credibility, and high lead capture velocity.",
-    stack: "React / Next.js / TypeScript / Tailwind CSS",
-    latency: "< 100ms TTI",
-    security: "Standard SSL / Strict Content Security Policy (CSP)",
-    benefits: [
-      "Conversion-Focused Layout Architecture",
-      "SEO-Ready Metadata & Schema.org Structured Data",
-      "Mobile-First Precision Responsive Engineering"
-    ],
-    capabilities: [
-      "Corporate Web Portals",
-      "Core Web Vitals Optimization",
-      "Headless CMS & Content Management"
-    ]
-  },
-  {
     id: "enterprise-software",
     title: "Enterprise Software / ERP / CRM",
     category: "Enterprise Business Engines",
@@ -295,6 +255,66 @@ export const CORE_SERVICES: Service[] = [
     ]
   },
   {
+    id: "custom-software",
+    title: "Custom Software Development",
+    category: "Tailored Business Systems",
+    description: "Design and develop applications tailored to business requirements and workflows.",
+    target: "Organizations needing purpose-built software architectures that map precisely to their proprietary business logic.",
+    stack: "React / Node.js / Java Spring / PostgreSQL",
+    latency: "< 80ms API Latency",
+    security: "Role-Based Access Control (RBAC) & AES-256",
+    benefits: [
+      "Bespoke Workflows Built to Exact Business Specifications",
+      "Seamless Legacy API & Database Integrations",
+      "High-Density Architecture Engineered for Longevity"
+    ],
+    capabilities: [
+      "Custom Workflow Automation",
+      "Microservice-Based Architecture",
+      "Data Pipeline Integration"
+    ]
+  },
+  {
+    id: "web-dev",
+    title: "Website & Web Application Development",
+    category: "High-Conversion Frontends & Portals",
+    description: "Create responsive websites and web applications for business communication and digital services.",
+    target: "Businesses requiring an authoritative online presence, brand credibility, and high lead capture velocity.",
+    stack: "React / Next.js / TypeScript / Tailwind CSS",
+    latency: "< 100ms TTI",
+    security: "Standard SSL / Strict Content Security Policy (CSP)",
+    benefits: [
+      "Conversion-Focused Layout Architecture",
+      "SEO-Ready Metadata & Schema.org Structured Data",
+      "Mobile-First Precision Responsive Engineering"
+    ],
+    capabilities: [
+      "Corporate Web Portals",
+      "Core Web Vitals Optimization",
+      "Headless CMS & Content Management"
+    ]
+  },
+  {
+    id: "ui-ux-engineering",
+    title: "UI/UX Design & Product Engineering",
+    category: "Usable Digital Experiences",
+    description: "Design usable digital experiences and support product development and improvement.",
+    target: "Teams looking to eliminate user friction, upgrade software aesthetic appeal, and improve retention through design excellence.",
+    stack: "Figma / React 19 / Design Tokens / WCAG 2.2 AA",
+    latency: "Accessible Contrast & Instant Feedback",
+    security: "Compliant Interaction Patterns",
+    benefits: [
+      "Systematic Design Systems That Scale With Growth",
+      "User-Centric Usability Research & Wireframing",
+      "WCAG 2.2 AA Accessibility Compliance Built-In"
+    ],
+    capabilities: [
+      "Interactive High-Fidelity Prototypes",
+      "Enterprise Design Token Systems",
+      "Ergonomic Dashboard & Workflow Refinement"
+    ]
+  },
+  {
     id: "ai-ml",
     title: "AI & Machine Learning",
     category: "Intelligent Software Capabilities",
@@ -332,26 +352,6 @@ export const CORE_SERVICES: Service[] = [
       "Container Orchestration & Dockerization",
       "Multi-Region Edge Routing & Caching",
       "Automated Security Audits & Vulnerability Scanning"
-    ]
-  },
-  {
-    id: "ui-ux-engineering",
-    title: "UI/UX Design & Product Engineering",
-    category: "Usable Digital Experiences",
-    description: "Design usable digital experiences and support product development and improvement.",
-    target: "Teams looking to eliminate user friction, upgrade software aesthetic appeal, and improve retention through design excellence.",
-    stack: "Figma / React 19 / Design Tokens / WCAG 2.2 AA",
-    latency: "Accessible Contrast & Instant Feedback",
-    security: "Compliant Interaction Patterns",
-    benefits: [
-      "Systematic Design Systems That Scale With Growth",
-      "User-Centric Usability Research & Wireframing",
-      "WCAG 2.2 AA Accessibility Compliance Built-In"
-    ],
-    capabilities: [
-      "Interactive High-Fidelity Prototypes",
-      "Enterprise Design Token Systems",
-      "Ergonomic Dashboard & Workflow Refinement"
     ]
   }
 ];
@@ -752,28 +752,28 @@ export const CAREERS_DATA = {
 export const DIFFERENTIATORS = [
   {
     number: "01",
-    title: "Fast Delivery",
-    description: "Lean architectural planning and disciplined sprint execution help your product transition from validated concept to production launch in record time."
-  },
-  {
-    number: "02",
-    title: "SEO Optimized",
-    description: "Semantic HTML5, lightning-fast Time to Interactive (<100ms), and search-ready OpenGraph and Schema.org structured data baked in from day one."
-  },
-  {
-    number: "03",
-    title: "Mobile Responsive",
-    description: "Every layout is precision-tested across mobile, tablet, and widescreen desktop monitors to guarantee fluid, touch-optimized user experiences."
-  },
-  {
-    number: "04",
     title: "Scalable Solutions",
     description: "Modular component hierarchies and decoupled API layers ensure your digital foundation effortlessly accommodates future pages, features, and user surges."
   },
   {
-    number: "05",
+    number: "02",
+    title: "Fast Delivery",
+    description: "Lean architectural planning and disciplined sprint execution help your product transition from validated concept to production launch in record time."
+  },
+  {
+    number: "03",
     title: "Modern Tech Stack",
     description: "Built with industry-standard technologies: React 19, TypeScript, Spring Boot, and cloud edge infrastructure for maximum developer velocity and longevity."
+  },
+  {
+    number: "04",
+    title: "Mobile Responsive",
+    description: "Every layout is precision-tested across mobile, tablet, and widescreen desktop monitors to guarantee fluid, touch-optimized user experiences."
+  },
+  {
+    number: "05",
+    title: "SEO Optimized",
+    description: "Semantic HTML5, lightning-fast Time to Interactive (<100ms), and search-ready OpenGraph and Schema.org structured data baked in from day one."
   },
   {
     number: "06",

@@ -70,12 +70,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
       <section className="relative min-h-screen pt-24 sm:pt-28 pb-10 sm:pb-14 flex flex-col justify-center border-b border-[#1f1f1f] overflow-hidden">
         {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
         <img
-          src="/bg-services-hero.svg"
+          src="/bg-services-hero.svg?v=5"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-90 pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full object-cover object-[88%_center] opacity-85 pointer-events-none select-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/75 via-[#0a0a0a]/35 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent pointer-events-none" aria-hidden="true" />
         <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center my-auto">
           <Reveal>

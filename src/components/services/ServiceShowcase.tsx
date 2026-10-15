@@ -27,23 +27,8 @@ interface ServiceShowcaseProps {
   onOpenConsultation: (service: Service) => void;
 }
 
-interface DomainFilter {
-  id: string;
-  label: string;
-  count: number;
-  serviceIds?: string[];
-}
-
-const DOMAINS: DomainFilter[] = [
-  { id: 'all', label: 'All Disciplines', count: 7 },
-  { id: 'platform', label: 'Platform & Backend', count: 2, serviceIds: ['custom-software', 'enterprise-software'] },
-  { id: 'web', label: 'Web & UI/UX', count: 2, serviceIds: ['web-dev', 'ui-ux-engineering'] },
-  { id: 'cloud-ai', label: 'Cloud, Mobile & AI', count: 3, serviceIds: ['mobile-apps', 'ai-ml', 'cloud-devops'] },
-];
-
 export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsultation }) => {
-  const [activeDomain, setActiveDomain] = useState<string>('all');
-  const [selectedServiceId, setSelectedServiceId] = useState<string>('custom-software');
+  const [selectedServiceId, setSelectedServiceId] = useState<string>(CORE_SERVICES[0]?.id || 'enterprise-software');
   const cardRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -66,17 +51,9 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
     }
   }, []);
 
-  // Filter services by active domain
-  const visibleServices = CORE_SERVICES.filter((s) => {
-    if (activeDomain === 'all') return true;
-    const domain = DOMAINS.find((d) => d.id === activeDomain);
-    return domain?.serviceIds ? domain.serviceIds.includes(s.id) : true;
-  });
-
   // Currently selected service (only this single service is rendered on the right)
   const activeService =
-    visibleServices.find((s) => s.id === selectedServiceId) ||
-    visibleServices[0] ||
+    CORE_SERVICES.find((s) => s.id === selectedServiceId) ||
     CORE_SERVICES[0];
 
   const getServiceIcon = (id: string) => {
@@ -101,16 +78,15 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
   };
 
   const ActiveIcon = getServiceIcon(activeService.id);
-  const activeGlobalIndex = CORE_SERVICES.findIndex((s) => s.id === activeService.id);
 
   return (
     <div className="space-y-8 sm:space-y-10">
       {/* 1. Executive Section Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[#1c1c1c]">
-        <div className="max-w-2xl">
+      <div className="pb-6 border-b border-[#1c1c1c]">
+        <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-[#161616] border border-[#2a2a2a] text-xs font-mono font-bold text-[#c9a84c] uppercase tracking-wider">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
-            <span>01 // Core Capabilities</span>
+            <span>Core Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-4xl font-black text-white tracking-tight leading-[1.12]">
             Mission-Critical Software Engineering for Modern Enterprises
@@ -119,57 +95,21 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
             Select a discipline from the menu to inspect its architectural specifications, throughput benchmarks, and deliverable scope.
           </p>
         </div>
-
-        {/* Domain Filter Tabs */}
-        <div className="flex items-center p-1 rounded-2xl bg-[#121212] border border-[#222222] self-start lg:self-auto overflow-x-auto max-w-full no-scrollbar">
-          {DOMAINS.map((domain) => {
-            const isActive = activeDomain === domain.id;
-            return (
-              <button
-                key={domain.id}
-                onClick={() => {
-                  setActiveDomain(domain.id);
-                  if (domain.serviceIds && !domain.serviceIds.includes(selectedServiceId)) {
-                    handleSelectService(domain.serviceIds[0]);
-                  }
-                }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
-                  isActive
-                    ? 'bg-[#c9a84c] text-black shadow-sm font-bold'
-                    : 'text-[#888888] hover:text-white'
-                }`}
-              >
-                <span>{domain.label}</span>
-                <span
-                  className={`text-[10px] font-mono px-1.5 py-0.2 rounded ${
-                    isActive ? 'bg-black/20 text-black font-bold' : 'text-[#666666]'
-                  }`}
-                >
-                  {domain.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       {/* 2. Interactive Selection Showcase (Single Active Service View) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Left Column: Service Selection Menu (Sticky while reading service details) */}
         <div className="lg:col-span-4 space-y-2 lg:sticky lg:top-24 lg:self-start">
-          <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-[#71717a] font-bold px-1 mb-2">
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#71717a] font-bold px-1 mb-2">
             <span>Engineering Disciplines</span>
-            <span className="text-[#c9a84c] font-bold">
-              {visibleServices.findIndex((s) => s.id === activeService.id) + 1} of {visibleServices.length}
-            </span>
           </div>
 
           {/* List of Selectable Service Buttons */}
           <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 no-scrollbar">
-            {visibleServices.map((service) => {
+            {CORE_SERVICES.map((service) => {
               const Icon = getServiceIcon(service.id);
               const isSelected = service.id === activeService.id;
-              const globalIndex = CORE_SERVICES.findIndex((s) => s.id === service.id);
 
               return (
                 <button
@@ -198,13 +138,8 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
                     </div>
 
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-mono font-bold ${isSelected ? 'text-[#DFC067]' : 'text-[#c9a84c]'}`}>
-                          0{globalIndex + 1}
-                        </span>
-                        <span className="text-[10px] font-mono text-[#777777] truncate">
-                          {service.category.split(' ')[0]}
-                        </span>
+                      <div className="text-[10px] font-mono text-[#777777] truncate">
+                        {service.category.split(' ')[0]}
                       </div>
                       <div
                         className={`text-xs sm:text-sm font-bold truncate mt-0.5 transition-colors ${
@@ -254,8 +189,7 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
               <div className="pb-5 border-b border-[#1f1f1f] relative z-10">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-3.5">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#181818] border border-[#2a2a2a] text-xs font-mono font-bold text-[#c9a84c]">
-                    <span>Discipline 0{activeGlobalIndex + 1}</span>
-                    <span className="text-[#444444]">/</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
                     <span className="text-[#a1a1aa]">{activeService.category}</span>
                   </div>
 

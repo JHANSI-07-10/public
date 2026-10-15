@@ -191,22 +191,14 @@ export const ProjectJourneyTimeline: React.FC = () => {
                     aria-controls={`stage-panel-${idx}`}
                     id={`stage-tab-${idx}`}
                     onClick={() => handleJumpToStage(idx)}
-                    className={`group relative flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border text-left transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
+                    className={`group relative flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl border text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
                       isActive
-                        ? 'border-[#c9a84c]/70 bg-[#171717] shadow-[0_0_22px_-4px_rgba(201,168,76,0.3)]'
+                        ? 'border-[#c9a84c] bg-[#171717]'
                         : isPast
                           ? 'border-[#262626] bg-[#121212]/80 hover:border-[#383838]'
                           : 'border-[#1f1f1f] bg-[#0e0e0e]/80 hover:border-[#2a2a2a]'
                     }`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeTimelineGlow"
-                        className="absolute inset-0 rounded-xl bg-gradient-to-b from-[#c9a84c]/12 to-transparent pointer-events-none"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
-
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                         isActive
@@ -220,18 +212,7 @@ export const ProjectJourneyTimeline: React.FC = () => {
                     </div>
                     <div className="flex flex-col min-w-0">
                       <span
-                        className={`text-[10px] font-mono font-bold leading-none mb-0.5 ${
-                          isActive
-                            ? 'text-[#c9a84c]'
-                            : isPast
-                              ? 'text-[#777777]'
-                              : 'text-[#555555]'
-                        }`}
-                      >
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-                      <span
-                        className={`text-xs sm:text-sm font-bold truncate leading-tight transition-colors ${
+                        className={`text-xs sm:text-sm font-semibold truncate leading-tight transition-colors ${
                           isActive ? 'text-white' : 'text-[#888888] group-hover:text-white'
                         }`}
                       >
@@ -246,7 +227,7 @@ export const ProjectJourneyTimeline: React.FC = () => {
 
           {/* Centered Stage Card */}
           <div className="mx-auto max-w-4xl">
-            <div className="relative rounded-2xl border border-[#c9a84c]/40 bg-[#141414] p-6 sm:p-7 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300">
+            <div className="relative rounded-2xl border border-[#2a2a2a] bg-[#141414] p-6 sm:p-7 overflow-hidden transition-all duration-300">
 
               <AnimatePresence mode="wait">
                 <motion.div
@@ -260,16 +241,16 @@ export const ProjectJourneyTimeline: React.FC = () => {
                   transition={{ duration: 0.24, ease: 'easeOut' }}
                   className="relative z-10 flex flex-col md:flex-row md:items-center gap-6"
                 >
-                  {/* Glowing Stage Icon Anchor */}
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/25 via-[#c9a84c]/15 to-transparent border border-[#c9a84c]/60 flex items-center justify-center text-[#DFC067] shadow-[0_0_28px_rgba(201,168,76,0.35)] shrink-0">
+                  {/* Clean Stage Icon Anchor */}
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#181818] border border-[#c9a84c]/30 flex items-center justify-center text-[#DFC067] shrink-0">
                     <CurrentIcon className="w-7 h-7 sm:w-8 sm:h-8" />
                   </div>
 
-                  {/* Core Highlighted Narrative */}
+                  {/* Core Narrative */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#c9a84c]/20 border border-[#c9a84c]/45 text-[#d8b75b] font-mono font-bold text-[11px] uppercase tracking-wider shadow-[0_0_14px_rgba(201,168,76,0.25)]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#c9a84c]/15 border border-[#c9a84c]/40 text-[#d8b75b] font-mono font-bold text-[11px] uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
                         Stage {String(activeStage + 1).padStart(2, '0')} of 06
                       </span>
                       <span className="text-[#555555]">·</span>
@@ -277,7 +258,7 @@ export const ProjectJourneyTimeline: React.FC = () => {
                     </div>
 
                     <h3 className="text-lg sm:text-xl font-bold text-white mb-2 leading-snug">
-                      {current.title} — <span className="text-[#DFC067] font-semibold drop-shadow-[0_0_16px_rgba(201,168,76,0.25)]">{current.shortDescription}</span>
+                      {current.title} — <span className="text-[#DFC067] font-semibold">{current.shortDescription}</span>
                     </h3>
 
                     <p className="text-xs sm:text-sm text-[#cccccc] leading-relaxed">

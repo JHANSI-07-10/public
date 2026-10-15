@@ -132,48 +132,36 @@ export const ServiceDeliveryApproach: React.FC<ServiceDeliveryApproachProps> = (
       </div>
 
       {/* 6-Stage Process Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-10 relative z-10">
-        {DELIVERY_STAGES.map((stage, idx) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-8 relative z-10">
+        {DELIVERY_STAGES.map((stage) => {
           const StageIcon = stage.icon;
           return (
             <div
-              key={stage.step}
-              className="silver-card-hover group rounded-2xl bg-[#131313]/90 border border-[#202020] p-6 flex flex-col justify-between relative overflow-hidden"
+              key={stage.title}
+              className="silver-card-hover group rounded-2xl bg-[#131313]/90 border border-[#202020] p-6 flex flex-col relative overflow-hidden h-full"
             >
-              <div className="relative z-10 flex flex-col justify-between h-full">
-                <div>
-                  {/* Top Row: Stage Number, Icon & Duration */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/25 flex items-center justify-center text-[#c9a84c] group-hover:scale-105 group-hover:bg-[#c9a84c]/15 transition-all">
-                      <StageIcon className="w-6 h-6" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-[#777777] bg-[#1a1a1a] border border-[#262626] px-2 py-0.5 rounded-md">
-                        {stage.duration}
-                      </span>
-                      <span className="text-xl font-mono font-black text-[#c9a84c]">
-                        {stage.step}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-[#DFC067] transition-colors mb-2">
-                    {stage.title}
-                  </h4>
-
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-[#a1a1aa] leading-relaxed mb-6">
-                    {stage.description}
-                  </p>
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Stage Icon */}
+                <div className="w-11 h-11 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/20 flex items-center justify-center text-[#c9a84c] group-hover:scale-105 group-hover:bg-[#c9a84c]/15 transition-all mb-4">
+                  <StageIcon className="w-5 h-5" />
                 </div>
 
+                {/* Title */}
+                <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-[#DFC067] transition-colors mb-2">
+                  {stage.title}
+                </h4>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-[#a1a1aa] leading-relaxed mb-5">
+                  {stage.description}
+                </p>
+
                 {/* Tangible Deliverables Block */}
-                <div className="pt-4 border-t border-[#1c1c1c]">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#71717a] block mb-2 font-semibold">
+                <div className="mt-auto pt-4 border-t border-[#1c1c1c]">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#71717a] block mb-2.5 font-semibold">
                     Key Deliverables
                   </span>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-2">
                     {stage.deliverables.map((item) => (
                       <li
                         key={item}
