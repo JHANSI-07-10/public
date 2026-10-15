@@ -45,6 +45,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
     secondary: 'text-white',
     outline: 'text-[#cccccc]',
     ghost: 'text-[#aaaaaa]',
+    'outline-gold': 'text-[#c9a84c]',
   };
 
   const legacyVariantStyles = {
