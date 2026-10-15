@@ -19,12 +19,11 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
   const [detailRole, setDetailRole] = useState<OpenRole | null>(null);
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+    <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* 1. Hero Section */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
         <PageHeroBackground imageSrc="/about1.webp" position="center 20%" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/30 pointer-events-none" />
-        <div className="absolute inset-0 hero-tech-grid opacity-35 pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
@@ -63,7 +62,42 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
         </div>
       </section>
 
-      {/* 2. Open Roles / Practice Areas */}
+      {/* 2. Engineering Culture & Values */}
+      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeader
+              eyebrow="Why Build With VPD"
+              title="A Culture Founded on Craft, Ownership &amp; Precision"
+              subtitle="We offer high-ownership roles free of corporate hierarchy where your engineering directly impacts production deployments."
+              align="center"
+              className="mb-10 sm:mb-12"
+            />
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CAREERS_DATA.values.map((val, idx) => (
+              <Reveal key={val.title} delay={idx * 0.08}>
+                <div className="p-6 sm:p-7 rounded-2xl bg-[#121212] border border-[#242424] h-full flex flex-col justify-between hover:border-[#c9a84c]/40 transition-colors">
+                  <div>
+                    <div className="text-xs font-mono font-bold text-[#c9a84c] mb-3">
+                      0{idx + 1}.
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">
+                      {val.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed">
+                      {val.description}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Open Roles / Practice Areas */}
       <section className="py-20 border-b border-[#1f1f1f] bg-[#0c0c0c]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
@@ -90,8 +124,8 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
         </div>
       </section>
 
-      {/* 3. Direct Email Submission Callout */}
-      <section className="py-16">
+      {/* 4. Direct Email Submission Callout */}
+      <section className="pt-8 sm:pt-10 pb-4 sm:pb-6">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-10 text-center relative overflow-hidden">
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">

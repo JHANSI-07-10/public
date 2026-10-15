@@ -20,20 +20,29 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
   const [showBrandIntro, setShowBrandIntro] = useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window === 'undefined') return;
+    try {
       const isIntroDisabled = window.location.search.includes('nointro');
-      const hasSeenIntro = sessionStorage.getItem('vpd_brand_intro_seen') === '1';
-      if (!isIntroDisabled && !hasSeenIntro) {
+      const hasSeen =
+        sessionStorage.getItem('vpd_intro_shown') ||
+        sessionStorage.getItem('vpd_brand_intro_seen');
+      // Only play the brand intro animation on the home page root ('/')
+      if (!isIntroDisabled && !hasSeen && (pathname === '/' || pathname === '')) {
         setShowBrandIntro(true);
       }
+    } catch {
+      // Ignore sessionStorage errors
     }
-  }, []);
+  }, [pathname]);
 
   const handleDismissIntro = () => {
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('vpd_brand_intro_seen', '1');
-    }
     setShowBrandIntro(false);
+    try {
+      sessionStorage.setItem('vpd_intro_shown', 'true');
+      sessionStorage.setItem('vpd_brand_intro_seen', 'true');
+    } catch {
+      // Ignore sessionStorage errors
+    }
   };
 
   // Support replaying intro via custom event if triggered from footer or elsewhere

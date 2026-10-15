@@ -159,12 +159,43 @@ export const CompanyIntro: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
                 {COMPANY_DATA.leadership.map((leader) => (
                   <div key={leader.name} className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] font-black text-sm shrink-0 group-hover:border-[#F2D98D]/60 group-hover:shadow-[0_0_12px_rgba(242,217,141,0.2)] transition-all duration-500">
-                      {leader.initials}
+                    <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] font-black text-sm shrink-0 group-hover:border-[#F2D98D]/60 group-hover:shadow-[0_0_12px_rgba(242,217,141,0.2)] transition-all duration-500 overflow-hidden relative">
+                      {leader.image ? (
+                        <>
+                          <img
+                            src={leader.image}
+                            alt={leader.name}
+                            className="w-full h-full object-cover object-[center_18%]"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLElement).style.display = 'none';
+                            }}
+                          />
+                          <span className="absolute inset-0 flex items-center justify-center -z-10 font-bold text-[#D4AF37]">
+                            {leader.initials}
+                          </span>
+                        </>
+                      ) : (
+                        leader.initials
+                      )}
                     </div>
                     <div>
-                      <div className="text-sm sm:text-base font-bold text-white group-hover:text-[#F2D98D] transition-colors duration-300">
-                        {leader.name}
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm sm:text-base font-bold text-white group-hover:text-[#F2D98D] transition-colors duration-300">
+                          {leader.name}
+                        </span>
+                        {leader.linkedin && (
+                          <a
+                            href={leader.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#888888] hover:text-[#0a66c2] transition-colors p-0.5"
+                            aria-label={`${leader.name} LinkedIn`}
+                          >
+                            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.61 1.6 1.6 1.6 0 0 0 1.61 1.6 1.6 1.6 0 0 0 1.6-1.6 1.6 1.6 0 0 0-1.6-1.6Z" />
+                            </svg>
+                          </a>
+                        )}
                       </div>
                       <div className="text-xs text-[#888888] font-medium">
                         {leader.role}
@@ -179,18 +210,18 @@ export const CompanyIntro: React.FC = () => {
               <div className="text-xs font-bold uppercase text-[#888888] tracking-wider">
                 Corporate Registration
               </div>
-              <div className="space-y-2.5 text-sm text-[#A1A1AA] mb-4">
-                <div className="flex justify-between">
-                  <span className="text-[#777777]">Entity:</span>
-                  <span className="font-medium text-white">{COMPANY_DATA.legalName}</span>
+              <div className="space-y-2 text-sm text-[#A1A1AA] mb-4">
+                <div className="flex justify-between items-center py-1 border-b border-[#222222]">
+                  <span className="text-xs font-semibold text-[#DFC067]">Entity:</span>
+                  <span className="text-xs font-bold text-white">{COMPANY_DATA.legalName}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[#777777]">HQ Location:</span>
-                  <span className="font-medium text-white">{COMPANY_DATA.location}</span>
+                <div className="flex justify-between items-center py-1 border-b border-[#222222]">
+                  <span className="text-xs font-semibold text-[#DFC067]">HQ Location:</span>
+                  <span className="text-xs font-bold text-white">{COMPANY_DATA.location}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[#777777]">Brand Line:</span>
-                  <span className="font-mono text-xs font-semibold text-[#D4AF37]">
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-xs font-semibold text-[#DFC067]">Brand Line:</span>
+                  <span className="font-mono text-xs font-bold text-[#DFC067]">
                     {COMPANY_DATA.brandLine}
                   </span>
                 </div>

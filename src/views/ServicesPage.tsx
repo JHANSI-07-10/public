@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { CORE_SERVICES, Service, COMPANY_DATA } from '../data/content';
 import { 
@@ -15,26 +15,43 @@ import {
   HelpCircle
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/ui/WhatsAppIcon';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
-import { ServiceDetailedCard } from '../components/services/ServiceDetailedCard';
-import { ServiceArchitectureVisualizer } from '../components/services/ServiceArchitectureVisualizer';
-import { ServiceComparisonMatrix } from '../components/services/ServiceComparisonMatrix';
-import { ServiceDeliveryProcess } from '../components/services/ServiceDeliveryProcess';
+import { ServiceShowcase } from '../components/services/ServiceShowcase';
+import { ServiceDeliveryApproach } from '../components/services/ServiceDeliveryApproach';
 import { ServicesFAQ } from '../components/services/ServicesFAQ';
 
 interface ServicesPageProps {
   onOpenConsultation: (service?: Service) => void;
 }
 
-export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }) => {
-  const [activeFilter, setActiveFilter] = useState<string>('all');
+const ROTATING_TARGETS = [
+  'SaaS & Enterprise',
+  'Cloud & DevOps',
+  'AI & Machine Learning',
+  'Web & Mobile Platforms',
+  'Enterprise ERP & CRM',
+  'Mission-Critical Systems',
+];
 
-  const filteredServices =
-    activeFilter === 'all'
-      ? CORE_SERVICES
-      : CORE_SERVICES.filter((s) => s.id === activeFilter);
+export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }) => {
+  const [rotatingIndex, setRotatingIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
+
+  // Cycle rotating terms every 3.2 seconds
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setRotatingIndex((prev) => (prev + 1) % ROTATING_TARGETS.length);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -44,19 +61,20 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
   };
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
-      {/* Services Hero */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden">
+    <div className="bg-[#0a0a0a] pb-20">
+      {/* Services Hero - Full Viewport First Fold */}
+      <section className="relative min-h-screen pt-24 sm:pt-28 pb-10 sm:pb-14 flex flex-col justify-center border-b border-[#1f1f1f] overflow-hidden">
         {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
         <img
-          src="/bg-services-hero.svg"
+          src="/bg-services-hero.svg?v=5"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-[75%_center] opacity-55 pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full object-cover object-[88%_center] opacity-85 pointer-events-none select-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/25 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-0 hero-tech-grid opacity-40 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center my-auto">
           <Reveal>
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616] border border-[#2a2a2a]">
@@ -66,12 +84,26 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.1] text-balance mb-5">
-                Software Engineering Services for <span className="text-[#c9a84c]">SaaS & Enterprise</span> Leaders.
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.2] mb-5">
+                Software Engineering Services for{' '}
+                <span className="inline-block relative overflow-hidden align-baseline">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={ROTATING_TARGETS[rotatingIndex]}
+                      initial={shouldReduceMotion ? undefined : { opacity: 0, y: '65%' }}
+                      animate={{ opacity: 1, y: '0%' }}
+                      exit={shouldReduceMotion ? undefined : { opacity: 0, y: '-65%' }}
+                      transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                      className="inline-block text-[#c9a84c]"
+                    >
+                      {ROTATING_TARGETS[rotatingIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
               </h1>
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl text-balance">
-                Explore VPD Technologies' engineering disciplines: custom SaaS development, enterprise Java backend solutions, and high-performance React frontends. Built for high-frequency workflows, durability, and conversion velocity.
+                Explore VPD Technologies' comprehensive digital engineering services, including custom software development, web and mobile applications, enterprise ERP and CRM solutions, AI and machine learning, cloud infrastructure, and UI/UX design. We focus on building reliable, scalable, and user-friendly digital solutions tailored to evolving business needs.
               </p>
             </div>
           </Reveal>
@@ -141,29 +173,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
               </button>
 
               <button
-                onClick={() => scrollToSection('architecture-visualizer')}
-                className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
-              >
-                <Cpu className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Architecture Topology</span>
-              </button>
-
-
-
-              <button
-                onClick={() => scrollToSection('comparison-matrix')}
-                className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
-              >
-                <Server className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Spec Comparison</span>
-              </button>
-
-              <button
-                onClick={() => scrollToSection('delivery-process')}
+                onClick={() => scrollToSection('delivery-approach')}
                 className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
               >
                 <Rocket className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Delivery Process</span>
+                <span>Delivery Approach</span>
               </button>
 
               <button
@@ -178,93 +192,18 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         </div>
       </section>
 
-      {/* 2. Core Service Blueprints & Filter */}
-      <section id="core-services" className="py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-            <div>
-              <span className="text-xs font-mono font-bold text-[#c9a84c] uppercase tracking-wider block mb-2">
-                Core Engineering Disciplines
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-                Inspect Our Architectural Offerings
-              </h2>
-              <p className="text-sm text-[#999999] mt-1 max-w-xl">
-                Switch between Overview, Benchmarks, and Tangible Deliverables inside each service card.
-              </p>
-            </div>
-
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                onClick={() => setActiveFilter('all')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
-                  activeFilter === 'all'
-                    ? 'bg-[#c9a84c] text-black shadow-md'
-                    : 'bg-[#141414] text-[#aaaaaa] hover:text-white border border-[#242424]'
-                }`}
-              >
-                All Disciplines ({CORE_SERVICES.length})
-              </button>
-              {CORE_SERVICES.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setActiveFilter(s.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] ${
-                    activeFilter === s.id
-                      ? 'bg-[#c9a84c] text-black shadow-md'
-                      : 'bg-[#141414] text-[#aaaaaa] hover:text-white border border-[#242424]'
-                  }`}
-                >
-                  {s.title}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <StaggerContainer className="space-y-10">
-            {filteredServices.map((service, index) => (
-              <StaggerItem key={service.id}>
-                <ServiceDetailedCard
-                  service={service}
-                  index={index}
-                  onOpenConsultation={(s) => onOpenConsultation(s)}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+      {/* 2. Core Engineering Capabilities Showcase */}
+      <section id="core-services" className="py-16 sm:py-24 border-t border-[#181818]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ServiceShowcase onOpenConsultation={(s) => onOpenConsultation(s)} />
         </div>
       </section>
 
-      {/* 3. Interactive Topology Visualizer */}
-      <section id="architecture-visualizer" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
+      {/* 3. Our Delivery Approach (6-Stage Lifecycle) */}
+      <section id="delivery-approach" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <ServiceArchitectureVisualizer
-              onOpenConsultation={() => onOpenConsultation()}
-            />
-          </Reveal>
-        </div>
-      </section>
-
-
-
-      {/* 5. Head-to-Head Technical Spec Matrix */}
-      <section id="comparison-matrix" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <ServiceComparisonMatrix
-              onOpenConsultation={(s) => onOpenConsultation(s)}
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 6. 4-Phase Delivery Lifecycle */}
-      <section id="delivery-process" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <ServiceDeliveryProcess
+            <ServiceDeliveryApproach
               onOpenConsultation={() => onOpenConsultation()}
             />
           </Reveal>

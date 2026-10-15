@@ -14,9 +14,11 @@ import {
   ChevronRight,
   ShieldCheck,
   Cpu,
-  Workflow
+  Workflow,
+  ShoppingBag,
+  UtensilsCrossed,
+  PawPrint
 } from 'lucide-react';
-import { SectionHeader } from '../components/ui/SectionHeader';
 import { PRODUCTS_PLATFORMS, ProductPlatform, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
@@ -44,6 +46,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
 
   const getPlatformIcon = (id: string) => {
     switch (id) {
+      case 'pawguard':
+        return PawPrint;
+      case 'lumiere-os':
+        return UtensilsCrossed;
+      case 'clikgett':
+        return ShoppingBag;
+      case 'gatesphere':
+        return ShieldCheck;
       case 'b2b-logistics':
         return Package;
       case 'agriflow-erp':
@@ -55,14 +65,13 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
   };
 
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
+    <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* 1. Hero Section */}
-      <section className="relative py-16 sm:py-24 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
         <PageHeroBackground imageSrc="/about2.webp" position="center 40%" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/30 pointer-events-none" />
-        <div className="absolute inset-0 hero-tech-grid opacity-35 pointer-events-none" />
+        <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <Reveal>
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616] border border-[#2a2a2a]">
@@ -77,7 +86,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
               </h1>
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-6">
-                Discover VPD Technologies' specialized software platforms engineered to streamline logistics coordination, rural agribusiness procurement, and multi-tenant enterprise operations.
+                Discover VPD Technologies&apos; specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
               </p>
 
               {/* Informational Disclaimer Banner */}
@@ -91,9 +100,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/contact">
                   <AnimatedButton
-                    variant="primary"
+                    variant="secondary"
                     size="md"
-                    icon={<ArrowRight className="w-4 h-4" />}
+                    icon={<ArrowRight className="w-4 h-4 text-[#aaaaaa]" />}
                   >
                     Request Platform Demonstration
                   </AnimatedButton>
@@ -112,18 +121,8 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
       </section>
 
       {/* 2. Platforms Detailed Showcase */}
-      <section className="py-20 border-b border-[#1f1f1f]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Platform Profiles & Readiness"
-              title="Architectural Overviews of VPD Platforms"
-              subtitle="Each platform is engineered with strict type safety, event streaming, and modular database schemas to support real-world operating environments."
-              align="center"
-              className="mb-16"
-            />
-          </Reveal>
-
+      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="space-y-16">
             {PRODUCTS_PLATFORMS.map((platform, index) => {
               const Icon = getPlatformIcon(platform.id);
@@ -131,9 +130,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 <Reveal key={platform.id} delay={index * 0.1}>
                   <div
                     id={platform.id}
-                    className="rounded-2xl border border-[#282828] bg-[#121212]/90 backdrop-blur-xl p-8 sm:p-10 lg:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:border-[#c9a84c]/40 transition-colors duration-300 relative overflow-hidden"
+                    className="silver-card-hover group rounded-2xl border border-[#282828] bg-[#121212]/90 backdrop-blur-xl p-8 sm:p-10 lg:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden"
                   >
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                       {/* Left: Platform Overview, Status Badge, Target Audience */}
                       <div className="lg:col-span-5 space-y-4">
                         <div className="flex items-center justify-between">
@@ -160,13 +159,31 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                         </p>
 
                         <div className="pt-4 border-t border-[#222222] space-y-2 text-xs">
-                          <span className="text-[#666666] font-mono uppercase tracking-wider block font-bold">
+                          <span className="text-[#aaaaaa] font-mono uppercase tracking-wider block font-bold">
                             Target Sector / Audience
                           </span>
                           <p className="text-[#dddddd] leading-relaxed">
                             {platform.targetAudience}
                           </p>
                         </div>
+
+                        {platform.keyTech && platform.keyTech.length > 0 && (
+                          <div className="pt-4 border-t border-[#222222] space-y-2">
+                            <span className="text-xs font-mono uppercase tracking-wider text-[#aaaaaa] block font-bold">
+                              Applied Technology Stack
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                              {platform.keyTech.map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="px-2.5 py-1 rounded-md bg-[#181818] border border-[#2a2a2a] text-xs font-mono text-[#D4AF37]"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Right: High-Level Concepts & Architectural Overview */}
@@ -200,13 +217,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                           </div>
                         </div>
 
-                        <div className="pt-2 flex items-center justify-between">
-                          <span className="text-xs text-[#666666] font-mono">
+                        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <span className="text-xs font-mono text-[#d4d4d8] flex items-center gap-2 font-medium">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] shrink-0" />
                             Informational briefing available upon request
                           </span>
                           <Link
                             href="/contact"
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c9a84c] hover:text-[#DFC067] transition-colors"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c9a84c] hover:text-[#DFC067] transition-colors shrink-0"
                           >
                             <span>Enquire About {platform.name}</span>
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -223,25 +241,27 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
       </section>
 
       {/* 3. Bottom CTA */}
-      <section className="py-16">
+      <section className="pt-8 sm:pt-10 pb-4 sm:pb-6">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
-              Explore Enterprise Integration &amp; Pilot Opportunities
-            </h2>
-            <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
-              If your organization is seeking to pilot AgriFlow ERP in your agricultural network, or evaluate the B2B Logistics Platform for regional freight management, our engineering leadership is ready to discuss technical prerequisites.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/contact">
-                <AnimatedButton
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Request Technical Briefing
-                </AnimatedButton>
-              </Link>
+          <div className="silver-card-hover group rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
+                Explore Enterprise Integration &amp; Pilot Opportunities
+              </h2>
+              <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
+                If your organization is seeking to deploy ClikGett for quick-commerce delivery, implement Lumière OS for restaurant operations, integrate PawGuard for animal shelter management, evaluate GateSphere Enterprise for community security, pilot AgriFlow ERP in your agricultural network, or integrate the B2B Logistics Platform, our engineering leadership is ready to discuss technical prerequisites.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/contact">
+                  <AnimatedButton
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Request Technical Briefing
+                  </AnimatedButton>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

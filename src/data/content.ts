@@ -91,6 +91,7 @@ export interface ProductPlatform {
   highLevelConcepts: string[];
   targetAudience: string;
   architectureNote: string;
+  keyTech?: string[];
 }
 
 export interface FounderProfile {
@@ -104,6 +105,7 @@ export interface FounderProfile {
   location: string;
   education?: string;
   linkedin?: string;
+  image?: string;
 }
 
 export interface DeliveryStage {
@@ -134,6 +136,7 @@ export const COMPANY_DATA = {
   mission: "We engineer high-performance software products, enterprise applications, and modern digital solutions that help organizations modernize operations and support business growth.",
   vision: "To establish a trusted digital technology presence recognized for delivering scalable, reliable, and impactful software solutions from Kurnool, Andhra Pradesh to enterprises globally.",
   location: "Kurnool, Andhra Pradesh, India",
+  streetAddress: "Kurnool, Andhra Pradesh, India",
   coordinates: { lat: 15.838556, lng: 78.015556 },
   phone: "+91 83339 19447",
   email: "support@vpdtechnologiespvtltd.com",
@@ -144,6 +147,8 @@ export const COMPANY_DATA = {
   founder: {
     name: "Sai Krishna Vuppala",
     role: "Founder & Chief Executive Officer",
+    image: "/sai-krishna-vuppala.webp",
+    linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/",
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results."
   },
   leadership: [
@@ -151,13 +156,17 @@ export const COMPANY_DATA = {
       name: "Sai Krishna Vuppala",
       role: "Founder and Chief Executive Officer",
       shortRole: "Founder & CEO",
-      initials: "SK"
+      initials: "SK",
+      image: "/sai-krishna-vuppala.webp",
+      linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/"
     },
     {
       name: "Ramcharan Gottipati",
       role: "Co-Founder and Managing Director",
       shortRole: "Co-Founder & MD",
-      initials: "RG"
+      initials: "RG",
+      image: "/ramcharan-gottipati.webp",
+      linkedin: "https://www.linkedin.com/in/ramcharangottipati/"
     }
   ]
 };
@@ -195,6 +204,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     role: "Founder & Chief Executive Officer (CEO)",
     shortRole: "Founder & CEO",
     initials: "SK",
+    image: "/sai-krishna-vuppala.webp",
     bio: "Sai Krishna Vuppala is the Founder and Chief Executive Officer of VPD Technologies Private Limited. Leading the company from Kurnool, Andhra Pradesh, Sai Krishna drives the overarching strategic vision, enterprise software architecture, and technology roadmap. With deep domain expertise in scalable full-stack ecosystems, enterprise Java backends, and modern web engineering, he oversees technology innovation and institutional client engagements. Under his stewardship, VPD Technologies delivers mission-critical software solutions for organizations modernizing their operations, instilling an engineering culture centered on precision, architectural integrity, and measurable business outcomes.",
     focusAreas: [
       "Enterprise Software Architecture",
@@ -205,13 +215,14 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results.",
     location: "Kurnool, Andhra Pradesh, India",
     education: "Bachelor of Technology in Computer Science & Engineering",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/"
   },
   {
     name: "Ramcharan Gottipati",
     role: "Co-Founder & Managing Director (MD)",
     shortRole: "Co-Founder & MD",
     initials: "RG",
+    image: "/ramcharan-gottipati.webp",
     bio: "Ramcharan Gottipati is the Co-Founder and Managing Director of VPD Technologies Private Limited. He spearheads delivery governance, client engagement models, operational execution, and organizational growth from the company's headquarters in Kurnool. With a focus on engineering rigor and process agility, Ramcharan ensures projects transition smoothly from architectural blueprint through pilot deployment and global scale. His leadership guarantees that client solutions meet strict quality standards, enterprise service level agreements, and reliable timelines, driving VPD’s reputation as an accountable digital engineering partner.",
     focusAreas: [
       "Delivery Governance & Project Operations",
@@ -222,7 +233,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     quote: "True engineering value lies in disciplined execution and dependable delivery. We are committed to building high-tier software capabilities and decentralized engineering talent that clients can rely on every single day.",
     location: "Kurnool, Andhra Pradesh, India",
     education: "Management & Technology Leadership",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://www.linkedin.com/in/ramcharangottipati/"
   }
 ];
 
@@ -234,6 +245,56 @@ export const KEY_METRICS = [
 ];
 
 export const CORE_SERVICES: Service[] = [
+  {
+    id: "enterprise-software",
+    title: "Enterprise Software / ERP / CRM",
+    category: "Enterprise Business Engines",
+    description: "Develop or implement business-focused applications and integrations, where offered by VPD.",
+    target: "Enterprises seeking centralized operational command, structured data integrity, and unified multi-department workflows.",
+    stack: "Java 21 / Spring Boot 3 / PostgreSQL / Redis",
+    latency: "High-Throughput Concurrent Stream",
+    security: "Enterprise ISO 27001 & AES-256 Protocol",
+    benefits: [
+      "Mission-Critical Enterprise Stability & Durability",
+      "Conflict-Free Optimistic Data Models for High Volume",
+      "Scalable Multi-Tenant Isolation & Role Governance"
+    ],
+    capabilities: [
+      "Enterprise Resource Planning Modules",
+      "Customer Relationship Management Engines",
+      "Distributed Database Clustering & Optimization"
+    ],
+    stackLines: [
+      "ERP and CRM engines that centralize operational command.",
+      "Unified workflows and structured data across departments.",
+      "Multi-tenant architecture with enterprise-grade governance."
+    ]
+  },
+  {
+    id: "mobile-apps",
+    title: "Mobile Application Development",
+    category: "Cross-Platform Mobile Experiences",
+    description: "Build mobile experiences for business services and customer engagement.",
+    target: "Companies extending operational tools to mobile teams, field workers, or mobile-first end consumers.",
+    stack: "React Native / Flutter / Android SDK / iOS Swift",
+    latency: "60 FPS Native Touch Response",
+    security: "Biometric Authentication & Keychain Encryption",
+    benefits: [
+      "Unified Codebase Across iOS & Android Platforms",
+      "Offline-First Data Caching & Automatic Sync",
+      "Ergonomic Touch-Optimized Design Systems"
+    ],
+    capabilities: [
+      "Field Operations & Dispatch Apps",
+      "Customer Self-Service Mobile Portals",
+      "Push Notification & Real-Time Telemetry Engines"
+    ],
+    stackLines: [
+      "Native-feel apps for iOS and Android from one codebase.",
+      "Offline-first data with reliable automatic synchronization.",
+      "Touch-optimized interfaces for field teams and customers."
+    ]
+  },
   {
     id: "custom-software",
     title: "Custom Software Development",
@@ -285,53 +346,28 @@ export const CORE_SERVICES: Service[] = [
     ]
   },
   {
-    id: "enterprise-software",
-    title: "Enterprise Software / ERP / CRM",
-    category: "Enterprise Business Engines",
-    description: "Develop or implement business-focused applications and integrations, where offered by VPD.",
-    target: "Enterprises seeking centralized operational command, structured data integrity, and unified multi-department workflows.",
-    stack: "Java 21 / Spring Boot 3 / PostgreSQL / Redis",
-    latency: "High-Throughput Concurrent Stream",
-    security: "Enterprise ISO 27001 & AES-256 Protocol",
+    id: "ui-ux-engineering",
+    title: "UI/UX Design & Product Engineering",
+    category: "Usable Digital Experiences",
+    description: "Design usable digital experiences and support product development and improvement.",
+    target: "Teams looking to eliminate user friction, upgrade software aesthetic appeal, and improve retention through design excellence.",
+    stack: "Figma / React 19 / Design Tokens / WCAG 2.2 AA",
+    latency: "Accessible Contrast & Instant Feedback",
+    security: "Compliant Interaction Patterns",
     benefits: [
-      "Mission-Critical Enterprise Stability & Durability",
-      "Conflict-Free Optimistic Data Models for High Volume",
-      "Scalable Multi-Tenant Isolation & Role Governance"
+      "Systematic Design Systems That Scale With Growth",
+      "User-Centric Usability Research & Wireframing",
+      "WCAG 2.2 AA Accessibility Compliance Built-In"
     ],
     capabilities: [
-      "Enterprise Resource Planning Modules",
-      "Customer Relationship Management Engines",
-      "Distributed Database Clustering & Optimization"
+      "Interactive High-Fidelity Prototypes",
+      "Enterprise Design Token Systems",
+      "Ergonomic Dashboard & Workflow Refinement"
     ],
     stackLines: [
-      "ERP and CRM engines that centralize operational command.",
-      "Unified workflows and structured data across departments.",
-      "Multi-tenant architecture with enterprise-grade governance."
-    ]
-  },
-  {
-    id: "mobile-apps",
-    title: "Mobile Application Development",
-    category: "Cross-Platform Mobile Experiences",
-    description: "Build mobile experiences for business services and customer engagement.",
-    target: "Companies extending operational tools to mobile teams, field workers, or mobile-first end consumers.",
-    stack: "React Native / Flutter / Android SDK / iOS Swift",
-    latency: "60 FPS Native Touch Response",
-    security: "Biometric Authentication & Keychain Encryption",
-    benefits: [
-      "Unified Codebase Across iOS & Android Platforms",
-      "Offline-First Data Caching & Automatic Sync",
-      "Ergonomic Touch-Optimized Design Systems"
-    ],
-    capabilities: [
-      "Field Operations & Dispatch Apps",
-      "Customer Self-Service Mobile Portals",
-      "Push Notification & Real-Time Telemetry Engines"
-    ],
-    stackLines: [
-      "Native-feel apps for iOS and Android from one codebase.",
-      "Offline-first data with reliable automatic synchronization.",
-      "Touch-optimized interfaces for field teams and customers."
+      "Design systems and prototypes that scale with growth.",
+      "User-centric research translated into interface clarity.",
+      "WCAG 2.2 AA accessibility engineered from day one."
     ]
   },
   {
@@ -384,31 +420,7 @@ export const CORE_SERVICES: Service[] = [
       "Continuous observability, telemetry and security auditing."
     ]
   },
-  {
-    id: "ui-ux-engineering",
-    title: "UI/UX Design & Product Engineering",
-    category: "Usable Digital Experiences",
-    description: "Design usable digital experiences and support product development and improvement.",
-    target: "Teams looking to eliminate user friction, upgrade software aesthetic appeal, and improve retention through design excellence.",
-    stack: "Figma / React 19 / Design Tokens / WCAG 2.2 AA",
-    latency: "Accessible Contrast & Instant Feedback",
-    security: "Compliant Interaction Patterns",
-    benefits: [
-      "Systematic Design Systems That Scale With Growth",
-      "User-Centric Usability Research & Wireframing",
-      "WCAG 2.2 AA Accessibility Compliance Built-In"
-    ],
-    capabilities: [
-      "Interactive High-Fidelity Prototypes",
-      "Enterprise Design Token Systems",
-      "Ergonomic Dashboard & Workflow Refinement"
-    ],
-    stackLines: [
-      "Design systems and prototypes that scale with growth.",
-      "User-centric research translated into interface clarity.",
-      "WCAG 2.2 AA accessibility engineered from day one."
-    ]
-  }
+
 ];
 
 export const INDUSTRIES: Industry[] = [
@@ -524,6 +536,108 @@ export const INDUSTRIES: Industry[] = [
 
 export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
   {
+    id: "clikgett",
+    name: "ClikGett",
+    category: "Quick-Commerce & Hyperlocal Grocery Delivery",
+    status: "Available",
+    statusBadge: "Live in Production",
+    summary: "Live quick-commerce and hyperlocal grocery delivery platform operating in Kurnool, Andhra Pradesh. Built around three interconnected interfaces: a customer Flutter mobile app, a native Android delivery partner app, and a centralized React administrative management portal.",
+    highLevelConcepts: [
+      "Customer Mobile App (Flutter) for Product Discovery, Smart Cart & Digital Checkout",
+      "Dedicated Delivery Partner App (Native Android) with Live Dispatch & Routing",
+      "Centralized Admin Console for Real-Time Catalog, Pricing & Variant Control",
+      "Dynamic Geofenced Address Verification & Hyperlocal Serviceability Mapping",
+      "Integrated Multi-Payment Workflows (UPI, Net Banking & Cash on Delivery)",
+      "Real-Time Order Progression, Fulfillment Tracking & Merchant Ledgers"
+    ],
+    targetAudience: "Urban shoppers, retail supermarket chains, regional grocery distributors, and quick-commerce operators requiring unified digital fulfillment.",
+    architectureNote: "Production system engineered with a three-tier architecture: Flutter cross-platform customer mobile application, high-reliability native Android delivery app, and a React administrative web dashboard. Powered by Node.js & Express RESTful microservices and a cloud-hosted MySQL database on AWS RDS with automated failover.",
+    keyTech: [
+      "Flutter (Customer App)",
+      "Native Android (Delivery)",
+      "React (Admin Web)",
+      "Node.js & Express",
+      "MySQL (AWS RDS)",
+      "RESTful APIs"
+    ]
+  },
+  {
+    id: "lumiere-os",
+    name: "Lumière OS",
+    category: "Hospitality Tech & Restaurant Operating System",
+    status: "Pilot",
+    statusBadge: "Pilot Stage",
+    summary: "Next-generation B2B multi-tenant restaurant operating system engineered for fine dining establishments and multi-outlet hospitality chains. Unifies table reservations with deposit protection, real-time Kitchen KDS bump bars, bi-directional marketplace order synchronization, floor plan waiter POS, and recipe COGS inventory.",
+    highLevelConcepts: [
+      "Table Reservation Engine with Razorpay Deposit No-Show Protection",
+      "Real-Time Kitchen Display System (KDS) & Bump Bar Ticket Acceleration",
+      "Bi-Directional Swiggy & Zomato Marketplace Order Synchronization",
+      "Interactive Waiter POS with Graphical Floor Plan & Table Turn Management",
+      "Recipe Level COGS Tracking, Ingredient Deductions & Inventory Alerts",
+      "Centralized Multi-Outlet Chain Administration & Role-Based Workspaces"
+    ],
+    targetAudience: "Fine dining restaurants, cloud kitchen networks, multi-outlet food & beverage chains, and franchise hospitality operators requiring unified front-of-house and kitchen operations.",
+    architectureNote: "Architected as a high-throughput, multi-tenant B2B SaaS engine. Built with Next.js web application architecture, complex relational stored procedures in PLpgSQL, modular client-side JavaScript execution, and custom responsive CSS design tokens.",
+    keyTech: [
+      "Next.js",
+      "PLpgSQL",
+      "JavaScript",
+      "CSS"
+    ]
+  },
+  {
+    id: "gatesphere",
+    name: "GateSphere Enterprise Platform",
+    category: "Residential Community, Visitor & Security Management",
+    status: "Pilot",
+    statusBadge: "Pilot Stage",
+    summary: "Enterprise-grade residential community, visitor lifecycle, live gate security, and facility management platform. Features an original micro-modular architecture, strict multi-tenant community segregation, and comprehensive role-based execution workflows.",
+    highLevelConcepts: [
+      "Real-Time Visitor Lifecycle & Digital QR / OTP Gate Verification",
+      "Zero-Latency Security Guard Live Gate Traffic Dashboard",
+      "Multi-Apartment Domestic Staff Mapping & Biometric Attendance",
+      "Configurable Delivery Protocols (Gate Desk, OTP, Resident Approval)",
+      "Accounting-Oriented Maintenance Invoicing & Resident Ledgers",
+      "SLA-Driven Complaint Service Desk & Concurrency-Checked Amenity Booking"
+    ],
+    targetAudience: "Gated residential communities, multi-tower apartment societies, township associations, facility management firms, and resident welfare associations (RWAs).",
+    architectureNote: "Engineered with a hybrid backend combining Django ORM & FastAPI asynchronous endpoints, paired with a React 19/Next.js frontend. Backed by PostgreSQL relational schemas, session-based authentication with strict 10-tier Role-Based Access Control (RBAC), and weekly sprint task tracking under Sivion QA acceptance frameworks.",
+    keyTech: [
+      "React 19 / Next.js",
+      "Django + FastAPI",
+      "PostgreSQL",
+      "Session Auth & RBAC",
+      "Redis Pub/Sub",
+      "Weekly CI/CD Sprints"
+    ]
+  },
+  {
+    id: "pawguard",
+    name: "PawGuard Central Platform",
+    category: "Animal Welfare, Rescue & Shelter Management",
+    status: "Pilot",
+    statusBadge: "Pilot Stage",
+    summary: "Centralized operational web application and digital nervous system for multi-regional dog rescue networks, veterinary care facilities, and adoption operations. Unifies public emergency incident reporting and donor sponsorship with internal GPS field rescue dispatch, kennel capacity management, and controlled adoption vetting.",
+    highLevelConcepts: [
+      "Public Emergency Rescue Reporting Wizard with Automated GPS Tagging & Media Uploads",
+      "Field Dispatch Control Board with Real-Time Vehicle Routing & Case Progression (Reported to Admitted)",
+      "360-Degree Master Dog Profile with Permanent Clinical Timeline & Microchip Tracking",
+      "Veterinary Clinical Suite for Surgical Logs, Scheduled Vaccinations & Adoption Health Clearances",
+      "Multi-Facility Shelter Capacity & Dynamic Spatial Kennel Allocation (Zero Overcrowding)",
+      "Controlled 6-Phase Adoption Vetting Pipeline with Dog Exclusivity Locking Engine"
+    ],
+    targetAudience: "Animal rescue organizations, multi-facility animal shelters, humane societies, municipal foster networks, emergency veterinary clinics, and animal welfare NGOs.",
+    architectureNote: "Architected as a dual-portal web platform (Public Service Portal & Internal Operations Hub) enforcing 15 granular Role-Based Access Control (RBAC) tiers. Built with Next.js web interfaces, Node.js microservices, PostgreSQL relational schemas, Redis event caching, and comprehensive transaction audit logging.",
+    keyTech: [
+      "Next.js / React 19",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Redis",
+      "15-Role RBAC"
+    ]
+  },
+  {
     id: "b2b-logistics",
     name: "B2B Logistics Platform",
     category: "Supply Chain & Freight Coordination",
@@ -537,7 +651,8 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
       "Carrier Route Optimization & Vehicle Turnaround Metrics"
     ],
     targetAudience: "Logistics providers, freight operators, and distribution enterprises seeking unified fleet and inventory visibility.",
-    architectureNote: "Descriptive concept only. Engineered around event-driven Java Spring microservices, persistent WebSocket state synchronization, and partition-indexed PostgreSQL storage."
+    architectureNote: "Descriptive concept only. Engineered around event-driven Java Spring microservices, persistent WebSocket state synchronization, and partition-indexed PostgreSQL storage.",
+    keyTech: ["Java 21", "Spring Boot", "WebSockets", "PostgreSQL", "Redis"]
   },
   {
     id: "agriflow-erp",
@@ -553,7 +668,8 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
       "Automated Warehouse Storage Coordination & Settlement Pipelines"
     ],
     targetAudience: "Agribusiness cooperatives, grain procurement agencies, farmer producer organizations (FPOs), and agricultural input distributors.",
-    architectureNote: "Descriptive concept only. Designed with mobile-responsive offline sync capabilities for rural field agents, integrated with secure ledger reconciliation backends."
+    architectureNote: "Descriptive concept only. Designed with mobile-responsive offline sync capabilities for rural field agents, integrated with secure ledger reconciliation backends.",
+    keyTech: ["React 19", "Node.js", "PostgreSQL", "Offline Sync", "GPS Mapping"]
   },
   {
     id: "enterprise-saas-suite",
@@ -569,7 +685,8 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
       "Institutional Education Portals & Academic Data Management"
     ],
     targetAudience: "Small to mid-scale enterprises modernizing business operations with turnkey, configurable software modules.",
-    architectureNote: "Descriptive concept only. Architected around multi-tenant isolation patterns, strict Role-Based Access Control (RBAC), and centralized API gateways."
+    architectureNote: "Descriptive concept only. Architected around multi-tenant isolation patterns, strict Role-Based Access Control (RBAC), and centralized API gateways.",
+    keyTech: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker"]
   }
 ];
 
@@ -719,28 +836,28 @@ export const CAREERS_DATA = {
 export const DIFFERENTIATORS = [
   {
     number: "01",
-    title: "Fast Delivery",
-    description: "Lean architectural planning and disciplined sprint execution help your product transition from validated concept to production launch in record time."
-  },
-  {
-    number: "02",
-    title: "SEO Optimized",
-    description: "Semantic HTML5, lightning-fast Time to Interactive (<100ms), and search-ready OpenGraph and Schema.org structured data baked in from day one."
-  },
-  {
-    number: "03",
-    title: "Mobile Responsive",
-    description: "Every layout is precision-tested across mobile, tablet, and widescreen desktop monitors to guarantee fluid, touch-optimized user experiences."
-  },
-  {
-    number: "04",
     title: "Scalable Solutions",
     description: "Modular component hierarchies and decoupled API layers ensure your digital foundation effortlessly accommodates future pages, features, and user surges."
   },
   {
-    number: "05",
+    number: "02",
+    title: "Fast Delivery",
+    description: "Lean architectural planning and disciplined sprint execution help your product transition from validated concept to production launch in record time."
+  },
+  {
+    number: "03",
     title: "Modern Tech Stack",
     description: "Built with industry-standard technologies: React 19, TypeScript, Spring Boot, and cloud edge infrastructure for maximum developer velocity and longevity."
+  },
+  {
+    number: "04",
+    title: "Mobile Responsive",
+    description: "Every layout is precision-tested across mobile, tablet, and widescreen desktop monitors to guarantee fluid, touch-optimized user experiences."
+  },
+  {
+    number: "05",
+    title: "SEO Optimized",
+    description: "Semantic HTML5, lightning-fast Time to Interactive (<100ms), and search-ready OpenGraph and Schema.org structured data baked in from day one."
   },
   {
     number: "06",

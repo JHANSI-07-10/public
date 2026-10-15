@@ -10,6 +10,7 @@ import { InteractiveCard } from '../components/motion/InteractiveCard';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { Accordion } from '../components/motion/Accordion';
 import { ProjectJourneyTimeline } from '../components/about/ProjectJourneyTimeline';
+import { CurvedTravelingBeam } from '../components/motion/CurvedTravelingBeam';
 
 interface AboutPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -168,29 +169,85 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                 {/* Two Leadership Columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                   {/* Sai Krishna Vuppala */}
-                  <div className="group">
-                    <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
-                      Founder &amp; CEO
+                  <div className="group flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-xl bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] font-black text-lg shrink-0 overflow-hidden relative">
+                      <img
+                        src="/sai-krishna-vuppala.webp"
+                        alt="Sai Krishna Vuppala"
+                        className="w-full h-full object-cover object-[center_18%]"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = 'none';
+                        }}
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center -z-10 font-bold text-[#c9a84c]">
+                        SK
+                      </span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-1 group-hover:text-[#DFC067] transition-colors duration-300">
-                      Sai Krishna Vuppala
-                    </h3>
-                    <p className="text-sm text-[#aaaaaa] leading-relaxed">
-                      Strategic vision, enterprise architecture, and company direction
-                    </p>
+                    <div>
+                      <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
+                        Founder &amp; CEO
+                      </div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight group-hover:text-[#DFC067] transition-colors duration-300">
+                          Sai Krishna Vuppala
+                        </h3>
+                        <a
+                          href="https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#888888] hover:text-[#0a66c2] transition-colors p-1"
+                          aria-label="Sai Krishna Vuppala LinkedIn"
+                        >
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.61 1.6 1.6 1.6 0 0 0 1.61 1.6 1.6 1.6 0 0 0 1.6-1.6 1.6 1.6 0 0 0-1.6-1.6Z" />
+                          </svg>
+                        </a>
+                      </div>
+                      <p className="text-sm text-[#aaaaaa] leading-relaxed">
+                        Strategic vision, enterprise architecture, and company direction
+                      </p>
+                    </div>
                   </div>
 
                   {/* Ramcharan Gottipati */}
-                  <div className="group">
-                    <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
-                      Co-Founder &amp; Managing Director
+                  <div className="group flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-xl bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] font-black text-lg shrink-0 overflow-hidden relative">
+                      <img
+                        src="/ramcharan-gottipati.webp"
+                        alt="Ramcharan Gottipati"
+                        className="w-full h-full object-cover object-[center_18%]"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = 'none';
+                        }}
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center -z-10 font-bold text-[#c9a84c]">
+                        RG
+                      </span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-1 group-hover:text-[#DFC067] transition-colors duration-300">
-                      Ramcharan Gottipati
-                    </h3>
-                    <p className="text-sm text-[#aaaaaa] leading-relaxed">
-                      Operational leadership, delivery governance, and organizational growth
-                    </p>
+                    <div>
+                      <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
+                        Co-Founder &amp; Managing Director
+                      </div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight group-hover:text-[#DFC067] transition-colors duration-300">
+                          Ramcharan Gottipati
+                        </h3>
+                        <a
+                          href="https://www.linkedin.com/in/ramcharangottipati/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#888888] hover:text-[#0a66c2] transition-colors p-1"
+                          aria-label="Ramcharan Gottipati LinkedIn"
+                        >
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.61 1.6 1.6 1.6 0 0 0 1.61 1.6 1.6 1.6 0 0 0 1.6-1.6 1.6 1.6 0 0 0-1.6-1.6Z" />
+                          </svg>
+                        </a>
+                      </div>
+                      <p className="text-sm text-[#aaaaaa] leading-relaxed">
+                        Operational leadership, delivery governance, and organizational growth
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -220,7 +277,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           <Reveal>
             <SectionHeader
               eyebrow="Purpose & Direction"
-              title="Our Vision & Mission"
+              title="What Drives Us Forward"
               subtitle="The foundational principles driving our technical standards, innovation trajectory, and client partnerships."
               align="center"
               className="!mb-6 sm:!mb-8"
@@ -228,7 +285,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* Our Vision Card */}
+            {/* Vision Card */}
             <Reveal delay={0.05}>
               <div className="h-full rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-7 relative overflow-hidden group hover:border-[#c9a84c]/40 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-3">
@@ -236,7 +293,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                     <Target className="w-4 h-4" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                    Our Vision
+                    Vision
                   </h3>
                 </div>
                 <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
@@ -245,7 +302,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               </div>
             </Reveal>
 
-            {/* Our Mission Card */}
+            {/* Mission Card */}
             <Reveal delay={0.1}>
               <div className="h-full rounded-2xl border border-[#222222] bg-[#111111]/90 p-6 sm:p-7 relative overflow-hidden group hover:border-[#c9a84c]/40 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-3">
@@ -253,7 +310,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                     <Rocket className="w-4 h-4" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                    Our Mission
+                    Mission
                   </h3>
                 </div>
                 <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
@@ -352,18 +409,24 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {DIFFERENTIATORS.map((diff) => (
-              <StaggerItem key={diff.number}>
-                <InteractiveCard variant="card" padding="md" className="h-full">
-                  <div className="text-xs font-mono font-bold text-[#c9a84c] mb-2">
-                    {diff.number}.
-                  </div>
-                  <h4 className="text-lg font-bold text-white mb-2">
-                    {diff.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed">
-                    {diff.description}
-                  </p>
-                </InteractiveCard>
+              <StaggerItem key={diff.title}>
+                <CurvedTravelingBeam className="h-full" radius={16} duration={2.4}>
+                  <InteractiveCard
+                    variant="card"
+                    padding="md"
+                    hoverable={false}
+                    className="h-full flex flex-col justify-between border-[#242424] bg-[#141414] transition-colors duration-300 group-hover:border-[#383838]"
+                  >
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-2 transition-all duration-300 group-hover:text-[#DFC067] group-hover:drop-shadow-[0_0_14px_rgba(223,192,103,0.35)]">
+                        {diff.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed">
+                        {diff.description}
+                      </p>
+                    </div>
+                  </InteractiveCard>
+                </CurvedTravelingBeam>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -390,9 +453,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           <div className="mt-8 text-center">
             <AnimatedButton
               onClick={() => onOpenConsultation()}
-              variant="primary"
+              variant="outline-gold"
               size="lg"
-              icon={<ArrowRight className="w-4 h-4" />}
+              icon={<ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />}
+              className="group transition-all duration-300"
             >
               Discuss Your Project Requirements
             </AnimatedButton>

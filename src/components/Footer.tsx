@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#080808]/90 backdrop-blur-sm border-t border-[#1f1f1f]/60 pt-16 pb-12 text-[#aaaaaa] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         <Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-[#1c1c1c]">
             {/* Column 1: Brand & Positioning */}
@@ -150,14 +150,6 @@ export const Footer: React.FC = () => {
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Careers &amp; Culture
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/portfolio"
-                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
-                  >
-                    Approved Case Studies
                   </Link>
                 </li>
                 <li>

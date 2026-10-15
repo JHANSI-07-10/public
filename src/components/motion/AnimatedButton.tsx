@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { motionTokens } from './motionTokens';
 
 export interface AnimatedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'outline-gold';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
@@ -56,6 +56,8 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
       'bg-transparent text-[#cccccc] hover:text-white border border-[#2e2e2e] hover:border-[#c9a84c]/60',
     ghost:
       'bg-transparent text-[#aaaaaa] hover:text-white hover:bg-[#161616]',
+    'outline-gold':
+      'bg-transparent text-[#c9a84c] border border-[#c9a84c] hover:bg-[#c9a84c] hover:text-[#0a0a0a]',
   };
 
   const widthStyle = fullWidth ? 'w-full' : '';
