@@ -288,16 +288,13 @@ return (
                             )}
 
                             {relatedProject && (
-                              <Link
-                                href={`/portfolio?case=${relatedProject.id}`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#c9a84c]/10 hover:bg-[#c9a84c]/20 border border-[#c9a84c]/30 text-[10px] font-mono font-bold text-[#c9a84c] transition-colors"
-                                title="View verified real-world production case study"
+                              <div
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#c9a84c]/10 border border-[#c9a84c]/30 text-[10px] font-mono font-bold text-[#c9a84c]"
+                                title="Verified real-world production deployment"
                               >
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
                                 <span>Verified in Production: {relatedProject.title}</span>
-                                <ArrowUpRight className="w-3 h-3 text-[#c9a84c]" />
-                              </Link>
+                              </div>
                             )}
                           </div>
 

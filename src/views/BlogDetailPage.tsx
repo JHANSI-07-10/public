@@ -256,14 +256,12 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
               ))}
 
               {relatedProject && (
-                <Link
-                  href={`/portfolio?case=${relatedProject.id}`}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#c9a84c]/10 hover:bg-[#c9a84c]/20 border border-[#c9a84c]/30 text-[10px] font-mono font-bold text-[#c9a84c] transition-colors"
+                <div
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#c9a84c]/10 border border-[#c9a84c]/30 text-[10px] font-mono font-bold text-[#c9a84c]"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
                   <span>Verified in Production: {relatedProject.title}</span>
-                  <ArrowUpRight className="w-3 h-3 text-[#c9a84c]" />
-                </Link>
+                </div>
               )}
             </div>
 
@@ -448,10 +446,10 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ id, onOpenConsul
                     Client: <strong className="text-white font-medium">{relatedProject.client}</strong> ({relatedProject.duration})
                   </span>
                   <Link
-                    href={`/portfolio?case=${relatedProject.id}`}
+                    href="/contact"
                     className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-black bg-[#c9a84c] hover:bg-[#d4b55c] transition-colors shrink-0"
                   >
-                    <span>Explore Production Case Study</span>
+                    <span>Schedule Technical Discussion</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

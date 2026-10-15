@@ -35,9 +35,9 @@ export const NotFoundPage: React.FC = () => {
         </div>
 
         <div className="pt-8 border-t border-[#222222] flex items-center justify-center gap-6 text-xs text-[#777777]">
-          <Link href="/portfolio" className="hover:text-white transition-colors flex items-center gap-1">
+          <Link href="/products" className="hover:text-white transition-colors flex items-center gap-1">
             <Briefcase className="w-3.5 h-3.5 text-[#c9a84c]" />
-            <span>Case Studies</span>
+            <span>Products &amp; Platforms</span>
           </Link>
           <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1">
             <Mail className="w-3.5 h-3.5 text-[#c9a84c]" />

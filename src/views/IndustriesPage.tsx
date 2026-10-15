@@ -53,7 +53,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
         <PageHeroBackground imageSrc="/industries-hero.webp" position="center 40%" />
         <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <Reveal>
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616] border border-[#2a2a2a]">
@@ -96,7 +96,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenConsultati
 
       {/* 2. Industries Detailed Showcase Grid */}
       <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <Reveal>
             <SectionHeader
               eyebrow="Sector Coverage"

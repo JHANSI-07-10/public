@@ -14,9 +14,11 @@ import {
   ChevronRight,
   ShieldCheck,
   Cpu,
-  Workflow
+  Workflow,
+  ShoppingBag,
+  UtensilsCrossed,
+  PawPrint
 } from 'lucide-react';
-import { SectionHeader } from '../components/ui/SectionHeader';
 import { PRODUCTS_PLATFORMS, ProductPlatform, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
@@ -44,6 +46,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
 
   const getPlatformIcon = (id: string) => {
     switch (id) {
+      case 'pawguard':
+        return PawPrint;
+      case 'lumiere-os':
+        return UtensilsCrossed;
+      case 'clikgett':
+        return ShoppingBag;
+      case 'gatesphere':
+        return ShieldCheck;
       case 'b2b-logistics':
         return Package;
       case 'agriflow-erp':
@@ -61,7 +71,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
         <PageHeroBackground imageSrc="/about2.webp" position="center 40%" />
         <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
           <Reveal>
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616] border border-[#2a2a2a]">
@@ -76,7 +86,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
               </h1>
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-6">
-                Discover VPD Technologies' specialized software platforms engineered to streamline logistics coordination, rural agribusiness procurement, and multi-tenant enterprise operations.
+                Discover VPD Technologies&apos; specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
               </p>
 
               {/* Informational Disclaimer Banner */}
@@ -90,9 +100,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/contact">
                   <AnimatedButton
-                    variant="primary"
+                    variant="secondary"
                     size="md"
-                    icon={<ArrowRight className="w-4 h-4" />}
+                    icon={<ArrowRight className="w-4 h-4 text-[#aaaaaa]" />}
                   >
                     Request Platform Demonstration
                   </AnimatedButton>
@@ -112,17 +122,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
 
       {/* 2. Platforms Detailed Showcase */}
       <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Platform Profiles & Readiness"
-              title="Architectural Overviews of VPD Platforms"
-              subtitle="Each platform is engineered with strict type safety, event streaming, and modular database schemas to support real-world operating environments."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
-          </Reveal>
-
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="space-y-16">
             {PRODUCTS_PLATFORMS.map((platform, index) => {
               const Icon = getPlatformIcon(platform.id);
@@ -166,6 +166,24 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                             {platform.targetAudience}
                           </p>
                         </div>
+
+                        {platform.keyTech && platform.keyTech.length > 0 && (
+                          <div className="pt-4 border-t border-[#222222] space-y-2">
+                            <span className="text-xs font-mono uppercase tracking-wider text-[#aaaaaa] block font-bold">
+                              Applied Technology Stack
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                              {platform.keyTech.map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="px-2.5 py-1 rounded-md bg-[#181818] border border-[#2a2a2a] text-xs font-mono text-[#D4AF37]"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Right: High-Level Concepts & Architectural Overview */}
@@ -231,7 +249,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 Explore Enterprise Integration &amp; Pilot Opportunities
               </h2>
               <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
-                If your organization is seeking to pilot AgriFlow ERP in your agricultural network, or evaluate the B2B Logistics Platform for regional freight management, our engineering leadership is ready to discuss technical prerequisites.
+                If your organization is seeking to deploy ClikGett for quick-commerce delivery, implement Lumière OS for restaurant operations, integrate PawGuard for animal shelter management, evaluate GateSphere Enterprise for community security, pilot AgriFlow ERP in your agricultural network, or integrate the B2B Logistics Platform, our engineering leadership is ready to discuss technical prerequisites.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/contact">

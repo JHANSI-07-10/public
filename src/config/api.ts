@@ -9,7 +9,6 @@ export const API_BASE_URL: string =
 
 export const API_ENDPOINTS = {
   services: `${API_BASE_URL}/services`,
-  portfolio: `${API_BASE_URL}/portfolio`,
   blogs: `${API_BASE_URL}/blogs`,
   testimonials: `${API_BASE_URL}/testimonials`,
   contact: `${API_BASE_URL}/contact`,

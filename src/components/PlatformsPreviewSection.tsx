@@ -10,7 +10,11 @@ import {
   CheckCircle2, 
   ChevronRight, 
   Info,
-  Building2
+  Building2,
+  ShieldCheck,
+  ShoppingBag,
+  UtensilsCrossed,
+  PawPrint
 } from 'lucide-react';
 import { SectionHeader } from './ui/SectionHeader';
 import { PRODUCTS_PLATFORMS, INDUSTRIES, ProductPlatform } from '../data/content';
@@ -33,6 +37,14 @@ export const PlatformsPreviewSection: React.FC = () => {
 
   const getPlatformIcon = (id: string) => {
     switch (id) {
+      case 'pawguard':
+        return PawPrint;
+      case 'lumiere-os':
+        return UtensilsCrossed;
+      case 'clikgett':
+        return ShoppingBag;
+      case 'gatesphere':
+        return ShieldCheck;
       case 'b2b-logistics':
         return Package;
       case 'agriflow-erp':
@@ -57,18 +69,18 @@ export const PlatformsPreviewSection: React.FC = () => {
               Products &amp; Platforms with <span className="text-[#D4AF37]">Verified Status</span>.
             </h2>
             <p className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-balance">
-              Informational overviews of our proprietary platforms built for agribusiness coordination, multi-hub freight logistics, and modular enterprise SaaS.
+              Informational overviews of our proprietary platforms built for live quick-commerce delivery, multi-tenant restaurant operations, animal rescue &amp; shelter governance, residential community security, and multi-hub logistics.
             </p>
           </div>
         </Reveal>
 
-        {/* 3 Named Platforms Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        {/* Named Platforms Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {PRODUCTS_PLATFORMS.map((platform, idx) => {
             const Icon = getPlatformIcon(platform.id);
             return (
               <Reveal key={platform.id} delay={idx * 0.1}>
-                <div className="rounded-2xl border border-[#262626] bg-[#121212]/90 backdrop-blur-md p-7 h-full flex flex-col justify-between hover:border-[#D4AF37]/50 transition-all duration-300 shadow-xl group">
+                <div className="silver-card-hover group rounded-2xl border border-[#262626] bg-[#121212]/90 backdrop-blur-md p-7 h-full flex flex-col justify-between shadow-xl relative overflow-hidden">
                   <div>
                     {/* Top Row: Icon + Status Badge */}
                     <div className="flex items-center justify-between mb-5">
@@ -102,6 +114,20 @@ export const PlatformsPreviewSection: React.FC = () => {
                         </div>
                       ))}
                     </div>
+
+                    {/* Tech Stack Chips */}
+                    {platform.keyTech && platform.keyTech.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-6">
+                        {platform.keyTech.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-0.5 rounded bg-[#181818] border border-[#2a2a2a] text-[11px] font-mono text-[#D4AF37]"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="pt-4 border-t border-[#222222]">
