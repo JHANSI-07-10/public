@@ -1,31 +1,36 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
 import { WordMaskReveal } from './motion/WordMaskReveal';
+import { Eye, Target, Rocket } from 'lucide-react';
 
 const PRINCIPLES = [
   {
-    title: 'Engineering Precision',
+    title: 'Vision',
+    icon: Eye,
     description:
-      'Our codebases are built upon rigid technical benchmarks, eliminating bloat to guarantee sub-100ms response times and high-density performance.',
+      'To anticipate the future of technology and create innovative digital solutions that help businesses grow and evolve.',
   },
   {
-    title: 'Multi-Tier Stack Harmony',
+    title: 'Purpose',
+    icon: Target,
     description:
-      'Unified full-stack synergy across React client applications, real-time message brokers, and scalable enterprise backends.',
+      'To build meaningful software solutions that address real business challenges and deliver lasting value.',
   },
   {
-    title: 'Protocol-Grade Security',
+    title: 'Delivery',
+    icon: Rocket,
     description:
-      'Enterprise data compliance with AES-256 encryption, strict RBAC authorization boundaries, and ISO 27001 security standards.',
+      'To transform ideas into reliable, scalable software products and digital solutions through quality engineering and effective execution.',
   },
 ];
 
 export const CompanyIntro: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <section
@@ -84,47 +89,91 @@ export const CompanyIntro: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* 3. Core Engineering Principles — Refined Glassmorphic Panel with Scroll Reveal */}
+        {/* 3. Core Philosophy & Pillars — Refined Glassmorphic Panel with Traveling Beam */}
         <motion.div
           initial={shouldReduceMotion ? undefined : { opacity: 0, y: 35 }}
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.75, delay: 0.1, ease: [0.19, 1, 0.22, 1] }}
-          className="mt-10 sm:mt-12 rounded-2xl border border-[#2a2a2a]/90 bg-[#121212]/80 backdrop-blur-xl p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+          className="relative mt-10 sm:mt-12 rounded-2xl border border-[#2a2a2a]/90 bg-[#121212]/80 backdrop-blur-xl p-5 sm:p-7 lg:p-9 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-[#262626] md:divide-x md:divide-y-0">
-            {PRINCIPLES.map((item, index) => (
-              <motion.article
-                key={item.title}
-                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.15 + index * 0.12,
-                  ease: [0.19, 1, 0.22, 1],
-                }}
-                className="py-6 md:px-7 md:py-3 first:md:pl-0 last:md:pr-0 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="mb-4 flex items-center gap-3">
-                    <span className="font-mono text-sm font-bold text-[#D4AF37]">
-                      0{index + 1}
-                    </span>
-                    <span
-                      className="h-px w-8 bg-[#D4AF37]/50 transition-all duration-500 group-hover:w-14 group-hover:bg-[#D4AF37]"
-                      aria-hidden="true"
-                    />
+          {/* Continuous Traveling Gold Energy Beam on Top Border */}
+          {!shouldReduceMotion && (
+            <div className="absolute top-0 left-0 right-0 h-[1.5px] overflow-hidden pointer-events-none z-20">
+              <motion.div
+                className="w-1/3 h-full bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-85"
+                animate={{ x: ['-100%', '300%'] }}
+                transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
+              />
+            </div>
+          )}
+
+          {/* 3 Clean, Non-Distracting Pillar Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 relative z-10">
+            {PRINCIPLES.map((item, index) => {
+              const Icon = item.icon;
+              const isItemHovered = hoveredIndex === index;
+
+              return (
+                <motion.article
+                  key={item.title}
+                  initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
+                  whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.15 + index * 0.12,
+                    ease: [0.19, 1, 0.22, 1],
+                  }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  whileHover={shouldReduceMotion ? undefined : { y: -3, transition: { duration: 0.2, ease: 'easeOut' } }}
+                  className={`relative rounded-xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 overflow-hidden border ${
+                    isItemHovered
+                      ? 'border-[#D4AF37]/60 bg-gradient-to-b from-[#181611] via-[#141414] to-[#101010]'
+                      : 'border-[#262626]/80 bg-[#161616]/40 hover:border-[#383838]'
+                  }`}
+                >
+                  {/* Crisp top accent line on hovered item */}
+                  <div
+                    className={`absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent transition-opacity duration-300 ${
+                      isItemHovered ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
+
+                  <div className="relative z-10">
+                    {/* Header: Icon in crisp border badge + Title */}
+                    <div className="mb-4 flex items-center gap-3">
+                      <div
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                          isItemHovered
+                            ? 'bg-[#D4AF37]/15 border border-[#D4AF37] text-[#F2D98D]'
+                            : 'bg-[#1c1c1c] border border-[#2a2a2a] text-[#D4AF37]'
+                        }`}
+                      >
+                        <Icon className="w-5 h-5 transition-transform duration-300" />
+                      </div>
+                      <h3
+                        className={`text-xl font-bold tracking-tight transition-colors duration-300 ${
+                          isItemHovered ? 'text-[#F2D98D]' : 'text-white'
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    {/* Description text with crisp readability */}
+                    <p
+                      className={`text-sm leading-relaxed transition-colors duration-300 ${
+                        isItemHovered ? 'text-[#e4e4e7]' : 'text-[#A1A1AA]'
+                      }`}
+                    >
+                      {item.description}
+                    </p>
                   </div>
-                  <h3 className="mb-3 text-xl font-bold text-white group-hover:text-[#F2D98D] transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-[#A1A1AA]">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
+                </motion.article>
+              );
+            })}
           </div>
         </motion.div>
       </div>
