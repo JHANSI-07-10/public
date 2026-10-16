@@ -9,7 +9,6 @@ import {
   ArrowRight, 
   CheckCircle2, 
   AlertCircle, 
-  Info, 
   ExternalLink,
   ChevronRight,
   ShoppingBag,
@@ -23,6 +22,7 @@ import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { PageHeroBackground } from '../components/ui/PageHeroBackground';
+import { SocialLinks } from '../components/social/SocialLinks';
 
 interface ProductsPageProps {
   onOpenConsultation?: (service?: Service) => void;
@@ -66,7 +66,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
   return (
     <div className="pt-28 pb-0 bg-[#0a0a0a]">
       {/* 1. Hero Section */}
-      <section className="relative pt-12 sm:pt-16 pb-8 sm:pb-10 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
+      <section className="relative pt-12 sm:pt-16 pb-12 sm:pb-16 border-b border-[#1f1f1f] overflow-hidden bg-[#0a0a0a]">
         <PageHeroBackground imageSrc="/about2.webp" position="center 40%" />
         <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
         
@@ -84,17 +84,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 Named Platforms &amp; <span className="text-[#c9a84c]">Enterprise Software</span>.
               </h1>
 
-              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-6">
-                Discover VPD Technologies&apos; specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, petrol &amp; fuel station SaaS operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
+              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-8">
+                Discover VPD specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, petrol &amp; fuel station SaaS operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
               </p>
-
-              {/* Informational Disclaimer Banner */}
-              <div className="p-4 rounded-xl bg-[#141414]/90 border border-[#2e2e2e] flex items-start gap-3 max-w-2xl mb-8">
-                <Info className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
-                <p className="text-xs text-[#999999] leading-relaxed">
-                  <strong className="text-white font-semibold">Informational Purpose Only:</strong> The platform profiles below describe VPD Technologies' current software developments and pilot initiatives. In compliance with company governance, this public website is strictly an informational company profile and does not provide public account registration, transaction processing, or operational SaaS self-service.
-                </p>
-              </div>
 
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/contact">
@@ -265,6 +257,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
           </div>
         </div>
       </section>
+
+      {/* Fixed social rail (desktop) / share dock (mobile & tablet) */}
+      <SocialLinks />
     </div>
   );
 };

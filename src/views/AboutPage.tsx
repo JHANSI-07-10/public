@@ -12,6 +12,7 @@ import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { Accordion } from '../components/motion/Accordion';
 import { ProjectJourneyTimeline } from '../components/about/ProjectJourneyTimeline';
 import { CurvedTravelingBeam } from '../components/motion/CurvedTravelingBeam';
+import { SocialLinks } from '../components/social/SocialLinks';
 
 interface AboutPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -70,7 +71,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1 rounded-full bg-[#141414] border border-[#c9a84c]/30 shadow-[0_0_20px_-4px_rgba(201,168,76,0.18)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
                 <span className="text-[11px] font-mono font-bold tracking-widest text-[#d8b75b] uppercase select-none">
-                  About VPD Technologies
+                  About VPD
                 </span>
               </div>
 
@@ -278,7 +279,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                   </h3>
                 </div>
                 <p className="text-sm sm:text-base text-[#aaaaaa] leading-relaxed">
-                  Create a trusted digital presence that clearly explains VPD Technologies’ capabilities and helps prospective clients, partners, and candidates understand the company and contact the team.
+                  Create a trusted digital presence that clearly explains VPD’s capabilities and helps prospective clients, partners, and candidates understand the company and contact the team.
                 </p>
               </div>
             </Reveal>
@@ -444,6 +445,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
           </div>
         </div>
       </section>
+
+      {/* Fixed social rail (desktop) / share dock (mobile & tablet) */}
+      <SocialLinks />
     </div>
   );
 };

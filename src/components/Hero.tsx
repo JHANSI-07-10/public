@@ -3,10 +3,7 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
-import { KEY_METRICS } from '../data/content';
-import { AnimatedButton } from './motion/AnimatedButton';
 import { motionTokens } from './motion/motionTokens';
-import { CountingNumber } from './ui/counting-number';
 import { WordMaskReveal } from './motion/WordMaskReveal';
 import { HeroVideoBackground } from './ui/HeroVideoBackground';
 
@@ -24,28 +21,37 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   });
 
   return (
-    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-10 lg:pb-12 overflow-hidden bg-[#060606]">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden bg-[#060606]">
       {/* Background Video with seamless feathered bottom blend (hidden on mobile view) */}
       <HeroVideoBackground className="hidden md:block" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         {/* Hero Composition */}
-        <div className="max-w-3xl flex flex-col items-start text-left pt-2 sm:pt-4">
+        <div className="max-w-4xl flex flex-col items-start text-left pt-2 sm:pt-4">
 
           {/* H1 Headline */}
           <motion.h1
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={itemTransition(0.12)}
-            className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-white leading-[1.08] text-balance mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-[3.5rem] font-black tracking-tight text-white leading-[1.12] mb-6"
           >
-            <WordMaskReveal
-              text="Transforming Ideas into Intelligent Digital Solutions."
-              delay={0.18}
-              stagger={0.05}
-              highlightWords={['Intelligent', 'Digital', 'Solutions.']}
-              highlightClassName="text-[#c9a84c] drop-shadow-[0_0_24px_rgba(201,168,76,0.22)]"
-            />
+            <span className="block">
+              <WordMaskReveal
+                text="Transforming Ideas into"
+                delay={0.15}
+                stagger={0.04}
+              />
+            </span>
+            <span className="block">
+              <WordMaskReveal
+                text="Intelligent Digital Solutions."
+                delay={0.3}
+                stagger={0.04}
+                highlightWords={['Intelligent', 'Digital', 'Solutions.']}
+                highlightClassName="text-[#c9a84c] drop-shadow-[0_0_24px_rgba(201,168,76,0.22)]"
+              />
+            </span>
           </motion.h1>
 
           {/* Supporting Value Proposition */}
@@ -53,9 +59,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={itemTransition(0.2)}
-            className="text-base sm:text-lg text-[#aaaaaa] leading-relaxed max-w-2xl mb-8 text-balance"
+            className="text-base sm:text-lg text-[#aaaaaa] leading-relaxed max-w-xl mb-8 text-balance"
           >
-            VPD Technologies builds software products, enterprise applications, and digital solutions that help organizations modernize operations and support business growth.
+            VPD builds software products, enterprise applications, and digital solutions that help organizations modernize operations and support business growth globally.
           </motion.p>
 
           {/* Action Group */}
@@ -65,23 +71,23 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             transition={itemTransition(0.28)}
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-10"
           >
-            <a href="/services">
-              <AnimatedButton
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-4 h-4" />}
+            <a href="/services" className="inline-flex">
+              <button
+                type="button"
+                className="group relative inline-flex min-h-[46px] items-center justify-center gap-2.5 rounded-xl border border-[#d4af37]/70 bg-[#141414] px-7 py-3 text-sm font-bold tracking-wide text-white shadow-[0_0_15px_rgba(212,175,55,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#d4af37] hover:bg-gradient-to-r hover:from-[#d4af37] hover:via-[#f2d36f] hover:to-[#c9a84c] hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.45)] cursor-pointer"
               >
-                Explore Our Services
-              </AnimatedButton>
+                <span>Explore Our Services</span>
+                <ArrowRight className="w-4 h-4 text-[#d4af37] transition-all duration-300 group-hover:translate-x-1.5 group-hover:text-black" />
+              </button>
             </a>
 
             <button
               type="button"
               onClick={onOpenConsultation}
-              className="vpd-outline-cta inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-xs font-bold tracking-wide text-white transition-colors hover:border-[#c9a84c]/50 hover:bg-[#1e1e1e] focus:outline-none sm:text-sm cursor-pointer"
+              className="group relative inline-flex min-h-[46px] items-center justify-center gap-2.5 rounded-xl border border-[#383838] bg-[#161616] px-7 py-3 text-sm font-bold tracking-wide text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#d4af37]/80 hover:bg-[#201b10] hover:text-[#f2d36f] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] focus:outline-none cursor-pointer"
             >
               <span>Contact Us</span>
-              <ChevronRight className="w-4 h-4 text-[#aaaaaa]" />
+              <ChevronRight className="w-4 h-4 text-[#aaaaaa] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#f2d36f]" />
             </button>
           </motion.div>
 
@@ -94,7 +100,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
           >
             <span className="flex items-center gap-1.5 text-[#aaaaaa]">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c]" />
-              110+ Completed Projects
+              55+ Completed Projects
             </span>
             <span className="hidden sm:inline text-[#777777]" aria-hidden="true">·</span>
             <span className="flex items-center gap-1.5 text-[#aaaaaa]">
@@ -108,39 +114,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
             </span>
           </motion.div>
         </div>
-
-        {/* 4-Metric Trust Bar (Full width strip below Hero) */}
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={itemTransition(0.42)}
-          className="mt-14 sm:mt-16 pt-8 sm:pt-10 border-t border-[#1F1F1F]"
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-            {KEY_METRICS.map((metric, idx) => (
-              <motion.div
-                key={idx}
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: idx * 0.1, ease: 'easeOut' }}
-                className="flex flex-col items-center text-center"
-              >
-                <div className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1 tabular-nums">
-                  <span className="text-[#c9a84c]">
-                    <CountingNumber value={metric.value} delay={0.5 + idx * 0.12} duration={1.4} />
-                  </span>
-                </div>
-                <div className="text-sm font-semibold text-white">
-                  {metric.label}
-                </div>
-                <div className="text-xs text-[#777777] mt-0.5">
-                  {metric.context}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

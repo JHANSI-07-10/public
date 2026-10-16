@@ -238,7 +238,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
 ];
 
 export const KEY_METRICS = [
-  { value: "110+", label: "Completed Projects", context: "Delivered across web, enterprise, and custom software" },
+  { value: "55+", label: "Completed Projects", context: "Delivered across web, enterprise, and custom software" },
   { value: "12+", label: "Websites & Web Apps", context: "Production-ready platforms launched for clients" },
   { value: "99.99%", label: "High-Availability Uptime", context: "Guaranteed architectural SLA benchmark" },
   { value: "< 100ms", label: "Frontend TTI Latency", context: "Core Web Vitals optimized for conversion velocity" }

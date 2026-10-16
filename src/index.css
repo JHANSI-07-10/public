@@ -78,14 +78,11 @@
 .vpd-outline-cta {
   position: relative;
   isolation: isolate;
-  border: 1px solid transparent;
   border-radius: 999px;
-  background-color: transparent !important;
-  background-image: none !important;
+  background-color: #121212;
   color: #ffffff;
-  box-shadow: none !important;
-  transition-property: color, transform;
-  transition-duration: 300ms, 150ms;
+  transition-property: color, transform, background-color, box-shadow;
+  transition-duration: 300ms, 200ms, 300ms, 300ms;
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -95,17 +92,17 @@
   z-index: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(110deg, #27272a 0%, #a1a1aa 34%, #f2d36f 66%, #d4af37 82%, #3f3f46 100%);
+  background: linear-gradient(110deg, #3f3f46 0%, #a1a1aa 34%, #f2d36f 66%, #d4af37 82%, #52525b 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  clip-path: inset(0 calc(100% - 18px) 0 0 round 999px);
+  clip-path: inset(0 0 0 0 round 999px);
   content: "";
   pointer-events: none;
   filter: drop-shadow(0 0 2px rgba(161, 161, 170, 0.35))
     drop-shadow(0 0 5px rgba(212, 175, 55, 0.32));
-  transition: clip-path 300ms cubic-bezier(0.19, 1, 0.22, 1), filter 300ms ease;
+  transition: all 300ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .vpd-outline-cta > * {
@@ -115,15 +112,17 @@
 
 .vpd-outline-cta:hover:not(:disabled),
 .vpd-outline-cta:focus-visible {
-  background-color: transparent !important;
+  background-color: #1e1910;
   color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 0 18px rgba(212, 175, 55, 0.35);
 }
 
 .vpd-outline-cta:hover:not(:disabled)::before,
 .vpd-outline-cta:focus-visible::before {
-  clip-path: inset(0 0 0 0 round 999px);
-  filter: drop-shadow(0 0 3px rgba(161, 161, 170, 0.48))
-    drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));
+  background: linear-gradient(110deg, #d4af37 0%, #f2d36f 40%, #ffffff 70%, #d4af37 100%);
+  filter: drop-shadow(0 0 4px rgba(242, 211, 111, 0.6))
+    drop-shadow(0 0 12px rgba(212, 175, 55, 0.55));
 }
 
 .vpd-outline-cta:focus-visible {
@@ -142,23 +141,35 @@
 .cta-talk {
   position: relative;
   isolation: isolate;
-  border: 1px solid transparent;
-  transition: transform 200ms ease;
+  border-radius: 999px;
+  background-color: #141414;
+  transition: transform 250ms ease, box-shadow 250ms ease;
 }
 
 .cta-talk::before {
   position: absolute;
-  inset: 0 auto 0 0;
+  inset: 0;
   z-index: -1;
-  width: 42px;
+  width: 100%;
   border: 1px solid transparent;
   border-radius: 999px;
   background:
-    linear-gradient(transparent, transparent) padding-box,
-    linear-gradient(110deg, #27272a 0%, #71717a 42%, #d4af37 78%, #3f3f46 100%) border-box;
+    linear-gradient(#141414, #141414) padding-box,
+    linear-gradient(
+      110deg,
+      #d4af37 0%,
+      #f2d36f 18%,
+      #71717a 38%,
+      #27272a 50%,
+      #71717a 65%,
+      #d4af37 82%,
+      #f2d36f 100%
+    ) border-box;
+  background-size: 200% 100%;
+  background-position: 100% 0;
   content: "";
   pointer-events: none;
-  transition: width 300ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: background-position 450ms cubic-bezier(0.19, 1, 0.22, 1), box-shadow 300ms ease;
 }
 
 .cta-talk > * {
@@ -166,23 +177,25 @@
 }
 
 .cta-talk > svg {
-  transform: translateX(-5px);
-  transition: transform 300ms ease;
+  transform: translate(0, 0);
+  transition: transform 300ms ease, color 300ms ease;
+}
+
+.cta-talk:hover,
+.cta-talk:focus-visible {
+  transform: translateY(-1.5px);
 }
 
 .cta-talk:hover::before,
 .cta-talk:focus-visible::before {
-  width: 100%;
+  background-position: 0% 0;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
 }
 
 .cta-talk:hover > svg,
 .cta-talk:focus-visible > svg {
-  transform: translateX(0);
-}
-
-.cta-talk:hover::before,
-.cta-talk:focus-visible::before {
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.22);
+  transform: translate(2px, -2px);
+  color: #f2d36f;
 }
 
 .cta-talk:focus-visible {
@@ -191,7 +204,7 @@
 }
 
 .cta-talk:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
 .vpd-cta-icon {

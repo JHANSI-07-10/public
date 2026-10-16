@@ -8,6 +8,7 @@ import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 import { RoleCard, type OpenRole, type RoleTint } from '../components/careers/RoleCard';
 import { RoleDetailModal } from '../components/careers/RoleDetailModal';
 import { CareerApplicationModal } from '../components/careers/CareerApplicationModal';
+import { SocialLinks } from '../components/social/SocialLinks';
 
 interface CareersPageProps {
   onOpenConsultation?: (service?: Service) => void;
@@ -128,6 +129,9 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
           setApplyRole(null);
         }}
       />
+
+      {/* Fixed social rail (desktop) / share dock (mobile & tablet) */}
+      <SocialLinks />
     </div>
   );
 };

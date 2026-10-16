@@ -6,7 +6,7 @@
  */
 
 .layout {
-  --dial: clamp(272px, 33vw, 348px);
+  --dial: clamp(240px, 30vw, 348px);
   --gold: #d4af37;
   --gold-soft: #f2d98d;
 
@@ -14,7 +14,14 @@
   grid-template-columns: 1fr;
   align-items: center;
   justify-items: center;
-  gap: clamp(26px, 4vw, 54px);
+  gap: clamp(20px, 3.5vw, 50px);
+}
+
+@media (max-width: 640px) {
+  .layout {
+    --dial: 220px;
+    gap: 16px;
+  }
 }
 
 @media (min-width: 1024px) {

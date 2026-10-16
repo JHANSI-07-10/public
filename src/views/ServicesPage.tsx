@@ -11,8 +11,7 @@ import {
   Activity,
   Cpu,
   Server,
-  Rocket,
-  HelpCircle
+  Rocket
 } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Reveal } from '../components/motion/Reveal';
@@ -20,7 +19,7 @@ import { StaggerContainer, StaggerItem } from '../components/motion/StaggerConta
 import { AnimatedButton } from '../components/motion/AnimatedButton';
 import { ServiceShowcase } from '../components/services/ServiceShowcase';
 import { ServiceDeliveryApproach } from '../components/services/ServiceDeliveryApproach';
-import { ServicesFAQ } from '../components/services/ServicesFAQ';
+import { SocialLinks } from '../components/social/SocialLinks';
 
 interface ServicesPageProps {
   onOpenConsultation: (service?: Service) => void;
@@ -102,7 +101,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
               </h1>
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl text-balance">
-                Explore VPD Technologies' comprehensive digital engineering services, including custom software development, web and mobile applications, enterprise ERP and CRM solutions, AI and machine learning, cloud infrastructure, and UI/UX design. We focus on building reliable, scalable, and user-friendly digital solutions tailored to evolving business needs.
+                Explore VPD comprehensive digital engineering services, including custom software development, web and mobile applications, enterprise ERP and CRM solutions, AI and machine learning, cloud infrastructure, and UI/UX design. We focus on building reliable, scalable, and user-friendly digital solutions tailored to evolving business needs.
               </p>
             </div>
           </Reveal>
@@ -178,14 +177,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 <Rocket className="w-3.5 h-3.5 text-[#c9a84c]" />
                 <span>Delivery Approach</span>
               </button>
-
-              <button
-                onClick={() => scrollToSection('faq-section')}
-                className="px-3.5 py-1.5 rounded-xl bg-[#141414] hover:bg-[#1a1a1a] border border-[#242424] text-xs font-medium text-[#cccccc] hover:text-white transition-colors shrink-0 cursor-pointer flex items-center gap-1.5"
-              >
-                <HelpCircle className="w-3.5 h-3.5 text-[#c9a84c]" />
-                <span>Enterprise FAQ</span>
-              </button>
             </div>
           </Reveal>
         </div>
@@ -209,18 +200,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         </div>
       </section>
 
-      {/* 7. Enterprise Architectural FAQ */}
-      <section id="faq-section" className="py-12 sm:py-16 border-t border-[#1c1c1c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <ServicesFAQ
-              onOpenConsultation={() => onOpenConsultation()}
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 8. Bottom Conversion Call-To-Action Banner */}
+      {/* Bottom Conversion Call-To-Action Banner */}
       <section className="py-16 sm:py-24 border-t border-[#1c1c1c] bg-[#0c0c0c] relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -263,6 +243,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
           </Reveal>
         </div>
       </section>
+
+      {/* Fixed social rail (desktop) / share dock (mobile & tablet) */}
+      <SocialLinks />
     </div>
   );
 };

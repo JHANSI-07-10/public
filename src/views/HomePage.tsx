@@ -6,7 +6,6 @@ import { WhatWeEngineer } from '../components/WhatWeEngineer';
 import { CompanyIntro } from '../components/CompanyIntro';
 import { ServicesSection } from '../components/ServicesSection';
 import { DeliveryApproachSection } from '../components/DeliveryApproachSection';
-import { TestimonialsSection } from '../components/TestimonialsSection';
 import { ContactCTA } from '../components/ContactCTA';
 import { SocialLinks } from '../components/social/SocialLinks';
 import { Service } from '../data/content';
@@ -29,7 +28,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenConsultation }) => {
         {/* Section 2: What We Engineer */}
         <WhatWeEngineer onOpenConsultation={() => onOpenConsultation()} />
 
-        {/* Section 3: Company Introduction & Founders Preview */}
+        {/* Section 3: Company Introduction & Foundations */}
         <CompanyIntro />
 
         {/* Section 4: Core Engineering Services */}
@@ -38,10 +37,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenConsultation }) => {
         {/* Section 5: Delivery Approach */}
         <DeliveryApproachSection />
 
-        {/* Section 6: Verified Client Testimonials */}
-        <TestimonialsSection />
-
-        {/* Section 7: Project Inquiry Banner & Form */}
+        {/* Section 6: Direct Engineering Contact Inquiry Banner & Form */}
         <ContactCTA onOpenConsultation={() => onOpenConsultation()} />
       </div>
 

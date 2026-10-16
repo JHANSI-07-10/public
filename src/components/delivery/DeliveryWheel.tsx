@@ -17,6 +17,8 @@ import styles from './DeliveryWheel.module.css';
 
 interface DeliveryWheelProps {
   stages: DeliveryStage[];
+  selectedIndex?: number;
+  onSelectStage?: (index: number) => void;
 }
 
 const STAGE_ICONS: Record<string, LucideIcon> = {
@@ -39,8 +41,21 @@ const polar = (deg: number) => {
   return { x: CENTER + RADIUS * Math.cos(rad), y: CENTER + RADIUS * Math.sin(rad) };
 };
 
-export const DeliveryWheel: React.FC<DeliveryWheelProps> = ({ stages }) => {
-  const [selected, setSelected] = useState(0);
+export const DeliveryWheel: React.FC<DeliveryWheelProps> = ({
+  stages,
+  selectedIndex,
+  onSelectStage,
+}) => {
+  const [internalSelected, setInternalSelected] = useState(0);
+  const selected = selectedIndex !== undefined ? selectedIndex : internalSelected;
+
+  const handleSelect = (index: number) => {
+    if (selectedIndex === undefined) {
+      setInternalSelected(index);
+    }
+    onSelectStage?.(index);
+  };
+
   const shouldReduceMotion = useReducedMotion();
   const dialRef = useRef<HTMLDivElement>(null);
   const drawn = useInView(dialRef, { once: true, amount: 0.3 }) || shouldReduceMotion;
@@ -75,7 +90,7 @@ export const DeliveryWheel: React.FC<DeliveryWheelProps> = ({ stages }) => {
                     className={classes}
                     d={`M ${p0.x.toFixed(2)} ${p0.y.toFixed(2)} A ${RADIUS} ${RADIUS} 0 0 1 ${p1.x.toFixed(2)} ${p1.y.toFixed(2)}`}
                     style={{ '--len': arcLen, '--d': `${i * 90}ms` } as React.CSSProperties}
-                    onClick={() => setSelected(i)}
+                    onClick={() => handleSelect(i)}
                   />
                 );
               })}
@@ -106,7 +121,7 @@ export const DeliveryWheel: React.FC<DeliveryWheelProps> = ({ stages }) => {
                       id={inputId}
                       value={stage.title}
                       checked={i === selected}
-                      onChange={() => setSelected(i)}
+                      onChange={() => handleSelect(i)}
                     />
                     <label className={styles.lab} htmlFor={inputId}>
                       <Icon className={`w-4 h-4 ${styles.labIcon}`} aria-hidden="true" />
@@ -137,7 +152,22 @@ export const DeliveryWheel: React.FC<DeliveryWheelProps> = ({ stages }) => {
           </div>
         </fieldset>
 
-        <p className={styles.instruction}>Select a stage to explore our process.</p>
+        <p className={styles.instruction}>
+          {selected < stages.length - 1 ? (
+            <span className="inline-flex items-center gap-1.5 text-xs text-[#a1a1aa]">
+              <span>Scroll or click to explore stages</span>
+              <span className="text-[#d4af37] font-semibold">({selected + 1}/{stages.length})</span>
+              <span className="inline-block animate-bounce text-[#d4af37]">↓</span>
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 text-xs text-[#d4af37] font-semibold">
+              <span>Stage 5 of 5 reached</span>
+              <span>•</span>
+              <span>Scroll down to continue</span>
+              <span className="inline-block animate-bounce">↓</span>
+            </span>
+          )}
+        </p>
       </div>
 
       <div className={styles.panel} aria-live="polite">
@@ -160,11 +190,14 @@ export const DeliveryWheel: React.FC<DeliveryWheelProps> = ({ stages }) => {
 
           <div className={styles.dots} aria-hidden="true">
             {stages.map((stage, i) => (
-              <span
+              <button
                 key={stage.step}
+                type="button"
+                onClick={() => handleSelect(i)}
+                title={`Stage ${stage.step}: ${stage.title}`}
                 className={`${styles.dot} ${i < selected ? styles.dotDone : ''} ${
                   i === selected ? styles.dotNow : ''
-                }`}
+                } cursor-pointer transition-all hover:opacity-80 focus:outline-none`}
               />
             ))}
             <span className={styles.dotLabel}>

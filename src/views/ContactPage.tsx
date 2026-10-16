@@ -61,7 +61,7 @@ export const ContactPage: React.FC = () => {
             <SectionHeader
               eyebrow="Direct Engineering Transmission"
               title={<WordMaskReveal text="Connect with Our Senior Engineering Leads." />}
-              subtitle="Connect with VPD Technologies to discuss enterprise software architecture, full-stack React projects, and digital transformation initiatives. Standing by for project reviews."
+              subtitle="Connect with VPD to discuss enterprise software architecture, full-stack React projects, and digital transformation initiatives. Standing by for project reviews."
             />
           </Reveal>
         </div>
