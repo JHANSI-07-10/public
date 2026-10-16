@@ -9,7 +9,7 @@ interface HeroVideoBackgroundProps {
 
 export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
   className = '',
-  videoSrc = '/gemini_generated_video_170d55ff.mp4',
+  videoSrc = '/gemini_generated_video_170d55ff-1080p.mp4',
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -82,7 +82,7 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
             maskImage:
               'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
           }}
-          className="absolute inset-0 w-full h-full object-cover object-[72%_center] contrast-[0.70] saturate-[1.25] brightness-[1.08]"
+          className="absolute inset-0 w-full h-full object-cover object-[72%_center] contrast-[0.95] saturate-[1.25] brightness-[1.08]"
         />
       )}
 

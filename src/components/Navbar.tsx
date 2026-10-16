@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           {/* Zone 1: Authentic Brand Monogram & Wordmark */}
           <Link
             href="/"
-            className="animated-vpd-logo-link flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl py-0.5 px-1 -ml-1 transition-transform duration-200 active:scale-95"
+            className="animated-vpd-logo-link flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl py-0.5 px-1 ml-2 sm:ml-4 transition-transform duration-200 active:scale-95"
             aria-label="VPD Technologies - Home"
           >
             <div

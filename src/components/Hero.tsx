@@ -3,7 +3,7 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
-import { KEY_METRICS, COMPANY_DATA } from '../data/content';
+import { KEY_METRICS } from '../data/content';
 import { AnimatedButton } from './motion/AnimatedButton';
 import { motionTokens } from './motion/motionTokens';
 import { CountingNumber } from './ui/counting-number';
@@ -30,20 +30,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Hero Composition */}
-        <div className="max-w-3xl flex flex-col items-start text-left pt-12 sm:pt-14">
-
-          {/* Eyebrow badge */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={itemTransition(0.08)}
-            className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616]/90 border border-[#c9a84c]/30 shadow-md backdrop-blur-md"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
-            <span className="text-xs font-mono font-bold tracking-widest text-[#DFC067] uppercase select-none">
-              {COMPANY_DATA.brandLine} · Kurnool, Andhra Pradesh
-            </span>
-          </motion.div>
+        <div className="max-w-3xl flex flex-col items-start text-left pt-2 sm:pt-4">
 
           {/* H1 Headline */}
           <motion.h1
