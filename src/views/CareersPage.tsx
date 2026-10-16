@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import { Mail, MapPin } from 'lucide-react';
-import { SectionHeader } from '../components/ui/SectionHeader';
 import { CAREERS_DATA, COMPANY_DATA, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
 import { PageHeroBackground } from '../components/ui/PageHeroBackground';
 import { RoleCard, type OpenRole, type RoleTint } from '../components/careers/RoleCard';
 import { RoleDetailModal } from '../components/careers/RoleDetailModal';
+import { CareerApplicationModal } from '../components/careers/CareerApplicationModal';
 
 interface CareersPageProps {
   onOpenConsultation?: (service?: Service) => void;
@@ -17,6 +17,13 @@ const ROLE_TINTS: RoleTint[] = ['amber', 'teal', 'violet'];
 
 export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) => {
   const [detailRole, setDetailRole] = useState<OpenRole | null>(null);
+  const [applyRole, setApplyRole] = useState<OpenRole | null>(null);
+  const [isApplyOpen, setIsApplyOpen] = useState(false);
+
+  const handleOpenApply = (role: OpenRole | null = null) => {
+    setApplyRole(role);
+    setIsApplyOpen(true);
+  };
 
   return (
     <div className="pt-28 pb-0 bg-[#0a0a0a]">
@@ -44,14 +51,6 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href={`mailto:${COMPANY_DATA.recruitmentEmail}?subject=${encodeURIComponent('Career Inquiry: VPD Technologies')}`}
-                  className="vpd-outline-cta inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-[#c9a84c] px-6 text-sm font-bold text-black hover:bg-[#d8b75b] transition-colors shadow-lg"
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>Send Your CV to Engineering Team</span>
-                </a>
-
                 <span className="text-xs font-mono text-[#888888] flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#c9a84c]" />
                   Headquartered in Kurnool, Andhra Pradesh
@@ -62,70 +61,38 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
         </div>
       </section>
 
-      {/* 2. Engineering Culture & Values */}
-      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 border-b border-[#1f1f1f]">
+      {/* Open Roles Directory — List Format */}
+      <section className="pt-6 sm:pt-8 pb-8 sm:pb-10 border-b border-[#1f1f1f] bg-[#0c0c0c]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Why Build With VPD"
-              title="A Culture Founded on Craft, Ownership &amp; Precision"
-              subtitle="We offer high-ownership roles free of corporate hierarchy where your engineering directly impacts production deployments."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CAREERS_DATA.values.map((val, idx) => (
-              <Reveal key={val.title} delay={idx * 0.08}>
-                <div className="p-6 sm:p-7 rounded-2xl bg-[#121212] border border-[#242424] h-full flex flex-col justify-between hover:border-[#c9a84c]/40 transition-colors">
-                  <div>
-                    <div className="text-xs font-mono font-bold text-[#c9a84c] mb-3">
-                      0{idx + 1}.
-                    </div>
-                    <h3 className="text-lg font-bold text-white mb-2">
-                      {val.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#aaaaaa] leading-relaxed">
-                      {val.description}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+          {/* Header row for list */}
+          <div className="flex items-center justify-between mb-3 max-w-5xl mx-auto px-1">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#DFC067]">
+                Open Positions ({CAREERS_DATA.openRoles.length})
+              </span>
+            </div>
+            <span className="text-xs font-mono text-[#777777] hidden sm:inline">
+              Kurnool, Andhra Pradesh · Hybrid / On-site
+            </span>
           </div>
-        </div>
-      </section>
 
-      {/* 3. Open Roles / Practice Areas */}
-      <section className="py-20 border-b border-[#1f1f1f] bg-[#0c0c0c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Active Engineering Disciplines"
-              title="Explore Engineering Openings &amp; Interest Areas"
-              subtitle="We are continually seeking passionate builders who take pride in writing elegant, durable, and type-safe software."
-              align="center"
-              className="mb-16"
-            />
-          </Reveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[860px] mx-auto justify-items-center">
+          <div className="max-w-5xl mx-auto w-full divide-y divide-[#242424]">
             {CAREERS_DATA.openRoles.map((role, idx) => (
-              <Reveal key={role.id} delay={idx * 0.1} className="w-full h-full">
-                <RoleCard role={role} tint={ROLE_TINTS[idx % ROLE_TINTS.length]} onDetails={setDetailRole} />
-              </Reveal>
+              <RoleCard
+                key={role.id}
+                role={role}
+                tint={ROLE_TINTS[idx % ROLE_TINTS.length]}
+                onDetails={setDetailRole}
+                onApply={handleOpenApply}
+              />
             ))}
           </div>
-
-          <p className="mt-8 text-center text-[11px] font-mono tracking-wider text-[#666666] uppercase select-none">
-            Open a card for full competencies &amp; application details
-          </p>
         </div>
       </section>
 
       {/* 4. Direct Email Submission Callout */}
-      <section className="pt-8 sm:pt-10 pb-4 sm:pb-6">
+      <section className="py-8 sm:py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl border border-[#2e2e2e] bg-gradient-to-b from-[#141414] to-[#0d0d0d] p-8 sm:p-10 text-center relative overflow-hidden">
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3">
@@ -147,7 +114,20 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
         </div>
       </section>
 
-      <RoleDetailModal role={detailRole} onClose={() => setDetailRole(null)} />
+      <RoleDetailModal
+        role={detailRole}
+        onClose={() => setDetailRole(null)}
+        onApply={handleOpenApply}
+      />
+
+      <CareerApplicationModal
+        isOpen={isApplyOpen}
+        role={applyRole}
+        onClose={() => {
+          setIsApplyOpen(false);
+          setApplyRole(null);
+        }}
+      />
     </div>
   );
 };

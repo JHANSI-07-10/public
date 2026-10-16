@@ -10,9 +10,10 @@ import type { OpenRole } from './RoleCard';
 interface RoleDetailModalProps {
   role: OpenRole | null;
   onClose: () => void;
+  onApply: (role: OpenRole) => void;
 }
 
-export const RoleDetailModal: React.FC<RoleDetailModalProps> = ({ role, onClose }) => {
+export const RoleDetailModal: React.FC<RoleDetailModalProps> = ({ role, onClose, onApply }) => {
   const panelRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -109,14 +110,17 @@ export const RoleDetailModal: React.FC<RoleDetailModalProps> = ({ role, onClose 
             <MapPin className="w-3.5 h-3.5 text-[#c9a84c]" />
             {role.location}
           </span>
-          <a
-            href={`mailto:${COMPANY_DATA.recruitmentEmail}?subject=${encodeURIComponent(`Application: ${role.title}`)}`}
-            className="vpd-outline-cta inline-flex min-h-[40px] items-center justify-center gap-2 rounded-xl border border-[#c9a84c]/50 bg-[#1c1c1c] px-4 text-xs font-bold text-white hover:bg-[#c9a84c] hover:text-black transition-colors shrink-0"
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onApply(role);
+            }}
+            className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-xl bg-[#c9a84c] px-5 text-xs font-bold text-black hover:bg-[#d8b75b] transition-colors shrink-0 shadow-md cursor-pointer"
           >
-            <Mail className="w-3.5 h-3.5" />
-            <span>Apply via Email</span>
+            <span>Apply Now</span>
             <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          </button>
         </div>
       </motion.div>
     </div>

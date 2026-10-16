@@ -15,10 +15,8 @@ import {
   Globe2,
   Building2,
   Phone,
-  Mail,
-  UserRound
+  Mail
 } from 'lucide-react';
-import { SectionHeader } from '../components/ui/SectionHeader';
 import { FOUNDER_PROFILES, COMPANY_DATA, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
@@ -104,16 +102,6 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
       {/* 2. Detailed Founder Profiles Section */}
       <section className="pt-8 sm:pt-10 pb-6 sm:pb-8">
         <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Executive Profiles"
-              title="Guiding Technology Vision and Operational Excellence"
-              subtitle="Get to know the leaders steering software architecture, delivery discipline, and decentralized engineering innovation at VPD Technologies."
-              align="center"
-              className="mb-10 sm:mb-12"
-            />
-          </Reveal>
-
           <div className="space-y-6 sm:space-y-8">
             {FOUNDER_PROFILES.map((founder, index) => {
               const isEven = index % 2 === 0;
@@ -123,21 +111,6 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
                     <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-8 sm:p-10 lg:p-12 items-start">
                       {/* Left: Founder Identity Card / Monogram / Badge */}
                       <div className="lg:col-span-4 xl:col-span-3 flex flex-col items-center sm:items-start text-center sm:text-left border-b lg:border-b-0 lg:border-r border-[#242424] pb-8 lg:pb-0 lg:pr-8">
-                        {/* Unclipped portrait frame with corner badge */}
-                        <div className="relative mb-6 shrink-0">
-                          <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-gradient-to-br from-[#1c1c1c] to-[#121212] border-2 border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-                            <UserRound className="w-16 h-16 sm:w-20 sm:h-20" aria-hidden="true" />
-                          </div>
-                          {/* Corner Verified Award Badge (unclipped) */}
-                          <div className="absolute -bottom-2.5 -right-2.5 w-9 h-9 rounded-full bg-[#121212] border-2 border-[#D4AF37] flex items-center justify-center text-[#DFC067] z-20 shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-                            <Award className="w-4 h-4 text-[#DFC067]" />
-                          </div>
-                        </div>
-
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1c1c1c] border border-[#D4AF37]/30 text-xs font-mono font-bold text-[#D4AF37] mb-2 uppercase">
-                          {founder.shortRole}
-                        </div>
-
                         <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">
                           {founder.name}
                         </h2>
