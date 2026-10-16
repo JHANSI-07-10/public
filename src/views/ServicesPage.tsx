@@ -61,8 +61,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
 
   return (
     <div className="bg-[#0a0a0a] pb-20">
-      {/* Services Hero - Full Viewport First Fold */}
-      <section className="relative min-h-screen pt-24 sm:pt-28 pb-10 sm:pb-14 flex flex-col justify-center border-b border-[#1f1f1f] overflow-hidden">
+      {/* Services Hero - Tightened Viewport */}
+      <section className="relative pt-24 sm:pt-28 pb-8 sm:pb-10 flex flex-col justify-center border-b border-[#1f1f1f] overflow-hidden">
         {/* Locally-authored SVG artwork backdrop (ships with the repo, no external links) */}
         <img
           src="/bg-services-hero.svg?v=5"
@@ -73,7 +73,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent pointer-events-none" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent pointer-events-none" aria-hidden="true" />
         <div className="absolute inset-0 hero-tech-grid opacity-15 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center my-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <Reveal>
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#161616] border border-[#2a2a2a]">
@@ -192,7 +192,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
       </section>
 
       {/* 2. Core Engineering Capabilities Showcase */}
-      <section id="core-services" className="py-16 sm:py-24 border-t border-[#181818]">
+      <section id="core-services" className="pt-6 sm:pt-8 pb-8 sm:pb-12 border-t border-[#181818]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ServiceShowcase onOpenConsultation={(s) => onOpenConsultation(s)} />
         </div>

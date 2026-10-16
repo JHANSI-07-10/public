@@ -461,6 +461,24 @@ export const INDUSTRIES: Industry[] = [
     icon: "Activity"
   },
   {
+    id: "fintech",
+    name: "Finance & FinTech",
+    tagline: "Institutional Security & High-Frequency Ledgers",
+    description: "High-throughput financial architectures, compliance reporting engines, and payment gateway integrations built with banking-grade encryption.",
+    challenges: [
+      "Sub-millisecond latency requirements during peak transaction spikes",
+      "Rigid regulatory compliance (ISO 27001, PCI-DSS, AES-256 standards)",
+      "Legacy core banking interfaces lacking modern API interoperability"
+    ],
+    vpdSolutions: [
+      "Event-driven Java microservices with asynchronous transaction clearing",
+      "Automated audit trails, multi-factor authorization, and ledger immutability",
+      "Scalable settlement rails with optimistic concurrency and zero data loss"
+    ],
+    keyTech: ["Java 21", "Kafka", "ISO 27001", "PostgreSQL", "AES-256"],
+    icon: "Briefcase"
+  },
+  {
     id: "edtech",
     name: "Education Technology",
     tagline: "Scalable Learning & Institutional Administration",

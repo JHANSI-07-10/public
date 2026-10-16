@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { DIFFERENTIATORS, KEY_METRICS, Service } from '../data/content';
 import { Shield, Cpu, Target, Award, ArrowRight, Rocket, Users, UserRound } from 'lucide-react';
@@ -236,13 +237,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                   <span className="text-xs text-[#888888]">
                     Read full professional biographies and governance focus
                   </span>
-                  <a
-                    href="/leadership"
+                  <Link
+                    href="/about/leadership"
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#DFC067] hover:text-white transition-colors"
                   >
                     <span>Meet Our Full Leadership Team</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

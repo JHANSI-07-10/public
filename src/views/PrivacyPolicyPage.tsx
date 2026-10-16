@@ -1,89 +1,181 @@
 'use client';
 
 import React from 'react';
-import { SectionHeader } from '../components/ui/SectionHeader';
-import { Card } from '../components/ui/Card';
-import { COMPANY_DATA } from '../data/content';
-import { Shield, Lock, Eye, FileText } from 'lucide-react';
 import Link from 'next/link';
+import { motion, useReducedMotion } from 'motion/react';
+import { Eye, Lock, Cookie, Shield, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { COMPANY_DATA } from '../data/content';
+import { Reveal } from '../components/motion/Reveal';
+
+interface ProtocolSection {
+  sec: string;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+}
+
+interface ParticleDef {
+  top: string;
+  right: string;
+  size: number;
+  delay: number;
+  duration: number;
+}
+
+const GOLD_PARTICLES: ParticleDef[] = [
+  { top: '24%', right: '14%', size: 3, delay: 0, duration: 3.5 },
+  { top: '42%', right: '26%', size: 2, delay: 0.8, duration: 4.2 },
+  { top: '64%', right: '18%', size: 2.5, delay: 1.5, duration: 3.8 },
+  { top: '32%', right: '8%', size: 3.5, delay: 2.2, duration: 4.5 },
+  { top: '74%', right: '32%', size: 2, delay: 0.4, duration: 5.0 },
+  { top: '18%', right: '38%', size: 1.5, delay: 1.2, duration: 3.2 },
+  { top: '58%', right: '45%', size: 2, delay: 2.7, duration: 4.0 },
+  { top: '82%', right: '12%', size: 2.5, delay: 1.9, duration: 3.6 },
+];
+
+const CardGlowAndParticles: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-3xl">
+      <div
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-56 pointer-events-none transition-opacity duration-500 opacity-60 group-hover:opacity-100"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(223,192,103,0.08), transparent 70%)',
+        }}
+      />
+      {!shouldReduceMotion &&
+        GOLD_PARTICLES.map((p, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              top: p.top,
+              right: p.right,
+              width: p.size,
+              height: p.size,
+              backgroundColor: '#DFC067',
+              boxShadow: '0 0 8px #DFC067, 0 0 16px rgba(223,192,103,0.5)',
+            }}
+            animate={{
+              y: [-4, 4, -4],
+              x: [-3, 3, -3],
+              opacity: [0.25, 0.9, 0.25],
+              scale: [0.8, 1.3, 0.8],
+            }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+    </div>
+  );
+};
+
+const PROTOCOL_SECTIONS: ProtocolSection[] = [
+  {
+    sec: 'SEC_01',
+    icon: Eye,
+    title: 'DATA ACQUISITION PROTOCOL',
+    description:
+      'We collect information necessary for technical handshake and service optimization. This includes operator identity (name), transmission coordinates (email), and communication history via our secure inquiry feed.',
+  },
+  {
+    sec: 'SEC_02',
+    icon: Lock,
+    title: 'ENCRYPTED STORAGE',
+    description:
+      'All collected data is stored in the VPD_LAB cloud cluster, protected by multi-layer encryption and rigid access controls. We do not distribute your transmission data to third-party entities without verified authorization.',
+  },
+  {
+    sec: 'SEC_03',
+    icon: Cookie,
+    title: 'COOKIE INFRASTRUCTURE',
+    description:
+      'Our system utilizes low-latency cookies to maintain session persistence and optimize UI delivery. These are temporary data packets that reside in your local browser cache.',
+  },
+  {
+    sec: 'SEC_04',
+    icon: ShieldCheck,
+    title: 'NON-DISCLOSURE & GOVERNANCE',
+    description:
+      `All proprietary client algorithms, database schemas, and commercial strategies shared during technical consultations are bound by our standard Non-Disclosure Agreement (NDA). Inquiries can be transmitted to ${COMPANY_DATA.email}.`,
+  },
+];
 
 export const PrivacyPolicyPage: React.FC = () => {
   return (
-    <div className="pt-28 pb-20 bg-[#0a0a0a]">
-      {/* Header */}
-      <section className="py-16 border-b border-[#1f1f1f] bg-[#0d0d0d]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            eyebrow="Compliance & Data Protection"
-            title="Privacy Policy & Information Governance"
-            subtitle={`Effective: May 2026 · ${COMPANY_DATA.legalName}`}
-          />
+    <div className="pt-28 pb-24 bg-[#0a0a0a] min-h-screen text-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#141414] hover:bg-[#1a1a1a] border border-[#262626] hover:border-[#D4AF37]/50 text-xs font-semibold text-[#a1a1aa] hover:text-white transition-all group duration-200"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 text-[#DFC067] group-hover:-translate-x-1 transition-transform duration-200" />
+            <span>Back to Home</span>
+          </Link>
         </div>
-      </section>
 
-      {/* Content */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card variant="card" padding="lg" className="space-y-8 text-sm text-[#cccccc] leading-relaxed">
-            <div>
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                <Shield className="w-5 h-5 text-[#c9a84c]" />
-                1. Commitment to Data Confidentiality
-              </h3>
-              <p className="text-[#aaaaaa]">
-                VPD Technologies Private Limited ("VPD Technologies", "we", "us", or "our") respects the proprietary nature of all client specifications, codebase assets, and corporate inquiries submitted to our platforms. This Privacy Policy details our data governance protocols, storage practices, and compliance standards.
-              </p>
-            </div>
+        {/* Header */}
+        <Reveal className="mb-10 sm:mb-12">
+          {/* Eyebrow Pill */}
+          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-[#16140d] border border-[#DFC067]/40 text-[11px] font-mono font-bold text-[#DFC067] tracking-wider uppercase">
+            <Shield className="w-3.5 h-3.5 text-[#DFC067]" />
+            <span>SECURITY PROTOCOL V4.0</span>
+          </div>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                <Eye className="w-5 h-5 text-[#c9a84c]" />
-                2. Information We Collect
-              </h3>
-              <p className="text-[#aaaaaa] mb-3">
-                When you initiate communication or request an architectural consultation through our platforms, we collect:
-              </p>
-              <ul className="list-disc list-inside space-y-1.5 text-[#aaaaaa] pl-2">
-                <li>Professional identification details: Full name, business email address, and direct telephone/WhatsApp number.</li>
-                <li>Project parameters: Target technology stack preferences, system throughput benchmarks, and deployment objectives.</li>
-                <li>Technical telemetry: Standard server access logs, IP address data, browser signatures, and interaction timestamps.</li>
-              </ul>
-            </div>
+          {/* Heading */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-2">
+            Privacy <span className="text-[#DFC067]">Policy.</span>
+          </h1>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                <Lock className="w-5 h-5 text-[#c9a84c]" />
-                3. Encryption & Storage Protocols
-              </h3>
-              <p className="text-[#aaaaaa]">
-                All data transmitted to VPD Technologies infrastructure is protected using Transport Layer Security (TLS 1.3) and AES-256 encryption at rest. In accordance with ISO 27001 data governance practices, access to client requirements is strictly segregated through Role-Based Access Control (RBAC). We never sell, lease, or monetize client contact information or technical specifications to third parties.
-              </p>
-            </div>
+          {/* Effective Update Subtitle */}
+          <div className="text-xs font-mono tracking-widest text-[#666666] uppercase">
+            EFFECTIVE_UPDATE: MAY_2026
+          </div>
+        </Reveal>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#c9a84c]" />
-                4. Non-Disclosure & Intellectual Property
-              </h3>
-              <p className="text-[#aaaaaa]">
-                All proprietary client algorithms, database schemas, and commercial strategies shared during technical consultations are bound by our standard Non-Disclosure Agreement (NDA). Custom source code authored for clients upon contractual execution remains 100% the intellectual property of the commissioning organization.
-              </p>
-            </div>
+        {/* Protocol Cards */}
+        <div className="space-y-6">
+          {PROTOCOL_SECTIONS.map((section, idx) => {
+            const Icon = section.icon;
+            return (
+              <Reveal key={section.sec} delay={idx * 0.08}>
+                <div className="relative rounded-3xl bg-[#121212] border border-[#DFC067]/40 hover:border-[#DFC067]/80 hover:shadow-[0_0_35px_rgba(223,192,103,0.12)] p-6 sm:p-8 overflow-hidden transition-all duration-300 group">
+                  {/* Subtle Background Watermark */}
+                  <div className="absolute right-6 sm:right-8 top-1/2 -translate-y-1/2 font-mono font-black text-5xl sm:text-7xl text-white/[0.03] select-none pointer-events-none tracking-widest group-hover:text-white/[0.05] transition-colors">
+                    {section.sec}
+                  </div>
 
-            <div className="pt-6 border-t border-[#222222]">
-              <h3 className="text-base font-bold text-white mb-2">
-                5. Governance Inquiries & Privacy Contact
-              </h3>
-              <p className="text-xs text-[#888888]">
-                For data protection requests or compliance inquiries, contact our legal and governance leads at{' '}
-                <a href={`mailto:${COMPANY_DATA.email}`} className="text-[#c9a84c] hover:underline">
-                  {COMPANY_DATA.email}
-                </a>.
-              </p>
-            </div>
-          </Card>
+                  {/* Particle & Glow Animation */}
+                  <CardGlowAndParticles />
+
+                  {/* Content */}
+                  <div className="flex items-start gap-4 sm:gap-5 relative z-10">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#1a1a1a] border border-[#DFC067]/30 flex items-center justify-center shrink-0 mt-0.5 text-[#DFC067]">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#DFC067]" />
+                    </div>
+
+                    <div className="flex-1 min-w-0 pr-10 sm:pr-14">
+                      <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white uppercase mb-2">
+                        {section.title}
+                      </h2>
+                      <p className="text-xs sm:text-sm text-[#888888] leading-relaxed">
+                        {section.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import {
   Users, 
   Award, 
   MapPin, 
+  ArrowLeft,
   ArrowRight, 
   ShieldCheck, 
   Code2, 
@@ -35,6 +36,16 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
         <div className="absolute inset-0 hero-tech-grid opacity-20 pointer-events-none" />
         
         <div className="max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10">
+          <div className="mb-6">
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#141414] hover:bg-[#1a1a1a] border border-[#262626] hover:border-[#D4AF37]/50 text-xs font-semibold text-[#a1a1aa] hover:text-white transition-all group duration-200"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-[#DFC067] group-hover:-translate-x-1 transition-transform duration-200" />
+              <span>Back to About Us</span>
+            </Link>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left: Leadership Governance Statement */}
             <div className="lg:col-span-7 xl:col-span-7">
