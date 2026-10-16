@@ -138,7 +138,7 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    href="/leadership"
+                    href="/about/leadership"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Founders &amp; Leadership

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Link from 'next/link';
 import { Award, UserRound } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
@@ -210,13 +211,13 @@ export const CompanyIntro: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <a
-                href="/leadership"
+              <Link
+                href="/about/leadership"
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#1c1c1c] border border-[#D4AF37]/40 text-xs font-bold text-white hover:bg-[#252525] hover:border-[#D4AF37] transition-colors group/link"
               >
                 <span>View Full Executive Profiles</span>
                 <span className="text-[#D4AF37] group-hover/link:translate-x-1 transition-transform">→</span>
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>
