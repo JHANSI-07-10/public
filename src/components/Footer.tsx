@@ -84,10 +84,10 @@ export const Footer: React.FC = () => {
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
                   <Link
-                    href="/industries"
+                    href="/services#core-services"
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
-                    All Industry Capabilities
+                    Industry Capabilities
                   </Link>
                 </li>
                 <li>

@@ -443,3 +443,25 @@
   }
 }
 
+/* Custom sleek gold/dark scrollbar for scrollable card sections */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.35);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.7);
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 168, 76, 0.35) rgba(20, 20, 20, 0.6);
+}
+
+
