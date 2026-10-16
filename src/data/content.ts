@@ -139,8 +139,8 @@ export const COMPANY_DATA = {
   streetAddress: "Kurnool, Andhra Pradesh, India",
   coordinates: { lat: 15.838556, lng: 78.015556 },
   phone: "+91 83339 19447",
-  email: "support@vpdtechnologiespvtltd.com",
-  recruitmentEmail: "support@vpdtechnologiespvtltd.com",
+  email: "info@vpdtechnologies.com",
+  recruitmentEmail: "info@vpdtechnologies.com",
   whatsappUrl: "https://wa.me/918333919447",
   mapsUrl: "https://maps.app.goo.gl/zC4rwmytTXbwNfTW7",
   foundingStatement: "VPD Technologies is led by its founding team, Sai Krishna Vuppala, Founder and Chief Executive Officer, and Ramcharan Gottipati, Co-Founder and Managing Director. The leadership team is focused on building technology capabilities, delivering software solutions, and supporting digital innovation from Kurnool, Andhra Pradesh.",
@@ -201,11 +201,11 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const FOUNDER_PROFILES: FounderProfile[] = [
   {
     name: "Sai Krishna Vuppala",
-    role: "Founder & Chief Executive Officer (CEO)",
+    role: "Founder & Chief Executive Officer",
     shortRole: "Founder & CEO",
     initials: "SK",
     image: "/sai-krishna-vuppala.webp",
-    bio: "Sai Krishna Vuppala is the Founder and Chief Executive Officer of VPD Technologies Private Limited. Leading the company from Kurnool, Andhra Pradesh, Sai Krishna drives the overarching strategic vision, enterprise software architecture, and technology roadmap. With deep domain expertise in scalable full-stack ecosystems, enterprise Java backends, and modern web engineering, he oversees technology innovation and institutional client engagements. Under his stewardship, VPD Technologies delivers mission-critical software solutions for organizations modernizing their operations, instilling an engineering culture centered on precision, architectural integrity, and measurable business outcomes.",
+    bio: "Sai Krishna Vuppala is the Founder and CEO of VPD Technologies Private Limited. He leads the company’s strategy, business development, and client relationships, and oversees service delivery and organizational growth. Working closely with the leadership team, he identifies new opportunities, understands client needs, and shapes technology solutions that serve their business goals, while expanding the company’s service capabilities and building long-term client partnerships.",
     focusAreas: [
       "Enterprise Software Architecture",
       "Strategic Technology Roadmap",
@@ -214,16 +214,16 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     ],
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results.",
     location: "Kurnool, Andhra Pradesh, India",
-    education: "Bachelor of Technology in Computer Science & Engineering",
+    education: "Management & Technology Leadership",
     linkedin: "https://www.linkedin.com/in/vuppala-sai-krishna-545a90175/"
   },
   {
     name: "Ramcharan Gottipati",
-    role: "Co-Founder & Managing Director (MD)",
+    role: "Co-Founder & Managing Director",
     shortRole: "Co-Founder & MD",
     initials: "RG",
     image: "/ramcharan-gottipati.webp",
-    bio: "Ramcharan Gottipati is the Co-Founder and Managing Director of VPD Technologies Private Limited. He spearheads delivery governance, client engagement models, operational execution, and organizational growth from the company's headquarters in Kurnool. With a focus on engineering rigor and process agility, Ramcharan ensures projects transition smoothly from architectural blueprint through pilot deployment and global scale. His leadership guarantees that client solutions meet strict quality standards, enterprise service level agreements, and reliable timelines, driving VPD’s reputation as an accountable digital engineering partner.",
+    bio: "Ramcharan Gottipati is the Co-Founder and Managing Director of VPD Technologies Private Limited. With 12 years of experience in the IT industry, he leads the company’s technology strategy, software architecture, and engineering standards, and is responsible for the quality of technical delivery. He translates business requirements into scalable, reliable solutions and works with the team to keep execution aligned with client objectives. Alongside this, he contributes to strategic planning, business development, and client engagement.",
     focusAreas: [
       "Delivery Governance & Project Operations",
       "Organizational Growth & Talent Development",
@@ -232,7 +232,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     ],
     quote: "True engineering value lies in disciplined execution and dependable delivery. We are committed to building high-tier software capabilities and decentralized engineering talent that clients can rely on every single day.",
     location: "Kurnool, Andhra Pradesh, India",
-    education: "Management & Technology Leadership",
+    education: "Bachelor of Technology in Computer Science & Engineering",
     linkedin: "https://www.linkedin.com/in/ramcharangottipati/"
   }
 ];
