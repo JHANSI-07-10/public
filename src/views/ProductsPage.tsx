@@ -12,12 +12,10 @@ import {
   Info, 
   ExternalLink,
   ChevronRight,
-  ShieldCheck,
-  Cpu,
-  Workflow,
   ShoppingBag,
   UtensilsCrossed,
-  PawPrint
+  Cpu,
+  Workflow
 } from 'lucide-react';
 import { PRODUCTS_PLATFORMS, ProductPlatform, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
@@ -32,8 +30,10 @@ interface ProductsPageProps {
 export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }) => {
   const getStatusBadgeClass = (status: ProductPlatform['status']) => {
     switch (status) {
+      case 'Production':
       case 'Available':
         return 'bg-emerald-950/80 border-emerald-500/50 text-emerald-400';
+      case 'Staging':
       case 'Pilot':
         return 'bg-amber-950/80 border-amber-500/50 text-amber-400';
       case 'In Development':
@@ -46,18 +46,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
 
   const getPlatformIcon = (id: string) => {
     switch (id) {
-      case 'pawguard':
-        return PawPrint;
-      case 'lumiere-os':
-        return UtensilsCrossed;
-      case 'clikgett':
-        return ShoppingBag;
-      case 'gatesphere':
-        return ShieldCheck;
-      case 'b2b-logistics':
-        return Package;
       case 'agriflow-erp':
         return Sprout;
+      case 'clikgett':
+        return ShoppingBag;
+      case 'lumiere-os':
+        return UtensilsCrossed;
+      case 'b2b-logistics':
+        return Package;
       case 'enterprise-saas-suite':
       default:
         return Layers;
@@ -249,7 +245,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 Explore Enterprise Integration &amp; Pilot Opportunities
               </h2>
               <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
-                If your organization is seeking to deploy ClikGett for quick-commerce delivery, implement Lumière OS for restaurant operations, integrate PawGuard for animal shelter management, evaluate GateSphere Enterprise for community security, pilot AgriFlow ERP in your agricultural network, or integrate the B2B Logistics Platform, our engineering leadership is ready to discuss technical prerequisites.
+                If your organization is seeking to deploy AgriFlow in your agricultural network, deploy ClikGett for quick-commerce delivery, implement Lumière OS for restaurant operations, integrate the B2B Logistics Platform, or evaluate the Enterprise SaaS Suite, our engineering leadership is ready to discuss technical prerequisites.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/contact">

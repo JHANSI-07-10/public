@@ -305,8 +305,8 @@ export const ContactPage: React.FC = () => {
                         <option value="B2B Logistics Platform Demonstration" className="bg-[#161616]">
                           B2B Logistics Platform Demonstration
                         </option>
-                        <option value="AgriFlow ERP Pilot Evaluation" className="bg-[#161616]">
-                          AgriFlow ERP Pilot Evaluation
+                        <option value="AgriFlow Deployment / Evaluation" className="bg-[#161616]">
+                          AgriFlow Deployment / Evaluation
                         </option>
                         <option value="Enterprise Architecture Consulting" className="bg-[#161616]">
                           Enterprise Architecture Consulting

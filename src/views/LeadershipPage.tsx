@@ -289,7 +289,7 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
               Connect Directly with VPD Executive Leadership
             </h2>
             <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
-              Whether you are an enterprise partner seeking custom software development, an agribusiness evaluating AgriFlow ERP, or an investor/client exploring collaboration.
+              Whether you are an enterprise partner seeking custom software development, an agribusiness evaluating AgriFlow, or an investor/client exploring collaboration.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link

@@ -85,7 +85,7 @@ export interface ProductPlatform {
   id: string;
   name: string;
   category: string;
-  status: 'Available' | 'Pilot' | 'In Development' | 'Planned';
+  status: 'Production' | 'Available' | 'Staging' | 'Pilot' | 'In Development' | 'Planned';
   statusBadge: string;
   summary: string;
   highLevelConcepts: string[];
@@ -439,7 +439,7 @@ export const INDUSTRIES: Industry[] = [
       "Digitized procurement checkpoints with automated batch tagging",
       "Integrated settlement ledger tracking for transparent payments"
     ],
-    keyTech: ["AgriFlow ERP Core", "Offline Sync", "GPS Mapping", "PostgreSQL"],
+    keyTech: ["AgriFlow Core", "Offline Sync", "GPS Mapping", "PostgreSQL"],
     icon: "Sprout"
   },
   {
@@ -554,11 +554,28 @@ export const INDUSTRIES: Industry[] = [
 
 export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
   {
+    id: "agriflow-erp",
+    name: "AgriFlow",
+    category: "Agribusiness & Mandi Management",
+    status: "Production",
+    statusBadge: "Production",
+    summary: "Intended agricultural platform covering farmer registration, crop management, inspections, grain procurement, warehouse coordination and settlements.",
+    highLevelConcepts: [
+      "Comprehensive Farmer Registration & Landholding Database",
+      "Crop Lifecycle Monitoring & Quality Inspection Checkpoints",
+      "Digital Grain Mandi Procurement Logs & Batch Tagging",
+      "Automated Warehouse Storage Coordination & Settlement Pipelines"
+    ],
+    targetAudience: "Agribusiness cooperatives, grain procurement agencies, farmer producer organizations (FPOs), and agricultural input distributors.",
+    architectureNote: "Descriptive concept only. Designed with mobile-responsive offline sync capabilities for rural field agents, integrated with secure ledger reconciliation backends.",
+    keyTech: ["React 19", "Node.js", "PostgreSQL", "Offline Sync", "GPS Mapping"]
+  },
+  {
     id: "clikgett",
     name: "ClikGett",
     category: "Quick-Commerce & Hyperlocal Grocery Delivery",
-    status: "Available",
-    statusBadge: "Live in Production",
+    status: "Production",
+    statusBadge: "Production",
     summary: "Live quick-commerce and hyperlocal grocery delivery platform operating in Kurnool, Andhra Pradesh. Built around three interconnected interfaces: a customer Flutter mobile app, a native Android delivery partner app, and a centralized React administrative management portal.",
     highLevelConcepts: [
       "Customer Mobile App (Flutter) for Product Discovery, Smart Cart & Digital Checkout",
@@ -583,8 +600,8 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
     id: "lumiere-os",
     name: "Lumière OS",
     category: "Hospitality Tech & Restaurant Operating System",
-    status: "Pilot",
-    statusBadge: "Pilot Stage",
+    status: "Staging",
+    statusBadge: "Staging",
     summary: "Next-generation B2B multi-tenant restaurant operating system engineered for fine dining establishments and multi-outlet hospitality chains. Unifies table reservations with deposit protection, real-time Kitchen KDS bump bars, bi-directional marketplace order synchronization, floor plan waiter POS, and recipe COGS inventory.",
     highLevelConcepts: [
       "Table Reservation Engine with Razorpay Deposit No-Show Protection",
@@ -604,58 +621,6 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
     ]
   },
   {
-    id: "gatesphere",
-    name: "GateSphere Enterprise Platform",
-    category: "Residential Community, Visitor & Security Management",
-    status: "Pilot",
-    statusBadge: "Pilot Stage",
-    summary: "Enterprise-grade residential community, visitor lifecycle, live gate security, and facility management platform. Features an original micro-modular architecture, strict multi-tenant community segregation, and comprehensive role-based execution workflows.",
-    highLevelConcepts: [
-      "Real-Time Visitor Lifecycle & Digital QR / OTP Gate Verification",
-      "Zero-Latency Security Guard Live Gate Traffic Dashboard",
-      "Multi-Apartment Domestic Staff Mapping & Biometric Attendance",
-      "Configurable Delivery Protocols (Gate Desk, OTP, Resident Approval)",
-      "Accounting-Oriented Maintenance Invoicing & Resident Ledgers",
-      "SLA-Driven Complaint Service Desk & Concurrency-Checked Amenity Booking"
-    ],
-    targetAudience: "Gated residential communities, multi-tower apartment societies, township associations, facility management firms, and resident welfare associations (RWAs).",
-    architectureNote: "Engineered with a hybrid backend combining Django ORM & FastAPI asynchronous endpoints, paired with a React 19/Next.js frontend. Backed by PostgreSQL relational schemas, session-based authentication with strict 10-tier Role-Based Access Control (RBAC), and weekly sprint task tracking under Sivion QA acceptance frameworks.",
-    keyTech: [
-      "React 19 / Next.js",
-      "Django + FastAPI",
-      "PostgreSQL",
-      "Session Auth & RBAC",
-      "Redis Pub/Sub",
-      "Weekly CI/CD Sprints"
-    ]
-  },
-  {
-    id: "pawguard",
-    name: "PawGuard Central Platform",
-    category: "Animal Welfare, Rescue & Shelter Management",
-    status: "Pilot",
-    statusBadge: "Pilot Stage",
-    summary: "Centralized operational web application and digital nervous system for multi-regional dog rescue networks, veterinary care facilities, and adoption operations. Unifies public emergency incident reporting and donor sponsorship with internal GPS field rescue dispatch, kennel capacity management, and controlled adoption vetting.",
-    highLevelConcepts: [
-      "Public Emergency Rescue Reporting Wizard with Automated GPS Tagging & Media Uploads",
-      "Field Dispatch Control Board with Real-Time Vehicle Routing & Case Progression (Reported to Admitted)",
-      "360-Degree Master Dog Profile with Permanent Clinical Timeline & Microchip Tracking",
-      "Veterinary Clinical Suite for Surgical Logs, Scheduled Vaccinations & Adoption Health Clearances",
-      "Multi-Facility Shelter Capacity & Dynamic Spatial Kennel Allocation (Zero Overcrowding)",
-      "Controlled 6-Phase Adoption Vetting Pipeline with Dog Exclusivity Locking Engine"
-    ],
-    targetAudience: "Animal rescue organizations, multi-facility animal shelters, humane societies, municipal foster networks, emergency veterinary clinics, and animal welfare NGOs.",
-    architectureNote: "Architected as a dual-portal web platform (Public Service Portal & Internal Operations Hub) enforcing 15 granular Role-Based Access Control (RBAC) tiers. Built with Next.js web interfaces, Node.js microservices, PostgreSQL relational schemas, Redis event caching, and comprehensive transaction audit logging.",
-    keyTech: [
-      "Next.js / React 19",
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "Redis",
-      "15-Role RBAC"
-    ]
-  },
-  {
     id: "b2b-logistics",
     name: "B2B Logistics Platform",
     category: "Supply Chain & Freight Coordination",
@@ -671,23 +636,6 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
     targetAudience: "Logistics providers, freight operators, and distribution enterprises seeking unified fleet and inventory visibility.",
     architectureNote: "Descriptive concept only. Engineered around event-driven Java Spring microservices, persistent WebSocket state synchronization, and partition-indexed PostgreSQL storage.",
     keyTech: ["Java 21", "Spring Boot", "WebSockets", "PostgreSQL", "Redis"]
-  },
-  {
-    id: "agriflow-erp",
-    name: "AgriFlow ERP",
-    category: "Agribusiness & Mandi Management",
-    status: "Pilot",
-    statusBadge: "Pilot Stage",
-    summary: "Intended agricultural platform covering farmer registration, crop management, inspections, grain procurement, warehouse coordination and settlements.",
-    highLevelConcepts: [
-      "Comprehensive Farmer Registration & Landholding Database",
-      "Crop Lifecycle Monitoring & Quality Inspection Checkpoints",
-      "Digital Grain Mandi Procurement Logs & Batch Tagging",
-      "Automated Warehouse Storage Coordination & Settlement Pipelines"
-    ],
-    targetAudience: "Agribusiness cooperatives, grain procurement agencies, farmer producer organizations (FPOs), and agricultural input distributors.",
-    architectureNote: "Descriptive concept only. Designed with mobile-responsive offline sync capabilities for rural field agents, integrated with secure ledger reconciliation backends.",
-    keyTech: ["React 19", "Node.js", "PostgreSQL", "Offline Sync", "GPS Mapping"]
   },
   {
     id: "enterprise-saas-suite",

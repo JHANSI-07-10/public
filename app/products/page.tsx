@@ -4,11 +4,11 @@ import { ProductsPage } from '../../src/views/ProductsPage';
 export const metadata: Metadata = {
   title: 'Products & Platforms | VPD Technologies',
   description:
-    'Informational overviews of VPD Technologies proprietary platforms: B2B Logistics Platform (In Development), AgriFlow ERP (Pilot), and Enterprise SaaS Suite (Planned).',
+    'Informational overviews of VPD Technologies proprietary platforms: AgriFlow (Production), ClikGett (Production), Lumière OS (Staging), B2B Logistics Platform, and Enterprise SaaS Suite.',
   openGraph: {
     title: 'Products & Platforms | VPD Technologies',
     description:
-      'Informational overviews of B2B Logistics Platform, AgriFlow ERP, and Enterprise SaaS Suite by VPD Technologies Private Limited.',
+      'Informational overviews of AgriFlow, ClikGett, Lumière OS, B2B Logistics Platform, and Enterprise SaaS Suite by VPD Technologies Private Limited.',
   },
 };
 

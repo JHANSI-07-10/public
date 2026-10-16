@@ -318,7 +318,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
               </div>
               <div className="flex items-start gap-2.5">
                 <span className="text-[#c9a84c] font-bold">✓</span>
-                <span>Present B2B Logistics Platform, AgriFlow ERP, and Enterprise SaaS Suite with verified status labels.</span>
+                <span>Present B2B Logistics Platform, AgriFlow, and Enterprise SaaS Suite with verified status labels.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <span className="text-[#c9a84c] font-bold">✓</span>

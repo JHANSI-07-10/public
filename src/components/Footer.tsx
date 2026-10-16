@@ -100,18 +100,34 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    href="/products#b2b-logistics"
+                    href="/products#agriflow-erp"
                     className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
                   >
-                    B2B Logistics Platform
+                    AgriFlow
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/products#agriflow-erp"
+                    href="/products#clikgett"
                     className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
                   >
-                    AgriFlow ERP
+                    ClikGett
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products#lumiere-os"
+                    className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
+                  >
+                    Lumière OS
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products#b2b-logistics"
+                    className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
+                  >
+                    B2B Logistics Platform
                   </Link>
                 </li>
                 <li>
