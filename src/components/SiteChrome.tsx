@@ -9,8 +9,7 @@ import { ConsultationModal } from './ConsultationModal';
 import { BrandIntro } from './BrandIntro';
 import { CursorTrail } from './CursorTrail';
 import { ConsultationProvider } from './ConsultationContext';
-import { Service, COMPANY_DATA } from '../data/content';
-import { WhatsAppIcon } from './ui/WhatsAppIcon';
+import { Service } from '../data/content';
 
 // In-memory flag that resets whenever the page is refreshed or reloaded
 let introShownInCurrentSession = false;
@@ -94,21 +93,6 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
           onClose={handleCloseConsultation}
           initialService={selectedService}
         />
-
-        {/* Direct WhatsApp Floating Trigger */}
-        {!isAdminRoute && (
-          <aside aria-label="Direct Technical Support">
-            <a
-              href={COMPANY_DATA.whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="fixed bottom-6 right-6 z-40 p-3.5 bg-[#141416]/95 hover:bg-[#1a1a1e] text-white hover:text-[#25D366] border border-[#2e2e32] hover:border-[#25D366]/50 rounded-full shadow-2xl hover:shadow-[0_4px_24px_rgba(37,211,102,0.28)] backdrop-blur-md transition-all duration-200 hover:scale-105 group flex items-center gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
-              title="Direct WhatsApp Support: +91 83339 19447"
-            >
-              <WhatsAppIcon className="w-5 h-5 shrink-0" />
-            </a>
-          </aside>
-        )}
 
       </div>
     </ConsultationProvider>
