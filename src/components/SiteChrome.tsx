@@ -12,6 +12,9 @@ import { ConsultationProvider } from './ConsultationContext';
 import { Service, COMPANY_DATA } from '../data/content';
 import { WhatsAppIcon } from './ui/WhatsAppIcon';
 
+// In-memory flag that resets whenever the page is refreshed or reloaded
+let introShownInCurrentSession = false;
+
 export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -22,27 +25,24 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const isIntroDisabled = window.location.search.includes('nointro');
-      const hasSeen =
-        sessionStorage.getItem('vpd_intro_shown') ||
-        sessionStorage.getItem('vpd_brand_intro_seen');
-      // Only play the brand intro animation on the home page root ('/')
-      if (!isIntroDisabled && !hasSeen && (pathname === '/' || pathname === '')) {
-        setShowBrandIntro(true);
-      }
+      // Clear legacy persistent storage so it never blocks page refresh
+      sessionStorage.removeItem('vpd_intro_shown');
+      sessionStorage.removeItem('vpd_brand_intro_seen');
     } catch {
       // Ignore sessionStorage errors
+    }
+
+    const isIntroDisabled = window.location.search.includes('nointro');
+    // Display brand intro on fresh page load or page refresh on home route
+    if (!isIntroDisabled && !introShownInCurrentSession && (pathname === '/' || pathname === '')) {
+      introShownInCurrentSession = true;
+      setShowBrandIntro(true);
     }
   }, [pathname]);
 
   const handleDismissIntro = () => {
     setShowBrandIntro(false);
-    try {
-      sessionStorage.setItem('vpd_intro_shown', 'true');
-      sessionStorage.setItem('vpd_brand_intro_seen', 'true');
-    } catch {
-      // Ignore sessionStorage errors
-    }
+    introShownInCurrentSession = true;
   };
 
   // Support replaying intro via custom event if triggered from footer or elsewhere
@@ -96,7 +96,7 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
         />
 
         {/* Direct WhatsApp Floating Trigger */}
-        {!isAdminRoute && pathname !== '/' && pathname !== '' && (
+        {!isAdminRoute && (
           <aside aria-label="Direct Technical Support">
             <a
               href={COMPANY_DATA.whatsappUrl}
@@ -109,6 +109,7 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
             </a>
           </aside>
         )}
+
       </div>
     </ConsultationProvider>
   );

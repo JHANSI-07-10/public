@@ -13,7 +13,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = () => {
   return (
     <section
       id="contact-cta"
-      className="py-20 sm:py-24 bg-[#08080a]/30 backdrop-blur-[2px] border-t border-[#1f1f1f]/60 relative overflow-hidden"
+      className="py-14 sm:py-16 bg-[#08080a]/30 backdrop-blur-[2px] border-t border-[#1f1f1f]/60 relative overflow-hidden"
       aria-label="Direct Engineering Contact"
     >
       {/* Subtle ambient gold radial aura */}

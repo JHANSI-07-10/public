@@ -32,7 +32,7 @@ export const CompanyIntro: React.FC = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 sm:py-28 lg:py-32 border-t border-[#1f1f1f]/50 overflow-hidden"
+      className="relative py-14 sm:py-16 lg:py-18 border-t border-[#1f1f1f]/50 overflow-hidden"
       aria-label="Company Introduction & Leadership"
     >
       {/* Pure coded ambient gold lighting */}

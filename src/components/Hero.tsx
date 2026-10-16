@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   });
 
   return (
-    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-18 overflow-hidden bg-[#060606]">
+    <section id="hero" className="relative pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-10 lg:pb-12 overflow-hidden bg-[#060606]">
       {/* Background Video with seamless feathered bottom blend (hidden on mobile view) */}
       <HeroVideoBackground className="hidden md:block" />
 

@@ -8,7 +8,7 @@ import { DeliveryWheel } from './delivery/DeliveryWheel';
 
 export const DeliveryApproachSection: React.FC = () => {
   return (
-    <section id="delivery-approach" className="py-24 bg-[#0c0c0c]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative overflow-hidden">
+    <section id="delivery-approach" className="py-14 sm:py-16 bg-[#0c0c0c] border-t border-[#1f1f1f]/50 relative overflow-hidden">
       {/* Background ambient radial glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full pointer-events-none opacity-20"

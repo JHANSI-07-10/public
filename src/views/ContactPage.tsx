@@ -6,7 +6,6 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { COMPANY_DATA, CORE_SERVICES } from '../data/content';
 import { Phone, Mail, MapPin, Clock, CheckCircle, ArrowRight } from 'lucide-react';
-import { WhatsAppIcon } from '../components/ui/WhatsAppIcon';
 import { motion } from 'motion/react';
 import { submitContactInquiry } from '../config/api';
 import { Reveal } from '../components/motion/Reveal';
@@ -112,9 +111,6 @@ export const ContactPage: React.FC = () => {
                     rel="noreferrer"
                     className="flex items-center gap-4 p-4 rounded-xl bg-[#141414] border border-[#262626] hover:border-[#22c55e]/50 transition-colors group"
                   >
-                    <div className="w-11 h-11 rounded-lg bg-[#22c55e]/10 flex items-center justify-center text-[#22c55e] shrink-0">
-                      <WhatsAppIcon size={22} className="w-5 h-5 shrink-0" />
-                    </div>
                     <div>
                       <div className="text-xs text-[#777777] font-medium uppercase tracking-wider">
                         Direct WhatsApp Sync

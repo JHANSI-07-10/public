@@ -39,13 +39,20 @@ const CAPABILITY_CARDS: CardItem[] = [
       'Software solutions tailored to specific operational requirements, integrations, and business processes.',
     image: '/images/what-we-engineer/custom-software-v2.webp',
   },
+  {
+    id: 'ai-integration',
+    title: 'AI Integration',
+    description:
+      'We integrate practical AI into digital products and business workflows, including intelligent automation and AI-powered features.',
+    image: '/images/what-we-engineer/ai-integration.webp',
+  },
 ];
 
 export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultation }) => {
   return (
     <section
       id="what-we-engineer"
-      className="relative bg-transparent pt-20 sm:pt-24 lg:pt-28 pb-20 sm:pb-24 lg:pb-28 overflow-hidden border-t-0"
+      className="relative bg-transparent pt-12 sm:pt-14 lg:pt-16 pb-12 sm:pb-14 lg:pb-16 overflow-hidden border-t-0"
       aria-label="What We Engineer"
     >
       {/* Subtle Radial Glow Separation from Hero */}
@@ -80,7 +87,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
         <div className="mb-14 sm:mb-16">
           <HoverRevealCards
             items={CAPABILITY_CARDS}
-            gridClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+            gridClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6"
             cardBg="bg-[#303030]"
             borderColor="border-[#494949]"
             hoverBorderColor="hover:border-[#D4AF37] focus-within:border-[#D4AF37]"

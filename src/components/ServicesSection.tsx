@@ -17,11 +17,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
   const activeService = CORE_SERVICES[activeIndex];
 
   return (
-    <section id="services" className="py-24 bg-[#0a0a0a]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative">
+    <section id="services" className="py-14 sm:py-16 bg-[#0a0a0a]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <Reveal>
-          <div className="mb-14 sm:mb-16 flex w-full justify-center text-center">
+          <div className="mb-6 sm:mb-8 flex w-full justify-center text-center">
             <SectionHeader
               eyebrow="Core Technical Offerings"
               title="Software Engineering Built for Uncompromising Scale."

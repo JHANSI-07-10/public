@@ -11,7 +11,6 @@ import {
 } from '../data/content';
 import { getArticleBreakdown } from '../data/articleBreakdowns';
 import { Button } from '../components/ui/Button';
-import { WhatsAppIcon } from '../components/ui/WhatsAppIcon';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import {
@@ -149,9 +148,6 @@ const ArticleShareMenu: React.FC<{ article: InsightArticle }> = ({ article }) =>
               onClick={() => setIsOpen(false)}
               className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-[#cccccc] hover:text-white hover:bg-[#1f1f1f] rounded-lg transition-colors cursor-pointer"
             >
-              <div className="w-5 h-5 rounded bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0">
-                <WhatsAppIcon size={12} className="w-3 h-3 shrink-0" />
-              </div>
               <span>WhatsApp</span>
             </a>
             <a

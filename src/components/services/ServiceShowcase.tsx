@@ -38,7 +38,7 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
 
     if (typeof window !== 'undefined' && cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
-      const targetTop = 88; // Position just below the sticky navbar
+      const targetTop = 64; // Position just below the sticky navbar
 
       // If user has scrolled down into or past the service card, scroll up to the top of the card
       if (rect.top < targetTop - 15 || rect.top > targetTop + 80) {

@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
-import { WhatsAppIcon } from './ui/WhatsAppIcon';
 import { AnimatedVPDLogo } from './AnimatedVPDLogo';
 import { Button } from './ui/Button';
 import { AnimatedButton } from './motion/AnimatedButton';
@@ -74,8 +73,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
         transition={{ duration: motionTokens.duration.normal, ease: motionTokens.ease.snappy }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#0a0a0a]/92 backdrop-blur-md border-b border-[#262626] py-3.5 shadow-xl shadow-black/50'
-            : 'bg-transparent border-b border-white/5 py-5'
+            ? 'bg-[#0a0a0a]/95 backdrop-blur-md border-b border-[#262626] py-1.5 sm:py-2 shadow-xl shadow-black/50'
+            : 'bg-[#0a0a0a]/92 backdrop-blur-md border-b border-white/5 py-2.5 sm:py-3'
         }`}
       >
         {/* Scroll progress indicator */}
@@ -88,10 +87,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           {/* Zone 1: Authentic Brand Monogram & Wordmark */}
           <Link
             href="/"
-            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl p-1"
+            className="animated-vpd-logo-link flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded-xl py-0.5 px-1 -ml-1 transition-transform duration-200 active:scale-95"
             aria-label="VPD Technologies - Home"
           >
-            <div className={`rounded-xl overflow-hidden bg-[#161616] border border-[#2a2a2a] p-1 flex items-center justify-center shrink-0 group-hover:border-[#c9a84c]/50 transition-all duration-300 ${isScrolled ? 'w-11 h-11' : 'w-12 h-12'}`}>
+            <div
+              className={`relative flex items-center justify-center shrink-0 rounded-lg bg-[#0a0a0a] transition-all duration-300 ${
+                isScrolled
+                  ? 'h-9 w-[72px] sm:h-9.5 sm:w-[76px] md:h-10 md:w-[80px]'
+                  : 'h-11 w-[88px] sm:h-12 sm:w-[96px] md:h-[52px] md:w-[104px]'
+              }`}
+            >
               <AnimatedVPDLogo />
             </div>
           </Link>
@@ -137,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-[#aaaaaa] hover:text-white bg-[#161616] border border-[#2a2a2a] rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer"
+              className="lg:hidden min-w-[38px] min-h-[38px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center text-[#aaaaaa] hover:text-white bg-[#161616] border border-[#2a2a2a] rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] cursor-pointer"
               aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
               aria-expanded={mobileMenuOpen}
             >
@@ -155,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
             transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.snappy }}
-            className="fixed inset-0 z-40 md:hidden bg-black/92 backdrop-blur-xl pt-24 px-6 flex flex-col justify-between pb-8"
+            className="fixed inset-0 z-40 md:hidden bg-black/92 backdrop-blur-xl pt-20 sm:pt-24 px-6 flex flex-col justify-between pb-8"
             role="dialog"
             aria-modal="true"
           >
@@ -217,7 +222,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                   rel="noreferrer"
                   className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#22c55e]/40 transition-colors"
                 >
-                  <WhatsAppIcon size={16} className="w-4 h-4 shrink-0" />
                   <span>WhatsApp</span>
                 </a>
               </div>

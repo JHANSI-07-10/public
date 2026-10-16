@@ -61,7 +61,7 @@ export const TestimonialsSection: React.FC = () => {
   const next = () => goTo((currentIndex + 1) % VERIFIED_TESTIMONIALS.length);
 
   return (
-    <section id="testimonials" className="py-24 bg-[#0d0d0d]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative overflow-hidden">
+    <section id="testimonials" className="py-14 sm:py-16 bg-[#0d0d0d]/25 backdrop-blur-[1px] border-t border-[#1f1f1f]/50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading & Controls */}
         <Reveal>
