@@ -14,7 +14,7 @@ interface MatrixRow {
   category: 'core' | 'perf' | 'security' | 'delivery';
   webDev: string;
   webApp: string;
-  javaStack: string;
+  enterpriseStack: string;
 }
 
 const COMPARISON_ROWS: MatrixRow[] = [
@@ -23,56 +23,56 @@ const COMPARISON_ROWS: MatrixRow[] = [
     category: 'core',
     webDev: 'Lead capture, SEO authority, and sub-100ms first paint',
     webApp: 'Complex interactive workflows, state orchestration, SaaS ops',
-    javaStack: 'Heavy transactional integrity, multi-service resilience, enterprise backends',
+    enterpriseStack: 'Heavy transactional integrity, multi-service resilience, enterprise backends',
   },
   {
     dimension: 'Technology Foundation',
     category: 'core',
     webDev: 'React 19 / Vite / Tailwind CSS / Edge CDN',
     webApp: 'MERN / WebSockets / Edge Serverless / Redis',
-    javaStack: 'Java 21 LTS / Spring Boot 3 / PostgreSQL / Docker',
+    enterpriseStack: 'FastAPI / Python / PostgreSQL / Docker',
   },
   {
     dimension: 'Latency & TTI Benchmark',
     category: 'perf',
     webDev: '< 100ms Time to Interactive (TTI)',
     webApp: '< 50ms Real-Time WebSocket state sync',
-    javaStack: '< 20ms High-throughput transactional P99',
+    enterpriseStack: '< 20ms High-throughput transactional P99',
   },
   {
     dimension: 'Concurrency & Traffic Model',
     category: 'perf',
     webDev: 'Global Edge Cached (Millions of visits)',
     webApp: 'Horizontally scaled stateful sessions (10k+ concurrent)',
-    javaStack: 'Distributed multi-thread clustering (100k+ concurrent)',
+    enterpriseStack: 'Distributed multi-thread clustering (100k+ concurrent)',
   },
   {
     dimension: 'Data Persistence Architecture',
     category: 'core',
     webDev: 'Headless CMS / Flat File / Static Generation',
     webApp: 'Document & Relational hybrid with Redis caching',
-    javaStack: 'ACID Relational PostgreSQL with read-replicas & PITR',
+    enterpriseStack: 'ACID Relational PostgreSQL with read-replicas & PITR',
   },
   {
     dimension: 'Security & Access Protocols',
     category: 'security',
     webDev: 'Strict CSP / Zero-trust Edge SSL / Sanitized inputs',
     webApp: 'OAuth2 / Multi-Tenant RBAC / Session management',
-    javaStack: 'Enterprise ISO 27001 / AES-256 / Banking-grade encryption',
+    enterpriseStack: 'Enterprise ISO 27001 / AES-256 / Banking-grade encryption',
   },
   {
     dimension: 'Typical Delivery Sprint',
     category: 'delivery',
     webDev: '1–2 Sprints (2–4 Weeks)',
     webApp: '3–4 Sprints (6–8 Weeks)',
-    javaStack: '5–7 Sprints (10–14 Weeks)',
+    enterpriseStack: '5–7 Sprints (10–14 Weeks)',
   },
   {
     dimension: 'Source Code & IP Transfer',
     category: 'delivery',
     webDev: '100% Full client ownership upon final milestone',
     webApp: '100% Full client ownership upon final milestone',
-    javaStack: '100% Full client ownership upon final milestone',
+    enterpriseStack: '100% Full client ownership upon final milestone',
   },
 ];
 
@@ -155,7 +155,7 @@ export const ServiceComparisonMatrix: React.FC<ServiceComparisonMatrixProps> = (
                   {row.webApp}
                 </td>
                 <td className="py-4 px-4 text-xs text-[#c9a84c] font-mono font-medium leading-relaxed">
-                  {row.javaStack}
+                  {row.enterpriseStack}
                 </td>
               </tr>
             ))}
@@ -186,7 +186,7 @@ export const ServiceComparisonMatrix: React.FC<ServiceComparisonMatrixProps> = (
         {COMPARISON_ROWS.map((row, idx) => {
           let value = row.webApp;
           if (activeMobileService === 'web-dev') value = row.webDev;
-          if (activeMobileService === 'java-stack') value = row.javaStack;
+          if (activeMobileService === 'enterprise-software') value = row.enterpriseStack;
 
           return (
             <div

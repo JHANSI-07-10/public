@@ -97,12 +97,12 @@ export const ARTICLE_BREAKDOWNS: Record<string, ArticleBreakdown> = {
 
   b2: {
     articleId: 'b2',
-    topicBadge: 'Enterprise Java Core & Financial Stability',
-    summaryTitle: 'Banking-Grade Stability, Strict Type Safety, and High-Throughput Java 21',
+    topicBadge: 'Enterprise Distributed Core & Financial Stability',
+    summaryTitle: 'Banking-Grade Stability, Strict Type Safety, and High-Throughput Architecture',
     summaryText:
-      'High-tier financial institutions and institutional settlement networks cannot afford runtime volatility. This breakdown details our production blueprints for Java 21 LTS and Spring Boot 3, demonstrating how strict memory models, double-entry transactional invariants, and ISO 27001 compliance standards deliver zero-incident operations.',
+      'High-tier financial institutions and institutional settlement networks cannot afford runtime volatility. This breakdown details our production blueprints for enterprise backends and microservices, demonstrating how strict memory models, double-entry transactional invariants, and ISO 27001 compliance standards deliver zero-incident operations.',
     specifications: [
-      { label: 'Runtime Core', value: 'Java 21 LTS + Spring Boot 3' },
+      { label: 'Runtime Core', value: 'High-Throughput Distributed Microservices' },
       { label: 'Cryptographic Standard', value: 'AES-256-GCM Hardware-Accelerated' },
       { label: 'Commit P99 Latency', value: '< 4ms Database Commit' },
       { label: 'Production Uptime SLA', value: '99.99% Guaranteed SLA' },
@@ -115,13 +115,13 @@ export const ARTICLE_BREAKDOWNS: Record<string, ArticleBreakdown> = {
     },
     sections: [
       {
-        heading: 'The Financial Invariant: Why Enterprise Banking Demands Java',
+        heading: 'The Financial Invariant: Why Enterprise Banking Demands Deterministic Architecture',
         paragraphs: [
-          'While lightweight scripting languages excel for rapid prototyping, they introduce nondeterministic type coercion, garbage collection jitter, and hidden runtime exceptions that become catastrophic in ledger-balancing environments. Java 21 LTS provides deterministic memory isolation, generational ZGC garbage collection with sub-millisecond pauses, and strict compile-time verification.',
+          'While lightweight scripting languages excel for rapid prototyping, they introduce nondeterministic type coercion, garbage collection jitter, and hidden runtime exceptions that become catastrophic in ledger-balancing environments. Our enterprise backend architecture provides deterministic memory isolation, low-latency garbage collection with sub-millisecond pauses, and strict compile-time verification.',
           'Our enterprise financial services enforce immutable domain models where balance updates, ledger rows, and transaction states can never exist in an indeterminate or null state.',
         ],
         bulletPoints: [
-          'Virtual Threads (Project Loom) handle tens of thousands of concurrent I/O operations without thread pool exhaustion.',
+          'High-throughput asynchronous workers handle tens of thousands of concurrent I/O operations without thread pool exhaustion.',
           'Strict compiler assertions and custom Value Objects prevent accidental unit conversion bugs.',
           'Deterministic memory models ensure predictable execution under high-volume order flows.',
         ],
@@ -382,7 +382,7 @@ export const ARTICLE_BREAKDOWNS: Record<string, ArticleBreakdown> = {
       {
         heading: 'Dynamic Tenant Routing & Connection Interceptors',
         paragraphs: [
-          'Incoming HTTP requests are inspected at the edge API gateway, where the tenant identifier is extracted from verified JWT claims or subdomains. This tenant context is bound to the execution thread using AsyncLocalStorage in Node.js or ThreadLocal in Java Spring Boot.',
+          'Incoming HTTP requests are inspected at the edge API gateway, where the tenant identifier is extracted from verified JWT claims or subdomains. This tenant context is bound to the execution thread using AsyncLocalStorage in Node.js or context vars in Python.',
           'Database interceptors automatically set the schema search_path and inject session tenant variables before executing any query, guaranteeing zero manual developer overhead.',
         ],
         bulletPoints: [
@@ -479,7 +479,7 @@ export const ARTICLE_BREAKDOWNS: Record<string, ArticleBreakdown> = {
     topicBadge: 'Event-Driven Systems & Stream Processing',
     summaryTitle: 'Event-Driven Backends: Transactional Outbox and Idempotent Consumers',
     summaryText:
-      'Synchronous HTTP chains between microservices create fragile domino failures. This technical breakdown examines event-driven architectures with Apache Kafka, RabbitMQ, and Java Spring Boot, detailing the Transactional Outbox pattern, idempotent consumers, and backpressure handling at 10,000+ events per second.',
+      'Synchronous HTTP chains between microservices create fragile domino failures. This technical breakdown examines event-driven architectures with Apache Kafka, RabbitMQ, and distributed microservices, detailing the Transactional Outbox pattern, idempotent consumers, and backpressure handling at 10,000+ events per second.',
     specifications: [
       { label: 'Event Message Bus', value: 'Apache Kafka / RabbitMQ Streams' },
       { label: 'Throughput Capacity', value: '12,000+ Events / Second' },

@@ -16,7 +16,7 @@ const PRINCIPLES = [
   {
     title: 'Multi-Tier Stack Harmony',
     description:
-      'Unified full-stack synergy across React client applications, real-time message brokers, and enterprise Java Spring backends.',
+      'Unified full-stack synergy across React client applications, real-time message brokers, and scalable enterprise backends.',
   },
   {
     title: 'Protocol-Grade Security',

@@ -30,7 +30,7 @@ const FAQ_ITEMS: AccordionItem[] = [
     content: (
       <div className="space-y-2 text-sm text-[#cccccc] leading-relaxed">
         <p>
-          Yes. Our Java full-stack team specializes in integrating with existing enterprise backends (PostgreSQL, MySQL, Oracle, MongoDB) and legacy ERP/CRM systems.
+          Yes. Our full-stack engineering team specializes in integrating with existing enterprise backends (PostgreSQL, MySQL, Oracle, MongoDB) and legacy ERP/CRM systems.
         </p>
         <p className="text-xs text-[#999999]">
           We typically employ strangler-fig or anti-corruption layer patterns to modernize critical workflows incrementally without disrupting live daily transactions or customer access.
@@ -47,7 +47,7 @@ const FAQ_ITEMS: AccordionItem[] = [
           Every architecture is stress-tested under simulated concurrent loads using automated k6 and JMeter suites before staging sign-off.
         </p>
         <p className="text-xs text-[#999999]">
-          For Java backends, we leverage Spring Boot 3 with virtual threads, connection pooling, and multi-tier Redis caching to maintain sub-25ms response times even under sudden 10x traffic spikes.
+          For scalable backends, we leverage asynchronous event loops, connection pooling, and multi-tier Redis caching to maintain sub-25ms response times even under sudden 10x traffic spikes.
         </p>
       </div>
     ),

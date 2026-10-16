@@ -209,7 +209,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     focusAreas: [
       "Enterprise Software Architecture",
       "Strategic Technology Roadmap",
-      "Full-Stack Ecosystems & Java Engineering",
+      "Full-Stack Ecosystems & Cloud Engineering",
       "Global Client Partnerships"
     ],
     quote: "VPD Technologies was established to bridge the gap between complex software engineering and intuitive business interfaces. We avoid corporate jargon in favor of direct technical transparency and measurable results.",
@@ -251,7 +251,7 @@ export const CORE_SERVICES: Service[] = [
     category: "Enterprise Business Engines",
     description: "Develop or implement business-focused applications and integrations, where offered by VPD.",
     target: "Enterprises seeking centralized operational command, structured data integrity, and unified multi-department workflows.",
-    stack: "Java 21 / Spring Boot 3 / PostgreSQL / Redis",
+    stack: "Python / FastAPI / PostgreSQL / Redis",
     latency: "High-Throughput Concurrent Stream",
     security: "Enterprise ISO 27001 & AES-256 Protocol",
     benefits: [
@@ -301,7 +301,7 @@ export const CORE_SERVICES: Service[] = [
     category: "Tailored Business Systems",
     description: "Design and develop applications tailored to business requirements and workflows.",
     target: "Organizations needing purpose-built software architectures that map precisely to their proprietary business logic.",
-    stack: "React / Node.js / Java Spring / PostgreSQL",
+    stack: "React / Node.js / Python / PostgreSQL",
     latency: "< 80ms API Latency",
     security: "Role-Based Access Control (RBAC) & AES-256",
     benefits: [
@@ -457,7 +457,7 @@ export const INDUSTRIES: Industry[] = [
       "Unified appointment coordination portals with automated reminders",
       "Interoperable REST APIs connecting laboratory results with doctor dashboards"
     ],
-    keyTech: ["HIPAA/DISHA Security Patterns", "Java 21", "React", "Audit Trails"],
+    keyTech: ["HIPAA/DISHA Security Patterns", "Python", "React", "Audit Trails"],
     icon: "Activity"
   },
   {
@@ -471,11 +471,11 @@ export const INDUSTRIES: Industry[] = [
       "Legacy core banking interfaces lacking modern API interoperability"
     ],
     vpdSolutions: [
-      "Event-driven Java microservices with asynchronous transaction clearing",
+      "Event-driven microservices with asynchronous transaction clearing",
       "Automated audit trails, multi-factor authorization, and ledger immutability",
       "Scalable settlement rails with optimistic concurrency and zero data loss"
     ],
-    keyTech: ["Java 21", "Kafka", "ISO 27001", "PostgreSQL", "AES-256"],
+    keyTech: ["Python / FastAPI", "Kafka", "ISO 27001", "PostgreSQL", "AES-256"],
     icon: "Briefcase"
   },
   {
@@ -511,7 +511,7 @@ export const INDUSTRIES: Industry[] = [
       "Scheduled preventive maintenance trackers with automated alerts",
       "Barcode-enabled inventory logging for real-time stock reconciliation"
     ],
-    keyTech: ["WebSockets", "Java Spring Boot", "Industrial Dashboards", "Docker"],
+    keyTech: ["WebSockets", "FastAPI / Python", "Industrial Dashboards", "Docker"],
     icon: "Factory"
   },
   {
@@ -660,8 +660,8 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
       "Carrier Route Optimization & Vehicle Turnaround Metrics"
     ],
     targetAudience: "Logistics providers, freight operators, and distribution enterprises seeking unified fleet and inventory visibility.",
-    architectureNote: "Descriptive concept only. Engineered around event-driven Java Spring microservices, persistent WebSocket state synchronization, and partition-indexed PostgreSQL storage.",
-    keyTech: ["Java 21", "Spring Boot", "WebSockets", "PostgreSQL", "Redis"]
+    architectureNote: "Descriptive concept only. Engineered around event-driven microservices, persistent WebSocket state synchronization, and partition-indexed PostgreSQL storage.",
+    keyTech: ["Python", "FastAPI", "WebSockets", "PostgreSQL", "Redis"]
   },
   {
     id: "enterprise-saas-suite",
@@ -700,7 +700,7 @@ export const DELIVERY_METHODOLOGY: DeliveryStage[] = [
     title: "Develop",
     tagline: "Sprint-Based Rigorous Engineering",
     summary: "Build, integrate and test reliable application components.",
-    description: "Disciplined engineering execution with modern tech stacks: React 19, TypeScript, Java 21, and Spring Boot. Clean type-safe code with automated testing.",
+    description: "Disciplined engineering execution with modern tech stacks: React 19, TypeScript, Python, and FastAPI. Clean type-safe code with automated testing.",
     deliverables: [
       "Modular Frontend & Backend Microservices",
       "Strict Unit & Integration Test Coverage",
@@ -756,7 +756,7 @@ export const CAREERS_DATA = {
     },
     {
       title: "Modern Engineering Stack",
-      description: "Hands-on experience with modern tools: React 19, Next.js, Java 21 LTS, Spring Boot 3, Docker, and Cloud Edge."
+      description: "Hands-on experience with modern tools: React 19, Next.js, Python, FastAPI, Docker, and Cloud Edge."
     },
     {
       title: "Culture of Continuous Learning",
@@ -770,7 +770,7 @@ export const CAREERS_DATA = {
   openRoles: [
     {
       id: "full-stack-engineer",
-      title: "Full-Stack Software Engineer (Java & React)",
+      title: "Full-Stack Software Engineer (Python & React)",
       department: "Core Engineering",
       type: "Full-time",
       postedDate: "12 Oct 2026",
@@ -778,9 +778,9 @@ export const CAREERS_DATA = {
       workMode: "On-site / Hybrid",
       shortLocation: "Kurnool, AP",
       location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
-      overview: "Develop mission-critical web applications, high-throughput Spring Boot backends, and responsive React client frontends.",
+      overview: "Develop mission-critical web applications, high-throughput scalable backends, and responsive React client frontends.",
       requirements: [
-        "Proficiency in Java / Spring Boot and modern TypeScript / React",
+        "Proficiency in Python / FastAPI / Node.js and modern TypeScript / React",
         "Understanding of relational databases (PostgreSQL) and RESTful API design",
         "Familiarity with Git, Docker, and CI/CD pipelines",
         "Passionate about writing clean, maintainable, and type-safe code"
@@ -942,16 +942,16 @@ export const VERIFIED_PROJECTS: Project[] = [
     metricHighlight: "90%",
     metricLabel: "Reduction in Data Entry Errors",
     problem: "Manual spreadsheet logging caused costly logistical delays and communication bottlenecks across distributed distribution centers.",
-    solution: "Built a high-frequency web application featuring real-time WebSocket state synchronization and a multi-threaded Java Spring Boot backend, providing single-pane visibility.",
+    solution: "Built a high-frequency web application featuring real-time WebSocket state synchronization and a multi-threaded asynchronous backend, providing single-pane visibility.",
     result: "Eliminated 90% of manual data entry errors and granted instantaneous operational tracking across 10+ regional dispatch hubs, improving turnaround by 35%.",
-    tags: ["WebSockets", "Java / Spring Boot", "Real-Time", "Logistics"],
+    tags: ["WebSockets", "Python / FastAPI", "Real-Time", "Logistics"],
     specs: [
       { label: "Protocol", value: "WebSockets (STOMP / SockJS)" },
-      { label: "Backend Core", value: "Java / Spring Boot" },
+      { label: "Backend Core", value: "FastAPI / Python" },
       { label: "Concurrency", value: "High-Volume Stream Handling" },
       { label: "Sync Latency", value: "< 50ms Global" }
     ],
-    overview: "A major logistics operator managing distribution hubs across regional corridors was handicapped by decentralized spreadsheets and delayed inventory reconciliations. VPD Technologies engineered a high-concurrency operations command center with WebSocket duplex communication and a Java Spring Boot streaming backend.",
+    overview: "A major logistics operator managing distribution hubs across regional corridors was handicapped by decentralized spreadsheets and delayed inventory reconciliations. VPD Technologies engineered a high-concurrency operations command center with WebSocket duplex communication and an asynchronous streaming backend.",
     challenges: [
       "Decentralized manual logging caused frequent shipment routing miscalculations and costly dispatch delays.",
       "Critical telemetry updates took up to 8 minutes to propagate between warehouse floors and headquarters.",
@@ -964,8 +964,8 @@ export const VERIFIED_PROJECTS: Project[] = [
         description: "Implemented persistent STOMP/SockJS connections with Redis Pub/Sub, broadcasting state modifications in under 50 milliseconds."
       },
       {
-        title: "High-Throughput Java Spring Boot Engine",
-        description: "Architected a non-blocking Java 21 microservice suite capable of ingesting high-volume telemetry and barcode scan streams."
+        title: "High-Throughput Asynchronous Engine",
+        description: "Architected a non-blocking microservice suite capable of ingesting high-volume telemetry and barcode scan streams."
       },
       {
         title: "Conflict-Free Optimistic Data Models",
@@ -974,7 +974,7 @@ export const VERIFIED_PROJECTS: Project[] = [
     ],
     timeline: [
       { phase: "Phase 1", duration: "Weeks 1–4", title: "Logistics Process Mapping & Schema Blueprint", description: "Mapped distributed warehouse state machines, manifest schemas, and multi-hub synchronization models." },
-      { phase: "Phase 2", duration: "Weeks 5–9", title: "Spring Boot Microservices & Redis Broker", description: "Engineered core messaging layers, persistent socket connections, and database partitioning." },
+      { phase: "Phase 2", duration: "Weeks 5–9", title: "Async Microservices & Redis Broker", description: "Engineered core messaging layers, persistent socket connections, and database partitioning." },
       { phase: "Phase 3", duration: "Weeks 10–13", title: "Real-Time Operator Console & Scanners", description: "Built ergonomic React frontend with live fleet mapping, manifest diffing, and scanner input listeners." },
       { phase: "Phase 4", duration: "Weeks 14–16", title: "Regional Pilot & Concurrency Hardening", description: "Simulated 5,000 active concurrent operators, audited sync accuracy, and deployed live across 10 distribution hubs." }
     ],
@@ -985,9 +985,9 @@ export const VERIFIED_PROJECTS: Project[] = [
       { metric: "100%", label: "Audit Traceability", detail: "Complete historical revision logs for every parcel and container manifest." }
     ],
     techStack: [
-      { category: "Backend Engine", technologies: ["Java 21 LTS", "Spring Boot 3", "Spring WebFlux"] },
+      { category: "Backend Engine", technologies: ["Python 3.12", "FastAPI", "AsyncIO Streams"] },
       { category: "Real-Time Messaging", technologies: ["WebSockets (STOMP)", "SockJS", "Redis Pub/Sub"] },
-      { category: "Data Storage", technologies: ["PostgreSQL 16", "HikariCP", "Flyway Migration"] },
+      { category: "Data Storage", technologies: ["PostgreSQL 16", "SQLAlchemy", "Alembic Migration"] },
       { category: "Frontend Interface", technologies: ["React", "TypeScript", "Tailwind CSS", "Canvas Mapping"] }
     ],
     testimonial: {
@@ -1001,7 +1001,7 @@ export const VERIFIED_PROJECTS: Project[] = [
     architectureFlow: [
       { step: "01", label: "Warehouse Scanner Inputs", detail: "Floor barcode terminals and manual dispatch consoles streaming live event inputs." },
       { step: "02", label: "STOMP WebSocket Pipe", detail: "Persistent duplex socket connection maintaining bidirectional telemetry synchronization." },
-      { step: "03", label: "Spring Boot Reactive Core", detail: "Multi-threaded Java 21 engine resolving concurrent manifest updates." },
+      { step: "03", label: "Async Reactive Core", detail: "High-throughput asynchronous engine resolving concurrent manifest updates." },
       { step: "04", label: "Redis Broker & PostgreSQL", detail: "Distributed pub/sub fanout with partition-indexed database persistence." }
     ]
   },
@@ -1015,16 +1015,16 @@ export const VERIFIED_PROJECTS: Project[] = [
     metricHighlight: "99.99%",
     metricLabel: "Guaranteed Production Uptime",
     problem: "Vulnerabilities in legacy transaction pipelines caused system instability and elevated failure rates during high-concurrency peak trading windows.",
-    solution: "Architected a Java full-stack core incorporating AES-256 protocol-level encryption, ISO 27001 audit standards, and stateless JWT authorization barriers.",
+    solution: "Architected a distributed full-stack core incorporating AES-256 protocol-level encryption, ISO 27001 audit standards, and stateless JWT authorization barriers.",
     result: "Maintained zero security incidents post-launch with 99.99% uptime SLA. The system comfortably handles over 10,000 transactions per second at sub-millisecond database response times.",
-    tags: ["Java Core", "ISO 27001", "FinTech", "AES-256"],
+    tags: ["Enterprise Core", "ISO 27001", "FinTech", "AES-256"],
     specs: [
       { label: "Security Standard", value: "ISO 27001 Compliance" },
       { label: "Data Encryption", value: "AES-256 / TLS 1.3" },
       { label: "Throughput", value: "10,000+ Tx / Second" },
       { label: "Availability", value: "99.99% Uptime SLA" }
     ],
-    overview: "A fast-growing fintech firm handling institutional transaction clearing needed to replace a fragile legacy pipeline before expanding into cross-border settlements. VPD Technologies built a high-throughput Java core architecture adhering to ISO 27001 security controls with AES-256 protocol-level cryptography and sub-millisecond execution times.",
+    overview: "A fast-growing fintech firm handling institutional transaction clearing needed to replace a fragile legacy pipeline before expanding into cross-border settlements. VPD Technologies built a high-throughput core architecture adhering to ISO 27001 security controls with AES-256 protocol-level cryptography and sub-millisecond execution times.",
     challenges: [
       "Severe latency spikes and thread contention during market open spikes, triggering transaction dropouts.",
       "Regulatory demands requiring airtight ISO 27001 data compliance, immutable audit journals, and HSM key lifecycle management.",
@@ -1033,8 +1033,8 @@ export const VERIFIED_PROJECTS: Project[] = [
     ],
     solutionPillars: [
       {
-        title: "Ultra-Resilient Java Transaction Engine",
-        description: "Constructed a zero-garbage, non-blocking Java core handling 10,000+ transactions per second at sub-millisecond database latency."
+        title: "Ultra-Resilient Transaction Engine",
+        description: "Constructed a high-concurrency, non-blocking core handling 10,000+ transactions per second at sub-millisecond database latency."
       },
       {
         title: "Hardware-Grade AES-256 Cryptography",
@@ -1047,7 +1047,7 @@ export const VERIFIED_PROJECTS: Project[] = [
     ],
     timeline: [
       { phase: "Phase 1", duration: "Weeks 1–6", title: "Compliance Audit & Cryptographic Specification", description: "Formalized ISO 27001 threat modeling, banking gateway requirements, and mathematical ledger invariants." },
-      { phase: "Phase 2", duration: "Weeks 7–14", title: "Settlement Engine Core & Kafka Ingestion", description: "Developed reactive Java microservices, event streaming partitions, and double-entry ledger state machine." },
+      { phase: "Phase 2", duration: "Weeks 7–14", title: "Settlement Engine Core & Kafka Ingestion", description: "Developed reactive microservices, event streaming partitions, and double-entry ledger state machine." },
       { phase: "Phase 3", duration: "Weeks 15–19", title: "Penetration Testing & HSM Hardware Integration", description: "Executed third-party black-box security penetration tests and integrated cloud HSM key rotation." },
       { phase: "Phase 4", duration: "Weeks 20–24", title: "High-Volume Stress Tests & Mainnet Launch", description: "Simulated 15,000 TPS peak load bursts, validated zero ledger drift, and launched live under production SLA." }
     ],
@@ -1058,7 +1058,7 @@ export const VERIFIED_PROJECTS: Project[] = [
       { metric: "ISO 27001", label: "Certified Compliance", detail: "Full security certification approved on initial external submission." }
     ],
     techStack: [
-      { category: "Core Backend", technologies: ["Java 21 LTS", "Spring Boot", "Spring Security"] },
+      { category: "Core Backend", technologies: ["Python / FastAPI", "Rust / Go Core", "OAuth2 / RBAC"] },
       { category: "Security & Encryption", technologies: ["AES-256-GCM", "TLS 1.3", "Cloud HSM", "JWT / RBAC"] },
       { category: "Event & Persistence", technologies: ["Apache Kafka", "PostgreSQL Enterprise", "Liquibase"] },
       { category: "Infrastructure", technologies: ["Docker", "Kubernetes", "Prometheus & Grafana"] }
@@ -1135,11 +1135,11 @@ export const VERIFIED_INSIGHTS: InsightArticle[] = [
   },
   {
     id: "b2",
-    title: "Java Full Stack: Stability in Enterprise Financial Systems",
-    excerpt: "Why high-tier financial institutions continue to rely on the rock-solid security and predictable type-safety of Spring Boot and Java.",
+    title: "Distributed Core: Stability in Enterprise Financial Systems",
+    excerpt: "Why high-tier financial institutions continue to rely on the rock-solid security and predictable type-safety of modern distributed architectures.",
     author: "VPD Engineering Lab",
     date: "May 2026",
-    tags: ["Java", "Security", "FinTech"],
+    tags: ["Distributed Core", "Security", "FinTech"],
     image: "https://res.cloudinary.com/deaku7v6t/image/upload/v1778928654/vpd_tech_uploads/aujkuuy5myo1ivxemoes.webp"
   },
   {
@@ -1148,7 +1148,7 @@ export const VERIFIED_INSIGHTS: InsightArticle[] = [
     excerpt: "Overcoming the technical hurdles of zero-latency state synchronization across distributed logistics hubs using WebSockets and resilient event queues.",
     author: "VPD Engineering Lab",
     date: "May 2026",
-    tags: ["WebSockets", "Java", "Real-Time"],
+    tags: ["WebSockets", "Cloud", "Real-Time"],
     image: "https://res.cloudinary.com/deaku7v6t/image/upload/v1778928608/vpd_tech_uploads/zwqcqtzhtvuwji9gqhkr.webp"
   },
   {
@@ -1190,10 +1190,10 @@ export const VERIFIED_INSIGHTS: InsightArticle[] = [
   {
     id: "b8",
     title: "Event-Driven Backends for High-Frequency Operations",
-    excerpt: "Designing Spring Boot services around durable event queues — idempotent consumers, replay safety, and back-pressure under 10,000 transactions per second.",
+    excerpt: "Designing distributed services around durable event queues — idempotent consumers, replay safety, and back-pressure under 10,000 transactions per second.",
     author: "VPD Engineering Lab",
     date: "February 2026",
-    tags: ["Java", "Real-Time", "Architecture"],
+    tags: ["Cloud", "Real-Time", "Architecture"],
     image: "/portfolio-operational-hub.svg"
   },
   {
@@ -1263,9 +1263,9 @@ export const getArticleTakeaways = (article: InsightArticle): string[] => {
       'Prioritize high-intent conversion pathways by decoupling state management from monolithic bundles.',
     ];
   }
-  if (article.tags.some((t) => ['Java', 'Security', 'FinTech'].includes(t))) {
+  if (article.tags.some((t) => ['Distributed Core', 'Security', 'FinTech'].includes(t))) {
     return [
-      'Enforce compile-time type safety and predictable memory models using Java 21 LTS and Spring Boot 3.',
+      'Enforce compile-time type safety and predictable memory models using distributed enterprise services.',
       'Deploy protocol-level AES-256-GCM encryption and stateless token authorization barriers.',
       'Guarantee audit compliance (ISO 27001) with immutable append-only event ledgers.',
     ];

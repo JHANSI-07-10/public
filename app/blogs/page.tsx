@@ -5,11 +5,11 @@ import { COMPANY_DATA, VERIFIED_INSIGHTS } from '../../src/data/content';
 export const metadata: Metadata = {
   title: 'Technical Insights & Engineering Research | VPD Technologies',
   description:
-    'Deep dives into React 19 performance budgets, event-driven microservices, enterprise Java Spring Boot architectures, and real-time WebSocket state synchronization.',
+    'Deep dives into React 19 performance budgets, event-driven microservices, cloud-native backend architectures, and real-time WebSocket state synchronization.',
   keywords: [
     'Software Architecture Blog',
     'React Performance Optimization',
-    'Java Spring Boot Engineering',
+    'Cloud Backend Engineering',
     'WebSocket Real-Time Protocols',
     'VPD Engineering Lab',
     'System Architecture Insights',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Technical Insights & Engineering Research | VPD Technologies',
     description:
-      'Deep dives into React frontends, real-time sync protocols, and enterprise Java systems from the VPD Engineering Lab.',
+      'Deep dives into React frontends, real-time sync protocols, and cloud-native systems from the VPD Engineering Lab.',
     url: 'https://vpdtechnologies.com/blogs',
     siteName: COMPANY_DATA.name,
     images: [
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Technical Insights & Engineering Research | VPD Technologies',
     description:
-      'Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and enterprise Java systems.',
+      'Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and cloud-native systems.',
     images: ['https://vpdtechnologies.com/about2.webp'],
   },
   alternates: {
@@ -49,7 +49,7 @@ export default function BlogsPageRoute() {
     '@type': 'Blog',
     name: 'VPD Technologies Engineering Lab & Research Insights',
     description:
-      'Deep dives into React 19 performance budgets, event-driven microservices, and enterprise Java architectures.',
+      'Deep dives into React 19 performance budgets, event-driven microservices, and enterprise cloud architectures.',
     url: 'https://vpdtechnologies.com/blogs',
     publisher: {
       '@type': 'Organization',

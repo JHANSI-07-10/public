@@ -92,7 +92,7 @@ export const ServiceScopeCalculator: React.FC<ServiceScopeCalculatorProps> = ({
     let baseSprints = 2;
     if (selectedServiceId === 'web-dev') baseSprints = 1.5;
     if (selectedServiceId === 'web-app') baseSprints = 2.5;
-    if (selectedServiceId === 'java-stack') baseSprints = 3.5;
+    if (selectedServiceId === 'enterprise-software') baseSprints = 3.5;
 
     // Scale modifier
     if (projectScale === 'mvp') baseSprints *= 0.8;

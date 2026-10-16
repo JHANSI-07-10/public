@@ -22,7 +22,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
     {
       id: 'faq-1',
       title: 'What core technologies does VPD Technologies specialize in?',
-      content: 'We specialize in high-performance web engineering using React and Next.js, scalable enterprise backend solutions with Java and Spring Boot, and robust cloud architectures.'
+      content: 'We specialize in high-performance web engineering using React and Next.js, scalable enterprise backend solutions, and robust cloud architectures.'
     },
     {
       id: 'faq-2',
@@ -45,7 +45,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
     {
       icon: Target,
       title: 'Multi-Tier Unified Stack',
-      description: 'Expertise across Java, React, and cloud architectures for unified digital ecosystems that seamlessly connect client frontends with core backends.'
+      description: 'Expertise across React, Next.js, and cloud architectures for unified digital ecosystems that seamlessly connect client frontends with core backends.'
     },
     {
       icon: Shield,

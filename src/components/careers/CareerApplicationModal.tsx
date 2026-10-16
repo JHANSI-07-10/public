@@ -715,14 +715,14 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       htmlFor={`${formId}-skills`}
                       className="block text-xs font-semibold text-[#cccccc] mb-1.5"
                     >
-                      Key skills (e.g. Java, React, AWS, testing) <span className="text-[#c9a84c]">*</span>
+                      Key skills (e.g. Python, React, AWS, testing) <span className="text-[#c9a84c]">*</span>
                     </label>
                     <input
                       id={`${formId}-skills`}
                       type="text"
                       value={keySkills}
                       onChange={(e) => setKeySkills(e.target.value)}
-                      placeholder="e.g. Java, React, TypeScript, Spring Boot, PostgreSQL, Docker"
+                      placeholder="e.g. Python, React, TypeScript, FastAPI, PostgreSQL, Docker"
                       className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
                         errors.keySkills ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
                       } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}

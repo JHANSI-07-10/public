@@ -184,7 +184,7 @@ return (
                                                                                                                               <span className="text-[#c9a84c]">VPD Engineering Lab</span>.
                                                                                                                             </>
                                                                                                                           }
-                                                                                                                          subtitle="Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and enterprise Java systems."
+                                                                                                                          subtitle="Articles, technical methodologies, and architectural benchmarks on React frontends, real-time sync protocols, and cloud-native systems."
                                                                                                                           className="!mb-6 sm:!mb-8"
                                                                                                                         />
 
@@ -403,7 +403,6 @@ return (
                   {[
                     'Frontend performance budget audits',
                     'Event-driven service mesh design',
-                    'Java / Spring Boot resilience hardening',
                     'Real-time sync & WebSocket strategy',
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3 text-sm text-[#cccccc]">

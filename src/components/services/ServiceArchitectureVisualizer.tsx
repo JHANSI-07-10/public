@@ -68,14 +68,14 @@ const ARCHITECTURE_TIERS: ArchitectureTier[] = [
   {
     id: 'core',
     name: 'Processing Core & Microservices',
-    category: 'Java / High Concurrency',
+    category: 'Cloud & High Concurrency',
     icon: Cpu,
-    techs: ['Java 21 LTS', 'Spring Boot 3', 'WebSockets', 'Kafka / RabbitMQ', 'Docker'],
+    techs: ['Python / FastAPI', 'Node.js', 'WebSockets', 'Kafka / RabbitMQ', 'Docker'],
     latency: '< 25ms P99 Service Time',
     sla: 'Zero Data Loss Failover',
-    description: 'Resilient, strictly type-safe backend services architected for millions of concurrent transactions. Virtual threads provide massive asynchronous throughput.',
+    description: 'Resilient, strictly type-safe backend services architected for millions of concurrent transactions. High-concurrency event loops provide massive asynchronous throughput.',
     specs: [
-      { label: 'Concurrency', value: 'Java 21 Project Loom Fibers' },
+      { label: 'Concurrency', value: 'Async High-Throughput Event Loop' },
       { label: 'Architecture', value: 'Hexagonal / Domain-Driven' },
       { label: 'Event Streaming', value: 'Bi-directional Real-Time Bus' },
       { label: 'Containerization', value: 'OCI-Compliant Docker Images' }

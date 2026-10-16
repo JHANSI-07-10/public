@@ -16,7 +16,8 @@ import {
   Globe2,
   Building2,
   Phone,
-  Mail
+  Mail,
+  Calendar
 } from 'lucide-react';
 import { FOUNDER_PROFILES, COMPANY_DATA, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
@@ -291,7 +292,7 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
             <p className="text-sm sm:text-base text-[#aaaaaa] max-w-xl mx-auto mb-8 leading-relaxed">
               Whether you are an enterprise partner seeking custom software development, an agribusiness evaluating AgriFlow, or an investor/client exploring collaboration.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
               <Link
                 href="/contact"
                 className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-sm font-bold text-white hover:border-[#c9a84c]/50 hover:bg-[#1f1f1f] transition-colors group/btn"
@@ -305,6 +306,15 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
               >
                 <Mail className="w-4 h-4 text-[#c9a84c]" />
                 <span>{COMPANY_DATA.email}</span>
+              </a>
+              <a
+                href="https://frontdesk.vpdtechnologies.com/booking"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="vpd-outline-cta inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#161616] px-6 text-sm font-bold text-white hover:border-[#c9a84c]/50 hover:bg-[#1f1f1f] transition-colors"
+              >
+                <Calendar className="w-4 h-4 text-[#c9a84c]" />
+                <span>Book Appointment</span>
               </a>
             </div>
           </div>
