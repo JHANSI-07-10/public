@@ -2,32 +2,32 @@
  * Desktop (lg+): left-edge rail of docked tabs; only the icon square peeks out
  * and the tab slides in on hover/focus to reveal the platform label.
  * Below lg: floating share button + vertical icon dock with a dim backdrop.
- * Charcoal/gold surface; each platform keeps its own recognisable accent.
+ * Premium grey + silver metallic surface with silver rim reflections and specular sheen.
  * All selectors scoped to this CSS module.
  */
 
 .railLink,
 .dockLink {
-  --brand: #c9a84c;
-  --brand-grad: linear-gradient(135deg, #d4af37, #9e7c2b);
+  --brand: #c8d4e2;
+  --brand-grad: linear-gradient(135deg, #ffffff, #c8d4e2 48%, #7c8e9f 95%);
 }
 
 .railLink[data-platform="linkedin"],
 .dockLink[data-platform="linkedin"] {
-  --brand: #2b8fd4;
-  --brand-grad: linear-gradient(135deg, #3b9de0, #0a66c2);
+  --brand: #cbd8e8;
+  --brand-grad: linear-gradient(135deg, #ffffff, #c0d1e4 50%, #768ca2 100%);
 }
 
 .railLink[data-platform="facebook"],
 .dockLink[data-platform="facebook"] {
-  --brand: #3b7fd4;
-  --brand-grad: linear-gradient(135deg, #4a8cf0, #1877f2);
+  --brand: #cfd8e3;
+  --brand-grad: linear-gradient(135deg, #ffffff, #c4cfdc 50%, #7b8896 100%);
 }
 
 .railLink[data-platform="instagram"],
 .dockLink[data-platform="instagram"] {
-  --brand: #d86a92;
-  --brand-grad: linear-gradient(135deg, #f58529, #dd2a7b 52%, #8134af);
+  --brand: #d6d3de;
+  --brand-grad: linear-gradient(135deg, #ffffff, #cac4d2 50%, #877d91 100%);
 }
 
 /* ------------------------------------------------------------------ rail */
@@ -69,27 +69,30 @@
   width: max-content;
   padding: 0 18px 0 0;
   border-radius: 0 999px 999px 0;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(210, 226, 245, 0.28);
   border-left: none;
-  background: rgba(14, 14, 14, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(90deg, rgba(22, 23, 27, 0.96) 0%, rgba(30, 32, 38, 0.94) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   /* Docked: only the 46px icon tab stays on screen. */
   translate: calc(-100% + 46px) 0;
-  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.9);
+  box-shadow:
+    0 12px 30px -18px rgba(0, 0, 0, 0.92),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
   transition:
     translate 0.45s cubic-bezier(0.19, 1, 0.22, 1),
     border-color 0.3s ease,
+    background 0.3s ease,
     box-shadow 0.35s ease;
 }
 
-/* Brand-tinted sheen that washes in from the tab as the link slides out. */
+/* Metallic silver sheen that washes in from the tab as the link slides out. */
 .railLink::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--brand-grad), transparent 78%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(200, 218, 238, 0.12) 45%, transparent 75%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -104,8 +107,7 @@
   height: 46px;
   flex-shrink: 0;
   border-radius: 50%;
-  color: #b9b9b9;
-  color: color-mix(in srgb, var(--brand) 60%, #c9c9c9);
+  color: #c4d0dc;
   transition: color 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.4, 0.4, 1);
 }
 
@@ -115,7 +117,7 @@
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #f0f0f0;
+  color: #f1f5f9;
   opacity: 0;
   translate: -6px 0;
   white-space: nowrap;
@@ -125,21 +127,24 @@
 .railLink:hover,
 .railLink:focus-visible {
   translate: 0 0;
-  border-color: rgba(212, 175, 55, 0.42);
+  border-color: rgba(230, 242, 255, 0.68);
+  background: linear-gradient(90deg, rgba(30, 32, 38, 0.98) 0%, rgba(40, 43, 50, 0.96) 100%);
   box-shadow:
-    0 16px 34px -18px rgba(0, 0, 0, 0.95),
-    0 0 22px -12px var(--brand);
+    0 16px 36px -16px rgba(0, 0, 0, 0.95),
+    0 0 24px -6px rgba(210, 230, 255, 0.42),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
 }
 
 .railLink:hover::before,
 .railLink:focus-visible::before {
-  opacity: 0.16;
+  opacity: 0.22;
 }
 
 .railLink:hover .railIcon,
 .railLink:focus-visible .railIcon {
   color: #ffffff;
-  transform: scale(1.08);
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.55));
 }
 
 .railLink:hover .railLabel,
@@ -149,7 +154,7 @@
 }
 
 .railLink:focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid rgba(220, 235, 255, 0.8);
   outline-offset: 3px;
 }
 
@@ -201,27 +206,28 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(16, 16, 16, 0.94);
-  color: #cfcfcf;
+  border: 1px solid rgba(210, 226, 245, 0.25);
+  background: rgba(20, 22, 26, 0.95);
+  color: #c4d0dc;
   box-shadow: 0 14px 28px -16px rgba(0, 0, 0, 0.95);
-  transition: color 0.25s ease, border-color 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.4, 1);
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.4, 1), box-shadow 0.25s ease;
 }
 
 .dockLink:hover,
 .dockLink:focus-visible {
   color: #ffffff;
-  border-color: var(--brand);
+  border-color: rgba(230, 242, 255, 0.75);
+  box-shadow: 0 0 18px -6px rgba(210, 230, 255, 0.55);
   transform: translateY(-2px) scale(1.06);
 }
 
 .dockLink:focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid rgba(220, 235, 255, 0.85);
   outline-offset: 3px;
 }
 
 .dockGlyph {
-  color: var(--brand);
+  color: #c4d0dc;
   transition: color 0.25s ease;
 }
 
@@ -236,23 +242,26 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(212, 175, 55, 0.34);
-  background: rgba(18, 18, 18, 0.95);
-  color: #e6c76a;
+  border: 1px solid rgba(210, 226, 245, 0.35);
+  background: rgba(22, 24, 28, 0.96);
+  color: #e2e8f0;
   box-shadow:
     0 18px 34px -18px rgba(0, 0, 0, 0.95),
-    0 0 20px -14px rgba(212, 175, 55, 0.6);
+    0 0 20px -12px rgba(210, 230, 255, 0.45);
   cursor: pointer;
-  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .fab:hover {
-  border-color: rgba(212, 175, 55, 0.7);
-  background: #1f1a0f;
+  border-color: rgba(240, 248, 255, 0.75);
+  background: #262932;
+  box-shadow:
+    0 18px 34px -18px rgba(0, 0, 0, 0.95),
+    0 0 24px -8px rgba(210, 230, 255, 0.6);
 }
 
 .fab:focus-visible {
-  outline: 2px solid #f2d98d;
+  outline: 2px solid rgba(220, 235, 255, 0.9);
   outline-offset: 3px;
 }
 

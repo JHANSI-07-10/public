@@ -15,7 +15,8 @@ import {
   Globe2,
   Building2,
   Phone,
-  Mail
+  Mail,
+  UserRound
 } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { FOUNDER_PROFILES, COMPANY_DATA, Service } from '../data/content';
@@ -124,24 +125,8 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
                       <div className="lg:col-span-4 xl:col-span-3 flex flex-col items-center sm:items-start text-center sm:text-left border-b lg:border-b-0 lg:border-r border-[#242424] pb-8 lg:pb-0 lg:pr-8">
                         {/* Unclipped portrait frame with corner badge */}
                         <div className="relative mb-6 shrink-0">
-                          <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-gradient-to-br from-[#1c1c1c] to-[#121212] border-2 border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] font-black text-3xl sm:text-4xl shadow-[0_0_30px_rgba(212,175,55,0.2)] overflow-hidden">
-                            {founder.image ? (
-                              <>
-                                <img
-                                  src={founder.image}
-                                  alt={founder.name}
-                                  className="w-full h-full object-cover object-[center_18%]"
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLElement).style.display = 'none';
-                                  }}
-                                />
-                                <span className="absolute inset-0 flex items-center justify-center -z-10 font-black text-3xl sm:text-4xl text-[#D4AF37]">
-                                  {founder.initials}
-                                </span>
-                              </>
-                            ) : (
-                              founder.initials
-                            )}
+                          <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-gradient-to-br from-[#1c1c1c] to-[#121212] border-2 border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+                            <UserRound className="w-16 h-16 sm:w-20 sm:h-20" aria-hidden="true" />
                           </div>
                           {/* Corner Verified Award Badge (unclipped) */}
                           <div className="absolute -bottom-2.5 -right-2.5 w-9 h-9 rounded-full bg-[#121212] border-2 border-[#D4AF37] flex items-center justify-center text-[#DFC067] z-20 shadow-[0_4px_16px_rgba(0,0,0,0.9)]">

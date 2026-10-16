@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface HeroVideoBackgroundProps {
   className?: string;
@@ -12,8 +12,23 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
   videoSrc = '/gemini_generated_video_170d55ff.mp4',
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Detect desktop/tablet viewport (>= 768px) to prevent downloading/rendering video on mobile
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(mediaQuery.matches);
+
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleMediaChange);
+    return () => mediaQuery.removeEventListener('change', handleMediaChange);
+  }, []);
 
   useEffect(() => {
+    if (!isDesktop) return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -28,11 +43,11 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
     else video.addEventListener('loadeddata', play, { once: true });
 
     return () => video.removeEventListener('loadeddata', play);
-  }, [videoSrc]);
+  }, [isDesktop, videoSrc]);
 
   return (
     <div
-      className={`absolute inset-0 overflow-hidden pointer-events-none select-none bg-transparent ${className}`}
+      className={`hidden md:block absolute inset-0 overflow-hidden pointer-events-none select-none bg-transparent ${className}`}
       style={{
         // 1. Bottom blend: completely dissolves the video layer and scrims to 0 opacity
         // before reaching the bottom edge, ensuring zero visible cut line and zero separation
@@ -49,24 +64,27 @@ export const HeroVideoBackground: React.FC<HeroVideoBackgroundProps> = ({
         - Horizontal gradient mask deeply reduces video visibility on the left side (down to 4-8%) so that
           the headline text, paragraph, and CTAs have crystal-clear readability with zero competing contrast.
         - The right side receives full 100% opacity with rich, high-contrast dynamic range.
+        - Rendered strictly on viewports >= 768px to ensure 0 mobile cellular data usage and 0 distraction on mobile.
       */}
-      <video
-        ref={videoRef}
-        src={videoSrc}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        disablePictureInPicture
-        style={{
-          WebkitMaskImage:
-            'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
-          maskImage:
-            'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
-        }}
-        className="absolute inset-0 w-full h-full object-cover object-[72%_center] contrast-[0.70] saturate-[1.25] brightness-[1.08]"
-      />
+      {isDesktop && (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          style={{
+            WebkitMaskImage:
+              'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
+            maskImage:
+              'linear-gradient(to right, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.10) 32%, rgba(0,0,0,0.38) 52%, rgba(0,0,0,0.88) 70%, black 86%)',
+          }}
+          className="absolute inset-0 w-full h-full object-cover object-[72%_center] contrast-[0.70] saturate-[1.25] brightness-[1.08]"
+        />
+      )}
 
       {/* 
         Left Scrim: Deeply softens and darkens the left side to guarantee high-contrast

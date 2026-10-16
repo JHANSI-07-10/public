@@ -96,7 +96,7 @@ export const SiteChrome: React.FC<{ children: React.ReactNode }> = ({ children }
         />
 
         {/* Direct WhatsApp Floating Trigger */}
-        {!isAdminRoute && (
+        {!isAdminRoute && pathname !== '/' && pathname !== '' && (
           <aside aria-label="Direct Technical Support">
             <a
               href={COMPANY_DATA.whatsappUrl}

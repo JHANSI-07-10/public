@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { Award } from 'lucide-react';
+import { Award, UserRound } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { COMPANY_DATA } from '../data/content';
 import { WordMaskReveal } from './motion/WordMaskReveal';
@@ -159,24 +159,8 @@ export const CompanyIntro: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
                 {COMPANY_DATA.leadership.map((leader) => (
                   <div key={leader.name} className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] font-black text-sm shrink-0 group-hover:border-[#F2D98D]/60 group-hover:shadow-[0_0_12px_rgba(242,217,141,0.2)] transition-all duration-500 overflow-hidden relative">
-                      {leader.image ? (
-                        <>
-                          <img
-                            src={leader.image}
-                            alt={leader.name}
-                            className="w-full h-full object-cover object-[center_18%]"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLElement).style.display = 'none';
-                            }}
-                          />
-                          <span className="absolute inset-0 flex items-center justify-center -z-10 font-bold text-[#D4AF37]">
-                            {leader.initials}
-                          </span>
-                        </>
-                      ) : (
-                        leader.initials
-                      )}
+                    <div className="w-11 h-11 rounded-full bg-[#1c1c1c] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] shrink-0 group-hover:border-[#F2D98D]/60 group-hover:shadow-[0_0_12px_rgba(242,217,141,0.2)] transition-all duration-500">
+                      <UserRound className="w-5 h-5" aria-hidden="true" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">

@@ -68,7 +68,7 @@ export const TestimonialsSection: React.FC = () => {
           <div className="flex flex-col items-center mb-16 gap-6">
             <SectionHeader
               eyebrow="Executive Endorsements"
-              title="Trusted by Founders, CTOs, and Product Leaders."
+              title="What Leaders Say About Working With Us"
               align="center"
               className="mb-0"
             />

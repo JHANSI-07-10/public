@@ -3,7 +3,7 @@
 import React from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { DIFFERENTIATORS, KEY_METRICS, Service } from '../data/content';
-import { Shield, Cpu, Target, Award, ArrowRight, Rocket, Users } from 'lucide-react';
+import { Shield, Cpu, Target, Award, ArrowRight, Rocket, Users, UserRound } from 'lucide-react';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { InteractiveCard } from '../components/motion/InteractiveCard';
@@ -170,18 +170,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                   {/* Sai Krishna Vuppala */}
                   <div className="group flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] font-black text-lg shrink-0 overflow-hidden relative">
-                      <img
-                        src="/sai-krishna-vuppala.webp"
-                        alt="Sai Krishna Vuppala"
-                        className="w-full h-full object-cover object-[center_18%]"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLElement).style.display = 'none';
-                        }}
-                      />
-                      <span className="absolute inset-0 flex items-center justify-center -z-10 font-bold text-[#c9a84c]">
-                        SK
-                      </span>
+                    <div className="w-14 h-14 rounded-xl bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] shrink-0">
+                      <UserRound className="w-7 h-7" aria-hidden="true" />
                     </div>
                     <div>
                       <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
@@ -211,18 +201,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
 
                   {/* Ramcharan Gottipati */}
                   <div className="group flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] font-black text-lg shrink-0 overflow-hidden relative">
-                      <img
-                        src="/ramcharan-gottipati.webp"
-                        alt="Ramcharan Gottipati"
-                        className="w-full h-full object-cover object-[center_18%]"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLElement).style.display = 'none';
-                        }}
-                      />
-                      <span className="absolute inset-0 flex items-center justify-center -z-10 font-bold text-[#c9a84c]">
-                        RG
-                      </span>
+                    <div className="w-14 h-14 rounded-xl bg-[#1c1c1c] border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] shrink-0">
+                      <UserRound className="w-7 h-7" aria-hidden="true" />
                     </div>
                     <div>
                       <div className="text-xs font-mono font-bold tracking-wider text-[#DFC067] uppercase mb-1">
