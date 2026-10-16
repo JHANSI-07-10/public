@@ -68,8 +68,8 @@ export const HoverRevealCard: React.FC<HoverRevealCardProps> = ({
           src={item.image}
           alt={item.title}
           fill
-          quality={95}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 360px"
+          quality={100}
+          sizes="800px"
           className={cn(
             'object-cover object-center w-full h-full',
             'transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]',

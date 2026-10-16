@@ -16,28 +16,28 @@ const CAPABILITY_CARDS: CardItem[] = [
     title: 'Web Experiences',
     description:
       'Responsive, accessible websites designed to deliver clear user experiences and support business goals.',
-    image: '/images/what-we-engineer/web-experiences-v2.webp',
+    image: '/images/what-we-engineer/web-experiences-v2.jpg',
   },
   {
     id: 'business-applications',
     title: 'Business Applications',
     description:
       'Purpose-built web applications that connect users, data, and business workflows in one cohesive experience.',
-    image: '/images/what-we-engineer/business-applications-v2.webp',
+    image: '/images/what-we-engineer/business-applications-v2.jpg',
   },
   {
     id: 'full-stack-systems',
     title: 'Full-Stack Systems',
     description:
       'Integrated frontend, backend, API, and database engineering for reliable digital products.',
-    image: '/images/what-we-engineer/full-stack-systems-v2.webp',
+    image: '/images/what-we-engineer/full-stack-systems-v2.jpg',
   },
   {
     id: 'custom-software',
     title: 'Custom Software',
     description:
       'Software solutions tailored to specific operational requirements, integrations, and business processes.',
-    image: '/images/what-we-engineer/custom-software-v2.webp',
+    image: '/images/what-we-engineer/custom-software-v2.jpg',
   },
   {
     id: 'ai-integration',
@@ -83,7 +83,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
           </div>
         </Reveal>
 
-        {/* 4-Card Capability Showcase with HoverRevealCards */}
+        {/* Capability Showcase with HoverRevealCards */}
         <div className="mb-14 sm:mb-16">
           <HoverRevealCards
             items={CAPABILITY_CARDS}
