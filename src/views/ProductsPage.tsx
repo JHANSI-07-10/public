@@ -15,7 +15,8 @@ import {
   ShoppingBag,
   UtensilsCrossed,
   Cpu,
-  Workflow
+  Workflow,
+  Fuel
 } from 'lucide-react';
 import { PRODUCTS_PLATFORMS, ProductPlatform, Service } from '../data/content';
 import { Reveal } from '../components/motion/Reveal';
@@ -46,6 +47,8 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
 
   const getPlatformIcon = (id: string) => {
     switch (id) {
+      case 'bunkos':
+        return Fuel;
       case 'agriflow-erp':
         return Sprout;
       case 'clikgett':
@@ -82,7 +85,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
               </h1>
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-6">
-                Discover VPD Technologies&apos; specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
+                Discover VPD Technologies&apos; specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, petrol &amp; fuel station SaaS operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
               </p>
 
               {/* Informational Disclaimer Banner */}

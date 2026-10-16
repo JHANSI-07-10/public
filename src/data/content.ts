@@ -621,6 +621,32 @@ export const PRODUCTS_PLATFORMS: ProductPlatform[] = [
     ]
   },
   {
+    id: "bunkos",
+    name: "BunkOS",
+    category: "Pump Station Management SaaS & Fuel Operations Platform",
+    status: "In Development",
+    statusBadge: "Implementation Planning",
+    summary: "A multi-tenant operational SaaS platform engineered to digitize petrol and fuel station operations. Connects station configuration, users, shifts, nozzle-level meter readings, sales, payment reconciliation, fuel tanker receipts, live tank inventory, credit ledger, compliance, maintenance, audit, and analytics into a single unified operational record.",
+    highLevelConcepts: [
+      "Multi-Tenant Control Plane & Web Plane for Dealers / Owners, Station Managers & Pump Attendants",
+      "Shift Lifecycle & Low-Friction Nozzle-Level Meter Readings (Opening & Closing Reconciliation)",
+      "Automated Sales & Payment Reconciliation (Meter Dispensed vs. Cash, Card, UPI & Credit Collections)",
+      "Auditable Fuel Inventory (Opening Stock + Tanker Deliveries − Dispensed ± Approved Adjustments)",
+      "B2B Credit & Receivables Ledger with Credit Limits, Payment Allocations & Aging Analysis",
+      "Preventive/Corrective Maintenance Tracking, Compliance Document Expiry Alerts & Full Evidence Audits"
+    ],
+    targetAudience: "Petrol pump dealers, fuel station owners, multi-station petroleum retail networks, station managers, and pump attendants requiring reliable operational control without manual spreadsheets.",
+    architectureNote: "Architected as a multi-tenant SaaS platform partitioned into a SaaS Control Plane and operational Web Plane. Engineered with a high-performance Python + FastAPI backend, PostgreSQL relational database with immutable audit logs and transactional reconciliation boundaries, and a responsive React / Next.js web application with role-specific workspaces.",
+    keyTech: [
+      "Python + FastAPI",
+      "React / Next.js",
+      "PostgreSQL",
+      "Multi-Tenant SaaS",
+      "Control & Web Planes",
+      "Role-Based RBAC"
+    ]
+  },
+  {
     id: "b2b-logistics",
     name: "B2B Logistics Platform",
     category: "Supply Chain & Freight Coordination",

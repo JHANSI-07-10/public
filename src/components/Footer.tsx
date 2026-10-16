@@ -100,6 +100,14 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
+                    href="/products#bunkos"
+                    className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
+                  >
+                    BunkOS (Fuel Station SaaS)
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/products#agriflow-erp"
                     className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block text-[#888888]"
                   >
@@ -166,14 +174,6 @@ export const Footer: React.FC = () => {
                     className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
                   >
                     Careers &amp; Culture
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/insights"
-                    className="hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] rounded px-0.5 inline-block"
-                  >
-                    Technical Insights
                   </Link>
                 </li>
                 <li>
