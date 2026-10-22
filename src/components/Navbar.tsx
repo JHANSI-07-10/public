@@ -205,23 +205,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               >
                 Request Free Consultation
               </AnimatedButton>
-              <div className="grid grid-cols-2 gap-3">
-                <a
-                  href={`tel:${COMPANY_DATA.phone}`}
-                  className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#c9a84c]/40 transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-[#c9a84c]" />
-                  <span>Call Directly</span>
-                </a>
-                <a
-                  href={COMPANY_DATA.whatsappUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#22c55e]/40 transition-colors"
-                >
-                  <span>WhatsApp</span>
-                </a>
-              </div>
+              <a
+                href={`tel:${COMPANY_DATA.phone}`}
+                className="min-h-[44px] flex items-center justify-center gap-2 py-2.5 bg-[#161616] border border-[#2a2a2a] rounded-xl text-white text-xs font-semibold hover:border-[#c9a84c]/40 transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#c9a84c]" />
+                <span>Call Directly: {COMPANY_DATA.phone}</span>
+              </a>
             </div>
           </motion.div>
         )}

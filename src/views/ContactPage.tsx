@@ -103,7 +103,7 @@ export const ContactPage: React.FC = () => {
                     Direct Communication Channels
                   </h3>
                   <p className="text-sm text-[#aaaaaa] leading-relaxed mb-6">
-                    Skip lengthy sales queues. Reach our engineering leadership directly through voice, WhatsApp, or corporate email.
+                    Skip lengthy sales queues. Reach our engineering leadership directly through voice call or corporate email.
                   </p>
                 </div>
               </Reveal>
@@ -123,24 +123,6 @@ export const ContactPage: React.FC = () => {
                       </div>
                       <div className="text-base font-bold text-white group-hover:text-[#c9a84c] transition-colors">
                         {COMPANY_DATA.phone}
-                      </div>
-                    </div>
-                  </a>
-                  </StaggerItem>
-
-                  <StaggerItem>
-                  <a
-                    href={COMPANY_DATA.whatsappUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-xl bg-[#141414] border border-[#262626] hover:border-[#22c55e]/50 transition-colors group"
-                  >
-                    <div>
-                      <div className="text-xs text-[#777777] font-medium uppercase tracking-wider">
-                        Direct WhatsApp Sync
-                      </div>
-                      <div className="text-base font-bold text-white group-hover:text-[#22c55e] transition-colors">
-                        Chat on WhatsApp
                       </div>
                     </div>
                   </a>
@@ -309,7 +291,7 @@ export const ContactPage: React.FC = () => {
                       </div>
                       <div>
                         <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#cccccc] mb-1.5">
-                          Phone / WhatsApp *
+                          Phone Number *
                         </label>
                         <input
                           id="contact-phone"
@@ -318,7 +300,7 @@ export const ContactPage: React.FC = () => {
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+91 83339 19447"
+                          placeholder="+91 99631 44490"
                           className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>

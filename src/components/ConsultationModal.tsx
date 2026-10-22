@@ -118,7 +118,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
             <p className="text-sm text-[#aaaaaa] leading-relaxed">
               We have received your specifications and a senior software engineer will review your scope and follow up about scheduling. Your request is received, but no appointment is confirmed until we agree a time with you.
             </p>
-            <div className="pt-4 flex flex-col sm:flex-row gap-3">
+            <div className="pt-4 flex justify-center">
               <Button
                 onClick={() => {
                   setIsSuccess(false);
@@ -130,14 +130,6 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               >
                 Close Window
               </Button>
-              <a
-                href={COMPANY_DATA.whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#22c55e] hover:bg-[#1fa951] text-black font-bold text-xs flex items-center justify-center gap-2 transition-colors"
-              >
-                <span>Chat on WhatsApp</span>
-              </a>
             </div>
           </div>
         ) : (
@@ -211,7 +203,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
               <div>
                 <label htmlFor="consultation-phone" className="block text-xs font-semibold text-[#cccccc] mb-1">
-                  Phone / WhatsApp *
+                  Phone Number *
                 </label>
                 <input
                   id="consultation-phone"
@@ -220,7 +212,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+91 83339 19447"
+                  placeholder="+91 99631 44490"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#0e0e0e] border border-[#2b2b2b] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
                 />
               </div>

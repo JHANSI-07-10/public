@@ -227,7 +227,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
               Schedule a technical discovery session with our senior engineering squad. We evaluate your requirements, benchmark performance constraints, and deliver an actionable architectural blueprint within 48 hours.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex items-center justify-center">
               <AnimatedButton
                 onClick={() => onOpenConsultation()}
                 variant="primary"
@@ -236,15 +236,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
               >
                 Schedule Free Technical Consultation
               </AnimatedButton>
-
-              <a
-                href={COMPANY_DATA.whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm font-semibold text-white bg-[#141414] hover:bg-[#1a1a1a] border border-[#282828] hover:border-[#22c55e]/50 rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e]"
-              >
-                <span>Chat with Architect on WhatsApp</span>
-              </a>
             </div>
           </Reveal>
         </div>
