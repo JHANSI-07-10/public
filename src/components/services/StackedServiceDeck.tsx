@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ArrowUpRight } from 'lucide-react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import type { Service } from '../../data/content';
 import styles from './StackedServiceDeck.module.css';
@@ -18,7 +20,13 @@ const CardBody: React.FC<{ service: Service }> = ({ service }) => {
   const oneLineDesc = service.stackLines?.[0] || service.description;
   return (
     <div className={styles.content}>
-      <p className={styles.category}>{service.category}</p>
+      <div className={styles.headerRow}>
+        <p className={styles.category}>{service.category}</p>
+        <span className={styles.exploreBadge} aria-hidden="true">
+          <span>Details</span>
+          <ArrowUpRight className={styles.badgeIcon} />
+        </span>
+      </div>
       <h3 className={styles.title}>{service.title}</h3>
       <div className={styles.separator}>
         <span className={styles.rule} aria-hidden="true" />
@@ -33,6 +41,7 @@ export const StackedServiceDeck: React.FC<StackedServiceDeckProps> = ({
   activeIndex,
   onActiveChange,
 }) => {
+  const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
   const viewportRef = useRef<HTMLDivElement>(null);
   const inView = useInView(viewportRef, { once: true, amount: 0.15 });
@@ -45,6 +54,14 @@ export const StackedServiceDeck: React.FC<StackedServiceDeckProps> = ({
     [onActiveChange],
   );
 
+  const handleCardClick = useCallback(
+    (service: Service, index: number) => {
+      activate(index);
+      router.push(`/services?service=${encodeURIComponent(service.id)}#core-services`);
+    },
+    [activate, router],
+  );
+
   if (shouldReduceMotion) {
     return (
       <div className={styles.flat}>
@@ -54,12 +71,12 @@ export const StackedServiceDeck: React.FC<StackedServiceDeckProps> = ({
             className={styles.flatCard}
             role="button"
             tabIndex={0}
-            aria-label={`${service.title} — view details`}
-            onClick={() => activate(i)}
+            aria-label={`${service.title} — view technical details`}
+            onClick={() => handleCardClick(service, i)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                activate(i);
+                handleCardClick(service, i);
               }
             }}
           >
@@ -120,12 +137,11 @@ export const StackedServiceDeck: React.FC<StackedServiceDeckProps> = ({
                   setTouchOpen(opening ? i : null);
                   setPaused(opening);
                 }}
-                onClick={() => activate(i)}
+                onClick={() => handleCardClick(service, i)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    activate(i);
-                    setPaused(true);
+                    handleCardClick(service, i);
                   }
                 }}
               >

@@ -22,7 +22,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = () => {
         aria-hidden="true"
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div className="w-full max-w-[92vw] 2xl:max-w-[1500px] 3xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10 text-center">
         <Reveal>
           <div className="rounded-3xl bg-gradient-to-b from-[#141416] via-[#101012] to-[#0c0c0e] border border-white/[0.08] p-8 sm:p-14 lg:p-16 shadow-2xl relative overflow-hidden group">
             {/* Top gold hair-line gleam */}

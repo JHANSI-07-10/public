@@ -39,6 +39,12 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('service') || params.has('industry') || params.has('tab') || window.location.hash) {
+        return;
+      }
+    }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 

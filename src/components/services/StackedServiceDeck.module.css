@@ -132,12 +132,21 @@
   position: relative;
   z-index: 1;
   height: 100%;
+  width: 100%;
   padding: clamp(18px, 1.8vw, 22px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   text-align: left;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
 }
 
 .category {
@@ -149,6 +158,43 @@
   color: #c9a84c;
   margin: 0;
   line-height: 1.2;
+}
+
+.exploreBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card:hover .exploreBadge,
+.cardRevealed .exploreBadge {
+  color: #DFC067;
+  background: rgba(201, 168, 76, 0.12);
+  border-color: rgba(201, 168, 76, 0.4);
+}
+
+.badgeIcon {
+  width: 11px;
+  height: 11px;
+  transition: transform 0.25s ease;
+}
+
+.card:hover .badgeIcon,
+.cardRevealed .badgeIcon {
+  transform: translate(1px, -1px);
 }
 
 .title {

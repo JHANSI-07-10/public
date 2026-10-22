@@ -70,7 +70,7 @@ export const DeliveryApproachSection: React.FC = () => {
           aria-hidden="true"
         />
 
-        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-4 sm:py-6 flex flex-col justify-center">
+        <div className="w-full max-w-[92vw] 2xl:max-w-[1680px] 3xl:max-w-[2100px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10 py-4 sm:py-6 flex flex-col justify-center">
           <Reveal>
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-6 sm:mb-8 lg:mb-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161616] border border-[#D4AF37]/30 text-xs font-bold tracking-widest text-[#D4AF37] uppercase mb-2 sm:mb-3">

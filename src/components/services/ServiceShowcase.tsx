@@ -84,19 +84,88 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
     };
   }, [activeTab]);
 
+  // Initial deep-link check (e.g. /services?service=ai-ml or /services?industry=agritech)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const syncFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const serviceParam = params.get('service') || params.get('tab') || params.get('id');
+      const industryParam = params.get('industry');
+
+      if (serviceParam) {
+        const matched = CORE_SERVICES.find(
+          (s) => s.id.toLowerCase() === serviceParam.toLowerCase()
+        );
+        if (matched) {
+          setActiveTab('services');
+          setSelectedServiceId(matched.id);
+          setTimeout(() => {
+            const section = document.getElementById('core-services');
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              const targetY = window.scrollY + rect.top - 84;
+              window.scrollTo({
+                top: Math.max(0, targetY),
+                behavior: 'smooth',
+              });
+            }
+          }, 120);
+          return;
+        }
+      }
+
+      if (industryParam) {
+        const matchedInd = INDUSTRIES.find(
+          (ind) => ind.id.toLowerCase() === industryParam.toLowerCase()
+        );
+        if (matchedInd) {
+          setActiveTab('industries');
+          setSelectedIndustryId(matchedInd.id);
+          setTimeout(() => {
+            const section = document.getElementById('core-services');
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              const targetY = window.scrollY + rect.top - 84;
+              window.scrollTo({
+                top: Math.max(0, targetY),
+                behavior: 'smooth',
+              });
+            }
+          }, 120);
+        }
+      }
+    };
+
+    syncFromUrl();
+    window.addEventListener('popstate', syncFromUrl);
+    return () => window.removeEventListener('popstate', syncFromUrl);
+  }, []);
+
   // Handle service selection and ensure the top of the card is in view
   const handleSelectService = useCallback((serviceId: string) => {
     setSelectedServiceId(serviceId);
 
-    if (typeof window !== 'undefined' && cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      const targetTop = 88;
-      if (rect.top < targetTop - 15 || rect.top > targetTop + 80) {
-        const targetScrollY = window.scrollY + rect.top - targetTop;
-        window.scrollTo({
-          top: Math.max(0, targetScrollY),
-          behavior: 'smooth',
-        });
+    if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('service', serviceId);
+        url.searchParams.delete('industry');
+        window.history.replaceState(null, '', url.toString());
+      } catch {
+        // Safe fallback in restricted environments
+      }
+
+      if (cardRef.current) {
+        const rect = cardRef.current.getBoundingClientRect();
+        const targetTop = 88;
+        if (rect.top < targetTop - 15 || rect.top > targetTop + 80) {
+          const targetScrollY = window.scrollY + rect.top - targetTop;
+          window.scrollTo({
+            top: Math.max(0, targetScrollY),
+            behavior: 'smooth',
+          });
+        }
       }
     }
   }, []);
@@ -105,15 +174,26 @@ export const ServiceShowcase: React.FC<ServiceShowcaseProps> = ({ onOpenConsulta
   const handleSelectIndustry = useCallback((industryId: string) => {
     setSelectedIndustryId(industryId);
 
-    if (typeof window !== 'undefined' && cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      const targetTop = 88;
-      if (rect.top < targetTop - 15 || rect.top > targetTop + 80) {
-        const targetScrollY = window.scrollY + rect.top - targetTop;
-        window.scrollTo({
-          top: Math.max(0, targetScrollY),
-          behavior: 'smooth',
-        });
+    if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('industry', industryId);
+        url.searchParams.delete('service');
+        window.history.replaceState(null, '', url.toString());
+      } catch {
+        // Safe fallback in restricted environments
+      }
+
+      if (cardRef.current) {
+        const rect = cardRef.current.getBoundingClientRect();
+        const targetTop = 88;
+        if (rect.top < targetTop - 15 || rect.top > targetTop + 80) {
+          const targetScrollY = window.scrollY + rect.top - targetTop;
+          window.scrollTo({
+            top: Math.max(0, targetScrollY),
+            behavior: 'smooth',
+          });
+        }
       }
     }
   }, []);
