@@ -6,12 +6,35 @@ Ordered, because most failures are the earlier steps silently unfinished.
 
 ## A. Local, before anything goes to production
 
-1. **Your turn** — confirm one verified sender exists in Brevo:
-   Brevo → *Senders, Domains & Dedicated IPs* → *Senders*. The list must contain
-   the address you intend to put in `BREVO_SENDER_EMAIL`. Until the brand domain
-   is authenticated, the only verified sender is the owner's Gmail address, which
-   is why the interim configuration sends from Gmail with the display name
-   `VPD Technologies`.
+1. **Your turn — this is the current blocker.** `BREVO_SENDER_EMAIL` is set to
+   `info@vpdtechnologiespvtltd.com`, and that address is **not yet a verified
+   sender** in the account. Verified today (read-only probe): `GET /v3/senders`
+   returns only the owner's Gmail (registered as "Edunova Global Academy" and
+   "CoralSwift Technologies"), and `GET /v3/senders/domains` returns
+   `{"domains":[],"count":0}` — no authenticated domain at all. Until both are
+   fixed, every send is refused: the forms still store submissions and report
+   `adminNotified: false`, and no fallback address is used. Do these in order:
+   1. Brevo → *Senders, Domains & Dedicated IPs* → **Domains** → *Add a domain*:
+      `vpdtechnologiespvtltd.com`. Brevo replies with a DKIM CNAME, an SPF value
+      and a host-verification record.
+   2. **Your turn** — Hostinger → *DNS Zone Editor* for that domain: add the DKIM
+      CNAME, then **merge** Brevo's SPF into the existing record rather than
+      replacing it. Today it is `v=spf1 include:_spf.mail.hostinger.com ~all`, so
+      the merged form is
+      `v=spf1 include:_spf.mail.hostinger.com include:spf.sendinblue.com ~all`
+      (use exactly the value Brevo shows you). Leave MX on Hostinger untouched.
+   3. Back in Brevo → *Verify* the domain until it reports authenticated, then
+      *Senders* → *Add sender*: name `VPD Technologies`, email
+      `info@vpdtechnologiespvtltd.com`, and click the confirmation link that
+      arrives in that Hostinger mailbox.
+      Adding the sender **without** the authenticated domain is what produced the
+      `…@11622325.brevosend.com` display: Brevo rewrites the From address to its
+      own sending domain whenever it cannot DKIM-sign as yours. The address is
+      verified, the domain authentication is what makes it display correctly.
+   4. **my turn** — as soon as `GET /v3/senders` lists `info@vpdtechnologiespvtltd.com`,
+      restart the dev server and send a real test from each form, then confirm in
+      the received message that the sender line reads exactly
+      `VPD Technologies <info@vpdtechnologiespvtltd.com>`.
 2. **Your turn** — create `public/.env` with the five names from
    `.env.example` and real values. Never write values into `.env.example`.
 3. **my turn** — restart the dev server so the file is read (Next.js loads env
@@ -36,19 +59,23 @@ Ordered, because most failures are the earlier steps silently unfinished.
    five in the *Other* type, for Production **and** Preview. Do not add them as
    *Environmental Variable for Frameworks* frontend entries, and never as
    `NEXT_PUBLIC_BREVO_API_KEY`.
-9. **Your turn** — authenticate the brand domain so `info@vpdtechnologiespvtltd.com`
-   can send: Brevo → *Senders, Domains & Dedicated IPs* → *Domains* → add
-   `vpdtechnologiespvtltd.com`, then merge the returned SPF value into the
-   Hostinger DNS record and add the DKIM CNAME. Today the SPF is
-   `v=spf1 include:_spf.mail.hostinger.com ~all` with no Brevo include, DMARC is
-   `p=none`, and no DKIM selector resolves — mail leaves the account but is weakly
-   authenticated, which is what lands it in spam.
-10. **my turn** — once the sender is verified, change one line in both places:
-    `BREVO_SENDER_EMAIL=info@vpdtechnologiespvtltd.com`.
-11. **Your turn** — redeploy so the new env is baked into the runtime, then repeat
-    step 6 against the production URL.
-12. **Your turn (optional, placement)** — after DMARC is at `p=quarantine` or
-    `p=reject` and DKIM aligns, remove the interim Gmail sender entirely.
+9. **Your turn** — finish step 1 (domain authentication + sender verification)
+   first. It is one account-wide change, so production inherits it; nothing else
+   in this section can succeed while `GET /v3/senders/domains` returns zero
+   domains. Placement is also still weak: DMARC is `p=none` and no DKIM selector
+   resolves for the brand domain, which is what puts authenticated-looking mail
+   in spam.
+10. **Your turn** — set `BREVO_SENDER_EMAIL=info@vpdtechnologiespvtltd.com` in the
+    Vercel project too (local `.env` is already on that value), then redeploy so
+    the runtime picks it up.
+11. **my turn** — after the redeploy, send one live test per workflow and read the
+    received message: the sender line must be exactly
+    `VPD Technologies <info@vpdtechnologiespvtltd.com>`, with no
+    `brevosend.com` in it. Anything else means the domain is still not
+    authenticated, and the code will keep refusing to send rather than fall back.
+12. **Your turn (placement follow-up)** — once SPF, DKIM and DMARC align, move
+    DMARC from `p=none` to `p=quarantine` and watch the reports for a week before
+    `p=reject`.
 
 ## C. Logo hosting
 

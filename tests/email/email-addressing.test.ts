@@ -294,3 +294,47 @@ describe('Reply-To addresses and display names are validated', () => {
     expect(JSON.stringify(status)).not.toContain(TEST_KEY);
   });
 });
+
+describe('sender identity is the VPD address and has no fallback', () => {
+  it('uses the required name and address on every email direction', async () => {
+    const payload = enquiry('contact');
+    await processEnquiry('contact', payload, freshIp());
+    const job = application();
+    await processCareerApplication(job, freshIp());
+
+    expect(readEmailConfig().config).toMatchObject({
+      senderName: 'VPD Technologies',
+      senderEmail: 'info@vpdtechnologiespvtltd.com',
+    });
+    expect(brevoCalls).toHaveLength(4);
+    for (const call of brevoCalls) {
+      expect(call.body.sender).toEqual({
+        name: 'VPD Technologies',
+        email: 'info@vpdtechnologiespvtltd.com',
+      });
+    }
+  });
+
+  it('sends nothing when the sender variable is unset', () => {
+    delete process.env.BREVO_SENDER_EMAIL;
+    const status = readEmailConfig();
+    expect(status.config).toBeNull();
+    expect(status.missing).toEqual(['BREVO_SENDER_EMAIL']);
+  });
+
+  it('refuses a brevosend.com rewritten address instead of falling back to it', async () => {
+    process.env.BREVO_SENDER_EMAIL = 'mandugulajhansilakshmi@11622325.brevosend.com';
+    const status = readEmailConfig();
+    expect(status.config).toBeNull();
+    expect(status.missing.join(' ')).toContain('BREVO_SENDER_EMAIL');
+    expect(JSON.stringify(status)).not.toContain('11622325.brevosend.com');
+
+    // A submission with that configuration is still captured, just never mailed.
+    const result = await processEnquiry('contact', enquiry('contact'), freshIp());
+    expect(brevoCalls).toHaveLength(0);
+    if (result.kind !== 'processed') throw new Error('expected processed');
+    expect(result.outcome.stored).toBe(true);
+    expect(result.outcome.adminNotified).toBe(false);
+    delete process.env.BREVO_SENDER_EMAIL;
+  });
+});

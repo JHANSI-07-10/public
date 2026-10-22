@@ -10,6 +10,14 @@
 /** Display name shown on every email this app sends. */
 const SENDER_NAME = 'VPD Technologies';
 
+/**
+ * While a sender's domain is not authenticated, Brevo rewrites the visible From
+ * to `<local-part>@<account-id>.brevosend.com`. That is not a VPD identity, so
+ * configuring one here is treated as misconfigured rather than as a usable
+ * fallback: nothing is sent until a real verified VPD address is set.
+ */
+const REWRITTEN_BREVO_SENDER = /@([-a-z0-9]+\.)?brevosend\.com$/i;
+
 export interface EmailConfig {
   apiKey: string;
   senderEmail: string;
@@ -22,7 +30,7 @@ export interface EmailConfigStatus {
   missing: string[];
 }
 
-/** Reports which required variables are absent without ever returning their values. */
+/** Reports unusable configuration by variable name only, never by value. */
 export function readEmailConfig(): EmailConfigStatus {
   const raw = {
     BREVO_API_KEY: process.env.BREVO_API_KEY?.trim() ?? '',
@@ -33,6 +41,10 @@ export function readEmailConfig(): EmailConfigStatus {
   const missing = Object.entries(raw)
     .filter(([, value]) => value === '')
     .map(([key]) => key);
+
+  if (raw.BREVO_SENDER_EMAIL !== '' && REWRITTEN_BREVO_SENDER.test(raw.BREVO_SENDER_EMAIL)) {
+    missing.push('BREVO_SENDER_EMAIL (a verified VPD address, not a brevosend.com rewrite)');
+  }
 
   if (missing.length > 0) return { config: null, missing };
 

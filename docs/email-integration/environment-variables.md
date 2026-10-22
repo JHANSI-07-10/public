@@ -7,7 +7,7 @@ reader, and it reports missing variables by name — never by value.
 | Variable | Purpose | Required | Where it must be set |
 |---|---|---|---|
 | `BREVO_API_KEY` | Authenticates `POST /v3/smtp/email` | Yes | `.env` locally, Vercel **Project Settings → Environment Variables → Other** (Production + Preview + Development) |
-| `BREVO_SENDER_EMAIL` | The verified Brevo sender used as `sender.email` on every email | Yes | same |
+| `BREVO_SENDER_EMAIL` | The verified Brevo sender used as `sender.email` on every email. Must be a real VPD address — `readEmailConfig()` refuses a `*.brevosend.com` value, because that is Brevo's rewrite of an unauthenticated sender and is never an acceptable fallback | Yes | same |
 | `CONTACT_RECEIVER_EMAIL` | The VPD inbox that receives all three admin notifications | Yes | same |
 | `SITE_URL` | Origin used in the email footer link | No — falls back to the published domain | same |
 | `EMAIL_LOGO_URL` | Absolute HTTPS URL of the logo that mail clients fetch | No — falls back to the currently verified deployment URL | same |
@@ -37,7 +37,7 @@ reader, and it reports missing variables by name — never by value.
 ```dotenv
 # public/.env  (git-ignored)
 BREVO_API_KEY=<paste the key here, never commit it>
-BREVO_SENDER_EMAIL=<a sender address already verified in the Brevo account>
+BREVO_SENDER_EMAIL=info@vpdtechnologiespvtltd.com
 CONTACT_RECEIVER_EMAIL=info@vpdtechnologiespvtltd.com
 SITE_URL=https://www.vpdtechnologiespvtltd.com
 EMAIL_LOGO_URL=https://<deployment-host>/logo.png
