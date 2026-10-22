@@ -62,7 +62,7 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
                   Founders &amp; <span className="text-[#c9a84c]">Executive Leadership</span>.
                 </h1>
 
-                <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl mb-6">
+                <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl mb-6 text-justify [text-justify:inter-word]">
                   {COMPANY_DATA.foundingStatement}
                 </p>
 
@@ -187,7 +187,7 @@ export const LeadershipPage: React.FC<LeadershipPageProps> = ({ onOpenConsultati
                           <h3 className="text-xs font-mono uppercase tracking-widest text-[#D4AF37] mb-3 font-bold">
                             Professional Biography
                           </h3>
-                          <p className="text-base sm:text-lg text-[#cccccc] leading-relaxed">
+                          <p className="text-base sm:text-lg text-[#cccccc] leading-relaxed text-justify [text-justify:inter-word]">
                             {founder.bio}
                           </p>
                         </div>

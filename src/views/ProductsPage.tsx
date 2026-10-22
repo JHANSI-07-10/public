@@ -84,7 +84,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenConsultation }
                 Named Platforms &amp; <span className="text-[#c9a84c]">Enterprise Software</span>.
               </h1>
 
-              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-8">
+              <p className="text-lg sm:text-xl text-[#b5b5b5] leading-relaxed max-w-3xl mb-8 text-justify [text-justify:inter-word]">
                 Discover VPD specialized software platforms engineered to power live quick-commerce fulfillment, fine dining &amp; restaurant operations, petrol &amp; fuel station SaaS operations, animal rescue &amp; shelter governance, residential community security, and enterprise logistics.
               </p>
 

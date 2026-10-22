@@ -106,7 +106,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenConsultation }
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl text-balance">
+              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-2xl text-justify [text-justify:inter-word]">
                 Explore VPD comprehensive digital engineering services, including custom software development, web and mobile applications, enterprise ERP and CRM solutions, AI and machine learning, cloud infrastructure, and UI/UX design. We focus on building reliable, scalable, and user-friendly digital solutions tailored to evolving business needs.
               </p>
             </div>

@@ -160,7 +160,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenConsultation }) => {
                     Leadership With a{' '}
                     <span className="text-[#DFC067]">Shared Purpose</span>
                   </h2>
-                  <p className="text-sm sm:text-base text-[#9e9e9e] leading-relaxed">
+                  <p className="text-sm sm:text-base text-[#9e9e9e] leading-relaxed text-justify [text-justify:inter-word]">
                     VPD Technologies is led by <strong className="text-white font-semibold">Sai Krishna Vuppala</strong>, Founder &amp; Chief Executive Officer, and <strong className="text-white font-semibold">Ramcharan Gottipati</strong>, Co-Founder &amp; Managing Director. Together, they provide strategic and operational leadership driven by a commitment to decentralized innovation—building world-class technology infrastructure, cultivating elite talent beyond conventional metropolitan centers, and delivering transformative digital solutions.
                   </p>
                 </div>
