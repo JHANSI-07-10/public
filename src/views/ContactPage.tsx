@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { COMPANY_DATA, CORE_SERVICES } from '../data/content';
 import { Phone, Mail, MapPin, Clock, CheckCircle, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { submitContactInquiry } from '../config/api';
+import { submitEnquiry } from '../config/api';
 import { Reveal } from '../components/motion/Reveal';
 import { StaggerContainer, StaggerItem } from '../components/motion/StaggerContainer';
 import { WordMaskReveal } from '../components/motion/WordMaskReveal';
@@ -23,29 +23,53 @@ export const ContactPage: React.FC = () => {
     company: '',
     phone: '',
     service: 'Website & Web Application Development',
-    message: ''
+    message: '',
+    website: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
+  const submissionRef = useRef(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setError('Please fill in your name, email, and project scope.');
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.phone.trim() ||
+      !formData.message.trim()
+    ) {
+      setError('Please fill in your name, email, contact number, and project scope.');
       return;
     }
+    // Blocks double-fire from repeated clicks or keyboard Enter.
+    if (isSubmitting) return;
 
     setIsSubmitting(true);
     setError('');
 
-    const res = await submitContactInquiry(formData);
+    const attempt = ++submissionRef.current;
+    const res = await submitEnquiry(
+      'contact',
+      {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        company: formData.company.trim(),
+        service: formData.service,
+        message: formData.message.trim(),
+      },
+      `ct-${crypto.randomUUID()}`,
+      new Date().toISOString()
+    );
+
+    if (attempt !== submissionRef.current) return;
+
     if (res.success) {
       setIsSuccess(true);
-      setFormData({ name: '', email: '', company: '', phone: '', service: 'Website Development', message: '' });
+      setFormData({ name: '', email: '', company: '', phone: '', service: 'Website Development', message: '', website: '' });
     } else {
-      setIsSuccess(true);
-      setFormData({ name: '', email: '', company: '', phone: '', service: 'Website Development', message: '' });
+      setError(res.message || 'We could not transmit your enquiry. Please try again.');
     }
     setIsSubmitting(false);
   };
@@ -218,6 +242,19 @@ export const ContactPage: React.FC = () => {
                       </p>
                     </div>
 
+                    <div className="absolute -left-[9999px] top-auto h-[1px] w-[1px] overflow-hidden" aria-hidden="true">
+                      <label htmlFor="contact-website">Do not fill this in</label>
+                      <input
+                        id="contact-website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formData.website}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                      />
+                    </div>
+
                     {error && (
                       <FormFeedback type="error" message={error} />
                     )}
@@ -272,12 +309,13 @@ export const ContactPage: React.FC = () => {
                       </div>
                       <div>
                         <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#cccccc] mb-1.5">
-                          Phone / WhatsApp (Optional)
+                          Phone / WhatsApp *
                         </label>
                         <input
                           id="contact-phone"
                           name="phone"
                           type="tel"
+                          required
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="+91 83339 19447"

@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, ArrowRight, CheckCircle } from 'lucide-react';
 import { CORE_SERVICES, COMPANY_DATA, Service } from '../data/content';
 import { Button } from './ui/Button';
-import { submitContactInquiry } from '../config/api';
+import { submitEnquiry } from '../config/api';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -23,10 +23,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
     phone: '',
     service: initialService ? initialService.title : 'Website Development',
     message: '',
+    website: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
+  const submissionRef = useRef(0);
 
   useEffect(() => {
     if (initialService) {
@@ -52,20 +54,35 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim()) {
-      setError('Please provide your name and contact email.');
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.message.trim()) {
+      setError('Please provide your name, contact email, phone number, and project scope.');
       return;
     }
+    if (isSubmitting) return;
 
     setIsSubmitting(true);
     setError('');
 
-    const res = await submitContactInquiry(formData);
+    const attempt = ++submissionRef.current;
+    const res = await submitEnquiry(
+      'consultation',
+      {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        service: formData.service,
+        message: formData.message.trim(),
+      },
+      `cs-${crypto.randomUUID()}`,
+      new Date().toISOString()
+    );
+
+    if (attempt !== submissionRef.current) return;
+
     if (res.success) {
       setIsSuccess(true);
     } else {
-      // Graceful fallback to avoid blocking user flow
-      setIsSuccess(true);
+      setError(res.message || 'We could not send your consultation request. Please try again.');
     }
     setIsSubmitting(false);
   };
@@ -91,15 +108,15 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
         </button>
 
         {isSuccess ? (
-          <div className="py-8 text-center space-y-4">
+          <div className="py-8 text-center space-y-4" role="status" aria-live="polite">
             <div className="w-14 h-14 rounded-full bg-[#22c55e]/15 border border-[#22c55e]/40 flex items-center justify-center text-[#22c55e] mx-auto">
               <CheckCircle className="w-7 h-7" />
             </div>
             <h3 className="text-2xl font-bold text-white">
-              Consultation Scheduled
+              Consultation Request Received
             </h3>
             <p className="text-sm text-[#aaaaaa] leading-relaxed">
-              We have received your specifications. A senior software engineer from VPD Technologies will review your scope and get in touch within 4 business hours.
+              We have received your specifications and a senior software engineer will review your scope and follow up about scheduling. Your request is received, but no appointment is confirmed until we agree a time with you.
             </p>
             <div className="pt-4 flex flex-col sm:flex-row gap-3">
               <Button
@@ -137,18 +154,36 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </p>
             </div>
 
+            <div className="absolute -left-[9999px] top-auto h-[1px] w-[1px] overflow-hidden" aria-hidden="true">
+              <label htmlFor="consultation-website">Do not fill this in</label>
+              <input
+                id="consultation-website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+              />
+            </div>
+
             {error && (
-              <div className="mb-4 p-3 rounded-lg bg-red-950/40 border border-red-800 text-xs text-red-300">
+              <div
+                role="alert"
+                className="mb-4 p-3 rounded-lg bg-red-950/40 border border-red-800 text-xs text-red-300"
+              >
                 {error}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#cccccc] mb-1">
+                <label htmlFor="consultation-name" className="block text-xs font-semibold text-[#cccccc] mb-1">
                   Full Name *
                 </label>
                 <input
+                  id="consultation-name"
+                  name="name"
                   type="text"
                   required
                   value={formData.name}
@@ -159,10 +194,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#cccccc] mb-1">
+                <label htmlFor="consultation-email" className="block text-xs font-semibold text-[#cccccc] mb-1">
                   Work Email *
                 </label>
                 <input
+                  id="consultation-email"
+                  name="email"
                   type="email"
                   required
                   value={formData.email}
@@ -173,11 +210,14 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#cccccc] mb-1">
-                  Phone / WhatsApp (Optional)
+                <label htmlFor="consultation-phone" className="block text-xs font-semibold text-[#cccccc] mb-1">
+                  Phone / WhatsApp *
                 </label>
                 <input
+                  id="consultation-phone"
+                  name="phone"
                   type="tel"
+                  required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="+91 83339 19447"
@@ -186,10 +226,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#cccccc] mb-1">
+                <label htmlFor="consultation-service" className="block text-xs font-semibold text-[#cccccc] mb-1">
                   Target Service *
                 </label>
                 <select
+                  id="consultation-service"
+                  name="service"
                   value={formData.service}
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#0e0e0e] border border-[#2b2b2b] focus:border-[#c9a84c] text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-colors"
@@ -211,10 +253,13 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#cccccc] mb-1">
-                  Project Scope & Goals
+                <label htmlFor="consultation-message" className="block text-xs font-semibold text-[#cccccc] mb-1">
+                  Project Scope & Goals *
                 </label>
                 <textarea
+                  id="consultation-message"
+                  name="message"
+                  required
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}

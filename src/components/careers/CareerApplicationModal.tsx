@@ -23,6 +23,7 @@ import {
 import { motion, useReducedMotion } from 'motion/react';
 import { motionTokens } from '../motion/motionTokens';
 import { CAREERS_DATA, COMPANY_DATA } from '../../data/content';
+import { submitCareerApplication } from '../../config/api';
 import type { OpenRole } from './RoleCard';
 
 interface CareerApplicationModalProps {
@@ -67,7 +68,9 @@ const SOURCE_OPTIONS = [
   'Other',
 ];
 
-const MAX_RESUME_SIZE = 5 * 1024 * 1024; // 5 MB
+// Kept under Vercel's 4.5 MB serverless request-body cap: a larger upload is
+// rejected by the platform before this app can say what went wrong.
+const MAX_RESUME_SIZE = 4 * 1024 * 1024; // 4 MB
 const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
 
 export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
@@ -113,6 +116,9 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
 
   // Status & Validation State
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Spam trap: rendered off-screen, so a human never types into it and a bot
+  // that fills every field gets silently dropped by the server.
+  const [honeypot, setHoneypot] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [generalError, setGeneralError] = useState('');
@@ -178,7 +184,7 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
     if (file.size > MAX_RESUME_SIZE) {
       setErrors((prev) => ({
         ...prev,
-        resume: `File is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is 5 MB.`,
+        resume: `File is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is 4 MB.`,
       }));
       setResumeFile(null);
       return;
@@ -232,7 +238,7 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
     if (!highestQualification) errs.highestQualification = 'Highest qualification is required';
 
     if (!resumeFile) {
-      errs.resume = 'Please upload your resume (PDF or DOC/DOCX, max 5 MB)';
+      errs.resume = 'Please upload your resume (PDF or DOC/DOCX, max 4 MB)';
     }
 
     if (hearAboutUs === 'Referral' && !referralName.trim()) {
@@ -292,16 +298,19 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
       formData.append('coverNote', coverNote);
       formData.append('consent', consent ? 'true' : 'false');
 
-      const response = await fetch('/api/careers/apply', {
-        method: 'POST',
-        body: formData,
-      });
+      // A fresh reference per attempt: a submission the server could not deliver
+      // stays retryable, while an honest double-click is still collapsed by the
+      // content fingerprint on the way in.
+      formData.append('referenceId', `VPD-APP-${crypto.randomUUID().replace(/-/g, '').toUpperCase()}`);
+      formData.append('submittedAt', new Date().toISOString());
+      formData.append('website', honeypot);
 
-      const resData = await response.json().catch(() => ({}));
+      const result = await submitCareerApplication(formData);
 
-      if (response.ok && resData.success) {
+      if (result.success) {
         setSubmissionData({
-          submissionId: resData.data?.submissionId || `VPD-${Date.now().toString(36).toUpperCase()}`,
+          submissionId:
+            result.data?.submissionId || `VPD-${Date.now().toString(36).toUpperCase()}`,
           timestamp: new Date().toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
@@ -312,21 +321,20 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
         });
         setIsSuccess(true);
       } else {
-        const errorMsg = resData.message || 'Submission failed. Please check your inputs and try again.';
-        setGeneralError(errorMsg);
+        // Only reported as received once the server captured it: a candidate
+        // told to expect contact for an application that was never stored loses
+        // their chance to fix and resubmit.
+        setGeneralError(
+          result.errors?.length
+            ? `Please review and correct the highlighted fields before submitting. (${result.errors.join(' ')})`
+            : result.message || 'Submission failed. Please check your inputs and try again.'
+        );
       }
     } catch (err: unknown) {
-      console.warn('Network issue submitting to /api/careers/apply; falling back gracefully:', err);
-      // Fallback graceful success so the applicant is not locked out
-      setSubmissionData({
-        submissionId: `VPD-APP-${Date.now().toString(36).toUpperCase()}`,
-        timestamp: new Date().toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-          year: 'numeric',
-        }),
-      });
-      setIsSuccess(true);
+      // Reported as a failure, never as a fake success: an applicant who is told
+      // their application arrived will not retry one that never did.
+      console.error('Career application submission failed:', err);
+      setGeneralError('We could not submit your application. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -949,7 +957,7 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-semibold text-[#cccccc] mb-1.5">
-                    Upload resume (PDF or DOC/DOCX, max 5 MB) <span className="text-[#c9a84c]">*</span>
+                    Upload resume (PDF or DOC/DOCX, max 4 MB) <span className="text-[#c9a84c]">*</span>
                   </label>
 
                   <input
@@ -980,7 +988,7 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                         Drag and drop your resume here, or <span className="text-[#c9a84c] underline">browse</span>
                       </p>
                       <p className="text-xs text-[#777777]">
-                        Accepted formats: PDF, DOC, DOCX • File size up to 5 MB
+                        Accepted formats: PDF, DOC, DOCX • File size up to 4 MB
                       </p>
                     </div>
                   ) : (
@@ -1139,6 +1147,20 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       <span>{errors.consent}</span>
                     </p>
                   )}
+                </div>
+
+                {/* Server-side spam trap; see the identical block in the enquiry forms. */}
+                <div className="absolute -left-[9999px] top-auto h-[1px] w-[1px] overflow-hidden" aria-hidden="true">
+                  <label htmlFor="career-website">Do not fill this in</label>
+                  <input
+                    id="career-website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
