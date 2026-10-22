@@ -1,5 +1,5 @@
 /**
- * Rebuilds src/lib/email/logo-asset.ts and public/email-logo.png from the
+ * Rebuilds src/lib/email/assets/logo-asset.ts and public/email-logo.png from the
  * repository's own logo.
  *
  * The artwork is used exactly as published: colours, transparency and aspect
@@ -14,7 +14,7 @@ import sharp from 'sharp';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = join(ROOT, 'public', 'logo.png');
-const TARGET = join(ROOT, 'src', 'lib', 'email', 'logo-asset.ts');
+const TARGET = join(ROOT, 'src', 'lib', 'email', 'assets', 'logo-asset.ts');
 const PUBLIC_COPY = join(ROOT, 'public', 'email-logo.png');
 
 /** Width the logo is drawn at in the email; the asset ships at 2x for sharpness. */

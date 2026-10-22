@@ -1,6 +1,6 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
-import { processEnquiry, type RawEnquiry } from '../src/lib/email/enquiry';
-import { makeEnquiryHandler } from '../src/lib/email/enquiry-handler';
+import { processEnquiry, type RawEnquiry } from '../../src/lib/email/workflows/enquiry';
+import { makeEnquiryHandler } from '../../src/lib/email/workflows/enquiry-handler';
 import type { NextRequest } from 'next/server';
 
 const TEST_KEY = 'test-secret-key-must-never-leak';
@@ -22,7 +22,7 @@ let fetchBehaviour: 'normal' | 'network-error' = 'normal';
 
 const storeMock = vi.fn(async (_payload: unknown) => ({ success: true }));
 
-vi.mock('../src/config/api', () => ({
+vi.mock('../../src/config/api', () => ({
   submitContactInquiry: (payload: unknown) => storeMock(payload),
   API_ENDPOINTS: {},
   API_BASE_URL: 'https://example.invalid/api',
@@ -137,13 +137,16 @@ describe('contact enquiry: storage and both emails', () => {
       email: 'info@vpdtechnologiespvtltd.com',
     });
     expect(admin.body.to).toEqual([{ email: 'info@vpdtechnologiespvtltd.com' }]);
-    expect(admin.body.subject).toBe('New Contact Enquiry | VPD Technologies');
-    expect(admin.body.replyTo).toEqual({ email: payload.email });
+    expect(admin.body.subject).toBe('New Contact - Website & Web Application Development');
+    expect(admin.body.replyTo).toEqual({ email: payload.email, name: 'Alex Morgan' });
 
     const user = brevoCalls[1];
     expect(user.body.to).toEqual([{ email: payload.email }]);
     expect(user.body.subject).toBe("We've Received Your Enquiry | VPD Technologies");
-    expect(user.body.replyTo).toEqual({ email: 'info@vpdtechnologiespvtltd.com' });
+    expect(user.body.replyTo).toEqual({
+      email: 'info@vpdtechnologiespvtltd.com',
+      name: 'VPD Technologies',
+    });
   });
 
   it('puts the real submitted values and an explicit timezone into the admin email', async () => {
@@ -197,14 +200,18 @@ describe('consultation enquiry', () => {
 
     expect(result.kind).toBe('processed');
     expect(brevoCalls).toHaveLength(2);
-    expect(brevoCalls[0].body.subject).toBe('New Consultation Request | VPD Technologies');
+    // The "Get a Quote" button opens this form, so the admin copy is filed as a
+    // quotation request; the acknowledgement to the visitor is unchanged.
+    expect(brevoCalls[0].body.subject).toBe(
+      'New Quotation Request - Enterprise Architecture Consulting'
+    );
     expect(brevoCalls[1].body.subject).toBe(
       'Your Consultation Request Has Been Received | VPD Technologies'
     );
 
     const adminHtml = String(brevoCalls[0].body.htmlContent);
     expect(adminHtml).toContain('New Consultation Request');
-    expect(adminHtml).toContain('Service requested');
+    expect(adminHtml).toContain('Service Requested');
     expect(adminHtml).toContain('Enterprise Architecture Consulting');
     expect(adminHtml).not.toContain('Preferred time');
 

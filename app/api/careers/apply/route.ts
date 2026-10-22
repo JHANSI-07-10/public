@@ -1,3 +1,3 @@
-import { makeCareerApplicationHandler } from '../../../../src/lib/email/careers-handler';
+import { makeCareerApplicationHandler } from '../../../../src/lib/email/workflows/careers-handler';
 
 export const POST = makeCareerApplicationHandler();

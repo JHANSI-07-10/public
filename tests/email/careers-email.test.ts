@@ -5,8 +5,8 @@ import {
   sanitizeResumeFilename,
   type RawCareerApplication,
   type ResumeInput,
-} from '../src/lib/email/careers';
-import { makeCareerApplicationHandler } from '../src/lib/email/careers-handler';
+} from '../../src/lib/email/workflows/careers';
+import { makeCareerApplicationHandler } from '../../src/lib/email/workflows/careers-handler';
 import type { NextRequest } from 'next/server';
 
 const TEST_KEY = 'test-secret-key-must-never-leak';
@@ -31,7 +31,7 @@ let brevoResponse: { ok: boolean; status: number; text: string } = {
 };
 const storeMock = vi.fn(async (_payload: unknown) => ({ success: true }));
 
-vi.mock('../src/config/api', () => ({
+vi.mock('../../src/config/api', () => ({
   submitContactInquiry: (payload: unknown) => storeMock(payload),
   submitCareerApplication: async () => ({ success: true }),
   API_ENDPOINTS: {},
@@ -130,7 +130,12 @@ function application(overrides: Partial<RawCareerApplication> = {}): RawCareerAp
 }
 
 function adminCall(): BrevoCall {
-  return brevoCalls.find((call) => call.body.subject === 'New Job Application | VPD Technologies')!;
+  // The recruiter copy is the one addressed to the configured inbox; its subject
+  // is now built from the applicant's own answers, so it can't be matched by a
+  // constant string.
+  return brevoCalls.find(
+    (call) => JSON.stringify(call.body.to) === JSON.stringify([{ email: RECEIVER }])
+  )!;
 }
 
 function applicantCall(): BrevoCall {
@@ -173,11 +178,14 @@ describe('job application: storage and both emails', () => {
     expect(admin.headers['api-key']).toBe(TEST_KEY);
     expect(admin.body.sender).toEqual({ name: 'VPD Technologies', email: RECEIVER });
     expect(admin.body.to).toEqual([{ email: RECEIVER }]);
-    expect(admin.body.replyTo).toEqual({ email: payload.email });
+    expect(admin.body.subject).toBe(
+      'Alex Morgan - Full-Stack Software Engineer - 3-5 years - Hybrid'
+    );
+    expect(admin.body.replyTo).toEqual({ email: payload.email, name: 'Alex Morgan' });
 
     const applicant = applicantCall();
     expect(applicant.body.to).toEqual([{ email: payload.email }]);
-    expect(applicant.body.replyTo).toEqual({ email: RECEIVER });
+    expect(applicant.body.replyTo).toEqual({ email: RECEIVER, name: 'VPD Technologies' });
   });
 
   it('never uses the applicant address as the sender', async () => {
@@ -505,7 +513,7 @@ describe('duplicate and rate protection', () => {
   it('does not spend the enquiry forms budget on applications', async () => {
     const ip = freshIp();
     for (let i = 0; i < 4; i += 1) await processCareerApplication(application(), ip);
-    const { processEnquiry } = await import('../src/lib/email/enquiry');
+    const { processEnquiry } = await import('../../src/lib/email/workflows/enquiry');
     const enquiry = await processEnquiry(
       'contact',
       {

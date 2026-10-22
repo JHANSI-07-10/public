@@ -7,18 +7,18 @@
  * Reuses the same Brevo configuration, template shell and submission guards as
  * the contact and consultation forms; nothing here changes their behaviour.
  */
-import { submitContactInquiry } from '../../config/api';
+import { submitContactInquiry } from '../../../config/api';
 import {
-  readEmailConfig,
-  sendTransactionalEmail,
+  isSendableEmail,
   maskEmail,
+  readEmailConfig,
   type EmailConfig,
-} from './brevo';
-import {
-  careersAdminNotification,
-  careersUserConfirmation,
-  type CareerApplicationEmailData,
-} from './templates';
+} from '../provider/sender-config';
+import { sendTransactionalEmail } from '../provider/brevo-client';
+import { careersAdminNotification } from '../templates/admin-notifications';
+import { careersUserConfirmation } from '../templates/customer-confirmations';
+import { careersAdminSubject } from '../templates/subjects';
+import type { CareerApplicationEmailData } from '../templates/types';
 import { createSubmissionGuard } from './guards';
 import { formatSubmittedAt } from './enquiry';
 
@@ -31,7 +31,6 @@ const LIMITS = {
   url: 300,
 } as const;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const REFERENCE_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
 
 const RATE_WINDOW_MS = 10 * 60 * 1000;
@@ -281,7 +280,7 @@ export async function validateApplication(
   if (position.length < 2) errors.push('Please mention the position you are applying for.');
   if (fullName.length < 2) errors.push('Please provide your full name.');
   if (email === '') errors.push('Please provide an email address.');
-  else if (!EMAIL_PATTERN.test(email)) errors.push('Please provide a valid email address.');
+  else if (!isSendableEmail(email)) errors.push('Please provide a valid email address.');
 
   const digits = phone.replace(/\D/g, '');
   if (digits.length < 7 || digits.length > 15) {
@@ -519,10 +518,18 @@ async function sendRecruiterEmail(
 ): Promise<boolean> {
   const outcome = await sendTransactionalEmail({
     to: config.receiverEmail,
-    subject: 'New Job Application | VPD Technologies',
+    // Applicant - Position - Experience - Applied Location (work mode).
+    subject: careersAdminSubject({
+      fullName: application.fullName,
+      position: application.position,
+      totalExperience: application.totalExperience,
+      workMode: application.workMode,
+    }),
     htmlBody: careersAdminNotification(data),
     config,
-    replyTo: application.email,
+    // Reply goes straight to the candidate, whose address never becomes the
+    // sender: only the verified VPD address may send through Brevo.
+    replyTo: { email: application.email, name: application.fullName },
     // Only the recruiter receives the resume; the applicant already has it.
     attachments: [
       { content: application.resume.bytes, filename: application.resume.filename, type: application.resume.mimeType },
@@ -544,7 +551,7 @@ async function sendApplicantEmail(
     subject: "We've Received Your Job Application | VPD Technologies",
     htmlBody: careersUserConfirmation(data),
     config,
-    replyTo: config.receiverEmail,
+    replyTo: { email: config.receiverEmail, name: config.senderName },
   });
   if (!outcome.ok) {
     console.error('[careers] applicant confirmation not sent', {

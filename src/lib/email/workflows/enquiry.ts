@@ -3,20 +3,24 @@
  * validation -> spam/rate guard -> durable store (existing backend) ->
  * admin notification -> user confirmation, with per-step outcome reporting.
  */
-import { submitContactInquiry } from '../../config/api';
+import { submitContactInquiry } from '../../../config/api';
 import {
-  readEmailConfig,
-  sendTransactionalEmail,
-  type EmailConfig,
+  isSendableEmail,
   maskEmail,
-} from './brevo';
+  readEmailConfig,
+  type EmailConfig,
+} from '../provider/sender-config';
+import { sendTransactionalEmail } from '../provider/brevo-client';
 import {
-  contactAdminNotification,
   consultationAdminNotification,
-  contactUserConfirmation,
+  contactAdminNotification,
+} from '../templates/admin-notifications';
+import {
   consultationUserConfirmation,
-  type EnquiryEmailData,
-} from './templates';
+  contactUserConfirmation,
+} from '../templates/customer-confirmations';
+import { contactAdminSubject, quotationAdminSubject } from '../templates/subjects';
+import type { EnquiryEmailData } from '../templates/types';
 import { createSubmissionGuard } from './guards';
 
 export type EnquiryKind = 'contact' | 'consultation';
@@ -31,7 +35,6 @@ const LIMITS = {
   message: 5000,
 } as const;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const REFERENCE_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
 
 /** Asia/Kolkata: the company and its enquiries are India-based. */
@@ -111,7 +114,7 @@ export function validateEnquiry(kind: EnquiryKind, raw: RawEnquiry): ValidatedEn
 
   if (name.length < 2) errors.push('Please provide your name (at least 2 characters).');
   if (email === '') errors.push('Please provide an email address.');
-  else if (!EMAIL_PATTERN.test(email)) errors.push('Please provide a valid email address.');
+  else if (!isSendableEmail(email)) errors.push('Please provide a valid email address.');
   if (phone.replace(/\D/g, '').length < 7) {
     errors.push('Please provide a contact number with at least 7 digits.');
   }
@@ -199,8 +202,10 @@ async function storeEnquiry(enquiry: ValidatedEnquiry): Promise<boolean> {
 }
 
 interface EmailPlan {
-  adminSubject: string;
+  /** Built per submission from the service the visitor chose. */
+  adminSubject: (data: EnquiryEmailData) => string;
   adminHtml: (data: EnquiryEmailData) => string;
+  /** Constant: the customer-facing acknowledgement never changes. */
   userSubject: string;
   userHtml: (data: EnquiryEmailData) => string;
   sourceLabel: string;
@@ -208,14 +213,16 @@ interface EmailPlan {
 
 const PLANS: Record<EnquiryKind, EmailPlan> = {
   contact: {
-    adminSubject: 'New Contact Enquiry | VPD Technologies',
+    adminSubject: (data) => contactAdminSubject(data.service),
     adminHtml: contactAdminNotification,
     userSubject: "We've Received Your Enquiry | VPD Technologies",
     userHtml: contactUserConfirmation,
     sourceLabel: 'Contact form',
   },
   consultation: {
-    adminSubject: 'New Consultation Request | VPD Technologies',
+    // The "Get a Quote" button opens this form, so the admin copy is filed as a
+    // quotation request while the visitor keeps receiving the acknowledgement.
+    adminSubject: (data) => quotationAdminSubject(data.service),
     adminHtml: consultationAdminNotification,
     userSubject: 'Your Consultation Request Has Been Received | VPD Technologies',
     userHtml: consultationUserConfirmation,
@@ -325,10 +332,12 @@ async function sendAdminEmail(
 ): Promise<boolean> {
   const outcome = await sendTransactionalEmail({
     to: config.receiverEmail,
-    subject: PLANS[kind].adminSubject,
+    subject: PLANS[kind].adminSubject(data),
     htmlBody: PLANS[kind].adminHtml(data),
     config,
-    replyTo: validated.email,
+    // The sender stays the verified VPD address; the visitor is reachable
+    // through Reply-To, so answering lands in their mailbox, not ours.
+    replyTo: { email: validated.email, name: validated.name },
   });
   if (outcome.ok) markNotified(kind, validated);
   return outcome.ok;
@@ -344,7 +353,7 @@ async function sendUserEmail(
     subject: PLANS[kind].userSubject,
     htmlBody: PLANS[kind].userHtml(data),
     config,
-    replyTo: config.receiverEmail,
+    replyTo: { email: config.receiverEmail, name: config.senderName },
   });
   if (!outcome.ok) {
     console.error('[enquiry] user confirmation not sent', {

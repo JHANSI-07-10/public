@@ -5,7 +5,7 @@
  *
  *   node scripts/check-email-logo-url.mjs [url]
  *
- * With no argument it checks the default baked into src/lib/email/templates.ts,
+ * With no argument it checks the default baked into src/lib/email/templates/shell.ts,
  * so it also catches a stale deployment URL after a project rename.
  */
 import { readFileSync } from 'node:fs';
@@ -14,12 +14,12 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-const templates = readFileSync(join(ROOT, 'src', 'lib', 'email', 'templates.ts'), 'utf8');
+const templates = readFileSync(join(ROOT, 'src', 'lib', 'email', 'templates', 'shell.ts'), 'utf8');
 const baked = templates.match(/https:\/\/[^'"]+\/logo\.png/)?.[0];
 
 const url = process.argv[2] ?? baked;
 if (!url) {
-  console.error('No logo URL found in src/lib/email/templates.ts and none was passed.');
+  console.error('No logo URL found in src/lib/email/templates/shell.ts and none was passed.');
   process.exit(1);
 }
 

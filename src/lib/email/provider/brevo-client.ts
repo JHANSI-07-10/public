@@ -1,14 +1,17 @@
 /**
  * Server-only Brevo transactional email client (POST https://api.brevo.com/v3/smtp/email).
- * Reads secrets from process.env and is only ever imported from route handlers,
- * so BREVO_API_KEY never reaches a client bundle or a browser response.
+ * It owns the payload shape and the HTTP call; the sender address, the inbox and
+ * the API key come from `sender-config.ts`, which reads them from process.env.
+ * Only route handlers import this, so BREVO_API_KEY never reaches a client bundle
+ * or a browser response.
  */
-import { LOGO_BASE64, LOGO_CONTENT_ID, LOGO_FILENAME, LOGO_MIME_TYPE } from './logo-asset';
+import { headerSafe } from '../templates/subjects';
+import { LOGO_BASE64, LOGO_CONTENT_ID, LOGO_FILENAME, LOGO_MIME_TYPE } from '../assets/logo-asset';
+import { isSendableEmail, maskEmail, type EmailConfig } from './sender-config';
 
 const BREVO_SEND_URL = 'https://api.brevo.com/v3/smtp/email';
 const SEND_TIMEOUT_MS = 8_000;
 const UPLOAD_TIMEOUT_MS = 20_000;
-const SENDER_NAME = 'VPD Technologies';
 
 export type BrevoFailureReason = 'not-configured' | 'rejected' | 'timeout' | 'network';
 
@@ -20,50 +23,6 @@ export interface BrevoSendOutcome {
   status?: number;
 }
 
-export interface EmailConfig {
-  apiKey: string;
-  senderEmail: string;
-  senderName: string;
-  receiverEmail: string;
-}
-
-export interface EmailConfigStatus {
-  config: EmailConfig | null;
-  missing: string[];
-}
-
-/** Reports which required variables are absent without ever returning their values. */
-export function readEmailConfig(): EmailConfigStatus {
-  const raw = {
-    BREVO_API_KEY: process.env.BREVO_API_KEY?.trim() ?? '',
-    BREVO_SENDER_EMAIL: process.env.BREVO_SENDER_EMAIL?.trim() ?? '',
-    CONTACT_RECEIVER_EMAIL: process.env.CONTACT_RECEIVER_EMAIL?.trim() ?? '',
-  };
-
-  const missing = Object.entries(raw)
-    .filter(([, value]) => value === '')
-    .map(([key]) => key);
-
-  if (missing.length > 0) return { config: null, missing };
-
-  return {
-    config: {
-      apiKey: raw.BREVO_API_KEY,
-      senderEmail: raw.BREVO_SENDER_EMAIL,
-      receiverEmail: raw.CONTACT_RECEIVER_EMAIL,
-      senderName: SENDER_NAME,
-    },
-    missing,
-  };
-}
-
-/** Keeps full addresses out of logs while still identifying the domain. */
-export function maskEmail(email: string): string {
-  const [local = '', domain = ''] = email.split('@');
-  if (domain === '') return '***';
-  return `${local.slice(0, 2)}***@${domain}`;
-}
-
 export interface EmailAttachment {
   /** Base64 of the file bytes, without a data: URI prefix. */
   content: string;
@@ -71,12 +30,38 @@ export interface EmailAttachment {
   type: string;
 }
 
+/** A Reply-To target. The address is only used after `isSendableEmail` accepts it. */
+export interface EmailRecipient {
+  email: string;
+  /** Display name as it should appear in the Reply-To header. */
+  name?: string;
+}
+
+const MAX_RECIPIENT_NAME_LENGTH = 80;
+
+/**
+ * Only a validated address can become a Reply-To header, and the display name
+ * loses control characters before it does, so a form value can neither forge a
+ * header line nor point the VPD team at a blank address.
+ */
+function replyToHeader(
+  replyTo: EmailRecipient | undefined
+): { email: string; name?: string } | undefined {
+  if (!replyTo) return undefined;
+
+  const email = String(replyTo.email ?? '').trim();
+  if (!isSendableEmail(email)) return undefined;
+
+  const name = headerSafe(replyTo.name).slice(0, MAX_RECIPIENT_NAME_LENGTH);
+  return name === '' ? { email } : { email, name };
+}
+
 export interface SendEmailParams {
   to: string;
   subject: string;
   htmlBody: string;
   config: EmailConfig;
-  replyTo?: string;
+  replyTo?: EmailRecipient;
   /** Downloadable files that travel with the message, e.g. a candidate resume. */
   attachments?: EmailAttachment[];
 }
@@ -96,6 +81,12 @@ export async function sendTransactionalEmail({
   const timeoutMs = files.length > 0 ? UPLOAD_TIMEOUT_MS : SEND_TIMEOUT_MS;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const reply = replyToHeader(replyTo);
+  // A dropped Reply-To means the admin copy still sends but cannot be answered
+  // in one click, so say so in the log rather than leaving it silent.
+  if (replyTo !== undefined && reply === undefined) {
+    console.error('[brevo] reply-to dropped: address failed validation', { subject });
+  }
 
   const payload = {
     sender: { name: config.senderName, email: config.senderEmail },
@@ -124,7 +115,7 @@ export async function sendTransactionalEmail({
         headers: [{ name: 'Content-Disposition', value: `attachment; filename=${file.filename}` }],
       })),
     ],
-    ...(replyTo ? { replyTo: { email: replyTo } } : {}),
+    ...(reply === undefined ? {} : { replyTo: reply }),
   };
 
   try {

@@ -1,21 +1,25 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   LOGO_BASE64,
   LOGO_CONTENT_ID,
   LOGO_RENDER_HEIGHT,
   LOGO_RENDER_WIDTH,
-} from '../src/lib/email/logo-asset';
+} from '../../src/lib/email/assets/logo-asset';
+import { LOGO_PUBLIC_URL } from '../../src/lib/email/templates/shell';
 import {
-  LOGO_PUBLIC_URL,
   careersAdminNotification,
-  careersUserConfirmation,
   contactAdminNotification,
-  contactUserConfirmation,
   consultationAdminNotification,
+} from '../../src/lib/email/templates/admin-notifications';
+import {
+  careersUserConfirmation,
+  contactUserConfirmation,
   consultationUserConfirmation,
-  type CareerApplicationEmailData,
-  type EnquiryEmailData,
-} from '../src/lib/email/templates';
+} from '../../src/lib/email/templates/customer-confirmations';
+import type {
+  CareerApplicationEmailData,
+  EnquiryEmailData,
+} from '../../src/lib/email/templates/types';
 
 /**
  * The logo used to ship as a bare `cid:` reference, so every client that could
@@ -124,17 +128,37 @@ describe('email logo source', () => {
   });
 
   it('honours EMAIL_LOGO_URL once the custom domain serves the asset', async () => {
-    const override = 'https://www.vpdtechnologiespvtltd.com/email-logo.png';
+    const override = 'https://www.vpdtechnologiespvtltd.com/email-logo.png/';
     const previous = process.env.EMAIL_LOGO_URL;
     process.env.EMAIL_LOGO_URL = override;
     try {
       vi.resetModules();
-      const reloaded = await import('../src/lib/email/templates');
-      expect(reloaded.LOGO_PUBLIC_URL).toBe(override);
-      expect(reloaded.contactAdminNotification(enquiry())).toContain(`src="${override}"`);
+      const shell = await import('../../src/lib/email/templates/shell');
+      const admin = await import('../../src/lib/email/templates/admin-notifications');
+      // A trailing slash is trimmed so the URL cannot double up.
+      expect(shell.LOGO_PUBLIC_URL).toBe(override.slice(0, -1));
+      expect(admin.contactAdminNotification(enquiry())).toContain(
+        `src="${override.slice(0, -1)}"`
+      );
     } finally {
       if (previous === undefined) delete process.env.EMAIL_LOGO_URL;
       else process.env.EMAIL_LOGO_URL = previous;
+      vi.resetModules();
+    }
+  });
+
+  it('takes the footer origin from SITE_URL instead of a hard-coded host', async () => {
+    const previous = process.env.SITE_URL;
+    process.env.SITE_URL = 'https://vpdtechnologies.com/';
+    try {
+      vi.resetModules();
+      const shell = await import('../../src/lib/email/templates/shell');
+      const customer = await import('../../src/lib/email/templates/customer-confirmations');
+      expect(shell.SITE_ORIGIN).toBe('https://vpdtechnologies.com');
+      expect(customer.contactUserConfirmation(enquiry())).toContain('href="https://vpdtechnologies.com"');
+    } finally {
+      if (previous === undefined) delete process.env.SITE_URL;
+      else process.env.SITE_URL = previous;
       vi.resetModules();
     }
   });
