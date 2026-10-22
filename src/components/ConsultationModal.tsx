@@ -118,19 +118,6 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
             <p className="text-sm text-[#aaaaaa] leading-relaxed">
               We have received your specifications and a senior software engineer will review your scope and follow up about scheduling. Your request is received, but no appointment is confirmed until we agree a time with you.
             </p>
-            <div className="pt-4 flex justify-center">
-              <Button
-                onClick={() => {
-                  setIsSuccess(false);
-                  onClose();
-                }}
-                variant="secondary"
-                size="md"
-                fullWidth
-              >
-                Close Window
-              </Button>
-            </div>
           </div>
         ) : (
           <div>

@@ -63,6 +63,7 @@ the visitor copy stays the consultation acknowledgement.
 npm run lint          # tsc --noEmit, the repository's type gate
 npm test              # vitest run, Brevo and the backend are always mocked
 node scripts/check-email-logo-url.mjs           # proves the logo URL is publicly reachable
+node --env-file=.env scripts/check-email-sender.mjs  # is the sender believed by receiving servers?
 node scripts/generate-email-logo.mjs            # rebuilds assets/logo-asset.ts from public/logo.png
 NEXT_DIST_DIR=.next-build npx next build        # production build beside a running dev server
 ```

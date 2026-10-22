@@ -53,7 +53,8 @@ public/
 │   └── email-logo.png               copy produced by generate-email-logo.mjs
 ├── scripts/
 │   ├── generate-email-logo.mjs      writes assets/logo-asset.ts + public/email-logo.png
-│   └── check-email-logo-url.mjs     proves the HTTPS logo URL before deploy
+│   ├── check-email-logo-url.mjs     proves the HTTPS logo URL before deploy
+│   └── check-email-sender.mjs       read-only sender + SPF/DKIM/DMARC verdict
 ├── tests/email/
 │   ├── enquiry-email.test.ts
 │   ├── careers-email.test.ts

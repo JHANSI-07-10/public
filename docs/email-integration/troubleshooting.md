@@ -47,7 +47,9 @@ one the team actually watches before trusting the inbox.
 
 ## "Nothing arrives but the logs say accepted"
 
-Placement, not code:
+Placement, not code. Start with
+`node --env-file=.env scripts/check-email-sender.mjs`, which reads items 1–3 back
+from public DNS and names the ones that fail:
 
 1. SPF must include Brevo **and** Hostinger, e.g.
    `v=spf1 include:_spf.mail.hostinger.com include:spf.sendinblue.com ~all` —

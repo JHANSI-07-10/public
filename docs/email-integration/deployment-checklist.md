@@ -6,14 +6,24 @@ Ordered, because most failures are the earlier steps silently unfinished.
 
 ## A. Local, before anything goes to production
 
-1. **Your turn — this is the current blocker.** `BREVO_SENDER_EMAIL` is set to
-   `info@vpdtechnologiespvtltd.com`, and that address is **not yet a verified
-   sender** in the account. Verified today (read-only probe): `GET /v3/senders`
-   returns only the owner's Gmail (registered as "Edunova Global Academy" and
-   "CoralSwift Technologies"), and `GET /v3/senders/domains` returns
-   `{"domains":[],"count":0}` — no authenticated domain at all. Until both are
-   fixed, every send is refused: the forms still store submissions and report
-   `adminNotified: false`, and no fallback address is used. Do these in order:
+1. **Your turn — this is the current blocker.** `info@vpdtechnologiespvtltd.com`
+   is **not a verified sender** and the domain is **not authenticated** in Brevo.
+   Verified today (read-only probes): `GET /v3/senders` returns only the owner's
+   Gmail (registered as "Edunova Global Academy" and "CoralSwift Technologies"),
+   `GET /v3/senders/domains` returns `{"domains":[],"count":0}`, DNS shows
+   `v=spf1 include:_spf.mail.hostinger.com ~all` (no Brevo include), no
+   `_domainkey` DKIM record, and `_dmarc` = `p=none`.
+   **Correction to an earlier version of this checklist:** sending as an
+   unverified address is *not* refused. `POST /v3/smtp/email` with
+   `sender.email = info@vpdtechnologiespvtltd.com` returned `201` and a
+   `messageId`, so the mail left the app and entered Brevo's queue. What fails is
+   authentication: the receiving server sees a message claiming a domain whose SPF
+   does not authorise Brevo and with no aligned DKIM signature, so it is treated
+   as spoofed. Admin notifications are the worst case — they arrive at the very
+   domain they claim to come from, which is the pattern spam filters punish
+   hardest. `BREVO_SENDER_EMAIL` is therefore set back to the verified Gmail for
+   now; mail flows, but the visible From is Brevo's rewrite. Do these in order to
+   get both:
    1. Brevo → *Senders, Domains & Dedicated IPs* → **Domains** → *Add a domain*:
       `vpdtechnologiespvtltd.com`. Brevo replies with a DKIM CNAME, an SPF value
       and a host-verification record.
@@ -31,10 +41,12 @@ Ordered, because most failures are the earlier steps silently unfinished.
       `…@11622325.brevosend.com` display: Brevo rewrites the From address to its
       own sending domain whenever it cannot DKIM-sign as yours. The address is
       verified, the domain authentication is what makes it display correctly.
-   4. **my turn** — as soon as `GET /v3/senders` lists `info@vpdtechnologiespvtltd.com`,
-      restart the dev server and send a real test from each form, then confirm in
-      the received message that the sender line reads exactly
-      `VPD Technologies <info@vpdtechnologiespvtltd.com>`.
+   4. **my turn** — as soon as `GET /v3/senders` lists `info@vpdtechnologiespvtltd.com`
+      *and* the domain reports authenticated, set `BREVO_SENDER_EMAIL` back to it,
+      restart the dev server, send a real test from each form, then confirm in the
+      received message that the sender line reads exactly
+      `VPD Technologies <info@vpdtechnologiespvtltd.com>` and that it lands in the
+      inbox rather than spam.
 2. **Your turn** — create `public/.env` with the five names from
    `.env.example` and real values. Never write values into `.env.example`.
 3. **my turn** — restart the dev server so the file is read (Next.js loads env
@@ -46,6 +58,11 @@ Ordered, because most failures are the earlier steps silently unfinished.
 5. **my turn** — `node scripts/check-email-logo-url.mjs` must print `OK` with an
    `image/png` content type. A `text/html` answer means the domain is parked and
    the logo will be a broken image in every mail.
+   `node --env-file=.env scripts/check-email-sender.mjs` does the same for step 1:
+   it reads the configured sender back from Brevo and checks the sender domain's
+   published SPF, DKIM, DMARC and the admin inbox's MX, printing OK / FAIL / SKIP.
+   Run it before and after the DNS work — it is the only check here that reflects
+   what a receiving server actually sees.
 6. **Your turn** — submit each real form once: contact, consultation (Get a
    Quote), careers with a resume. Check both the inbox and the address you typed,
    and reply to the admin copy to confirm it opens the submitter's mailbox.

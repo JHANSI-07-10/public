@@ -37,7 +37,7 @@ reader, and it reports missing variables by name — never by value.
 ```dotenv
 # public/.env  (git-ignored)
 BREVO_API_KEY=<paste the key here, never commit it>
-BREVO_SENDER_EMAIL=info@vpdtechnologiespvtltd.com
+BREVO_SENDER_EMAIL=<a sender address already verified in the Brevo account>
 CONTACT_RECEIVER_EMAIL=info@vpdtechnologiespvtltd.com
 SITE_URL=https://www.vpdtechnologiespvtltd.com
 EMAIL_LOGO_URL=https://<deployment-host>/logo.png
@@ -63,5 +63,10 @@ read -rs KEY && curl -s -o /dev/null -w '%{http_code}\n' \
 ```
 
 `200` means the key works. The response body lists the verified senders — the
-address in `BREVO_SENDER_EMAIL` must be one of them, otherwise every send returns
-a 4xx and no mail leaves the account.
+address in `BREVO_SENDER_EMAIL` should be one of them. It is **not** a sufficient
+condition: Brevo accepted an unverified sender with `201` and a `messageId`, and
+the mail was then treated as spoofed by the receiver because the domain had no
+aligned DKIM signature and an SPF record that does not authorise Brevo. Check
+`GET /v3/senders/domains` too — an empty list means the From address cannot be
+trusted no matter which sender is configured. See
+`deployment-checklist.md` step 1 for the exact records.
