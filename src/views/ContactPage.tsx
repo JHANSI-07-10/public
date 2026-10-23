@@ -33,15 +33,43 @@ export const ContactPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.phone.trim() ||
-      !formData.message.trim()
-    ) {
-      setError('Please fill in your name, email, contact number, and project scope.');
+    const nameTrimmed = formData.name.trim();
+    if (!nameTrimmed) {
+      setError('Please enter your full name.');
       return;
     }
+    if (!/^[A-Za-z\s.'-]+$/.test(nameTrimmed) || !/[A-Za-z]/.test(nameTrimmed)) {
+      setError('Name must contain only alphabets.');
+      return;
+    }
+
+    const emailTrimmed = formData.email.trim();
+    if (!emailTrimmed) {
+      setError('Please enter your work email.');
+      return;
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(emailTrimmed)) {
+      setError('Please enter a valid email address (e.g. name@gmail.com or name@company.com).');
+      return;
+    }
+
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    if (phoneDigits.length !== 10) {
+      setError('Phone number must be exactly 10 digits.');
+      return;
+    }
+
+    const messageTrimmed = formData.message.trim();
+    if (!messageTrimmed) {
+      setError('Please describe your project scope & technical specifications.');
+      return;
+    }
+    if (!/^[A-Za-z\s.,!?'"()\-–—;:\n\r]+$/.test(messageTrimmed) || !/[A-Za-z]/.test(messageTrimmed)) {
+      setError('Project Scope & Technical Specifications must contain only alphabets.');
+      return;
+    }
+
     // Blocks double-fire from repeated clicks or keyboard Enter.
     if (isSubmitting) return;
 
@@ -252,7 +280,7 @@ export const ContactPage: React.FC = () => {
                           type="text"
                           required
                           value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value.replace(/[^A-Za-z\s.'-]/g, '') })}
                           placeholder="e.g. Alex Morgan"
                           className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
@@ -297,10 +325,16 @@ export const ContactPage: React.FC = () => {
                           id="contact-phone"
                           name="phone"
                           type="tel"
+                          inputMode="numeric"
+                          pattern="[0-9]{10}"
+                          maxLength={10}
                           required
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+91 99631 44490"
+                          onChange={(e) => {
+                            const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                            setFormData({ ...formData, phone: digits });
+                          }}
+                          placeholder="e.g. 9963144490"
                           className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300"
                         />
                       </div>
@@ -344,7 +378,7 @@ export const ContactPage: React.FC = () => {
                         required
                         rows={5}
                         value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value.replace(/[^A-Za-z\s.,!?'"()\-–—;:\n\r]/g, '') })}
                         placeholder="Detail your application requirements, expected traffic, target deployment window, or current infrastructure..."
                         className="w-full px-4 py-3 rounded-xl bg-[#101010] border border-[#2a2a2a] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none focus:ring-1 focus:ring-[#c9a84c] transition-all duration-300 resize-none"
                       />

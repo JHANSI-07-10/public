@@ -76,7 +76,7 @@ export const WhatWeEngineer: React.FC<WhatWeEngineerProps> = ({ onOpenConsultati
               Engineering Digital Solutions That{' '}
               <span className="text-[#D4AF37]">Move Business Forward</span>.
             </h2>
-            <p className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-balance max-w-2xl">
+            <p className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-justify max-w-2xl">
               From engaging web experiences to integrated business systems, we engineer digital
               solutions designed around real business needs.
             </p>

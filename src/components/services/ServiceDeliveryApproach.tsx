@@ -113,7 +113,7 @@ export const ServiceDeliveryApproach: React.FC<ServiceDeliveryApproachProps> = (
           <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-[1.15]">
             From Vision to Production Reality
           </h3>
-          <p className="text-sm sm:text-base text-[#999999] mt-3 leading-relaxed">
+          <p className="text-sm sm:text-base text-[#999999] mt-3 leading-relaxed text-justify">
             Every engagement follows a structured, transparent 6-stage lifecycle designed to eliminate uncertainty, enforce engineering rigor, and guarantee predictable business outcomes.
           </p>
         </div>

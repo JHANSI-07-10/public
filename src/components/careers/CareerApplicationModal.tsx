@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useId } from 'react';
+import React, { useState, useEffect, useRef, useId, useMemo } from 'react';
 import {
   X,
   Upload,
@@ -73,6 +73,76 @@ const SOURCE_OPTIONS = [
 const MAX_RESUME_SIZE = 4 * 1024 * 1024; // 4 MB
 const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
 
+const getRoleSkillsInfo = (roleTitle?: string, roleId?: string) => {
+  const combined = `${roleTitle || ''} ${roleId || ''}`.toLowerCase();
+
+  if (combined.includes('medical') || combined.includes('coder') || combined.includes('healthcare')) {
+    return {
+      labelExample: 'e.g. Medical Coding, ICD, CPT, Anatomy',
+      placeholder: 'e.g. Medical Coding, ICD Coding, CPT, Anatomy, Physiology, HIPAA Compliance',
+      suggestions: [
+        'Medical Coding',
+        'ICD Coding',
+        'CPT Coding',
+        'HCPCS',
+        'Anatomy',
+        'Physiology',
+        'Clinical Documentation',
+        'HIPAA Compliance',
+      ],
+    };
+  }
+
+  if (combined.includes('bde') || combined.includes('business development') || combined.includes('intern')) {
+    return {
+      labelExample: 'e.g. Lead Generation, Market Research, B2B Sales',
+      placeholder: 'e.g. Lead Generation, Market Research, B2B Sales, Client Outreach, Pitch Decks',
+      suggestions: [
+        'Lead Generation',
+        'Market Research',
+        'B2B Sales',
+        'Client Outreach',
+        'Cold Calling',
+        'Business Communication',
+        'Presentation Skills',
+        'CRM Tools',
+      ],
+    };
+  }
+
+  if (combined.includes('non-it') || combined.includes('operations') || combined.includes('hr')) {
+    return {
+      labelExample: 'e.g. Operations, HR, Testing, IT Support',
+      placeholder: 'e.g. HR Operations, Recruitment, Software Testing, IT Support, Administration',
+      suggestions: [
+        'Operations Management',
+        'HR & Recruitment',
+        'Software Testing',
+        'IT Support',
+        'System Administration',
+        'General Administration',
+        'Finance & Accounts',
+        'Communication',
+      ],
+    };
+  }
+
+  return {
+    labelExample: 'e.g. Python, React, TypeScript, FastAPI',
+    placeholder: 'e.g. Python, React, TypeScript, FastAPI, PostgreSQL, Docker, Git',
+    suggestions: [
+      'Python',
+      'React',
+      'TypeScript',
+      'FastAPI',
+      'Node.js',
+      'PostgreSQL',
+      'Docker',
+      'REST APIs',
+    ],
+  };
+};
+
 export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
   isOpen,
   role,
@@ -86,6 +156,11 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
   // Form State
   const [position, setPosition] = useState('');
   const [workMode, setWorkMode] = useState('Hybrid');
+
+  const roleSkillsInfo = useMemo(
+    () => getRoleSkillsInfo(role?.title || position, role?.id),
+    [role, position]
+  );
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -127,8 +202,51 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
     timestamp: string;
   } | null>(null);
 
+  // Reset form to empty values
+  const clearForm = () => {
+    setFullName('');
+    setEmail('');
+    setPhone('');
+    setCurrentLocation('');
+    setTotalExperience('');
+    setCurrentCompany('');
+    setCurrentDesignation('');
+    setKeySkills('');
+    setCurrentCtc('');
+    setExpectedCtc('');
+    setNoticePeriod('');
+    setHighestQualification('');
+    setCollege('');
+    setYearOfPassing('');
+    setLinkedinUrl('');
+    setPortfolioUrl('');
+    setResumeFile(null);
+    setCoverNote('');
+    setReferralName('');
+    setConsent(false);
+    setHoneypot('');
+    setErrors({});
+    setGeneralError('');
+    setSubmissionData(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // If reopening after a previous success or when closing, reset form
+  useEffect(() => {
+    if (!isOpen && isSuccess) {
+      clearForm();
+      setIsSuccess(false);
+    }
+  }, [isOpen, isSuccess]);
+
   // Initialize role values
   useEffect(() => {
+    if (isOpen && isSuccess) {
+      clearForm();
+      setIsSuccess(false);
+    }
     if (role) {
       setPosition(role.title);
       if (role.workMode) {
@@ -214,28 +332,80 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
     const errs: Record<string, string> = {};
 
     if (!position.trim()) errs.position = 'Position is required';
-    if (!fullName.trim()) errs.fullName = 'Full name is required';
+    if (!fullName.trim()) {
+      errs.fullName = 'Full name is required';
+    } else if (!/^[A-Za-z\s.'-]+$/.test(fullName.trim()) || !/[A-Za-z]/.test(fullName)) {
+      errs.fullName = 'Full name must contain only alphabetic characters';
+    }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email.trim()) {
       errs.email = 'Email address is required';
-    } else if (!emailRegex.test(email)) {
-      errs.email = 'Please enter a valid email address (e.g. name@example.com)';
+    } else if (!emailRegex.test(email.trim())) {
+      errs.email = 'Please enter a valid email address (e.g. name@gmail.com or name@company.com)';
     }
 
     const digitsOnly = phone.replace(/\D/g, '');
     if (!phone.trim()) {
-      errs.phone = 'Phone number with country code is required';
-    } else if (digitsOnly.length < 7 || digitsOnly.length > 15) {
-      errs.phone = 'Please enter a valid phone number with country code (e.g. +91 98765 43210)';
+      errs.phone = 'Phone number is required';
+    } else if (digitsOnly.length !== 10) {
+      errs.phone = 'Phone number must be exactly 10 digits';
+    }
+
+    if (currentLocation.trim() && (!/^[A-Za-z\s,.-]+$/.test(currentLocation.trim()) || !/[A-Za-z]/.test(currentLocation))) {
+      errs.currentLocation = 'Location must contain only alphabets and commas (e.g. Kurnool, Andhra Pradesh)';
     }
 
     if (!totalExperience) errs.totalExperience = 'Total experience is required';
-    if (!keySkills.trim()) errs.keySkills = 'Key skills are required';
-    if (!expectedCtc.trim()) errs.expectedCtc = 'Expected CTC is required';
+
+    if (currentDesignation.trim() && (!/^[A-Za-z\s.&/()-]+$/.test(currentDesignation.trim()) || !/[A-Za-z]/.test(currentDesignation))) {
+      errs.currentDesignation = 'Designation must contain only alphabetic characters';
+    }
+
+    if (!keySkills.trim()) {
+      errs.keySkills = 'Key skills are required';
+    } else if (!/^[A-Za-z\s,&.-]+$/.test(keySkills.trim()) || !/[A-Za-z]/.test(keySkills)) {
+      errs.keySkills = 'Key skills must contain only alphabets (no numbers allowed)';
+    }
+
+    let normalizedCurrentCtc = currentCtc.trim();
+    if (normalizedCurrentCtc) {
+      const curMatch = normalizedCurrentCtc.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
+      if (curMatch) {
+        normalizedCurrentCtc = `${curMatch[1]} LPA`;
+        setCurrentCtc(normalizedCurrentCtc);
+      } else if (!/^\d+(\.\d+)?\s*LPA$/i.test(normalizedCurrentCtc)) {
+        errs.currentCtc = 'Current CTC can be a number or number with LPA (e.g. 5.5 or 5.5 LPA)';
+      }
+    }
+
+    let normalizedExpectedCtc = expectedCtc.trim();
+    const expMatch = normalizedExpectedCtc.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
+    if (expMatch) {
+      normalizedExpectedCtc = `${expMatch[1]} LPA`;
+      setExpectedCtc(normalizedExpectedCtc);
+    }
+    if (!normalizedExpectedCtc) {
+      errs.expectedCtc = 'Expected CTC is required (e.g. 8.0 LPA or 8)';
+    } else if (!/^\d+(\.\d+)?\s*LPA$/i.test(normalizedExpectedCtc)) {
+      errs.expectedCtc = 'Expected CTC can be a number or number with LPA (e.g. 8.0 or 8.0 LPA)';
+    }
+
     if (!noticePeriod) errs.noticePeriod = 'Notice period is required';
 
     if (!highestQualification) errs.highestQualification = 'Highest qualification is required';
+
+    if (college.trim() && (!/^[A-Za-z0-9\s.,&/()-]+$/.test(college.trim()) || !/[A-Za-z]/.test(college))) {
+      errs.college = 'College/university must contain valid letters';
+    }
+
+    if (yearOfPassing.trim()) {
+      const yr = parseInt(yearOfPassing.trim(), 10);
+      const currentYear = new Date().getFullYear();
+      if (!/^\d{4}$/.test(yearOfPassing.trim()) || yr < 1960 || yr > currentYear + 6) {
+        errs.yearOfPassing = `Year of passing must be a valid 4-digit year (e.g. ${currentYear})`;
+      }
+    }
 
     if (!resumeFile) {
       errs.resume = 'Please upload your resume (PDF or DOC/DOCX, max 4 MB)';
@@ -278,8 +448,8 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
       formData.append('currentCompany', currentCompany);
       formData.append('currentDesignation', currentDesignation);
       formData.append('keySkills', keySkills);
-      formData.append('currentCtc', currentCtc);
-      formData.append('expectedCtc', expectedCtc);
+      formData.append('currentCtc', normalizedCurrentCtc);
+      formData.append('expectedCtc', normalizedExpectedCtc);
       formData.append('noticePeriod', noticePeriod);
 
       formData.append('highestQualification', highestQualification);
@@ -341,6 +511,9 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
   };
 
   const handleReset = () => {
+    if (isSuccess) {
+      clearForm();
+    }
     setIsSuccess(false);
     setGeneralError('');
     setErrors({});
@@ -557,7 +730,7 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                         id={`${formId}-fullName`}
                         type="text"
                         value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
+                        onChange={(e) => setFullName(e.target.value.replace(/[^A-Za-z\s.'-]/g, ''))}
                         placeholder="Your full legal name"
                         className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#181818] border ${
                           errors.fullName ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
@@ -599,16 +772,19 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       htmlFor={`${formId}-phone`}
                       className="block text-xs font-semibold text-[#cccccc] mb-1.5"
                     >
-                      Phone number (with country code) <span className="text-[#c9a84c]">*</span>
+                      Phone number (10 digits) <span className="text-[#c9a84c]">*</span>
                     </label>
                     <div className="relative">
                       <Phone className="w-4 h-4 text-[#666666] absolute left-3.5 top-3" />
                       <input
                         id={`${formId}-phone`}
                         type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9]{10}"
+                        maxLength={10}
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+91 98765 43210"
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                        placeholder="e.g. 9876543210"
                         className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#181818] border ${
                           errors.phone ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
                         } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
@@ -632,11 +808,16 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                         id={`${formId}-location`}
                         type="text"
                         value={currentLocation}
-                        onChange={(e) => setCurrentLocation(e.target.value)}
+                        onChange={(e) => setCurrentLocation(e.target.value.replace(/[^A-Za-z\s,.-]/g, ''))}
                         placeholder="e.g. Kurnool, Andhra Pradesh"
-                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#181818] border border-[#2c2c2c] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
+                        className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#181818] border ${
+                          errors.currentLocation ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
+                        } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
                       />
                     </div>
+                    {errors.currentLocation && (
+                      <p className="text-[11px] text-red-400 mt-1">{errors.currentLocation}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -710,10 +891,15 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       id={`${formId}-designation`}
                       type="text"
                       value={currentDesignation}
-                      onChange={(e) => setCurrentDesignation(e.target.value)}
+                      onChange={(e) => setCurrentDesignation(e.target.value.replace(/[^A-Za-z\s.&/()-]/g, ''))}
                       placeholder="e.g. Junior Developer"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-[#2c2c2c] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
+                      className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
+                        errors.currentDesignation ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
+                      } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
                     />
+                    {errors.currentDesignation && (
+                      <p className="text-[11px] text-red-400 mt-1">{errors.currentDesignation}</p>
+                    )}
                   </div>
                 </div>
 
@@ -723,14 +909,24 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       htmlFor={`${formId}-skills`}
                       className="block text-xs font-semibold text-[#cccccc] mb-1.5"
                     >
-                      Key skills (e.g. Python, React, AWS, testing) <span className="text-[#c9a84c]">*</span>
+                      Key skills ({roleSkillsInfo.labelExample}) <span className="text-[#c9a84c]">*</span>
                     </label>
                     <input
                       id={`${formId}-skills`}
                       type="text"
                       value={keySkills}
-                      onChange={(e) => setKeySkills(e.target.value)}
-                      placeholder="e.g. Python, React, TypeScript, FastAPI, PostgreSQL, Docker"
+                      onChange={(e) => {
+                        const filtered = e.target.value.replace(/[^A-Za-z\s,&.-]/g, '');
+                        setKeySkills(filtered);
+                        if (errors.keySkills) {
+                          setErrors((prev) => {
+                            const copy = { ...prev };
+                            delete copy.keySkills;
+                            return copy;
+                          });
+                        }
+                      }}
+                      placeholder={roleSkillsInfo.placeholder}
                       className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
                         errors.keySkills ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
                       } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
@@ -738,6 +934,45 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                     {errors.keySkills && (
                       <p className="text-[11px] text-red-400 mt-1">{errors.keySkills}</p>
                     )}
+
+                    {/* Role-specific skill suggestions */}
+                    <div className="mt-2.5 pt-2 border-t border-[#222222]">
+                      <div className="flex items-center justify-between text-[11px] text-[#888888] mb-1.5">
+                        <span>Suggested skills for {role?.title || position} (click to add):</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {roleSkillsInfo.suggestions.map((skill) => {
+                          const isAdded = keySkills.toLowerCase().includes(skill.toLowerCase());
+                          return (
+                            <button
+                              key={skill}
+                              type="button"
+                              onClick={() => {
+                                if (!isAdded) {
+                                  const current = keySkills.trim();
+                                  const next = current ? `${current.replace(/,\s*$/, '')}, ${skill}` : skill;
+                                  setKeySkills(next);
+                                  if (errors.keySkills) {
+                                    setErrors((prev) => {
+                                      const copy = { ...prev };
+                                      delete copy.keySkills;
+                                      return copy;
+                                    });
+                                  }
+                                }
+                              }}
+                              className={`text-[11px] px-2.5 py-1 rounded-lg border transition-all ${
+                                isAdded
+                                  ? 'bg-[#c9a84c]/20 border-[#c9a84c]/40 text-[#c9a84c]'
+                                  : 'bg-[#181818] border-[#2e2e2e] text-[#a0a0a0] hover:border-[#c9a84c]/50 hover:text-white'
+                              }`}
+                            >
+                              {isAdded ? `✓ ${skill}` : `+ ${skill}`}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   <div>
@@ -751,10 +986,32 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       id={`${formId}-currentCtc`}
                       type="text"
                       value={currentCtc}
-                      onChange={(e) => setCurrentCtc(e.target.value)}
-                      placeholder="e.g. 5.5 LPA"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-[#2c2c2c] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
+                      onChange={(e) => {
+                        const filtered = e.target.value.replace(/[^0-9.\sLlPpAa]/g, '');
+                        setCurrentCtc(filtered);
+                        if (errors.currentCtc) {
+                          setErrors((prev) => {
+                            const copy = { ...prev };
+                            delete copy.currentCtc;
+                            return copy;
+                          });
+                        }
+                      }}
+                      onBlur={() => {
+                        const val = currentCtc.trim();
+                        const match = val.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
+                        if (match) {
+                          setCurrentCtc(`${match[1]} LPA`);
+                        }
+                      }}
+                      placeholder="e.g. 5.5 LPA or 5.5"
+                      className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
+                        errors.currentCtc ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
+                      } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
                     />
+                    {errors.currentCtc && (
+                      <p className="text-[11px] text-red-400 mt-1">{errors.currentCtc}</p>
+                    )}
                   </div>
 
                   <div>
@@ -768,8 +1025,25 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       id={`${formId}-expectedCtc`}
                       type="text"
                       value={expectedCtc}
-                      onChange={(e) => setExpectedCtc(e.target.value)}
-                      placeholder="e.g. 8.0 LPA"
+                      onChange={(e) => {
+                        const filtered = e.target.value.replace(/[^0-9.\sLlPpAa]/g, '');
+                        setExpectedCtc(filtered);
+                        if (errors.expectedCtc) {
+                          setErrors((prev) => {
+                            const copy = { ...prev };
+                            delete copy.expectedCtc;
+                            return copy;
+                          });
+                        }
+                      }}
+                      onBlur={() => {
+                        const val = expectedCtc.trim();
+                        const match = val.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
+                        if (match) {
+                          setExpectedCtc(`${match[1]} LPA`);
+                        }
+                      }}
+                      placeholder="e.g. 8.0 LPA or 8"
                       className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
                         errors.expectedCtc ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
                       } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
@@ -867,8 +1141,13 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                       value={college}
                       onChange={(e) => setCollege(e.target.value)}
                       placeholder="e.g. JNTU / G.Pulla Reddy"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-[#2c2c2c] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
+                      className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
+                        errors.college ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
+                      } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
                     />
+                    {errors.college && (
+                      <p className="text-[11px] text-red-400 mt-1">{errors.college}</p>
+                    )}
                   </div>
 
                   <div>
@@ -881,11 +1160,19 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
                     <input
                       id={`${formId}-yearOfPassing`}
                       type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]{4}"
+                      maxLength={4}
                       value={yearOfPassing}
-                      onChange={(e) => setYearOfPassing(e.target.value)}
+                      onChange={(e) => setYearOfPassing(e.target.value.replace(/\D/g, '').slice(0, 4))}
                       placeholder="e.g. 2024"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-[#2c2c2c] focus:border-[#c9a84c] text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
+                      className={`w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border ${
+                        errors.yearOfPassing ? 'border-red-500' : 'border-[#2c2c2c] focus:border-[#c9a84c]'
+                      } text-sm text-white placeholder-[#555555] focus:outline-none transition-colors`}
                     />
+                    {errors.yearOfPassing && (
+                      <p className="text-[11px] text-red-400 mt-1">{errors.yearOfPassing}</p>
+                    )}
                   </div>
                 </div>
               </div>

@@ -787,39 +787,60 @@ export const CAREERS_DATA = {
       ]
     },
     {
-      id: "frontend-developer",
-      title: "Frontend Engineer (Next.js & UI/UX)",
-      department: "Frontend Experience",
+      id: "medical-coders",
+      title: "Medical Coders",
+      department: "Healthcare Operations",
       type: "Full-time",
-      postedDate: "03 Oct 2026",
-      experienceLevel: "Mid – Senior",
+      postedDate: "20 Oct 2026",
+      experienceLevel: "Fresher / Experienced",
       workMode: "On-site / Hybrid",
       shortLocation: "Kurnool, AP",
       location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
-      overview: "Craft cinematic, high-performance web experiences with sub-100ms Time-to-Interactive and pixel-perfect design systems.",
+      overview: "Medical coding specialists responsible for reviewing clinical documentation, translating diagnoses and procedures into standardized medical codes (ICD-10, CPT, HCPCS), and ensuring healthcare compliance.",
       requirements: [
-        "Strong expertise in React 19, Next.js, TypeScript, and Tailwind CSS",
-        "Deep understanding of Core Web Vitals, accessibility (WCAG), and responsive layouts",
-        "Experience translating Figma design systems into reusable atomic components",
-        "Attention to micro-animations, layout rhythm, and mobile polish"
+        "Knowledge of medical terminology, human anatomy, physiology, and clinical documentation",
+        "Familiarity with ICD-10-CM, CPT, and HCPCS coding conventions and guidelines",
+        "Degree in Life Sciences, Pharmacy, Nursing, Biotechnology, or certified medical coder (CPC / CIC / COC is an advantage)",
+        "Strong analytical skills with high precision, detail orientation, and adherence to HIPAA confidentiality",
+        "Good written and verbal communication skills"
       ]
     },
     {
-      id: "qa-devops",
-      title: "DevOps & Quality Assurance Engineer",
-      department: "Infrastructure & Quality",
+      id: "non-it-and-it-roles",
+      title: "Non-IT & IT Roles",
+      department: "Operations & Technology",
       type: "Full-time",
-      postedDate: "24 Sep 2026",
-      experienceLevel: "Mid-level",
+      postedDate: "18 Oct 2026",
+      experienceLevel: "Fresher – Experienced",
       workMode: "On-site / Hybrid",
       shortLocation: "Kurnool, AP",
       location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
-      overview: "Maintain high-availability deployment pipelines, Docker environments, and automated regression test suites.",
+      overview: "Support roles in Operations, HR, Finance, Administration, Software Development, Testing, IT Support, System Administration and other roles.",
       requirements: [
-        "Hands-on experience with Docker, Linux administration, and CI/CD workflows",
-        "Experience authoring automated end-to-end and integration tests",
-        "Familiarity with cloud hosting (AWS, Vercel, VPS) and monitoring tools",
-        "Strong focus on system reliability, zero-downtime deploys, and security standards"
+        "Openings across Non-IT streams: Operations, Human Resources (HR), Finance & Accounts, and General Administration",
+        "Openings across IT streams: Software Development, Manual & Automation Testing, IT Support, and System Administration",
+        "Bachelor's or Master's degree in relevant fields (B.Tech, B.Sc, BCA, MCA, B.Com, BBA, MBA, or any graduate)",
+        "Proactive mindset with problem-solving capabilities and strong interpersonal skills",
+        "Ability to collaborate effectively across multidisciplinary teams in a fast-paced environment"
+      ]
+    },
+    {
+      id: "bde-interns",
+      title: "BDE Interns",
+      department: "Business Development",
+      type: "Internship",
+      postedDate: "16 Oct 2026",
+      experienceLevel: "Fresher / Intern",
+      workMode: "On-site / Hybrid",
+      shortLocation: "Kurnool, AP",
+      location: "Kurnool, Andhra Pradesh (On-site / Hybrid)",
+      overview: "Business Development Executive Interns",
+      requirements: [
+        "Assist the business development team in market research, prospect identification, and B2B outreach",
+        "Support lead generation campaigns across digital channels, email, and professional networks",
+        "Help prepare presentations, pitch decks, and service proposals for prospective enterprise clients",
+        "Excellent verbal and written communication skills with strong presentation abilities",
+        "Degree in Business Administration, Marketing, Commerce, or related disciplines (final-year students / recent graduates welcome)"
       ]
     }
   ]

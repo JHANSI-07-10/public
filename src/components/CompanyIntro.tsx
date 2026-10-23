@@ -82,7 +82,7 @@ export const CompanyIntro: React.FC = () => {
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
-            className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-balance"
+            className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed text-justify"
           >
             {COMPANY_DATA.vision} We reject off-the-shelf compromises and opaque agency jargon,
             replacing them with verifiable architecture and direct accountability.

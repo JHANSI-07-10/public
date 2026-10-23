@@ -47,12 +47,12 @@ export const CareersPage: React.FC<CareersPageProps> = ({ onOpenConsultation }) 
                 {CAREERS_DATA.headline}
               </h1>
 
-              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed max-w-3xl text-balance mb-8">
+              <p className="text-base sm:text-lg text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-relaxed max-w-3xl text-justify mb-8">
                 {CAREERS_DATA.overview}
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
-                <span className="text-xs font-mono text-[#888888] flex items-center gap-1.5">
+                <span className="text-xs font-mono text-zinc-300 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#c9a84c]" />
                   Headquartered in Kurnool, Andhra Pradesh
                 </span>

@@ -38,6 +38,24 @@ const DEPARTMENT_BADGES: Record<
     border: 'border-amber-500/25',
     dot: 'bg-amber-400',
   },
+  'Healthcare Operations': {
+    bg: 'bg-teal-500/10',
+    text: 'text-teal-400',
+    border: 'border-teal-500/25',
+    dot: 'bg-teal-400',
+  },
+  'Operations & Technology': {
+    bg: 'bg-sky-500/10',
+    text: 'text-sky-400',
+    border: 'border-sky-500/25',
+    dot: 'bg-sky-400',
+  },
+  'Business Development': {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/25',
+    dot: 'bg-amber-400',
+  },
 };
 
 const DEFAULT_BADGE = {

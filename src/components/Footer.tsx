@@ -261,15 +261,6 @@ export const Footer: React.FC = () => {
               Terms of Service
             </Link>
             <button
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent('replay_brand_intro'));
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a84c] cursor-pointer"
-            >
-              Replay Brand Intro
-            </button>
-            <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 text-[#aaaaaa] hover:text-[#c9a84c] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a84c] rounded p-1 cursor-pointer"
               aria-label="Scroll back to top"
