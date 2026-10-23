@@ -32,6 +32,21 @@ interface CareerApplicationModalProps {
   onClose: () => void;
 }
 
+/** Accepted submit form for a CTC figure, e.g. `8 LPA` or `8.5 LPA`. */
+const CTC_WITH_UNIT = /^\d+(?:\.\d+)?\s*LPA$/i;
+
+/**
+ * Rewrites a bare figure like `5.5` or `5.5 lpa` to `5.5 LPA`. Anything that is
+ * not a figure is returned trimmed, so the validator can reject it. Called from
+ * both validation and submit because `setCurrentCtc` has not flushed by the time
+ * the payload is built, so the state still holds the raw input.
+ */
+const normalizeCtc = (value: string) => {
+  const trimmed = value.trim();
+  const match = trimmed.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
+  return match ? `${match[1]} LPA` : trimmed;
+};
+
 const NOTICE_PERIOD_OPTIONS = [
   'Immediate',
   '15 days',
@@ -368,26 +383,19 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
       errs.keySkills = 'Key skills must contain only alphabets (no numbers allowed)';
     }
 
-    let normalizedCurrentCtc = currentCtc.trim();
+    const normalizedCurrentCtc = normalizeCtc(currentCtc);
     if (normalizedCurrentCtc) {
-      const curMatch = normalizedCurrentCtc.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
-      if (curMatch) {
-        normalizedCurrentCtc = `${curMatch[1]} LPA`;
-        setCurrentCtc(normalizedCurrentCtc);
-      } else if (!/^\d+(\.\d+)?\s*LPA$/i.test(normalizedCurrentCtc)) {
+      if (normalizedCurrentCtc !== currentCtc.trim()) setCurrentCtc(normalizedCurrentCtc);
+      if (!CTC_WITH_UNIT.test(normalizedCurrentCtc)) {
         errs.currentCtc = 'Current CTC can be a number or number with LPA (e.g. 5.5 or 5.5 LPA)';
       }
     }
 
-    let normalizedExpectedCtc = expectedCtc.trim();
-    const expMatch = normalizedExpectedCtc.match(/^(\d+(?:\.\d+)?)\s*(?:lpa)?$/i);
-    if (expMatch) {
-      normalizedExpectedCtc = `${expMatch[1]} LPA`;
-      setExpectedCtc(normalizedExpectedCtc);
-    }
+    const normalizedExpectedCtc = normalizeCtc(expectedCtc);
+    if (normalizedExpectedCtc !== expectedCtc.trim()) setExpectedCtc(normalizedExpectedCtc);
     if (!normalizedExpectedCtc) {
       errs.expectedCtc = 'Expected CTC is required (e.g. 8.0 LPA or 8)';
-    } else if (!/^\d+(\.\d+)?\s*LPA$/i.test(normalizedExpectedCtc)) {
+    } else if (!CTC_WITH_UNIT.test(normalizedExpectedCtc)) {
       errs.expectedCtc = 'Expected CTC can be a number or number with LPA (e.g. 8.0 or 8.0 LPA)';
     }
 
@@ -448,8 +456,8 @@ export const CareerApplicationModal: React.FC<CareerApplicationModalProps> = ({
       formData.append('currentCompany', currentCompany);
       formData.append('currentDesignation', currentDesignation);
       formData.append('keySkills', keySkills);
-      formData.append('currentCtc', normalizedCurrentCtc);
-      formData.append('expectedCtc', normalizedExpectedCtc);
+      formData.append('currentCtc', normalizeCtc(currentCtc));
+      formData.append('expectedCtc', normalizeCtc(expectedCtc));
       formData.append('noticePeriod', noticePeriod);
 
       formData.append('highestQualification', highestQualification);
